@@ -54,6 +54,18 @@ const Button = forwardRef(({
       text-white
       focus:ring-red-500
     `,
+    white: `
+      bg-white hover:bg-neutral-50
+      text-primary-600
+      focus:ring-white
+      shadow-lg
+    `,
+    'ghost-light': `
+      bg-white/10 hover:bg-white/20
+      text-white
+      border border-white/20
+      focus:ring-white
+    `,
   };
 
   const sizes = {
