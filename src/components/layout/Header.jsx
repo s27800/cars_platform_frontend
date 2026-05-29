@@ -11,13 +11,16 @@ import {
   IoSpeedometerOutline,
   IoSettingsOutline,
   IoLogOutOutline,
+  IoSunnyOutline,
+  IoMoonOutline,
 } from 'react-icons/io5';
-import useAuth from '../../hooks/useAuth';
+import { useAuth, useTheme } from '../../hooks';
 import { Button, Input, NavLink, Avatar, Dropdown, IconButton } from '../ui';
 
 
 const Header = () => {
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -116,6 +119,20 @@ const Header = () => {
 
           {/* Right side controls */}
           <div className="flex items-center gap-3">
+
+            {/* Theme toggle */}
+            <IconButton
+              onClick={toggleTheme}
+              label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              aria-pressed={isDark}
+            >
+              {isDark ? (
+                <IoSunnyOutline className="w-5 h-5" />
+              ) : (
+                <IoMoonOutline className="w-5 h-5" />
+              )}
+            </IconButton>
+
             {isAuthenticated ? (
               <div className="relative" ref={dropdownRef}>
                 <button
@@ -214,6 +231,26 @@ const Header = () => {
                   {label}
                 </NavLink>
               ))}
+            </div>
+
+            {/* Mobile theme toggle */}
+            <div className="pt-4 border-t border-neutral-200 dark:border-neutral-700">
+              <button
+                onClick={toggleTheme}
+                className="flex items-center justify-between w-full px-4 py-3 text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
+              >
+                <span className="flex items-center gap-3">
+                  {isDark ? (
+                    <IoSunnyOutline className="w-5 h-5" />
+                  ) : (
+                    <IoMoonOutline className="w-5 h-5" />
+                  )}
+                  <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
+                </span>
+                <span className="text-xs text-neutral-500 dark:text-neutral-400">
+                  {isDark ? 'Dark' : 'Light'}
+                </span>
+              </button>
             </div>
 
             {/* Mobile auth buttons */}

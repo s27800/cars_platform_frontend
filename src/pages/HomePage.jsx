@@ -10,7 +10,6 @@ import {
   IoStarOutline,
   IoSearchOutline,
   IoChevronForwardOutline,
-  IoArrowForwardOutline,
 } from 'react-icons/io5';
 import { Button } from '../components/ui';
 
@@ -90,10 +89,11 @@ const HomePage = () => {
 
   return (
     <div className="space-y-16 pb-16">
+      {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-white to-neutral-50 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-800" />
         <div className="absolute top-20 right-10 w-72 h-72 bg-primary-200/30 dark:bg-primary-900/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-secondary-200/20 dark:bg-secondary-900/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 left-10 w-96 h-96 bg-accent-200/20 dark:bg-accent-900/10 rounded-full blur-3xl" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -131,14 +131,7 @@ const HomePage = () => {
               {stats.map((stat, index) => (
                 <div
                   key={index}
-                  className="
-                    bg-white/80 dark:bg-neutral-800/80
-                    backdrop-blur-sm
-                    rounded-2xl p-6
-                    border border-neutral-200/50 dark:border-neutral-700/50
-                    shadow-lg
-                    text-center
-                  "
+                  className="bg-white/80 dark:bg-neutral-800/80 backdrop-blur-sm rounded-2xl p-6 border border-neutral-200/50 dark:border-neutral-700/50 shadow-lg text-center"
                 >
                   <div className="text-3xl sm:text-4xl font-bold text-primary-600 dark:text-primary-400">
                     {stat.value}
@@ -169,23 +162,9 @@ const HomePage = () => {
             <Link
               key={index}
               to={filter.link}
-              className="
-                group relative
-                bg-white dark:bg-neutral-800
-                rounded-2xl p-6
-                border border-neutral-200 dark:border-neutral-700
-                shadow-card hover:shadow-card-hover
-                transition-all duration-300
-                hover:-translate-y-1
-              "
+              className="group relative bg-white dark:bg-neutral-800 rounded-2xl p-6 border border-neutral-200 dark:border-neutral-700 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
-              <div className={`
-                inline-flex items-center justify-center
-                w-14 h-14 rounded-xl
-                ${filter.color} text-white
-                mb-4
-                group-hover:scale-110 transition-transform duration-300
-              `}>
+              <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl ${filter.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>
                 {filter.icon}
               </div>
 
@@ -204,58 +183,10 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Popular Brands Section */}
-      <section aria-labelledby="brands-heading" className="bg-neutral-50 dark:bg-neutral-800/50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 id="brands-heading" className="text-3xl font-bold text-neutral-900 dark:text-white">
-              Popular brands
-            </h2>
-            <p className="mt-3 text-lg text-neutral-600 dark:text-neutral-400">
-              Browse cars by manufacturer
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
-            {popularBrands.map((brand) => (
-              <Link
-                key={brand.slug}
-                to={`/cars?brand=${brand.slug}`}
-                className="
-                  flex flex-col items-center justify-center
-                  bg-white dark:bg-neutral-800
-                  rounded-xl p-4
-                  border border-neutral-200 dark:border-neutral-700
-                  hover:border-primary-300 dark:hover:border-primary-600
-                  hover:shadow-md
-                  transition-all duration-200
-                  group
-                "
-              >
-                <div className="
-                  w-12 h-12 rounded-full
-                  bg-neutral-100 dark:bg-neutral-700
-                  flex items-center justify-center
-                  text-xl font-bold text-neutral-400 dark:text-neutral-500
-                  group-hover:bg-primary-100 dark:group-hover:bg-primary-900/30
-                  group-hover:text-primary-600 dark:group-hover:text-primary-400
-                  transition-colors
-                ">
-                  {brand.name.charAt(0)}
-                </div>
-                <span className="mt-2 text-sm font-medium text-neutral-700 dark:text-neutral-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                  {brand.name}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Features Section */}
-      <section aria-labelledby="features-heading" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
-          <h2 id="features-heading" className="text-3xl font-bold text-neutral-900 dark:text-white">
+          <h2 className="text-3xl font-bold text-neutral-900 dark:text-white">
             Why CarsPlatform?
           </h2>
           <p className="mt-3 text-lg text-neutral-600 dark:text-neutral-400">
@@ -267,20 +198,9 @@ const HomePage = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="
-                bg-white dark:bg-neutral-800
-                rounded-2xl p-6
-                border border-neutral-200 dark:border-neutral-700
-                shadow-card
-              "
+              className="text-center p-6"
             >
-              <div className="
-                inline-flex items-center justify-center
-                w-12 h-12 rounded-xl
-                bg-primary-100 dark:bg-primary-900/30
-                text-primary-600 dark:text-primary-400
-                mb-4
-              ">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 mb-4">
                 {feature.icon}
               </div>
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
@@ -294,43 +214,29 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Popular Brands Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="
-          relative overflow-hidden
-          bg-gradient-to-r from-primary-600 to-primary-700
-          rounded-3xl
-          p-8 sm:p-12
-          text-center
-        ">
-          <div className="absolute top-0 left-0 w-40 h-40 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-60 h-60 bg-white/10 rounded-full translate-x-1/3 translate-y-1/3" />
-          
-          <div className="relative">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Ready to find your car?
-            </h2>
-            <p className="text-lg text-primary-100 max-w-2xl mx-auto mb-8">
-              Join thousands of users who already use our platform to compare and choose the best cars.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                to="/cars"
-                variant="white"
-                size="lg"
-                rightIcon={<IoArrowForwardOutline className="w-5 h-5" />}
-              >
-                Start searching
-              </Button>
-              <Button
-                to="/register"
-                variant="ghost-light"
-                size="lg"
-              >
-                Create account
-              </Button>
-            </div>
-          </div>
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold text-neutral-900 dark:text-white">
+            Popular brands
+          </h2>
+          <p className="mt-3 text-lg text-neutral-600 dark:text-neutral-400">
+            Browse cars from the most popular manufacturers
+          </p>
+        </div>
+
+        <div className="grid grid-cols-4 sm:grid-cols-8 gap-4">
+          {popularBrands.map((brand) => (
+            <Link
+              key={brand.slug}
+              to={`/cars?brand=${brand.slug}`}
+              className="flex items-center justify-center p-4 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-md transition-all"
+            >
+              <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+                {brand.name}
+              </span>
+            </Link>
+          ))}
         </div>
       </section>
     </div>
