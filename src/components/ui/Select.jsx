@@ -54,7 +54,7 @@ const Select = forwardRef(({
           className={selectStyles}
           {...props}
         >
-          {placeholder && (
+          {placeholder && !options.some(opt => opt.value === '') && (
             <option value="">{placeholder}</option>
           )}
           {options.map((option) => (

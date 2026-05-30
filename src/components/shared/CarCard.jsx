@@ -17,6 +17,9 @@ const CarCard = ({
 }) => {
   const {
     id,
+    name,
+    imageUrl,
+    productionYears,
     brand,
     model,
     generation,
@@ -26,12 +29,13 @@ const CarCard = ({
     photos = [],
   } = car;
 
-  const mainPhoto = photos.length > 0 ? photos[0].url : null;
-  const carName = `${brand?.name || ''} ${model?.name || ''} ${generation?.name || ''}`.trim();
+  const mainPhoto = imageUrl || (photos.length > 0 ? photos[0].url : null);
   
-  const yearRange = generation 
+  const carName = name || `${brand?.name || ''} ${model?.name || ''} ${generation?.name || ''}`.trim();
+  
+  const yearRange = productionYears || (generation 
     ? `${generation.startYear}${generation.endYear ? ` - ${generation.endYear}` : '+'}`
-    : null;
+    : null);
 
   return (
     <div className={`
@@ -74,10 +78,10 @@ const CarCard = ({
         </Link>
 
         <div className="mt-3 grid grid-cols-3 gap-2">
-          {engine?.power && (
+          {(engine?.power || engine?.maxPower) && (
             <div className="flex items-center gap-1.5 text-sm text-neutral-600 dark:text-neutral-400">
               <IoFlashOutline className="w-4 h-4 text-primary-500 flex-shrink-0" />
-              <span>{engine.power} HP</span>
+              <span>{engine.power || engine.maxPower} HP</span>
             </div>
           )}
           

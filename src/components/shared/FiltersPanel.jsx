@@ -9,10 +9,10 @@ import { Select, Input, Button, Checkbox } from '../ui';
 
 
 const ENGINE_TYPES = [
-  { value: 'PETROL', label: 'Petrol' },
-  { value: 'DIESEL', label: 'Diesel' },
-  { value: 'HYBRID', label: 'Hybrid' },
-  { value: 'ELECTRIC', label: 'Electric' },
+  { value: 'Gasoline', label: 'Petrol' },
+  { value: 'Diesel', label: 'Diesel' },
+  { value: 'Hybrid', label: 'Hybrid' },
+  { value: 'Electric', label: 'Electric' },
 ];
 
 const DRIVE_TYPES = [
@@ -22,8 +22,8 @@ const DRIVE_TYPES = [
 ];
 
 const TRANSMISSION_TYPES = [
-  { value: 'MANUAL', label: 'Manual' },
-  { value: 'AUTOMATIC', label: 'Automatic' },
+  { value: 'Manual', label: 'Manual' },
+  { value: 'Automatic', label: 'Automatic' },
 ];
 
 
