@@ -20,41 +20,41 @@ const HomePage = () => {
       title: 'Economical',
       description: 'Cars with low fuel consumption',
       icon: <IoFlashOutline className="w-8 h-8" />,
-      link: '/cars?tags=economical',
+      link: '/cars?tagIds=3',
       color: 'bg-green-500',
     },
     {
       title: 'Sporty',
       description: 'Powerful and dynamic cars',
       icon: <IoTrendingUpOutline className="w-8 h-8" />,
-      link: '/cars?tags=sporty',
+      link: '/cars?tagIds=1',
       color: 'bg-red-500',
     },
     {
       title: 'Family',
       description: 'Spacious and comfortable',
       icon: <IoPeopleOutline className="w-8 h-8" />,
-      link: '/cars?bodyTypes=estate,suv',
+      link: '/cars?tagIds=2',
       color: 'bg-blue-500',
     },
     {
       title: 'Electric',
       description: 'Electric only vehicles',
       icon: <IoBatteryChargingOutline className="w-8 h-8" />,
-      link: '/cars?fuelTypes=electric',
+      link: '/cars?engineTypes=Electric',
       color: 'bg-yellow-500',
     },
   ];
 
   const popularBrands = [
-    { name: 'Audi', slug: 'audi' },
-    { name: 'BMW', slug: 'bmw' },
-    { name: 'Mercedes', slug: 'mercedes' },
-    { name: 'Volkswagen', slug: 'volkswagen' },
-    { name: 'Toyota', slug: 'toyota' },
-    { name: 'Ford', slug: 'ford' },
-    { name: 'Skoda', slug: 'skoda' },
-    { name: 'Opel', slug: 'opel' },
+    { name: 'Audi', id: 3 },
+    { name: 'BMW', id: 2 },
+    { name: 'Mercedes', id: 4 },
+    { name: 'Volkswagen', id: 1 },
+    { name: 'Toyota', id: 5 },
+    { name: 'Ford', id: 8 },
+    { name: 'Skoda', id: 9 },
+    { name: 'Porsche', id: 13 },
   ];
 
   const stats = [
@@ -228,8 +228,8 @@ const HomePage = () => {
         <div className="grid grid-cols-4 sm:grid-cols-8 gap-4">
           {popularBrands.map((brand) => (
             <Link
-              key={brand.slug}
-              to={`/cars?brand=${brand.slug}`}
+              key={brand.id}
+              to={`/cars?brandIds=${brand.id}`}
               className="flex items-center justify-center p-4 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-md transition-all"
             >
               <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
