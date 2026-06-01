@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainLayout } from './components/layout';
-import { HomePage, LoginPage, RegisterPage, CarsSearchPage } from './pages';
+import { HomePage, LoginPage, RegisterPage, CarsSearchPage, CarDetailsPage } from './pages';
 
 
 function App() {
@@ -12,6 +12,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/cars" element={<CarsSearchPage />} />
+          <Route path="/cars/:id" element={<CarDetailsPage />} />
         </Route>
       </Routes>
     </Router>
