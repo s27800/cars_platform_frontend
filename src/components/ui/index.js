@@ -11,3 +11,8 @@ export { default as IconButton } from './IconButton';
 export { default as Dropdown } from './Dropdown';
 export { default as Pagination } from './Pagination';
 export { default as Spinner } from './Spinner';
+export { default as Modal } from './Modal';
+export { default as TextArea } from './TextArea';
+export { default as Rating } from './Rating';
+export { default as Tabs } from './Tabs';
+export { default as Alert } from './Alert';
