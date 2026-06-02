@@ -4,3 +4,4 @@ export { default as LoginPage } from './LoginPage';
 export { default as RegisterPage } from './RegisterPage';
 export { default as CarsSearchPage } from './CarsSearchPage';
 export { default as CarDetailsPage } from './CarDetailsPage';
+export { default as ComparisonPage } from './ComparisonPage';
