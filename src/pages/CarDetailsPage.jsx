@@ -266,10 +266,13 @@ const CarDetailsPage = () => {
               defaultOpen={true}
             >
               <SpecificationSection.Grid>
+                <SpecificationSection.Item label="Brand" value={car.brand?.name} />
+                <SpecificationSection.Item label="Model" value={car.model?.name} />
+                <SpecificationSection.Item label="Generation" value={car.generation?.name} />
                 <SpecificationSection.Item label="Production Years" value={productionYears} />
+                <SpecificationSection.Item label="Body Type" value={bodyType?.name} />
                 <SpecificationSection.Item label="Doors" value={doorsNumber} />
                 <SpecificationSection.Item label="Seats" value={seatsNumber} />
-                <SpecificationSection.Item label="Body Type" value={bodyType?.name} />
               </SpecificationSection.Grid>
             </SpecificationSection>
 
@@ -303,6 +306,7 @@ const CarDetailsPage = () => {
               <SpecificationSection
                 title="Transmission"
                 icon={<IoSettingsOutline className="w-5 h-5" />}
+                defaultOpen={true}
               >
                 <SpecificationSection.Grid>
                   <SpecificationSection.Item label="Type" value={transmission.transmissionType} />
@@ -318,6 +322,7 @@ const CarDetailsPage = () => {
               <SpecificationSection
                 title="Performance"
                 icon={<IoSpeedometerOutline className="w-5 h-5" />}
+                defaultOpen={true}
               >
                 <SpecificationSection.Grid>
                   <SpecificationSection.Item label="Top Speed" value={performance.maxSpeed} unit="km/h" />
@@ -341,6 +346,7 @@ const CarDetailsPage = () => {
               <SpecificationSection
                 title="Chassis & Brakes"
                 icon={<IoLayersOutline className="w-5 h-5" />}
+                defaultOpen={true}
               >
                 <SpecificationSection.Grid>
                   <SpecificationSection.Item label="Drive" value={chassis.drive} />
@@ -362,6 +368,7 @@ const CarDetailsPage = () => {
               <SpecificationSection
                 title="Outside Dimensions"
                 icon={<IoResizeOutline className="w-5 h-5" />}
+                defaultOpen={true}
               >
                 <SpecificationSection.Grid>
                   <SpecificationSection.Item label="Length" value={outsideDimensions.length} unit="mm" />
@@ -385,6 +392,7 @@ const CarDetailsPage = () => {
               <SpecificationSection
                 title="Inside Dimensions"
                 icon={<IoGridOutline className="w-5 h-5" />}
+                defaultOpen={true}
               >
                 <SpecificationSection.Grid>
                   <SpecificationSection.Item label="Front Headroom" value={insideDimensions.heightFromSeatToRoofFront} unit="mm" />
