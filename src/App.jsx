@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainLayout } from './components/layout';
-import { HomePage, LoginPage, RegisterPage, CarsSearchPage, CarDetailsPage, ComparisonPage } from './pages';
+import { HomePage, LoginPage, RegisterPage, CarsSearchPage, CarDetailsPage, ComparisonPage, ProfilePage } from './pages';
 
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
           <Route path="/cars" element={<CarsSearchPage />} />
           <Route path="/cars/:id" element={<CarDetailsPage />} />
           <Route path="/comparison" element={<ComparisonPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Routes>
     </Router>
