@@ -1,4 +1,8 @@
-import { IoPersonOutline, IoMailOutline, IoAtOutline } from 'react-icons/io5';
+import { 
+  IoPersonOutline, 
+  IoMailOutline, 
+  IoAtOutline, 
+} from 'react-icons/io5';
 import { Card, Avatar } from '../../components/ui';
 
 

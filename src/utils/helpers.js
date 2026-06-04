@@ -33,18 +33,18 @@ export const calculateAverage = (values) => {
 export const getConsumptionLevel = (value) => {
   const numValue = parseFloat(value);
   if (numValue <= 5)
-    return { label: 'Very economical', color: 'text-green-600 dark:text-green-400' };
+    return { label: 'Very economical', color: 'text-green-600 dark:text-green-400', variant: 'success' };
   
   if (numValue <= 7)
-    return { label: 'Economical', color: 'text-green-500 dark:text-green-400' };
+    return { label: 'Economical', color: 'text-green-500 dark:text-green-400', variant: 'success' };
   
   if (numValue <= 10)
-    return { label: 'Average', color: 'text-yellow-600 dark:text-yellow-400' };
+    return { label: 'Average', color: 'text-yellow-600 dark:text-yellow-400', variant: 'warning' };
   
   if (numValue <= 13)
-    return { label: 'Above average', color: 'text-orange-500 dark:text-orange-400' };
+    return { label: 'Above average', color: 'text-orange-500 dark:text-orange-400', variant: 'warning' };
   
-  return { label: 'High consumption', color: 'text-red-500 dark:text-red-400' };
+  return { label: 'High consumption', color: 'text-red-500 dark:text-red-400', variant: 'danger' };
 };
 
 /**
