@@ -30,6 +30,28 @@ export const updateProfile = async (profileData) => {
  */
 export const changePassword = async (passwordData) => {
   const response = await apiClient.post('/users/me/change-password', passwordData);
-  
+
+  return response.data;
+};
+
+/**
+ * Get current user's reviews with pagination
+ * GET /api/users/me/reviews
+ * Requires authentication
+ */
+export const getUserReviews = async (params = {}) => {
+  const response = await apiClient.get('/users/me/reviews', { params });
+
+  return response.data;
+};
+
+/**
+ * Get current user's fuel reports with pagination
+ * GET /api/users/me/fuel-reports
+ * Requires authentication
+ */
+export const getUserFuelReports = async (params = {}) => {
+  const response = await apiClient.get('/users/me/fuel-reports', { params });
+
   return response.data;
 };

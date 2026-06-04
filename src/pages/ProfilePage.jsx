@@ -6,11 +6,13 @@ import {
   IoPencilOutline, 
   IoLockClosedOutline,
   IoArrowBackOutline,
+  IoDocumentTextOutline,
+  IoSpeedometerOutline,
 } from 'react-icons/io5';
 import { useAuth } from '../hooks';
 import { getProfile, updateProfile, changePassword } from '../api/users';
 import { Card, Tabs, Spinner, Button } from '../components/ui';
-import { ProfileInfo, ProfileEditForm, PasswordChangeForm } from '../features/profile';
+import { ProfileInfo, ProfileEditForm, PasswordChangeForm, UserReviewsList, UserFuelReportsList } from '../features/profile';
 
 
 const ProfilePage = () => {
@@ -156,7 +158,7 @@ const ProfilePage = () => {
           <div className="lg:col-span-3">
             <Card variant="bordered" padding="none">
               <Tabs value={activeTab} onChange={setActiveTab}>
-                <Tabs.List className="px-6 pt-4">
+                <Tabs.List className="px-6 pt-4 flex-wrap">
                   <Tabs.Trigger value="profile">
                     <span className="flex items-center gap-2">
                       <IoPencilOutline className="w-4 h-4" />
@@ -166,7 +168,19 @@ const ProfilePage = () => {
                   <Tabs.Trigger value="password">
                     <span className="flex items-center gap-2">
                       <IoLockClosedOutline className="w-4 h-4" />
-                      Change Password
+                      Password
+                    </span>
+                  </Tabs.Trigger>
+                  <Tabs.Trigger value="reviews">
+                    <span className="flex items-center gap-2">
+                      <IoDocumentTextOutline className="w-4 h-4" />
+                      My Reviews
+                    </span>
+                  </Tabs.Trigger>
+                  <Tabs.Trigger value="reports">
+                    <span className="flex items-center gap-2">
+                      <IoSpeedometerOutline className="w-4 h-4" />
+                      My Fuel Reports
                     </span>
                   </Tabs.Trigger>
                 </Tabs.List>
@@ -191,6 +205,14 @@ const ProfilePage = () => {
                              changePasswordMutation.error?.message}
                       success={passwordSuccess}
                     />
+                  </Tabs.Content>
+
+                  <Tabs.Content value="reviews">
+                    <UserReviewsList />
+                  </Tabs.Content>
+
+                  <Tabs.Content value="reports">
+                    <UserFuelReportsList />
                   </Tabs.Content>
                 </div>
               </Tabs>

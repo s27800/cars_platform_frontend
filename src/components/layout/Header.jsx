@@ -7,8 +7,6 @@ import {
   IoMenuOutline,
   IoCloseOutline,
   IoPersonOutline,
-  IoStarOutline,
-  IoSpeedometerOutline,
   IoSettingsOutline,
   IoLogOutOutline,
   IoSunnyOutline,
@@ -160,12 +158,6 @@ const Header = () => {
 
                   <Dropdown.Item as={Link} to="/profile" icon={<IoPersonOutline className="w-4 h-4" />}>
                     My profile
-                  </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/my-reviews" icon={<IoStarOutline className="w-4 h-4" />}>
-                    My reviews
-                  </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/my-fuel-reports" icon={<IoSpeedometerOutline className="w-4 h-4" />}>
-                    Fuel reports
                   </Dropdown.Item>
 
                   {isAdmin && (
