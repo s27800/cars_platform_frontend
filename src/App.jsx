@@ -8,6 +8,7 @@ import {
   CarDetailsPage, 
   ComparisonPage, 
   ProfilePage,
+  AdminDashboard,
 } from './pages';
 
 
@@ -26,6 +27,10 @@ function App() {
           <Route path="/profile/reviews" element={<Navigate to="/profile" replace />} />
           <Route path="/profile/reports" element={<Navigate to="/profile" replace />} />
           <Route path="/profile/proposals" element={<Navigate to="/profile" replace />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/reviews" element={<AdminDashboard />} />
+          <Route path="/admin/fuel-reports" element={<AdminDashboard />} />
+          <Route path="/admin/proposals" element={<AdminDashboard />} />
         </Route>
       </Routes>
     </Router>
