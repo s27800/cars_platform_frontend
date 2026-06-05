@@ -14,17 +14,6 @@ export const createProposal = async (carId, proposalData) => {
   return response.data;
 };
 
-/**
- * Get current user's data proposals
- * GET /api/data-proposals/me
- * Requires authentication
- */
-export const getMyProposals = async (params = {}) => {
-  const response = await apiClient.get('/data-proposals/me', { params });
-
-  return response.data;
-};
-
 
 // ============ Admin Actions ============
 

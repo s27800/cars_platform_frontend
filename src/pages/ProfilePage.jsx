@@ -8,11 +8,45 @@ import {
   IoArrowBackOutline,
   IoDocumentTextOutline,
   IoSpeedometerOutline,
+  IoCreateOutline,
+  IoListOutline,
 } from 'react-icons/io5';
 import { useAuth } from '../hooks';
 import { getProfile, updateProfile, changePassword } from '../api/users';
 import { Card, Tabs, Spinner, Button } from '../components/ui';
-import { ProfileInfo, ProfileEditForm, PasswordChangeForm, UserReviewsList, UserFuelReportsList } from '../features/profile';
+import { ProfileInfo, ProfileEditForm, PasswordChangeForm, UserReviewsList, UserFuelReportsList, UserDataProposalsList } from '../features/profile';
+
+
+// Activity type selector component
+const ActivityTypeSelector = ({ value, onChange }) => {
+  const activityTypes = [
+    { id: 'reviews', label: 'Reviews', icon: IoDocumentTextOutline },
+    { id: 'reports', label: 'Fuel Reports', icon: IoSpeedometerOutline },
+    { id: 'proposals', label: 'Proposals', icon: IoCreateOutline },
+  ];
+
+  return (
+    <div className="flex flex-wrap gap-2 mb-6">
+      {activityTypes.map(({ id, label, icon: Icon }) => (
+        <button
+          key={id}
+          onClick={() => onChange(id)}
+          className={`
+            flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
+            transition-all duration-200
+            ${value === id
+              ? 'bg-primary-600 text-white shadow-sm'
+              : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
+            }
+          `}
+        >
+          <Icon className="w-4 h-4" />
+          {label}
+        </button>
+      ))}
+    </div>
+  );
+};
 
 
 const ProfilePage = () => {
@@ -20,6 +54,7 @@ const ProfilePage = () => {
   const queryClient = useQueryClient();
 
   const [activeTab, setActiveTab] = useState('profile');
+  const [activityType, setActivityType] = useState('reviews');
   const [profileSuccess, setProfileSuccess] = useState(false);
   const [passwordSuccess, setPasswordSuccess] = useState(false);
 
@@ -158,7 +193,7 @@ const ProfilePage = () => {
           <div className="lg:col-span-3">
             <Card variant="bordered" padding="none">
               <Tabs value={activeTab} onChange={setActiveTab}>
-                <Tabs.List className="px-6 pt-4 flex-wrap">
+                <Tabs.List className="px-4 pt-4">
                   <Tabs.Trigger value="profile">
                     <span className="flex items-center gap-2">
                       <IoPencilOutline className="w-4 h-4" />
@@ -171,16 +206,10 @@ const ProfilePage = () => {
                       Password
                     </span>
                   </Tabs.Trigger>
-                  <Tabs.Trigger value="reviews">
+                  <Tabs.Trigger value="activity">
                     <span className="flex items-center gap-2">
-                      <IoDocumentTextOutline className="w-4 h-4" />
-                      My Reviews
-                    </span>
-                  </Tabs.Trigger>
-                  <Tabs.Trigger value="reports">
-                    <span className="flex items-center gap-2">
-                      <IoSpeedometerOutline className="w-4 h-4" />
-                      My Fuel Reports
+                      <IoListOutline className="w-4 h-4" />
+                      My Activity
                     </span>
                   </Tabs.Trigger>
                 </Tabs.List>
@@ -207,12 +236,11 @@ const ProfilePage = () => {
                     />
                   </Tabs.Content>
 
-                  <Tabs.Content value="reviews">
-                    <UserReviewsList />
-                  </Tabs.Content>
-
-                  <Tabs.Content value="reports">
-                    <UserFuelReportsList />
+                  <Tabs.Content value="activity">
+                    <ActivityTypeSelector value={activityType} onChange={setActivityType} />
+                    {activityType === 'reviews' && <UserReviewsList />}
+                    {activityType === 'reports' && <UserFuelReportsList />}
+                    {activityType === 'proposals' && <UserDataProposalsList />}
                   </Tabs.Content>
                 </div>
               </Tabs>
