@@ -38,7 +38,7 @@ Tabs.List = ({ className = '', children }) => {
   return (
     <div 
       className={`
-        flex border-b border-neutral-200 dark:border-neutral-700 
+        flex border-b border-neutral-200 dark:border-neutral-700
         ${className}
       `}
       role="tablist"
@@ -67,7 +67,7 @@ Tabs.Trigger = ({ value, className = '', disabled = false, children }) => {
       disabled={disabled}
       onClick={() => setActiveTab(value)}
       className={`
-        px-4 py-3 text-sm font-medium
+        px-4 py-3 text-sm font-medium whitespace-nowrap flex-shrink-0
         border-b-2 -mb-px transition-colors
         ${isActive 
           ? 'border-primary-600 text-primary-600 dark:text-primary-400' 

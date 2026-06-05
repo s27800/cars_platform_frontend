@@ -55,3 +55,14 @@ export const getUserFuelReports = async (params = {}) => {
 
   return response.data;
 };
+
+/**
+ * Get current user's data proposals with pagination
+ * GET /api/users/me/data-proposals
+ * Requires authentication
+ */
+export const getUserDataProposals = async (params = {}) => {
+  const response = await apiClient.get('/users/me/data-proposals', { params });
+
+  return response.data;
+};

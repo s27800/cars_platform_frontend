@@ -25,6 +25,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/reviews" element={<Navigate to="/profile" replace />} />
           <Route path="/profile/reports" element={<Navigate to="/profile" replace />} />
+          <Route path="/profile/proposals" element={<Navigate to="/profile" replace />} />
         </Route>
       </Routes>
     </Router>
