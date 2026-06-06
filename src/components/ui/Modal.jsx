@@ -17,6 +17,7 @@ const Modal = ({
   children,
 }) => {
   const modalRef = useRef(null);
+  const previousIsOpen = useRef(false);
 
   const handleEscape = useCallback((event) => {
     if (closeOnEscape && event.key === 'Escape')
@@ -31,14 +32,18 @@ const Modal = ({
 
   // Setup event listeners and body scroll lock
   useEffect(() => {
-    if (!isOpen)
+    if (!isOpen) {
+      previousIsOpen.current = false;
       return;
+    }
 
     document.addEventListener('keydown', handleEscape);
     document.body.style.overflow = 'hidden';
 
-    if (modalRef.current)
+    if (!previousIsOpen.current && modalRef.current) {
       modalRef.current.focus();
+      previousIsOpen.current = true;
+    }
 
     return () => {
       document.removeEventListener('keydown', handleEscape);

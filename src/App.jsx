@@ -9,6 +9,7 @@ import {
   ComparisonPage, 
   ProfilePage,
   AdminDashboard,
+  AdminProposalsPage,
 } from './pages';
 
 
@@ -30,7 +31,7 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/reviews" element={<AdminDashboard />} />
           <Route path="/admin/fuel-reports" element={<AdminDashboard />} />
-          <Route path="/admin/proposals" element={<AdminDashboard />} />
+          <Route path="/admin/proposals" element={<AdminProposalsPage />} />
         </Route>
       </Routes>
     </Router>
