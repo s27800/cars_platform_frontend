@@ -51,8 +51,12 @@ const decodeJwtPayload = (token) => {
  * @returns {boolean} - True if user is admin
  */
 const checkIsAdmin = (user) => {
-  if (!user) return false;
-  
+  if (!user)
+    return false;
+
+  if (user.isAdmin === true)
+    return true;
+
   if (Array.isArray(user.roles)) {
     return user.roles.some(role => 
       role === 'ROLE_ADMIN' || 
