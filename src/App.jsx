@@ -10,6 +10,7 @@ import {
   ProfilePage,
   AdminDashboard,
   AdminProposalsPage,
+  AdminReviewsPage,
 } from './pages';
 
 
@@ -29,7 +30,7 @@ function App() {
           <Route path="/profile/reports" element={<Navigate to="/profile" replace />} />
           <Route path="/profile/proposals" element={<Navigate to="/profile" replace />} />
           <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/reviews" element={<AdminDashboard />} />
+          <Route path="/admin/reviews" element={<AdminReviewsPage />} />
           <Route path="/admin/fuel-reports" element={<AdminDashboard />} />
           <Route path="/admin/proposals" element={<AdminProposalsPage />} />
         </Route>
