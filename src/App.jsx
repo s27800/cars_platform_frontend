@@ -11,6 +11,7 @@ import {
   AdminDashboard,
   AdminProposalsPage,
   AdminReviewsPage,
+  AdminFuelReportsPage,
 } from './pages';
 
 
@@ -31,7 +32,7 @@ function App() {
           <Route path="/profile/proposals" element={<Navigate to="/profile" replace />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/reviews" element={<AdminReviewsPage />} />
-          <Route path="/admin/fuel-reports" element={<AdminDashboard />} />
+          <Route path="/admin/fuel-reports" element={<AdminFuelReportsPage />} />
           <Route path="/admin/proposals" element={<AdminProposalsPage />} />
         </Route>
       </Routes>
