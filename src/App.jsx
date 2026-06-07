@@ -13,6 +13,8 @@ import {
   AdminReviewsPage,
   AdminFuelReportsPage,
   AboutPage,
+  TermsPage,
+  FAQPage,
 } from './pages';
 
 
@@ -36,6 +38,8 @@ function App() {
           <Route path="/admin/fuel-reports" element={<AdminFuelReportsPage />} />
           <Route path="/admin/proposals" element={<AdminProposalsPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/faq" element={<FAQPage />} />
         </Route>
       </Routes>
     </Router>
