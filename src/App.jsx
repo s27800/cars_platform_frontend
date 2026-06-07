@@ -12,6 +12,7 @@ import {
   AdminProposalsPage,
   AdminReviewsPage,
   AdminFuelReportsPage,
+  AboutPage,
 } from './pages';
 
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="/admin/reviews" element={<AdminReviewsPage />} />
           <Route path="/admin/fuel-reports" element={<AdminFuelReportsPage />} />
           <Route path="/admin/proposals" element={<AdminProposalsPage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Route>
       </Routes>
     </Router>
