@@ -14,6 +14,7 @@ const Footer = () => {
 
   const footerLinks = [
     { path: '/about', label: 'About us' },
+    { path: '/faq', label: 'FAQ' },
     { path: '/terms', label: 'Terms of service' },
     { path: '/cars', label: 'Cars' },
     { path: '/comparison', label: 'Comparison' },

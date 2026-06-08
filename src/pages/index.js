@@ -10,3 +10,7 @@ export { default as AdminDashboard } from './AdminDashboard';
 export { default as AdminProposalsPage } from './AdminProposalsPage';
 export { default as AdminReviewsPage } from './AdminReviewsPage';
 export { default as AdminFuelReportsPage } from './AdminFuelReportsPage';
+export { default as AboutPage } from './AboutPage';
+export { default as TermsPage } from './TermsPage';
+export { default as FAQPage } from './FAQPage';
+export { default as PrivacyPage } from './PrivacyPage';
