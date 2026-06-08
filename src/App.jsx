@@ -16,6 +16,7 @@ import {
   TermsPage,
   FAQPage,
   PrivacyPage,
+  NotFoundPage,
 } from './pages';
 
 
@@ -42,6 +43,7 @@ function App() {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </Router>
