@@ -1,17 +1,50 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainLayout } from './components/layout';
-import { HomePage } from './pages';
+import { 
+  HomePage, 
+  LoginPage, 
+  RegisterPage, 
+  CarsSearchPage, 
+  CarDetailsPage, 
+  ComparisonPage, 
+  ProfilePage,
+  AdminDashboard,
+  AdminProposalsPage,
+  AdminReviewsPage,
+  AdminFuelReportsPage,
+  AboutPage,
+  TermsPage,
+  FAQPage,
+  PrivacyPage,
+  NotFoundPage,
+} from './pages';
 
 
-/**
- * Main application component
- */
 function App() {
   return (
     <Router>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/cars" element={<CarsSearchPage />} />
+          <Route path="/cars/:id" element={<CarDetailsPage />} />
+          <Route path="/comparison" element={<ComparisonPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/password" element={<ProfilePage />} />
+          <Route path="/profile/reviews" element={<ProfilePage />} />
+          <Route path="/profile/reports" element={<ProfilePage />} />
+          <Route path="/profile/proposals" element={<ProfilePage />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/reviews" element={<AdminReviewsPage />} />
+          <Route path="/admin/fuel-reports" element={<AdminFuelReportsPage />} />
+          <Route path="/admin/proposals" element={<AdminProposalsPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/faq" element={<FAQPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </Router>

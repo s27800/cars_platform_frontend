@@ -1,20 +1,20 @@
 import { forwardRef } from 'react';
+import { IoChevronDownOutline } from 'react-icons/io5';
 
 
-// Reusable Input component with label, error states, and icon support
-const Input = forwardRef(({
+const Select = forwardRef(({
   label,
   error,
   hint,
-  leftIcon,
-  rightIcon,
+  options = [],
+  placeholder = 'Select...',
   size = 'md',
   fullWidth = true,
   className = '',
   id,
   ...props
 }, ref) => {
-  const inputId = id || props.name;
+  const selectId = id || props.name;
 
   const sizes = {
     sm: 'py-1.5 text-sm',
@@ -22,18 +22,17 @@ const Input = forwardRef(({
     lg: 'py-3 text-base',
   };
 
-  const inputStyles = `
-    w-full rounded-xl
+  const selectStyles = `
+    w-full rounded-xl appearance-none
     bg-neutral-100 dark:bg-neutral-700
     border border-neutral-200 dark:border-neutral-600
     focus:border-primary-500 focus:bg-white dark:focus:bg-neutral-800
     text-neutral-900 dark:text-white
-    placeholder-neutral-500 dark:placeholder-neutral-400
     transition-all outline-none
-    ${leftIcon ? 'pl-10' : 'pl-4'}
-    ${rightIcon ? 'pr-10' : 'pr-4'}
+    pl-4 pr-10
     ${sizes[size]}
     ${error ? 'border-red-500 focus:border-red-500' : ''}
+    ${props.disabled ? 'opacity-50 cursor-not-allowed' : ''}
     ${className}
   `.trim().replace(/\s+/g, ' ');
 
@@ -41,7 +40,7 @@ const Input = forwardRef(({
     <div className={fullWidth ? 'w-full' : ''}>
       {label && (
         <label 
-          htmlFor={inputId}
+          htmlFor={selectId}
           className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5"
         >
           {label}
@@ -49,24 +48,25 @@ const Input = forwardRef(({
       )}
       
       <div className="relative">
-        {leftIcon && (
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">
-            {leftIcon}
-          </span>
-        )}
-        
-        <input
+        <select
           ref={ref}
-          id={inputId}
-          className={inputStyles}
+          id={selectId}
+          className={selectStyles}
           {...props}
-        />
+        >
+          {placeholder && !options.some(opt => opt.value === '') && (
+            <option value="">{placeholder}</option>
+          )}
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
         
-        {rightIcon && (
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400">
-            {rightIcon}
-          </span>
-        )}
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none">
+          <IoChevronDownOutline className="w-4 h-4" />
+        </span>
       </div>
 
       {error && (
@@ -80,6 +80,6 @@ const Input = forwardRef(({
   );
 });
 
-Input.displayName = 'Input';
+Select.displayName = 'Select';
 
-export default Input;
+export default Select;

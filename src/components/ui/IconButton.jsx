@@ -21,6 +21,10 @@ const IconButton = ({
       text-red-600 dark:text-red-400
       hover:bg-red-50 dark:hover:bg-red-900/20
     `,
+    ghost: `
+      text-neutral-500 dark:text-neutral-400
+      hover:bg-neutral-100 dark:hover:bg-neutral-700
+    `,
   };
 
   const sizes = {
