@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainLayout } from './components/layout';
 import { 
   HomePage, 
@@ -32,9 +32,10 @@ function App() {
           <Route path="/cars/:id" element={<CarDetailsPage />} />
           <Route path="/comparison" element={<ComparisonPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/profile/reviews" element={<Navigate to="/profile" replace />} />
-          <Route path="/profile/reports" element={<Navigate to="/profile" replace />} />
-          <Route path="/profile/proposals" element={<Navigate to="/profile" replace />} />
+          <Route path="/profile/password" element={<ProfilePage />} />
+          <Route path="/profile/reviews" element={<ProfilePage />} />
+          <Route path="/profile/reports" element={<ProfilePage />} />
+          <Route path="/profile/proposals" element={<ProfilePage />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/reviews" element={<AdminReviewsPage />} />
           <Route path="/admin/fuel-reports" element={<AdminFuelReportsPage />} />

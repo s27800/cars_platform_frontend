@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { 
@@ -37,10 +37,13 @@ const validationSchema = Yup.object({
 });
 
 const RegisterPage = () => {
-  const { register, isLoading, error, clearError } = useAuth();
+  const { register, isLoading, isAuthenticated, error, clearError } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  if (isAuthenticated)
+    return <Navigate to="/" replace />;
 
   const formik = useFormik({
     initialValues: {

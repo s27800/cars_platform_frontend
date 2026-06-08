@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { IoLockClosedOutline, IoPersonOutline, IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
@@ -17,12 +17,15 @@ const validationSchema = Yup.object({
 });
 
 const LoginPage = () => {
-  const { login, isLoading, error, clearError } = useAuth();
+  const { login, isLoading, isAuthenticated, error, clearError } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
 
   const from = location.state?.from?.pathname || '/';
+
+  if (isAuthenticated)
+    return <Navigate to={from} replace />;
 
   const formik = useFormik({
     initialValues: {

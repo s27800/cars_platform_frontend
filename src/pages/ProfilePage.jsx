@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useState, useEffect, useMemo } from 'react';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { 
   IoPersonOutline, 
@@ -50,11 +50,44 @@ const ActivityTypeSelector = ({ value, onChange }) => {
 
 
 const ProfilePage = () => {
-  const { isAuthenticated, user: authUser, updateUser } = useAuth();
+  const { isAuthenticated, isLoading: authLoading, user: authUser, updateUser } = useAuth();
   const queryClient = useQueryClient();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const [activeTab, setActiveTab] = useState('profile');
-  const [activityType, setActivityType] = useState('reviews');
+  // Set active tab from URL
+  const { activeTab, activityType } = useMemo(() => {
+    const path = location.pathname;
+
+    if (path === '/profile/password')
+      return { activeTab: 'password', activityType: 'reviews' };
+
+    if (path === '/profile/reviews')
+      return { activeTab: 'activity', activityType: 'reviews' };
+
+    if (path === '/profile/reports')
+      return { activeTab: 'activity', activityType: 'reports' };
+
+    if (path === '/profile/proposals')
+      return { activeTab: 'activity', activityType: 'proposals' };
+
+    return { activeTab: 'profile', activityType: 'reviews' };
+  }, [location.pathname]);
+
+  // Navigation handlers
+  const setActiveTab = (tab) => {
+    if (tab === 'profile')
+      navigate('/profile');
+    else if (tab === 'password')
+      navigate('/profile/password');
+    else if (tab === 'activity')
+      navigate('/profile/reviews');
+  };
+
+  const setActivityType = (type) => {
+    navigate(`/profile/${type}`);
+  };
+
   const [profileSuccess, setProfileSuccess] = useState(false);
   const [passwordSuccess, setPasswordSuccess] = useState(false);
 
@@ -114,9 +147,17 @@ const ProfilePage = () => {
     setPasswordSuccess(false);
   }, [activeTab]);
 
+  if (authLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
+
   // Redirect not authenticated user
   if (!isAuthenticated)
-    return <Navigate to="/login" state={{ from: { pathname: '/profile' } }} replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
 
   const handleProfileUpdate = async (values) => {
     setProfileSuccess(false);
