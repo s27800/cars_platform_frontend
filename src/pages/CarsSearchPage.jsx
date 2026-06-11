@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { IoSearchOutline, IoFilterOutline, IoCarSportOutline } from 'react-icons/io5';
 import { searchCars } from '../api/cars';
 import { CarCard, FiltersPanel } from '../components/shared';
-import { Input, Select, Pagination, Spinner, Button } from '../components/ui';
+import { Input, Select, Pagination, Spinner, Button, CardSkeleton } from '../components/ui';
 import { useDebounce } from '../hooks';
 
 
@@ -205,9 +205,7 @@ const CarsSearchPage = () => {
             </div>
 
             {isLoading ? (
-              <div className="flex justify-center items-center py-20">
-                <Spinner size="lg" />
-              </div>
+              <CardSkeleton.Grid count={size} className="grid-cols-1 sm:grid-cols-2 xl:grid-cols-3" />
             ) : isError ? (
               <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-6 text-center">
                 <p className="text-red-600 dark:text-red-400">
