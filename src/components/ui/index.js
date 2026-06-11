@@ -17,3 +17,6 @@ export { default as Rating } from './Rating';
 export { default as Tabs } from './Tabs';
 export { default as Alert } from './Alert';
 export { default as ToastContainer, showToast } from './Toast';
+export { default as Skeleton } from './Skeleton';
+export { default as CardSkeleton } from './CardSkeleton';
+export { default as TableSkeleton } from './TableSkeleton';
