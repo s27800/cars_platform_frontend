@@ -16,3 +16,4 @@ export { default as TextArea } from './TextArea';
 export { default as Rating } from './Rating';
 export { default as Tabs } from './Tabs';
 export { default as Alert } from './Alert';
+export { default as ToastContainer, showToast } from './Toast';
