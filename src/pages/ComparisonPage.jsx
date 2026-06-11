@@ -168,7 +168,14 @@ const ComparisonPage = () => {
               </Tabs.List>
 
               <Tabs.Content value="specs">
-                <ComparisonTable cars={cars} />
+                
+                {/* Desktop: Side-by-side table */}
+                <div className="hidden lg:block">
+                  <ComparisonTable cars={cars} />
+                </div>
+                
+                {/* Mobile: Stacked card layout */}
+                <ComparisonTable.Mobile cars={cars} />
               </Tabs.Content>
 
               <Tabs.Content value="ratings">

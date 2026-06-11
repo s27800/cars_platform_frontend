@@ -257,6 +257,89 @@ const ComparisonGroup = ({ group, cars, defaultOpen = true }) => {
 
 
 /**
+ * Mobile-friendly card view for comparison
+ */
+const MobileComparisonCards = ({ cars, group }) => {
+  const { specs } = group;
+  
+  return (
+    <div className="space-y-4">
+      {cars.map((car, carIndex) => (
+        <div key={car.id} className="space-y-2">
+
+          {/* Car name header */}
+          <div className="flex items-center gap-2 pb-2 border-b border-neutral-200 dark:border-neutral-700">
+            <span className={`w-3 h-3 rounded-full ${carIndex === 0 ? 'bg-primary-500' : 'bg-amber-500'}`} />
+            <span className="font-medium text-neutral-900 dark:text-white truncate">
+              {car.name || `${car.brand?.name} ${car.model?.name}`}
+            </span>
+          </div>
+          
+          {/* Specs grid */}
+          <div className="grid grid-cols-2 gap-2">
+            {specs.map(spec => {
+              const value = getNestedValue(car, spec.path);
+              if (value === null || value === undefined) return null;
+              
+              return (
+                <div key={spec.key} className="py-2">
+                  <div className="text-xs text-neutral-500 dark:text-neutral-400">{spec.label}</div>
+                  <div className="text-sm font-medium text-neutral-900 dark:text-white">
+                    {formatValue(value, spec.unit)}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+
+/**
+ * Mobile-optimized comparison group with card layout
+ */
+const MobileComparisonGroup = ({ group, cars, defaultOpen = true }) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const { title, icon, specs } = group;
+
+  const hasData = specs.some(spec => 
+    cars.some(car => getNestedValue(car, spec.path) !== null)
+  );
+
+  if (!hasData)
+    return null;
+
+  return (
+    <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-neutral-200 dark:border-neutral-700 overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between px-4 py-3 bg-neutral-50 dark:bg-neutral-800/50 hover:bg-neutral-100 dark:hover:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700 transition-colors"
+        aria-expanded={isOpen}
+      >
+        <div className="flex items-center gap-3">
+          <span className="text-primary-600 dark:text-primary-400">{icon}</span>
+          <h3 className="font-semibold text-neutral-900 dark:text-white">{title}</h3>
+        </div>
+        <IoChevronDownOutline 
+          className={`w-5 h-5 text-neutral-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+        />
+      </button>
+
+      {isOpen && (
+        <div className="p-4">
+          <MobileComparisonCards cars={cars} group={group} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+/**
  * Header row showing car names and images
  */
 ComparisonTable.Header = ({ cars, onRemove }) => {
@@ -315,5 +398,42 @@ ComparisonTable.Header = ({ cars, onRemove }) => {
     </div>
   );
 };
+
+
+/**
+ * Mobile-specific comparison layout
+ */
+ComparisonTable.Mobile = ({ cars }) => {
+  const validCars = useMemo(() => cars.filter(Boolean), [cars]);
+
+  if (validCars.length === 0)
+    return null;
+
+  return (
+    <div className="space-y-4 lg:hidden">
+
+      {/* Legend */}
+      <div className="flex items-center justify-center gap-4 text-sm">
+        {validCars.map((car, idx) => (
+          <div key={car.id} className="flex items-center gap-2">
+            <span className={`w-3 h-3 rounded-full ${idx === 0 ? 'bg-primary-500' : 'bg-amber-500'}`} />
+            <span className="text-neutral-600 dark:text-neutral-400 truncate max-w-[120px]">
+              {car.brand?.name} {car.model?.name}
+            </span>
+          </div>
+        ))}
+      </div>
+      
+      {SPEC_GROUPS.map(group => (
+        <MobileComparisonGroup 
+          key={group.key}
+          group={group}
+          cars={validCars}
+        />
+      ))}
+    </div>
+  );
+};
+
 
 export default ComparisonTable;
