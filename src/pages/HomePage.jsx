@@ -229,7 +229,7 @@ const HomePage = () => {
           {popularBrands.map((brand) => (
             <Link
               key={brand.id}
-              to={`/cars?brandIds=${brand.id}`}
+              to={`/brands/${brand.id}`}
               className="flex items-center justify-center p-4 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-md transition-all"
             >
               <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
