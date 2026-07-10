@@ -109,17 +109,31 @@ const CarDetailsPage = () => {
       {/* Breadcrumb navigation */}
       <div className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
         <div className="max-w-7xl mx-auto px-4 py-3">
-          <nav className="flex items-center gap-2 text-sm">
+          <nav className="flex items-center gap-2 text-sm flex-wrap">
             <Link 
-              to="/cars" 
+              to={`/brands/${car.brand?.id}`}
               className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400 flex items-center gap-1"
             >
               <IoChevronBackOutline className="w-4 h-4" />
-              Cars
+              {car.brand?.name}
+            </Link>
+            <span className="text-neutral-400">/</span>
+            <Link 
+              to={`/models/${car.model?.id}`}
+              className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400"
+            >
+              {car.model?.name}
+            </Link>
+            <span className="text-neutral-400">/</span>
+            <Link 
+              to={`/generations/${car.generation?.id}`}
+              className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400"
+            >
+              {car.generation?.name}
             </Link>
             <span className="text-neutral-400">/</span>
             <span className="text-neutral-900 dark:text-white font-medium truncate">
-              {carName}
+              {car.name || carName}
             </span>
           </nav>
         </div>
