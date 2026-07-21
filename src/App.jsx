@@ -11,6 +11,7 @@ const RegisterPage = lazy(() => import('./pages/RegisterPage'));
 const CarsSearchPage = lazy(() => import('./pages/CarsSearchPage'));
 const CarDetailsPage = lazy(() => import('./pages/CarDetailsPage'));
 const BrandDetailsPage = lazy(() => import('./pages/BrandDetailsPage'));
+const ModelDetailsPage = lazy(() => import('./pages/ModelDetailsPage'));
 const ComparisonPage = lazy(() => import('./pages/ComparisonPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
@@ -44,6 +45,7 @@ function App() {
             <Route path="/cars" element={<CarsSearchPage />} />
             <Route path="/cars/:id" element={<CarDetailsPage />} />
             <Route path="/brands/:id" element={<BrandDetailsPage />} />
+            <Route path="/models/:id" element={<ModelDetailsPage />} />
             <Route path="/comparison" element={<ComparisonPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/profile/password" element={<ProfilePage />} />
