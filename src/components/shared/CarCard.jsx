@@ -127,6 +127,7 @@ const CarCard = ({
             <Button
               variant={isInComparison ? 'secondary' : 'outline'}
               size="sm"
+              className="flex-1"
               onClick={(e) => {
                 e.preventDefault();
                 onToggleComparison(car);
