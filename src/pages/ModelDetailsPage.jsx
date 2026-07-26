@@ -211,7 +211,7 @@ const GenerationCard = ({ generation, brandId, modelId }) => {
 
   return (
     <Link
-      to={`/cars?brandIds=${brandId}&modelIds=${modelId}&generationIds=${id}`}
+      to={`/generations/${id}`}
       className="relative p-4 rounded-xl border-2 transition-all duration-200 border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 hover:border-primary-300 dark:hover:border-primary-700 hover:shadow-md group"
     >
       {/* Generation icon */}
