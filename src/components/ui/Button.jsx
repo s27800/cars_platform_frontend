@@ -23,6 +23,7 @@ const Button = forwardRef(({
     font-medium rounded-xl
     transition-colors duration-200
     focus:outline-none focus:ring-2 focus:ring-offset-2
+    cursor-pointer
     disabled:opacity-50 disabled:cursor-not-allowed
   `;
 
@@ -36,6 +37,7 @@ const Button = forwardRef(({
       bg-neutral-100 dark:bg-neutral-800
       hover:bg-neutral-200 dark:hover:bg-neutral-700
       text-neutral-700 dark:text-neutral-200
+      border border-neutral-300 dark:border-neutral-600
       focus:ring-neutral-500
     `,
     outline: `
