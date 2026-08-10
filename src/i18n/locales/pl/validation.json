@@ -1,0 +1,50 @@
+{
+  "required": "To pole jest wymagane",
+  "email": "Wprowadź prawidłowy adres email",
+  "minLength": "Musi mieć co najmniej {{min}} znaków",
+  "maxLength": "Może mieć maksymalnie {{max}} znaków",
+  "passwordMatch": "Hasła muszą być identyczne",
+  "invalidFormat": "Nieprawidłowy format",
+  "positiveNumber": "Musi być liczbą dodatnią",
+  "integer": "Musi być liczbą całkowitą",
+  "minValue": "Minimalna wartość to {{min}}",
+  "maxValue": "Maksymalna wartość to {{max}}",
+  "username": {
+    "required": "Nazwa użytkownika jest wymagana",
+    "minLength": "Nazwa użytkownika musi mieć co najmniej 3 znaki",
+    "maxLength": "Nazwa użytkownika może mieć maksymalnie 50 znaków",
+    "invalid": "Nazwa użytkownika może zawierać tylko litery, cyfry i podkreślenia"
+  },
+  "password": {
+    "required": "Hasło jest wymagane",
+    "minLength": "Hasło musi mieć co najmniej 6 znaków",
+    "maxLength": "Hasło może mieć maksymalnie 100 znaków",
+    "weak": "Hasło jest zbyt słabe",
+    "mismatch": "Hasła nie są identyczne"
+  },
+  "emailField": {
+    "required": "Email jest wymagany",
+    "invalid": "Wprowadź prawidłowy adres email"
+  },
+  "review": {
+    "titleRequired": "Tytuł opinii jest wymagany",
+    "titleMinLength": "Tytuł musi mieć co najmniej 5 znaków",
+    "contentRequired": "Treść opinii jest wymagana",
+    "contentMinLength": "Opinia musi mieć co najmniej 20 znaków",
+    "ratingRequired": "Proszę podać ocenę"
+  },
+  "fuelReport": {
+    "consumptionRequired": "Spalanie jest wymagane",
+    "consumptionPositive": "Spalanie musi być liczbą dodatnią",
+    "mileageRequired": "Przebieg jest wymagany",
+    "mileagePositive": "Przebieg musi być liczbą dodatnią",
+    "dateRequired": "Data jest wymagana",
+    "dateFuture": "Data nie może być z przyszłości"
+  },
+  "proposal": {
+    "categoryRequired": "Kategoria jest wymagana",
+    "fieldRequired": "Pole jest wymagane",
+    "valueRequired": "Proponowana wartość jest wymagana",
+    "descriptionRequired": "Opis jest wymagany"
+  }
+}

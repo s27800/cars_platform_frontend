@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQueries } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { 
   IoStarOutline, 
   IoSpeedometerOutline,
@@ -16,6 +17,7 @@ import { RATING_CATEGORIES } from '../../utils/constants';
  * Compare average ratings and fuel consumption between cars
  */
 const ComparisonStats = ({ carIds = [] }) => {
+  const { t } = useTranslation('cars');
 
   // Fetch ratings
   const ratingsQueries = useQueries({
@@ -51,6 +53,7 @@ const ComparisonStats = ({ carIds = [] }) => {
         queries={ratingsQueries}
         carIds={carIds}
         isLoading={isLoadingRatings}
+        t={t}
       />
 
       {/* Fuel consumption comparison */}
@@ -58,6 +61,7 @@ const ComparisonStats = ({ carIds = [] }) => {
         queries={consumptionQueries}
         carIds={carIds}
         isLoading={isLoadingConsumption}
+        t={t}
       />
     </div>
   );
@@ -67,7 +71,7 @@ const ComparisonStats = ({ carIds = [] }) => {
 /**
  * Compare average ratings across all categories
  */
-const RatingsComparison = ({ queries, carIds, isLoading }) => {
+const RatingsComparison = ({ queries, carIds, isLoading, t }) => {
   const [isOpen, setIsOpen] = useState(true);
   const getBackendKey = (key) => `avg${key.charAt(0).toUpperCase()}${key.slice(1)}`;
   
@@ -90,7 +94,7 @@ const RatingsComparison = ({ queries, carIds, isLoading }) => {
       >
         <div className="flex items-center gap-3">
           <IoStarOutline className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-          <h3 className="font-semibold text-neutral-900 dark:text-white">Average Ratings</h3>
+          <h3 className="font-semibold text-neutral-900 dark:text-white">{t('stats.averageRatings')}</h3>
         </div>
         <IoChevronDownOutline 
           className={`w-5 h-5 text-neutral-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
@@ -105,7 +109,7 @@ const RatingsComparison = ({ queries, carIds, isLoading }) => {
           </div>
         ) : !hasAnyRatings ? (
           <p className="text-center text-neutral-500 dark:text-neutral-400 py-6">
-            No reviews available for comparison
+            {t('stats.noReviews')}
           </p>
         ) : (
           <div className="overflow-x-auto">
@@ -193,7 +197,7 @@ const RatingBar = ({ value, maxValue = 5 }) => {
 /**
  * Compare fuel consumption
  */
-const ConsumptionComparison = ({ queries, carIds, isLoading }) => {
+const ConsumptionComparison = ({ queries, carIds, isLoading, t }) => {
   const [isOpen, setIsOpen] = useState(true);
   
   const getConsumptionValue = (data) => {
@@ -218,7 +222,7 @@ const ConsumptionComparison = ({ queries, carIds, isLoading }) => {
         <div className="flex items-center gap-3">
           <IoFlameOutline className="w-5 h-5 text-primary-600 dark:text-primary-400" />
           <h3 className="font-semibold text-neutral-900 dark:text-white">
-            Average Real-World Fuel Consumption
+            {t('stats.fuelConsumption')}
           </h3>
         </div>
         <IoChevronDownOutline 
@@ -234,7 +238,7 @@ const ConsumptionComparison = ({ queries, carIds, isLoading }) => {
           </div>
         ) : !hasAnyData ? (
           <p className="text-center text-neutral-500 dark:text-neutral-400 py-6">
-            No fuel reports available for comparison
+            {t('stats.noFuelReports')}
           </p>
         ) : (
           <div 
@@ -287,12 +291,12 @@ const ConsumptionComparison = ({ queries, carIds, isLoading }) => {
                       
                       {isBest && (
                         <span className="text-xs text-green-600 dark:text-green-400 font-medium">
-                          Most economical
+                          {t('stats.mostEconomical')}
                         </span>
                       )}
                     </>
                   ) : (
-                    <span className="text-neutral-400">No data</span>
+                    <span className="text-neutral-400">{t('stats.noData')}</span>
                   )}
                 </div>
               );

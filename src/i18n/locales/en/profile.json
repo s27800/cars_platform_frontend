@@ -1,0 +1,73 @@
+{
+  "title": "My Profile",
+  "tabs": {
+    "overview": "Overview",
+    "reviews": "My Reviews",
+    "fuelReports": "Fuel Reports",
+    "proposals": "Data Proposals",
+    "password": "Change Password",
+    "settings": "Settings"
+  },
+  "overview": {
+    "memberSince": "Member since",
+    "totalReviews": "Reviews written",
+    "totalFuelReports": "Fuel reports",
+    "totalProposals": "Data proposals"
+  },
+  "editProfile": {
+    "title": "Edit profile",
+    "username": "Username",
+    "email": "Email",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "save": "Save changes",
+    "cancel": "Cancel"
+  },
+  "changePassword": {
+    "title": "Change password",
+    "currentPassword": "Current password",
+    "currentPasswordPlaceholder": "Enter current password",
+    "newPassword": "New password",
+    "newPasswordPlaceholder": "Enter new password",
+    "confirmPassword": "Confirm new password",
+    "confirmPasswordPlaceholder": "Repeat new password",
+    "submit": "Change password",
+    "success": "Password changed successfully!",
+    "wrongPassword": "Current password is incorrect"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "language": "Language",
+    "notifications": "Notifications",
+    "emailNotifications": "Email notifications",
+    "save": "Save settings"
+  },
+  "fuelReports": {
+    "title": "My fuel reports",
+    "add": "Add fuel report",
+    "edit": "Edit report",
+    "delete": "Delete report",
+    "empty": "No fuel reports yet",
+    "emptyDescription": "Start tracking your fuel consumption by adding your first report"
+  },
+  "proposals": {
+    "title": "My data proposals",
+    "add": "Submit new proposal",
+    "empty": "No proposals yet",
+    "emptyDescription": "Help us improve our database by suggesting corrections or additions",
+    "status": {
+      "pending": "Pending review",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    }
+  },
+  "messages": {
+    "profileUpdated": "Profile updated successfully!",
+    "settingsSaved": "Settings saved successfully!"
+  }
+}

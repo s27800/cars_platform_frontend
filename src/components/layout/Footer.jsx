@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   IoCarSportOutline,
   IoLogoFacebook,
@@ -10,14 +11,15 @@ import {
 
 
 const Footer = () => {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
   const footerLinks = [
-    { path: '/about', label: 'About us' },
-    { path: '/faq', label: 'FAQ' },
-    { path: '/terms', label: 'Terms of service' },
-    { path: '/cars', label: 'Cars' },
-    { path: '/comparison', label: 'Comparison' },
+    { path: '/about', label: t('footer.aboutUs') },
+    { path: '/faq', label: t('footer.faq') },
+    { path: '/terms', label: t('footer.terms') },
+    { path: '/cars', label: t('navigation.cars') },
+    { path: '/comparison', label: t('navigation.comparison') },
   ];
 
   const socialLinks = [
@@ -44,15 +46,14 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-sm text-neutral-600 dark:text-neutral-400 max-w-xs">
-              Your comprehensive source of car information. 
-              Compare models, read reviews, analyze fuel reports and find your dream car.
+              {t('footer.description')}
             </p>
           </div>
 
           {/* Navigation */}
           <div>
             <h3 className="text-sm font-semibold text-neutral-900 dark:text-white uppercase tracking-wider mb-4">
-              Navigation
+              {t('footer.navigation')}
             </h3>
             <ul className="space-y-2">
               {footerLinks.map(({ path, label }) => (
@@ -72,7 +73,7 @@ const Footer = () => {
           {/* Socials & Contact */}
           <div>
             <h3 className="text-sm font-semibold text-neutral-900 dark:text-white uppercase tracking-wider mb-4">
-              Follow us
+              {t('footer.followUs')}
             </h3>
             <div className="flex gap-2 mb-6">
               {socialLinks.map(({ name, url, icon }) => (
@@ -98,14 +99,14 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-sm text-neutral-500">
-            © {currentYear} CarsPlatform. All rights reserved.
+            {t('footer.copyright', { year: currentYear })}
           </p>
           <div className="flex gap-6 text-sm">
             <Link to="/terms" className="text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors">
-              Terms of service
+              {t('footer.terms')}
             </Link>
             <Link to="/privacy" className="text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors">
-              Privacy policy
+              {t('footer.privacy')}
             </Link>
           </div>
         </div>

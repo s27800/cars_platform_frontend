@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { IoSearchOutline, IoFilterOutline, IoCarSportOutline } from 'react-icons/io5';
 import { searchCars } from '../api/cars';
 import { CarCard, FiltersPanel } from '../components/shared';
@@ -8,26 +9,27 @@ import { Input, Select, Pagination, Spinner, Button, CardSkeleton } from '../com
 import { useDebounce } from '../hooks';
 
 
-const SORT_OPTIONS = [
-  { value: '', label: 'Default' },
-  { value: 'name,asc', label: 'Car name A-Z' },
-  { value: 'name,desc', label: 'Car name Z-A' },
-  { value: 'engine.power,desc', label: 'Power: High to Low' },
-  { value: 'engine.power,asc', label: 'Power: Low to High' },
-];
-
-const PAGE_SIZE_OPTIONS = [
-  { value: '12', label: '12 per page' },
-  { value: '24', label: '24 per page' },
-  { value: '48', label: '48 per page' },
-];
-
-
 const CarsSearchPage = () => {
+  const { t } = useTranslation('cars');
+  const { t: tCommon } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearch = useDebounce(searchQuery, 400);
+
+  const SORT_OPTIONS = [
+    { value: '', label: t('search.sortDefault') },
+    { value: 'name,asc', label: t('search.sortNameAsc') },
+    { value: 'name,desc', label: t('search.sortNameDesc') },
+    { value: 'engine.power,desc', label: t('search.sortPowerDesc') },
+    { value: 'engine.power,asc', label: t('search.sortPowerAsc') },
+  ];
+
+  const PAGE_SIZE_OPTIONS = [
+    { value: '12', label: t('search.perPage', { count: 12 }) },
+    { value: '24', label: t('search.perPage', { count: 24 }) },
+    { value: '48', label: t('search.perPage', { count: 48 }) },
+  ];
 
   const filters = useMemo(() => ({
     brandIds: searchParams.get('brandIds')?.split(',').map(Number).filter(Boolean) || [],
@@ -136,10 +138,10 @@ const CarsSearchPage = () => {
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-neutral-900 dark:text-white flex items-center gap-3">
             <IoCarSportOutline className="w-8 h-8 text-primary-600" />
-            Car Search
+            {t('search.title')}
           </h1>
           <p className="mt-1 text-neutral-600 dark:text-neutral-400">
-            Browse and filter through our car database
+            {t('search.subtitle')}
           </p>
         </div>
 
@@ -159,7 +161,7 @@ const CarsSearchPage = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex-1">
                   <Input
-                    placeholder="Search cars..."
+                    placeholder={t('search.searchPlaceholder')}
                     leftIcon={<IoSearchOutline className="w-5 h-5" />}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -173,7 +175,7 @@ const CarsSearchPage = () => {
                     onClick={() => setShowMobileFilters(true)}
                     leftIcon={<IoFilterOutline className="w-5 h-5" />}
                   >
-                    Filters
+                    {t('filters.title')}
                   </Button>
 
                   <Select
@@ -194,12 +196,9 @@ const CarsSearchPage = () => {
 
               <div className="mt-3 text-sm text-neutral-600 dark:text-neutral-400">
                 {isLoading ? (
-                  'Loading...'
+                  tCommon('buttons.loading')
                 ) : (
-                  <>
-                    Showing <span className="font-medium">{filteredCars.length}</span> of{' '}
-                    <span className="font-medium">{totalElements}</span> results
-                  </>
+                  t('search.showingResults', { count: filteredCars.length, total: totalElements })
                 )}
               </div>
             </div>
@@ -209,31 +208,31 @@ const CarsSearchPage = () => {
             ) : isError ? (
               <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-6 text-center">
                 <p className="text-red-600 dark:text-red-400">
-                  {error?.message || 'Failed to load cars. Please try again.'}
+                  {error?.message || tCommon('errors.loadFailed')}
                 </p>
                 <Button
                   variant="outline"
                   className="mt-4"
                   onClick={() => window.location.reload()}
                 >
-                  Retry
+                  {tCommon('buttons.retry')}
                 </Button>
               </div>
             ) : filteredCars.length === 0 ? (
               <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-neutral-200 dark:border-neutral-700 p-12 text-center">
                 <IoCarSportOutline className="w-16 h-16 mx-auto text-neutral-400" />
                 <h3 className="mt-4 text-lg font-medium text-neutral-900 dark:text-white">
-                  No cars found
+                  {t('search.noResults')}
                 </h3>
                 <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-                  Try adjusting your filters or search query
+                  {t('search.noResultsHint')}
                 </p>
                 <Button
                   variant="primary"
                   className="mt-4"
                   onClick={handleResetFilters}
                 >
-                  Clear Filters
+                  {t('filters.clearAll')}
                 </Button>
               </div>
             ) : (

@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { 
   IoCogOutline,
   IoSpeedometerOutline,
@@ -16,82 +17,82 @@ import {
 const SPEC_GROUPS = [
   {
     key: 'basic',
-    title: 'Basic Info',
+    titleKey: 'specs.groups.basic',
     icon: <IoCarSportOutline className="w-5 h-5" />,
     specs: [
-      { key: 'brand', label: 'Brand', path: 'brand.name' },
-      { key: 'model', label: 'Model', path: 'model.name' },
-      { key: 'generation', label: 'Generation', path: 'generation.name' },
-      { key: 'productionYears', label: 'Production Years', path: 'productionYears' },
-      { key: 'bodyType', label: 'Body Type', path: 'bodyType.name' },
-      { key: 'doors', label: 'Doors', path: 'doorsNumber' },
-      { key: 'seats', label: 'Seats', path: 'seatsNumber' },
+      { key: 'brand', labelKey: 'specs.brand', path: 'brand.name' },
+      { key: 'model', labelKey: 'specs.model', path: 'model.name' },
+      { key: 'generation', labelKey: 'specs.generation', path: 'generation.name' },
+      { key: 'productionYears', labelKey: 'specs.productionYears', path: 'productionYears' },
+      { key: 'bodyType', labelKey: 'specs.bodyType', path: 'bodyType.name' },
+      { key: 'doors', labelKey: 'specs.doors', path: 'doorsNumber' },
+      { key: 'seats', labelKey: 'specs.seats', path: 'seatsNumber' },
     ],
   },
   {
     key: 'engine',
-    title: 'Engine',
+    titleKey: 'specs.groups.engine',
     icon: <IoCogOutline className="w-5 h-5" />,
     specs: [
-      { key: 'engineCode', label: 'Engine Code', path: 'engine.engineCode' },
-      { key: 'displacement', label: 'Displacement', path: 'engine.displacement', unit: 'cc' },
-      { key: 'engineType', label: 'Fuel Type', path: 'engine.engineType' },
-      { key: 'maxPower', label: 'Max Power', path: 'engine.maxPower', unit: 'HP', compare: 'higher' },
-      { key: 'maxPowerRpm', label: 'Max Power RPM', path: 'engine.maxPowerRotationSpeed', unit: 'rpm' },
-      { key: 'maxTorque', label: 'Max Torque', path: 'engine.maxTorque', unit: 'Nm', compare: 'higher' },
-      { key: 'maxTorqueRpm', label: 'Max Torque RPM', path: 'engine.maxTorqueRotationSpeed', unit: 'rpm' },
-      { key: 'cylinders', label: 'Cylinders', path: 'engine.cylindersNumber' },
-      { key: 'turbo', label: 'Turbo', path: 'engine.turbo' },
+      { key: 'engineCode', labelKey: 'specs.engineCode', path: 'engine.engineCode' },
+      { key: 'displacement', labelKey: 'specs.displacement', path: 'engine.displacement', unit: 'cc' },
+      { key: 'engineType', labelKey: 'specs.fuelType', path: 'engine.engineType' },
+      { key: 'maxPower', labelKey: 'specs.maxPower', path: 'engine.maxPower', unit: 'HP', compare: 'higher' },
+      { key: 'maxPowerRpm', labelKey: 'specs.maxPowerRpm', path: 'engine.maxPowerRotationSpeed', unit: 'rpm' },
+      { key: 'maxTorque', labelKey: 'specs.maxTorque', path: 'engine.maxTorque', unit: 'Nm', compare: 'higher' },
+      { key: 'maxTorqueRpm', labelKey: 'specs.maxTorqueRpm', path: 'engine.maxTorqueRotationSpeed', unit: 'rpm' },
+      { key: 'cylinders', labelKey: 'specs.cylinders', path: 'engine.cylindersNumber' },
+      { key: 'turbo', labelKey: 'specs.turbo', path: 'engine.turbo' },
     ],
   },
   {
     key: 'transmission',
-    title: 'Transmission',
+    titleKey: 'specs.groups.transmission',
     icon: <IoSettingsOutline className="w-5 h-5" />,
     specs: [
-      { key: 'transmissionType', label: 'Type', path: 'transmission.transmissionType' },
-      { key: 'gears', label: 'Gears', path: 'transmission.gearsNumber' },
-      { key: 'clutch', label: 'Clutch', path: 'transmission.clutchType' },
+      { key: 'transmissionType', labelKey: 'specs.transmissionType', path: 'transmission.transmissionType' },
+      { key: 'gears', labelKey: 'specs.gears', path: 'transmission.gearsNumber' },
+      { key: 'clutch', labelKey: 'specs.clutch', path: 'transmission.clutchType' },
     ],
   },
   {
     key: 'performance',
-    title: 'Performance',
+    titleKey: 'specs.groups.performance',
     icon: <IoSpeedometerOutline className="w-5 h-5" />,
     specs: [
-      { key: 'maxSpeed', label: 'Top Speed', path: 'performance.maxSpeed', unit: 'km/h', compare: 'higher' },
-      { key: 'acceleration', label: '0-100 km/h', path: 'performance.acceleration0100', unit: 's', compare: 'lower' },
-      { key: 'consumptionCity', label: 'City Consumption', path: 'performance.fuelConsumptionCity', unit: 'L/100km', compare: 'lower' },
-      { key: 'consumptionHighway', label: 'Highway Consumption', path: 'performance.fuelConsumptionRoute', unit: 'L/100km', compare: 'lower' },
-      { key: 'consumptionMixed', label: 'Mixed Consumption', path: 'performance.fuelConsumptionMixed', unit: 'L/100km', compare: 'lower' },
-      { key: 'fuelTank', label: 'Fuel Tank', path: 'performance.fuelTankCapacity', unit: 'L' },
+      { key: 'maxSpeed', labelKey: 'specs.topSpeed', path: 'performance.maxSpeed', unit: 'km/h', compare: 'higher' },
+      { key: 'acceleration', labelKey: 'specs.acceleration', path: 'performance.acceleration0100', unit: 's', compare: 'lower' },
+      { key: 'consumptionCity', labelKey: 'specs.consumptionCity', path: 'performance.fuelConsumptionCity', unit: 'L/100km', compare: 'lower' },
+      { key: 'consumptionHighway', labelKey: 'specs.consumptionHighway', path: 'performance.fuelConsumptionRoute', unit: 'L/100km', compare: 'lower' },
+      { key: 'consumptionMixed', labelKey: 'specs.consumptionMixed', path: 'performance.fuelConsumptionMixed', unit: 'L/100km', compare: 'lower' },
+      { key: 'fuelTank', labelKey: 'specs.fuelTank', path: 'performance.fuelTankCapacity', unit: 'L' },
     ],
   },
   {
     key: 'chassis',
-    title: 'Chassis & Brakes',
+    titleKey: 'specs.groups.chassis',
     icon: <IoLayersOutline className="w-5 h-5" />,
     specs: [
-      { key: 'drive', label: 'Drive', path: 'chassis.drive' },
-      { key: 'frontBrakes', label: 'Front Brakes', path: 'chassis.frontBrakes' },
-      { key: 'rearBrakes', label: 'Rear Brakes', path: 'chassis.backBrakes' },
-      { key: 'frontBrakesRadius', label: 'Front Brakes Ø', path: 'chassis.frontBrakesRadius', unit: 'mm' },
-      { key: 'rearBrakesRadius', label: 'Rear Brakes Ø', path: 'chassis.backBrakesRadius', unit: 'mm' },
-      { key: 'suspension', label: 'Suspension', path: 'chassis.suspension' },
+      { key: 'drive', labelKey: 'specs.drive', path: 'chassis.drive' },
+      { key: 'frontBrakes', labelKey: 'specs.frontBrakes', path: 'chassis.frontBrakes' },
+      { key: 'rearBrakes', labelKey: 'specs.rearBrakes', path: 'chassis.backBrakes' },
+      { key: 'frontBrakesRadius', labelKey: 'specs.frontBrakesRadius', path: 'chassis.frontBrakesRadius', unit: 'mm' },
+      { key: 'rearBrakesRadius', labelKey: 'specs.rearBrakesRadius', path: 'chassis.backBrakesRadius', unit: 'mm' },
+      { key: 'suspension', labelKey: 'specs.suspension', path: 'chassis.suspension' },
     ],
   },
   {
     key: 'dimensions',
-    title: 'Dimensions',
+    titleKey: 'specs.groups.dimensions',
     icon: <IoResizeOutline className="w-5 h-5" />,
     specs: [
-      { key: 'length', label: 'Length', path: 'outsideDimensions.length', unit: 'mm' },
-      { key: 'width', label: 'Width', path: 'outsideDimensions.width', unit: 'mm' },
-      { key: 'height', label: 'Height', path: 'outsideDimensions.height', unit: 'mm' },
-      { key: 'wheelbase', label: 'Wheelbase', path: 'outsideDimensions.wheelBase', unit: 'mm' },
-      { key: 'clearance', label: 'Ground Clearance', path: 'outsideDimensions.clearance', unit: 'mm' },
-      { key: 'trunkMin', label: 'Trunk (min)', path: 'insideDimensions.minTrunkSpace', unit: 'L', compare: 'higher' },
-      { key: 'trunkMax', label: 'Trunk (max)', path: 'insideDimensions.maxTrunkSpace', unit: 'L', compare: 'higher' },
+      { key: 'length', labelKey: 'specs.length', path: 'outsideDimensions.length', unit: 'mm' },
+      { key: 'width', labelKey: 'specs.width', path: 'outsideDimensions.width', unit: 'mm' },
+      { key: 'height', labelKey: 'specs.height', path: 'outsideDimensions.height', unit: 'mm' },
+      { key: 'wheelbase', labelKey: 'specs.wheelbase', path: 'outsideDimensions.wheelBase', unit: 'mm' },
+      { key: 'clearance', labelKey: 'specs.clearance', path: 'outsideDimensions.clearance', unit: 'mm' },
+      { key: 'trunkMin', labelKey: 'specs.trunkMin', path: 'insideDimensions.minTrunkSpace', unit: 'L', compare: 'higher' },
+      { key: 'trunkMax', labelKey: 'specs.trunkMax', path: 'insideDimensions.maxTrunkSpace', unit: 'L', compare: 'higher' },
     ],
   },
 ];
@@ -113,12 +114,12 @@ const getNestedValue = (obj, path) => {
 /**
  * Format value with unit for display
  */
-const formatValue = (value, unit) => {
+const formatValue = (value, unit, t) => {
   if (value === null || value === undefined || value === '')
     return '—';
 
   if (typeof value === 'boolean')
-    return value ? 'Yes' : 'No';
+    return value ? t('common.yes') : t('common.no');
 
   return unit ? `${value} ${unit}` : String(value);
 };
@@ -148,6 +149,7 @@ const compareValues = (val1, val2, compareType) => {
  * Table component for comparing car specifications side by side.
  */
 const ComparisonTable = ({ cars = [] }) => {
+  const { t } = useTranslation('cars');
   const validCars = useMemo(() => cars.filter(Boolean), [cars]);
 
   if (validCars.length === 0)
@@ -160,6 +162,7 @@ const ComparisonTable = ({ cars = [] }) => {
           key={group.key}
           group={group}
           cars={validCars}
+          t={t}
         />
       ))}
     </div>
@@ -170,9 +173,9 @@ const ComparisonTable = ({ cars = [] }) => {
 /**
  * Single specification comparison group
  */
-const ComparisonGroup = ({ group, cars, defaultOpen = true }) => {
+const ComparisonGroup = ({ group, cars, defaultOpen = true, t }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const { title, icon, specs } = group;
+  const { titleKey, icon, specs } = group;
 
   const hasData = specs.some(spec => 
     cars.some(car => getNestedValue(car, spec.path) !== null)
@@ -193,7 +196,7 @@ const ComparisonGroup = ({ group, cars, defaultOpen = true }) => {
       >
         <div className="flex items-center gap-3">
           <span className="text-primary-600 dark:text-primary-400">{icon}</span>
-          <h3 className="font-semibold text-neutral-900 dark:text-white">{title}</h3>
+          <h3 className="font-semibold text-neutral-900 dark:text-white">{t(titleKey)}</h3>
         </div>
         <IoChevronDownOutline 
           className={`w-5 h-5 text-neutral-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
@@ -223,7 +226,7 @@ const ComparisonGroup = ({ group, cars, defaultOpen = true }) => {
                   className="border-b border-neutral-100 dark:border-neutral-700 last:border-0"
                 >
                   <td className="px-4 py-3 text-sm text-neutral-600 dark:text-neutral-400 w-1/4 min-w-[140px]">
-                    {spec.label}
+                    {t(spec.labelKey)}
                   </td>
                   
                   {values.map((value, idx) => {
@@ -240,7 +243,7 @@ const ComparisonGroup = ({ group, cars, defaultOpen = true }) => {
                           }
                         `}
                       >
-                        {formatValue(value, spec.unit)}
+                        {formatValue(value, spec.unit, t)}
                       </td>
                     );
                   })}
@@ -259,7 +262,7 @@ const ComparisonGroup = ({ group, cars, defaultOpen = true }) => {
 /**
  * Mobile-friendly card view for comparison
  */
-const MobileComparisonCards = ({ cars, group }) => {
+const MobileComparisonCards = ({ cars, group, t }) => {
   const { specs } = group;
   
   return (
@@ -283,9 +286,9 @@ const MobileComparisonCards = ({ cars, group }) => {
               
               return (
                 <div key={spec.key} className="py-2">
-                  <div className="text-xs text-neutral-500 dark:text-neutral-400">{spec.label}</div>
+                  <div className="text-xs text-neutral-500 dark:text-neutral-400">{t(spec.labelKey)}</div>
                   <div className="text-sm font-medium text-neutral-900 dark:text-white">
-                    {formatValue(value, spec.unit)}
+                    {formatValue(value, spec.unit, t)}
                   </div>
                 </div>
               );
@@ -301,9 +304,9 @@ const MobileComparisonCards = ({ cars, group }) => {
 /**
  * Mobile-optimized comparison group with card layout
  */
-const MobileComparisonGroup = ({ group, cars, defaultOpen = true }) => {
+const MobileComparisonGroup = ({ group, cars, defaultOpen = true, t }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const { title, icon, specs } = group;
+  const { titleKey, icon, specs } = group;
 
   const hasData = specs.some(spec => 
     cars.some(car => getNestedValue(car, spec.path) !== null)
@@ -322,7 +325,7 @@ const MobileComparisonGroup = ({ group, cars, defaultOpen = true }) => {
       >
         <div className="flex items-center gap-3">
           <span className="text-primary-600 dark:text-primary-400">{icon}</span>
-          <h3 className="font-semibold text-neutral-900 dark:text-white">{title}</h3>
+          <h3 className="font-semibold text-neutral-900 dark:text-white">{t(titleKey)}</h3>
         </div>
         <IoChevronDownOutline 
           className={`w-5 h-5 text-neutral-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
@@ -331,7 +334,7 @@ const MobileComparisonGroup = ({ group, cars, defaultOpen = true }) => {
 
       {isOpen && (
         <div className="p-4">
-          <MobileComparisonCards cars={cars} group={group} />
+          <MobileComparisonCards cars={cars} group={group} t={t} />
         </div>
       )}
     </div>

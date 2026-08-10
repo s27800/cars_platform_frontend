@@ -20,3 +20,4 @@ export { default as ToastContainer, showToast } from './Toast';
 export { default as Skeleton } from './Skeleton';
 export { default as CardSkeleton } from './CardSkeleton';
 export { default as TableSkeleton } from './TableSkeleton';
+export { default as LanguageSwitcher } from './LanguageSwitcher';

@@ -1,0 +1,76 @@
+{
+  "title": "Reviews",
+  "writeReview": "Write a review",
+  "editReview": "Edit review",
+  "deleteReview": "Delete review",
+  "yourReview": "Your review",
+  "ratings": {
+    "overall": "Overall rating",
+    "engine": "Engine",
+    "engineDesc": "Performance, sound, response",
+    "transmission": "Transmission",
+    "transmissionDesc": "Smooth shifts, gear ratios",
+    "steering": "Steering",
+    "steeringDesc": "Feel, precision, feedback",
+    "suspension": "Suspension",
+    "suspensionDesc": "Comfort, handling balance",
+    "visibility": "Visibility",
+    "visibilityDesc": "Mirrors, blind spots, parking",
+    "ergonomics": "Ergonomics",
+    "ergonomicsDesc": "Controls, seating position",
+    "soundProofing": "Sound proofing",
+    "soundProofingDesc": "Road noise, wind noise",
+    "interiorSpace": "Interior space",
+    "interiorSpaceDesc": "Legroom, cargo, storage",
+    "maintenance": "Maintenance",
+    "maintenanceDesc": "Service costs, reliability",
+    "priceQuality": "Price/Quality",
+    "priceQualityDesc": "Value for money",
+    "reliability": "Reliability",
+    "reliabilityDesc": "Breakdown frequency, durability"
+  },
+  "form": {
+    "title": "Review title",
+    "titlePlaceholder": "Summarize your experience",
+    "content": "Your review",
+    "contentPlaceholder": "Share your experience with this car...",
+    "ownershipPeriod": "Ownership period",
+    "ownershipPeriodPlaceholder": "e.g., 2 years",
+    "mileage": "Mileage driven",
+    "mileagePlaceholder": "e.g., 50000",
+    "pros": "Pros",
+    "prosPlaceholder": "What do you like about this car?",
+    "cons": "Cons",
+    "consPlaceholder": "What could be improved?",
+    "submit": "Submit review",
+    "update": "Update review",
+    "cancel": "Cancel"
+  },
+  "messages": {
+    "submitSuccess": "Review submitted successfully!",
+    "updateSuccess": "Review updated successfully!",
+    "deleteSuccess": "Review deleted successfully!",
+    "deleteConfirm": "Are you sure you want to delete this review?",
+    "loginRequired": "Please sign in to write a review",
+    "alreadyReviewed": "You have already reviewed this car"
+  },
+  "sort": {
+    "newest": "Newest first",
+    "oldest": "Oldest first",
+    "highestRated": "Highest rated",
+    "lowestRated": "Lowest rated",
+    "mostHelpful": "Most helpful"
+  },
+  "empty": {
+    "noReviews": "No reviews yet",
+    "noReviewsDescription": "Be the first to share your experience with this car",
+    "noUserReviews": "You haven't written any reviews yet"
+  },
+  "helpful": {
+    "wasHelpful": "Was this review helpful?",
+    "yes": "Yes",
+    "no": "No",
+    "helpfulCount": "{{count}} person found this helpful",
+    "helpfulCount_plural": "{{count}} people found this helpful"
+  }
+}

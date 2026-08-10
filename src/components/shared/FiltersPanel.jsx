@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { IoCloseOutline, IoFilterOutline, IoChevronDownOutline } from 'react-icons/io5';
 import { getBrands, getBrandById } from '../../api/brands';
 import { getModelById } from '../../api/models';
@@ -8,23 +9,9 @@ import { getTags } from '../../api/tags';
 import { Select, Input, Button, Checkbox } from '../ui';
 
 
-const ENGINE_TYPES = [
-  { value: 'Gasoline', label: 'Petrol' },
-  { value: 'Diesel', label: 'Diesel' },
-  { value: 'Hybrid', label: 'Hybrid' },
-  { value: 'Electric', label: 'Electric' },
-];
-
-const DRIVE_TYPES = [
-  { value: 'FWD', label: 'Front (FWD)' },
-  { value: 'RWD', label: 'Rear (RWD)' },
-  { value: 'AWD', label: 'All-wheel (AWD)' },
-];
-
-const TRANSMISSION_TYPES = [
-  { value: 'Manual', label: 'Manual' },
-  { value: 'Automatic', label: 'Automatic' },
-];
+const ENGINE_TYPE_VALUES = ['Gasoline', 'Diesel', 'Hybrid', 'Electric'];
+const DRIVE_TYPE_VALUES = ['FWD', 'RWD', 'AWD'];
+const TRANSMISSION_TYPE_VALUES = ['Manual', 'Automatic'];
 
 
 const FilterSection = ({ title, children, defaultOpen = true }) => {
@@ -57,6 +44,7 @@ const FiltersPanel = ({
   isMobile = false,
   onClose,
 }) => {
+  const { t } = useTranslation('cars');
   const [selectedBrandId, setSelectedBrandId] = useState(filters.brandIds?.[0] || '');
   const [selectedModelId, setSelectedModelId] = useState(filters.modelIds?.[0] || '');
   const [models, setModels] = useState([]);
@@ -215,22 +203,22 @@ const FiltersPanel = ({
 
   const content = (
     <div className="space-y-1">
-      <FilterSection title="Brand, Model & Generation">
+      <FilterSection title={t('filters.brandModelGeneration')}>
         <Select
-          placeholder="Select brand"
+          placeholder={t('filters.selectBrand')}
           options={brandOptions}
           value={selectedBrandId}
           onChange={handleBrandChange}
         />
         <Select
-          placeholder="Select model"
+          placeholder={t('filters.selectModel')}
           options={modelOptions}
           value={selectedModelId}
           onChange={handleModelChange}
           disabled={!selectedBrandId}
         />
         <Select
-          placeholder="Select generation"
+          placeholder={t('filters.selectGeneration')}
           options={generationOptions}
           value={filters.generationIds?.[0]?.toString() || ''}
           onChange={handleGenerationChange}
@@ -238,12 +226,12 @@ const FiltersPanel = ({
         />
       </FilterSection>
 
-      <FilterSection title="Body Type">
+      <FilterSection title={t('filters.bodyType')}>
         <div className="space-y-2">
           {bodyTypes.map((bodyType) => (
             <Checkbox
               key={bodyType.id}
-              label={bodyType.name}
+              label={t(`bodyTypes.${bodyType.name}`, bodyType.name)}
               checked={(filters.bodyTypeIds || []).includes(bodyType.id)}
               onChange={() => handleBodyTypeToggle(bodyType.id)}
             />
@@ -251,57 +239,57 @@ const FiltersPanel = ({
         </div>
       </FilterSection>
 
-      <FilterSection title="Engine Type">
+      <FilterSection title={t('filters.engineType')}>
         <div className="space-y-2">
-          {ENGINE_TYPES.map((type) => (
+          {ENGINE_TYPE_VALUES.map((value) => (
             <Checkbox
-              key={type.value}
-              label={type.label}
-              checked={(filters.engineTypes || []).includes(type.value)}
-              onChange={() => handleEngineTypeToggle(type.value)}
+              key={value}
+              label={t(`engineTypes.${value}`)}
+              checked={(filters.engineTypes || []).includes(value)}
+              onChange={() => handleEngineTypeToggle(value)}
             />
           ))}
         </div>
       </FilterSection>
 
-      <FilterSection title="Drive Type">
+      <FilterSection title={t('filters.driveType')}>
         <div className="space-y-2">
-          {DRIVE_TYPES.map((type) => (
+          {DRIVE_TYPE_VALUES.map((value) => (
             <Checkbox
-              key={type.value}
-              label={type.label}
-              checked={(filters.drives || []).includes(type.value)}
-              onChange={() => handleDriveToggle(type.value)}
+              key={value}
+              label={t(`driveTypes.${value}`)}
+              checked={(filters.drives || []).includes(value)}
+              onChange={() => handleDriveToggle(value)}
             />
           ))}
         </div>
       </FilterSection>
 
-      <FilterSection title="Transmission">
+      <FilterSection title={t('filters.transmission')}>
         <div className="space-y-2">
-          {TRANSMISSION_TYPES.map((type) => (
+          {TRANSMISSION_TYPE_VALUES.map((value) => (
             <Checkbox
-              key={type.value}
-              label={type.label}
-              checked={(filters.transmissionTypes || []).includes(type.value)}
-              onChange={() => handleTransmissionToggle(type.value)}
+              key={value}
+              label={t(`transmissionTypes.${value}`)}
+              checked={(filters.transmissionTypes || []).includes(value)}
+              onChange={() => handleTransmissionToggle(value)}
             />
           ))}
         </div>
       </FilterSection>
 
-      <FilterSection title="Power (HP)" defaultOpen={false}>
+      <FilterSection title={t('filters.powerRange')} defaultOpen={false}>
         <div className="grid grid-cols-2 gap-2">
           <Input
             type="number"
-            placeholder="Min"
+            placeholder={t('filters.min')}
             value={filters.minPower || ''}
             onChange={(e) => handleRangeChange('minPower', e.target.value)}
             size="sm"
           />
           <Input
             type="number"
-            placeholder="Max"
+            placeholder={t('filters.max')}
             value={filters.maxPower || ''}
             onChange={(e) => handleRangeChange('maxPower', e.target.value)}
             size="sm"
@@ -309,18 +297,18 @@ const FiltersPanel = ({
         </div>
       </FilterSection>
 
-      <FilterSection title="Displacement (cc)" defaultOpen={false}>
+      <FilterSection title={t('filters.displacementRange')} defaultOpen={false}>
         <div className="grid grid-cols-2 gap-2">
           <Input
             type="number"
-            placeholder="Min"
+            placeholder={t('filters.min')}
             value={filters.minDisplacement || ''}
             onChange={(e) => handleRangeChange('minDisplacement', e.target.value)}
             size="sm"
           />
           <Input
             type="number"
-            placeholder="Max"
+            placeholder={t('filters.max')}
             value={filters.maxDisplacement || ''}
             onChange={(e) => handleRangeChange('maxDisplacement', e.target.value)}
             size="sm"
@@ -329,7 +317,7 @@ const FiltersPanel = ({
       </FilterSection>
 
       {tags.length > 0 && (
-        <FilterSection title="Tags" defaultOpen={false}>
+        <FilterSection title={t('filters.tags')} defaultOpen={false}>
           <div className="space-y-2">
             {tags.map((tag) => (
               <Checkbox
@@ -351,7 +339,7 @@ const FiltersPanel = ({
             onClick={onReset}
             leftIcon={<IoCloseOutline className="w-4 h-4" />}
           >
-            Clear all filters ({activeFiltersCount})
+            {t('filters.clearAllCount', { count: activeFiltersCount })}
           </Button>
         </div>
       )}
@@ -368,7 +356,7 @@ const FiltersPanel = ({
           <div className="sticky top-0 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700 p-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <IoFilterOutline className="w-5 h-5" />
-              <span className="font-semibold">Filters</span>
+              <span className="font-semibold">{t('filters.title')}</span>
             </div>
             <button
               onClick={onClose}

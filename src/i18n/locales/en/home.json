@@ -1,0 +1,65 @@
+{
+  "hero": {
+    "title": "Find your",
+    "titleHighlight": "perfect car",
+    "subtitle": "Explore thousands of cars, compare models, read real owner reviews and check actual fuel consumption data.",
+    "searchPlaceholder": "Search for a car...",
+    "searchButton": "Search",
+    "browseAll": "Browse all cars"
+  },
+  "quickFilters": {
+    "title": "Popular categories",
+    "economical": {
+      "title": "Economical",
+      "description": "Cars with low fuel consumption"
+    },
+    "sporty": {
+      "title": "Sporty",
+      "description": "Powerful and dynamic cars"
+    },
+    "family": {
+      "title": "Family",
+      "description": "Spacious and comfortable"
+    },
+    "electric": {
+      "title": "Electric",
+      "description": "Electric only vehicles"
+    }
+  },
+  "popularBrands": {
+    "title": "Popular brands",
+    "viewAll": "View all brands"
+  },
+  "stats": {
+    "carModels": "Car models",
+    "userReviews": "User reviews",
+    "fuelReports": "Fuel reports",
+    "brandsInDatabase": "Brands in database"
+  },
+  "features": {
+    "title": "Why CarsPlatform?",
+    "subtitle": "Everything you need to choose the right car",
+    "specs": {
+      "title": "Detailed specifications",
+      "description": "Complete technical data for every model"
+    },
+    "comparison": {
+      "title": "Model comparison",
+      "description": "Compare multiple cars side by side"
+    },
+    "fuel": {
+      "title": "Real fuel consumption",
+      "description": "Data from users, not manufacturers"
+    },
+    "reviews": {
+      "title": "Owner reviews",
+      "description": "Reviews from real drivers"
+    }
+  },
+  "cta": {
+    "title": "Ready to find your car?",
+    "subtitle": "Start searching now or create an account to access all features",
+    "searchButton": "Search cars",
+    "registerButton": "Create account"
+  }
+}

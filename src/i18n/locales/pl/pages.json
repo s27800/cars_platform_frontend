@@ -1,0 +1,159 @@
+{
+  "about": {
+    "title": "O CarsPlatform",
+    "subtitle": "Twoje kompleksowe źródło informacji o samochodach, opiniach i realnym zużyciu paliwa. Stworzone przez entuzjastów motoryzacji, dla entuzjastów motoryzacji.",
+    "mission": {
+      "title": "Nasza misja",
+      "description": "Wierzymy, że wybór samochodu powinien opierać się na realnych danych i szczerych opiniach. Nasza platforma łączy szczegółowe specyfikacje, opinie użytkowników i rzeczywiste dane o zużyciu paliwa, aby pomóc Ci podjąć świadomą decyzję."
+    },
+    "stats": {
+      "carModels": "Modeli samochodów",
+      "brands": "Marek",
+      "reviews": "Opinii",
+      "fuelReports": "Raportów spalania"
+    },
+    "features": {
+      "title": "Funkcje platformy",
+      "subtitle": "Wszystko, czego potrzebujesz, aby zbadać i porównać samochody",
+      "search": {
+        "title": "Zaawansowane wyszukiwanie",
+        "description": "Znajdź samochody używając szczegółowych filtrów, w tym marki, modelu, typu silnika, mocy i więcej."
+      },
+      "comparison": {
+        "title": "Porównanie samochodów",
+        "description": "Porównaj do 4 samochodów obok siebie ze szczegółowymi specyfikacjami i ocenami."
+      },
+      "reviews": {
+        "title": "Opinie użytkowników",
+        "description": "Czytaj szczere opinie od prawdziwych właścicieli samochodów ze szczegółowymi ocenami w 11 kategoriach."
+      },
+      "fuel": {
+        "title": "Raporty spalania",
+        "description": "Sprawdź rzeczywiste dane o zużyciu paliwa zgłaszane przez społeczność."
+      },
+      "moderated": {
+        "title": "Moderowana treść",
+        "description": "Wszystkie opinie i raporty są weryfikowane przez nasz zespół administracyjny pod kątem jakości i dokładności."
+      },
+      "community": {
+        "title": "Napędzane przez społeczność",
+        "description": "Użytkownicy mogą sugerować poprawki danych, aby nasza baza była dokładna i aktualna."
+      }
+    },
+    "howItWorks": {
+      "title": "Jak to działa",
+      "step1": {
+        "title": "Szukaj i przeglądaj",
+        "description": "Użyj naszych zaawansowanych filtrów wyszukiwania lub przeglądaj według marki, aby znaleźć samochody spełniające Twoje kryteria."
+      },
+      "step2": {
+        "title": "Porównuj i badaj",
+        "description": "Dodaj samochody do porównania, czytaj opinie użytkowników i sprawdzaj rzeczywiste dane o zużyciu paliwa."
+      },
+      "step3": {
+        "title": "Podejmij świadomą decyzję",
+        "description": "Wykorzystaj wszystkie zebrane dane, aby wybrać samochód, który najlepiej odpowiada Twoim potrzebom."
+      }
+    },
+    "cta": {
+      "title": "Gotowy znaleźć swój idealny samochód?",
+      "button": "Zacznij przeglądać"
+    }
+  },
+  "faq": {
+    "title": "Często zadawane pytania",
+    "subtitle": "Znajdź odpowiedzi na najczęściej zadawane pytania dotyczące CarsPlatform",
+    "general": {
+      "title": "Pytania ogólne",
+      "q1": "Czym jest CarsPlatform?",
+      "a1": "CarsPlatform to kompleksowa platforma informacyjna o samochodach, która pozwala wyszukiwać, porównywać i oceniać samochody. Zapewniamy szczegółowe specyfikacje, opinie użytkowników i rzeczywiste dane o zużyciu paliwa.",
+      "q2": "Czy CarsPlatform jest darmowy?",
+      "a2": "Tak, CarsPlatform jest całkowicie darmowy. Możesz przeglądać samochody, czytać opinie i sprawdzać raporty spalania bez żadnych kosztów. Rejestracja jest wymagana tylko do dodawania opinii i raportów spalania.",
+      "q3": "Jak założyć konto?",
+      "a3": "Kliknij przycisk 'Zarejestruj się' w prawym górnym rogu strony. Wypełnij dane, w tym nazwę użytkownika, email i hasło. Po rejestracji możesz od razu zacząć współtworzyć platformę."
+    },
+    "reviews": {
+      "title": "Opinie i oceny",
+      "q1": "Jak obliczane są oceny samochodów?",
+      "a1": "Oceny samochodów są średnią ze wszystkich opinii użytkowników. Każda opinia ocenia samochód w 11 różnych kategoriach, a ogólna ocena jest średnią wszystkich ocen kategorii.",
+      "q2": "Czy mogę edytować swoją opinię?",
+      "a2": "Tak, możesz edytować swoje opinie w każdej chwili ze swojej strony profilu. Po prostu przejdź do sekcji swoich opinii i kliknij przycisk edycji przy dowolnej przesłanej opinii.",
+      "q3": "Dlaczego moja opinia nie została opublikowana?",
+      "a3": "Wszystkie opinie przechodzą proces moderacji w celu zapewnienia jakości. Jeśli Twoja opinia nie spełnia naszych wytycznych (np. zawiera nieodpowiednie treści, jest zbyt krótka lub brakuje jej treści), może zostać odrzucona."
+    },
+    "fuel": {
+      "title": "Raporty spalania",
+      "q1": "Jak działają raporty spalania?",
+      "a1": "Użytkownicy mogą przesyłać raporty o zużyciu paliwa dla samochodów, które posiadają lub regularnie prowadzą. Każdy raport zawiera średnie zużycie paliwa, warunki jazdy i inne istotne szczegóły.",
+      "q2": "Jak dokładne są dane o zużyciu paliwa?",
+      "a2": "Dane o zużyciu paliwa opierają się na rzeczywistych raportach użytkowników. Uśredniamy wszystkie przesłane raporty, aby zapewnić jak najdokładniejsze oszacowanie. Pamiętaj, że rzeczywiste zużycie może się różnić w zależności od stylu jazdy, warunków i konserwacji pojazdu."
+    },
+    "comparison": {
+      "title": "Porównanie samochodów",
+      "q1": "Ile samochodów mogę porównać naraz?",
+      "a1": "Możesz porównać do 4 samochodów naraz. Pozwala to zobaczyć specyfikacje, oceny i zużycie paliwa obok siebie dla łatwiejszego porównania.",
+      "q2": "Czy mogę zapisać swoje porównania?",
+      "a2": "Obecnie porównania są przechowywane w sesji przeglądarki. Jeśli zamkniesz przeglądarkę, porównanie zostanie zresetowane. Zalecamy robienie zrzutów ekranu, jeśli chcesz zapisać porównanie."
+    }
+  },
+  "terms": {
+    "title": "Regulamin",
+    "lastUpdated": "Ostatnia aktualizacja",
+    "sections": {
+      "acceptance": {
+        "title": "1. Akceptacja warunków",
+        "content": "Uzyskując dostęp do CarsPlatform i korzystając z niego, akceptujesz i zgadzasz się na warunki niniejszej umowy."
+      },
+      "use": {
+        "title": "2. Korzystanie z usługi",
+        "content": "Zgadzasz się korzystać z usługi wyłącznie w celach zgodnych z prawem i zgodnie z niniejszym Regulaminem. Jesteś odpowiedzialny za wszystkie treści, które przesyłasz na platformę."
+      },
+      "accounts": {
+        "title": "3. Konta użytkowników",
+        "content": "Jesteś odpowiedzialny za zabezpieczenie hasła do konta oraz za wszelkie działania lub czynności wykonywane na Twoim koncie."
+      },
+      "content": {
+        "title": "4. Treści użytkowników",
+        "content": "Przesyłając opinie, raporty spalania lub inne treści, udzielasz nam prawa do wykorzystywania, modyfikowania i wyświetlania tych treści na platformie."
+      },
+      "moderation": {
+        "title": "5. Moderacja treści",
+        "content": "Zastrzegamy sobie prawo do usunięcia wszelkich treści, które naruszają nasze wytyczne lub są uznane za nieodpowiednie."
+      },
+      "disclaimer": {
+        "title": "6. Wyłączenie odpowiedzialności",
+        "content": "Usługa jest świadczona w stanie 'takim, jaki jest', bez jakichkolwiek gwarancji. Nie gwarantujemy dokładności danych przesłanych przez użytkowników."
+      }
+    }
+  },
+  "privacy": {
+    "title": "Polityka prywatności",
+    "lastUpdated": "Ostatnia aktualizacja",
+    "sections": {
+      "collect": {
+        "title": "1. Zbierane informacje",
+        "content": "Zbieramy informacje, które nam bezpośrednio przekazujesz, takie jak podczas tworzenia konta, przesyłania opinii lub kontaktowania się z nami."
+      },
+      "use": {
+        "title": "2. Jak wykorzystujemy Twoje informacje",
+        "content": "Wykorzystujemy informacje do świadczenia, utrzymywania i ulepszania naszych usług oraz do komunikacji z Tobą."
+      },
+      "sharing": {
+        "title": "3. Udostępnianie informacji",
+        "content": "Nie sprzedajemy ani nie udostępniamy Twoich danych osobowych osobom trzecim, z wyjątkiem przypadków opisanych w niniejszej polityce."
+      },
+      "security": {
+        "title": "4. Bezpieczeństwo danych",
+        "content": "Wdrażamy odpowiednie środki bezpieczeństwa w celu ochrony Twoich danych osobowych."
+      },
+      "rights": {
+        "title": "5. Twoje prawa",
+        "content": "Masz prawo dostępu, poprawiania lub usunięcia swoich danych osobowych w dowolnym momencie poprzez ustawienia konta."
+      },
+      "contact": {
+        "title": "6. Kontakt",
+        "content": "Jeśli masz pytania dotyczące niniejszej Polityki prywatności, skontaktuj się z nami."
+      }
+    }
+  }
+}
