@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { IoSearchOutline, IoAddOutline, IoCloseOutline } from 'react-icons/io5';
 import { searchCars } from '../../api/cars';
 import { Input, Spinner } from '../../components/ui';
@@ -12,8 +13,9 @@ import { useDebounce } from '../../hooks';
 const ComparisonSelector = ({ 
   onSelect, 
   excludeIds = [],
-  placeholder = 'Search for a car to add...',
+  placeholder,
 }) => {
+  const { t } = useTranslation('cars');
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
@@ -85,7 +87,7 @@ const ComparisonSelector = ({
           value={query}
           onChange={handleInputChange}
           onFocus={handleInputFocus}
-          placeholder={placeholder}
+          placeholder={placeholder || t('comparison.searchFirst')}
           leftIcon={<IoSearchOutline className="w-5 h-5" />}
           rightIcon={
             query ? (
@@ -113,7 +115,7 @@ const ComparisonSelector = ({
 
           {!showLoading && filteredResults.length === 0 && (
             <div className="px-4 py-6 text-center text-neutral-500 dark:text-neutral-400">
-              No cars found matching "{debouncedQuery}"
+              {t('stats.noResults')} "{debouncedQuery}"
             </div>
           )}
 

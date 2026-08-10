@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useQueries } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { 
   IoGitCompareOutline, 
   IoTrashOutline,
@@ -13,6 +14,7 @@ import { MAX_COMPARISON_CARS, STORAGE_KEYS } from '../utils/constants';
 
 
 const ComparisonPage = () => {
+  const { t } = useTranslation('cars');
   
   // Get initial car IDs from localStorage
   const [selectedCarIds, setSelectedCarIds] = useState(() => {
@@ -77,10 +79,10 @@ const ComparisonPage = () => {
               <IoGitCompareOutline className="w-8 h-8 text-primary-600 dark:text-primary-400" />
               <div>
                 <h1 className="text-2xl font-bold text-neutral-900 dark:text-white">
-                  Compare Cars
+                  {t('comparison.title')}
                 </h1>
                 <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                  Select up to {MAX_COMPARISON_CARS} cars to compare side by side
+                  {t('comparison.subtitle', { max: MAX_COMPARISON_CARS })}
                 </p>
               </div>
             </div>
@@ -93,7 +95,7 @@ const ComparisonPage = () => {
                 className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
               >
                 <IoTrashOutline className="w-4 h-4 mr-1.5" />
-                Clear all
+                {t('comparison.clearAll')}
               </Button>
             )}
           </div>
@@ -110,8 +112,8 @@ const ComparisonPage = () => {
               excludeIds={selectedCarIds}
               placeholder={
                 selectedCarIds.length === 0
-                  ? 'Search for the first car to compare...'
-                  : `Add another car (${selectedCarIds.length}/${MAX_COMPARISON_CARS})`
+                  ? t('comparison.searchFirst')
+                  : t('comparison.addAnother', { current: selectedCarIds.length, max: MAX_COMPARISON_CARS })
               }
             />
           </div>
@@ -131,14 +133,13 @@ const ComparisonPage = () => {
               <IoCarSportOutline className="w-10 h-10 text-neutral-400" />
             </div>
             <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">
-              No cars selected
+              {t('comparison.noCars')}
             </h2>
             <p className="text-neutral-500 dark:text-neutral-400 max-w-md mx-auto mb-6">
-              Use the search bar above to find and add cars you want to compare.
-              You can compare up to {MAX_COMPARISON_CARS} cars at once.
+              {t('comparison.noCarsDescription', { max: MAX_COMPARISON_CARS })}
             </p>
             <Button to="/cars" variant="primary">
-              Browse Cars
+              {t('comparison.browseCars')}
             </Button>
           </div>
         )}
@@ -146,7 +147,7 @@ const ComparisonPage = () => {
         {/* Single car hint */}
         {!isLoading && cars.length === 1 && (
           <Alert variant="info" className="mb-6">
-            Add at least one more car to start comparing specifications and ratings.
+            {t('comparison.addMoreCars')}
           </Alert>
         )}
 
@@ -163,8 +164,8 @@ const ComparisonPage = () => {
             {/* Tabs for specs/ratings */}
             <Tabs value={activeTab} onChange={setActiveTab}>
               <Tabs.List>
-                <Tabs.Trigger value="specs">Specifications</Tabs.Trigger>
-                <Tabs.Trigger value="ratings">Ratings & Fuel</Tabs.Trigger>
+                <Tabs.Trigger value="specs">{t('comparison.specifications')}</Tabs.Trigger>
+                <Tabs.Trigger value="ratings">{t('comparison.ratingsAndFuel')}</Tabs.Trigger>
               </Tabs.List>
 
               <Tabs.Content value="specs">

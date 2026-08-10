@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { 
   IoLockClosedOutline, 
@@ -13,34 +14,36 @@ import { useAuth } from '../hooks';
 import { Button, Input } from '../components/ui';
 
 
-const validationSchema = Yup.object({
-  username: Yup.string()
-    .required('Username is required')
-    .min(3, 'Username must be at least 3 characters')
-    .max(20, 'Username must be at most 20 characters')
-    .matches(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers and underscores'),
-  email: Yup.string()
-    .required('Email is required')
-    .email('Invalid email address'),
-  password: Yup.string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters'),
-  confirmPassword: Yup.string()
-    .required('Please confirm your password')
-    .oneOf([Yup.ref('password')], 'Passwords must match'),
-  firstName: Yup.string()
-    .required('First name is required')
-    .min(2, 'First name must be at least 2 characters'),
-  lastName: Yup.string()
-    .required('Last name is required')
-    .min(2, 'Last name must be at least 2 characters'),
-});
-
 const RegisterPage = () => {
+  const { t } = useTranslation('auth');
+  const { t: tValidation } = useTranslation('validation');
   const { register, isLoading, isAuthenticated, error, clearError } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const validationSchema = Yup.object({
+    username: Yup.string()
+      .required(tValidation('username.required'))
+      .min(3, tValidation('username.minLength'))
+      .max(20, tValidation('username.maxLength'))
+      .matches(/^[a-zA-Z0-9_]+$/, tValidation('username.pattern')),
+    email: Yup.string()
+      .required(tValidation('email.required'))
+      .email(tValidation('email.invalid')),
+    password: Yup.string()
+      .required(tValidation('password.required'))
+      .min(6, tValidation('password.minLength')),
+    confirmPassword: Yup.string()
+      .required(tValidation('confirmPassword.required'))
+      .oneOf([Yup.ref('password')], tValidation('confirmPassword.match')),
+    firstName: Yup.string()
+      .required(tValidation('firstName.required'))
+      .min(2, tValidation('firstName.minLength')),
+    lastName: Yup.string()
+      .required(tValidation('lastName.required'))
+      .min(2, tValidation('lastName.minLength')),
+  });
 
   if (isAuthenticated)
     return <Navigate to="/" replace />;
@@ -74,10 +77,10 @@ const RegisterPage = () => {
         <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-neutral-900 dark:text-white">
-              Create account
+              {t('register.title')}
             </h1>
             <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-              Join CarsPlatform today
+              {t('register.subtitle')}
             </p>
           </div>
 
@@ -90,10 +93,10 @@ const RegisterPage = () => {
           <form onSubmit={formik.handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <Input
-                label="First name"
+                label={t('register.firstName')}
                 name="firstName"
                 type="text"
-                placeholder="John"
+                placeholder={t('register.firstNamePlaceholder')}
                 value={formik.values.firstName}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -101,10 +104,10 @@ const RegisterPage = () => {
                 disabled={isLoading}
               />
               <Input
-                label="Last name"
+                label={t('register.lastName')}
                 name="lastName"
                 type="text"
-                placeholder="Doe"
+                placeholder={t('register.lastNamePlaceholder')}
                 value={formik.values.lastName}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -114,10 +117,10 @@ const RegisterPage = () => {
             </div>
 
             <Input
-              label="Username"
+              label={t('register.username')}
               name="username"
               type="text"
-              placeholder="johndoe"
+              placeholder={t('register.usernamePlaceholder')}
               leftIcon={<IoPersonOutline className="w-5 h-5" />}
               value={formik.values.username}
               onChange={formik.handleChange}
@@ -127,10 +130,10 @@ const RegisterPage = () => {
             />
 
             <Input
-              label="Email"
+              label={t('register.email')}
               name="email"
               type="email"
-              placeholder="john@example.com"
+              placeholder={t('register.emailPlaceholder')}
               leftIcon={<IoMailOutline className="w-5 h-5" />}
               value={formik.values.email}
               onChange={formik.handleChange}
@@ -140,10 +143,10 @@ const RegisterPage = () => {
             />
 
             <Input
-              label="Password"
+              label={t('register.password')}
               name="password"
               type={showPassword ? 'text' : 'password'}
-              placeholder="Min. 6 characters"
+              placeholder={t('register.passwordPlaceholder')}
               leftIcon={<IoLockClosedOutline className="w-5 h-5" />}
               rightIcon={
                 <button
@@ -163,10 +166,10 @@ const RegisterPage = () => {
             />
 
             <Input
-              label="Confirm password"
+              label={t('register.confirmPassword')}
               name="confirmPassword"
               type={showConfirmPassword ? 'text' : 'password'}
-              placeholder="Repeat password"
+              placeholder={t('register.confirmPasswordPlaceholder')}
               leftIcon={<IoLockClosedOutline className="w-5 h-5" />}
               rightIcon={
                 <button
@@ -193,18 +196,18 @@ const RegisterPage = () => {
               disabled={isLoading || !formik.isValid}
               className="mt-6"
             >
-              Create account
+              {t('register.submit')}
             </Button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-neutral-600 dark:text-neutral-400">
-              Already have an account?{' '}
+              {t('register.hasAccount')}{' '}
               <Link 
                 to="/login" 
                 className="text-primary-600 dark:text-primary-400 hover:underline font-medium"
               >
-                Sign in
+                {t('register.login')}
               </Link>
             </p>
           </div>

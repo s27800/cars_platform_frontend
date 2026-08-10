@@ -1,0 +1,124 @@
+{
+  "navigation": {
+    "home": "Home",
+    "cars": "Cars",
+    "comparison": "Comparison",
+    "profile": "Profile",
+    "admin": "Admin Panel",
+    "login": "Sign in",
+    "register": "Sign up",
+    "logout": "Sign out",
+    "search": "Search for a car...",
+    "settings": "Settings"
+  },
+  "footer": {
+    "description": "Your comprehensive source of car information. Compare models, read reviews, analyze fuel reports and find your dream car.",
+    "navigation": "Navigation",
+    "followUs": "Follow us",
+    "aboutUs": "About us",
+    "faq": "FAQ",
+    "terms": "Terms of service",
+    "privacy": "Privacy policy",
+    "copyright": "© {{year}} CarsPlatform. All rights reserved."
+  },
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "clear": "Clear",
+    "reset": "Reset",
+    "apply": "Apply",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "seeAll": "See all",
+    "loading": "Loading..."
+  },
+  "status": {
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "showing": "Showing",
+    "to": "to",
+    "results": "results"
+  },
+  "errors": {
+    "somethingWentWrong": "Something went wrong",
+    "pageNotFound": "Page not found",
+    "pageNotFoundDescription": "The page you are looking for doesn't exist or has been moved.",
+    "goHome": "Go to homepage",
+    "unauthorized": "Unauthorized access",
+    "forbidden": "Access forbidden",
+    "serverError": "Server error",
+    "networkError": "Network error. Please check your connection.",
+    "tryAgain": "Try again"
+  },
+  "empty": {
+    "noResults": "No results found",
+    "noData": "No data available"
+  },
+  "time": {
+    "justNow": "Just now",
+    "minutesAgo": "{{count}} minute ago",
+    "minutesAgo_plural": "{{count}} minutes ago",
+    "hoursAgo": "{{count}} hour ago",
+    "hoursAgo_plural": "{{count}} hours ago",
+    "daysAgo": "{{count}} day ago",
+    "daysAgo_plural": "{{count}} days ago"
+  },
+  "about": {
+    "title": "About us",
+    "subtitle": "Your comprehensive source of car information",
+    "mission": {
+      "title": "Our mission",
+      "description": "We strive to provide the most accurate and comprehensive car information, helping you make informed decisions when choosing your next vehicle."
+    },
+    "features": {
+      "title": "What we offer",
+      "specs": "Detailed specifications",
+      "specsDesc": "Complete technical data for every model",
+      "comparison": "Model comparison",
+      "comparisonDesc": "Compare multiple cars side by side",
+      "fuel": "Real fuel consumption",
+      "fuelDesc": "Data from real users, not manufacturers",
+      "reviews": "Owner reviews",
+      "reviewsDesc": "Honest reviews from real drivers"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to the most common questions about our platform",
+    "searchPlaceholder": "Search questions...",
+    "categories": {
+      "account": "Account",
+      "cars": "Cars & Search",
+      "reviews": "Reviews",
+      "fuelReports": "Fuel Reports",
+      "technical": "Technical",
+      "privacy": "Privacy & Security"
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: {{date}}"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: {{date}}"
+  }
+}

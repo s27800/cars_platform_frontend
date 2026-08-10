@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   IoFlashOutline,
   IoTrendingUpOutline,
@@ -15,31 +16,33 @@ import { Button } from '../components/ui';
 
 
 const HomePage = () => {
+  const { t } = useTranslation('home');
+  
   const quickFilters = [
     {
-      title: 'Economical',
-      description: 'Cars with low fuel consumption',
+      titleKey: 'quickFilters.economical.title',
+      descriptionKey: 'quickFilters.economical.description',
       icon: <IoFlashOutline className="w-8 h-8" />,
       link: '/cars?tagIds=3',
       color: 'bg-green-500',
     },
     {
-      title: 'Sporty',
-      description: 'Powerful and dynamic cars',
+      titleKey: 'quickFilters.sporty.title',
+      descriptionKey: 'quickFilters.sporty.description',
       icon: <IoTrendingUpOutline className="w-8 h-8" />,
       link: '/cars?tagIds=1',
       color: 'bg-red-500',
     },
     {
-      title: 'Family',
-      description: 'Spacious and comfortable',
+      titleKey: 'quickFilters.family.title',
+      descriptionKey: 'quickFilters.family.description',
       icon: <IoPeopleOutline className="w-8 h-8" />,
       link: '/cars?tagIds=2',
       color: 'bg-blue-500',
     },
     {
-      title: 'Electric',
-      description: 'Electric only vehicles',
+      titleKey: 'quickFilters.electric.title',
+      descriptionKey: 'quickFilters.electric.description',
       icon: <IoBatteryChargingOutline className="w-8 h-8" />,
       link: '/cars?engineTypes=Electric',
       color: 'bg-yellow-500',
@@ -58,31 +61,31 @@ const HomePage = () => {
   ];
 
   const stats = [
-    { value: '500+', label: 'Car models' },
-    { value: '10k+', label: 'User reviews' },
-    { value: '25k+', label: 'Fuel reports' },
-    { value: '50+', label: 'Brands in database' },
+    { value: '500+', labelKey: 'stats.carModels' },
+    { value: '10k+', labelKey: 'stats.userReviews' },
+    { value: '25k+', labelKey: 'stats.fuelReports' },
+    { value: '50+', labelKey: 'stats.brandsInDatabase' },
   ];
 
   const features = [
     {
-      title: 'Detailed specifications',
-      description: 'Complete technical data for every model',
+      titleKey: 'features.specs.title',
+      descriptionKey: 'features.specs.description',
       icon: <IoDocumentTextOutline className="w-6 h-6" />,
     },
     {
-      title: 'Model comparison',
-      description: 'Compare multiple cars side by side',
+      titleKey: 'features.comparison.title',
+      descriptionKey: 'features.comparison.description',
       icon: <IoBarChartOutline className="w-6 h-6" />,
     },
     {
-      title: 'Real fuel consumption',
-      description: 'Data from users, not manufacturers',
+      titleKey: 'features.fuel.title',
+      descriptionKey: 'features.fuel.description',
       icon: <IoFlameOutline className="w-6 h-6" />,
     },
     {
-      title: 'Owner reviews',
-      description: 'Reviews from real drivers',
+      titleKey: 'features.reviews.title',
+      descriptionKey: 'features.reviews.description',
       icon: <IoStarOutline className="w-6 h-6" />,
     },
   ];
@@ -99,11 +102,11 @@ const HomePage = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-white leading-tight">
-                Find your dream{' '}
-                <span className="text-primary-600 dark:text-primary-400">car</span>
+                {t('hero.title')}{' '}
+                <span className="text-primary-600 dark:text-primary-400">{t('hero.titleHighlight')}</span>
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-neutral-600 dark:text-neutral-300 max-w-2xl">
-                Compare specifications, read user reviews, and analyze real fuel consumption data. All in one place.
+                {t('hero.subtitle')}
               </p>
               
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -113,7 +116,7 @@ const HomePage = () => {
                   leftIcon={<IoSearchOutline className="w-5 h-5" />}
                   className="shadow-lg shadow-primary-600/25 hover:shadow-xl hover:shadow-primary-600/30 hover:-translate-y-0.5"
                 >
-                  Browse cars
+                  {t('hero.searchButton')}
                 </Button>
                 <Button
                   to="/comparison"
@@ -122,7 +125,7 @@ const HomePage = () => {
                   leftIcon={<IoBarChartOutline className="w-5 h-5" />}
                   className="hover:-translate-y-0.5"
                 >
-                  Compare models
+                  {t('features.comparison.title')}
                 </Button>
               </div>
             </div>
@@ -137,7 +140,7 @@ const HomePage = () => {
                     {stat.value}
                   </div>
                   <div className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-                    {stat.label}
+                    {t(stat.labelKey)}
                   </div>
                 </div>
               ))}
@@ -150,11 +153,8 @@ const HomePage = () => {
       <section aria-labelledby="quick-search-heading" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <h2 id="quick-search-heading" className="text-3xl font-bold text-neutral-900 dark:text-white">
-            Quick search
+            {t('quickFilters.title')}
           </h2>
-          <p className="mt-3 text-lg text-neutral-600 dark:text-neutral-400">
-            Choose a category and find a car tailored to your needs
-          </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -169,10 +169,10 @@ const HomePage = () => {
               </div>
 
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-1">
-                {filter.title}
+                {t(filter.titleKey)}
               </h3>
               <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                {filter.description}
+                {t(filter.descriptionKey)}
               </p>
 
               <div className="absolute top-6 right-6 text-neutral-300 dark:text-neutral-600 group-hover:text-primary-500 transition-colors">
@@ -187,10 +187,10 @@ const HomePage = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-neutral-900 dark:text-white">
-            Why CarsPlatform?
+            {t('features.title')}
           </h2>
           <p className="mt-3 text-lg text-neutral-600 dark:text-neutral-400">
-            Everything you need to make an informed decision
+            {t('features.subtitle')}
           </p>
         </div>
 
@@ -204,10 +204,10 @@ const HomePage = () => {
                 {feature.icon}
               </div>
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
-                {feature.title}
+                {t(feature.titleKey)}
               </h3>
               <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                {feature.description}
+                {t(feature.descriptionKey)}
               </p>
             </div>
           ))}
@@ -218,11 +218,8 @@ const HomePage = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-neutral-900 dark:text-white">
-            Popular brands
+            {t('popularBrands.title')}
           </h2>
-          <p className="mt-3 text-lg text-neutral-600 dark:text-neutral-400">
-            Browse cars from the most popular manufacturers
-          </p>
         </div>
 
         <div className="grid grid-cols-4 sm:grid-cols-8 gap-4">

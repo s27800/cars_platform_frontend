@@ -1,0 +1,73 @@
+{
+  "title": "Mój profil",
+  "tabs": {
+    "overview": "Przegląd",
+    "reviews": "Moje opinie",
+    "fuelReports": "Raporty spalania",
+    "proposals": "Propozycje danych",
+    "password": "Zmień hasło",
+    "settings": "Ustawienia"
+  },
+  "overview": {
+    "memberSince": "Członek od",
+    "totalReviews": "Napisanych opinii",
+    "totalFuelReports": "Raportów spalania",
+    "totalProposals": "Propozycji danych"
+  },
+  "editProfile": {
+    "title": "Edytuj profil",
+    "username": "Nazwa użytkownika",
+    "email": "Email",
+    "currentPassword": "Aktualne hasło",
+    "newPassword": "Nowe hasło",
+    "confirmPassword": "Potwierdź nowe hasło",
+    "save": "Zapisz zmiany",
+    "cancel": "Anuluj"
+  },
+  "changePassword": {
+    "title": "Zmień hasło",
+    "currentPassword": "Aktualne hasło",
+    "currentPasswordPlaceholder": "Wprowadź aktualne hasło",
+    "newPassword": "Nowe hasło",
+    "newPasswordPlaceholder": "Wprowadź nowe hasło",
+    "confirmPassword": "Potwierdź nowe hasło",
+    "confirmPasswordPlaceholder": "Powtórz nowe hasło",
+    "submit": "Zmień hasło",
+    "success": "Hasło zmienione pomyślnie!",
+    "wrongPassword": "Aktualne hasło jest nieprawidłowe"
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "theme": "Motyw",
+    "themeLight": "Jasny",
+    "themeDark": "Ciemny",
+    "themeSystem": "Systemowy",
+    "language": "Język",
+    "notifications": "Powiadomienia",
+    "emailNotifications": "Powiadomienia email",
+    "save": "Zapisz ustawienia"
+  },
+  "fuelReports": {
+    "title": "Moje raporty spalania",
+    "add": "Dodaj raport spalania",
+    "edit": "Edytuj raport",
+    "delete": "Usuń raport",
+    "empty": "Brak raportów spalania",
+    "emptyDescription": "Zacznij śledzić swoje spalanie dodając pierwszy raport"
+  },
+  "proposals": {
+    "title": "Moje propozycje danych",
+    "add": "Prześlij nową propozycję",
+    "empty": "Brak propozycji",
+    "emptyDescription": "Pomóż nam ulepszyć bazę danych, sugerując poprawki lub uzupełnienia",
+    "status": {
+      "pending": "Oczekuje na weryfikację",
+      "approved": "Zatwierdzona",
+      "rejected": "Odrzucona"
+    }
+  },
+  "messages": {
+    "profileUpdated": "Profil zaktualizowany pomyślnie!",
+    "settingsSaved": "Ustawienia zapisane pomyślnie!"
+  }
+}

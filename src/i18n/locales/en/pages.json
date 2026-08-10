@@ -1,0 +1,159 @@
+{
+  "about": {
+    "title": "About CarsPlatform",
+    "subtitle": "Your comprehensive source for car information, reviews, and real-world fuel consumption data. Built by car enthusiasts, for car enthusiasts.",
+    "mission": {
+      "title": "Our Mission",
+      "description": "We believe that choosing a car should be based on real data and honest opinions. Our platform brings together detailed specifications, user reviews, and actual fuel consumption reports to help you make informed decisions."
+    },
+    "stats": {
+      "carModels": "Car Models",
+      "brands": "Brands",
+      "reviews": "Reviews",
+      "fuelReports": "Fuel Reports"
+    },
+    "features": {
+      "title": "Platform Features",
+      "subtitle": "Everything you need to research and compare cars",
+      "search": {
+        "title": "Advanced Search",
+        "description": "Find cars using detailed filters including brand, model, engine type, power, and more."
+      },
+      "comparison": {
+        "title": "Car Comparison",
+        "description": "Compare up to 4 cars side by side with detailed specifications and ratings."
+      },
+      "reviews": {
+        "title": "User Reviews",
+        "description": "Read honest reviews from real car owners with detailed ratings across 11 categories."
+      },
+      "fuel": {
+        "title": "Fuel Reports",
+        "description": "Check real-world fuel consumption data reported by the community."
+      },
+      "moderated": {
+        "title": "Moderated Content",
+        "description": "All reviews and reports are verified by our admin team for quality and accuracy."
+      },
+      "community": {
+        "title": "Community Driven",
+        "description": "Users can suggest data corrections to keep our database accurate and up-to-date."
+      }
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "step1": {
+        "title": "Search & Browse",
+        "description": "Use our advanced search filters or browse by brand to find cars that match your criteria."
+      },
+      "step2": {
+        "title": "Compare & Research",
+        "description": "Add cars to comparison, read user reviews, and check real fuel consumption data."
+      },
+      "step3": {
+        "title": "Make an Informed Decision",
+        "description": "Use all the collected data to choose the car that best fits your needs."
+      }
+    },
+    "cta": {
+      "title": "Ready to find your perfect car?",
+      "button": "Start Browsing"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to common questions about CarsPlatform",
+    "general": {
+      "title": "General Questions",
+      "q1": "What is CarsPlatform?",
+      "a1": "CarsPlatform is a comprehensive car information platform that allows you to search, compare, and review cars. We provide detailed specifications, user reviews, and real-world fuel consumption data.",
+      "q2": "Is CarsPlatform free to use?",
+      "a2": "Yes, CarsPlatform is completely free to use. You can browse cars, read reviews, and check fuel reports without any cost. Registration is only required for adding reviews and fuel reports.",
+      "q3": "How do I create an account?",
+      "a3": "Click the 'Sign Up' button in the top right corner of the page. Fill in your details including username, email, and password. After registration, you can immediately start contributing to the platform."
+    },
+    "reviews": {
+      "title": "Reviews & Ratings",
+      "q1": "How are car ratings calculated?",
+      "a1": "Car ratings are averaged from all user reviews. Each review rates the car across 11 different categories, and the overall rating is the average of all category scores.",
+      "q2": "Can I edit my review?",
+      "a2": "Yes, you can edit your reviews at any time from your profile page. Simply navigate to your reviews section and click the edit button on any review you've submitted.",
+      "q3": "Why was my review not published?",
+      "a3": "All reviews go through a moderation process to ensure quality. If your review doesn't meet our guidelines (e.g., contains inappropriate content, is too short, or lacks substance), it may be rejected."
+    },
+    "fuel": {
+      "title": "Fuel Reports",
+      "q1": "How do fuel reports work?",
+      "a1": "Users can submit fuel consumption reports for cars they own or drive regularly. Each report includes average fuel consumption, driving conditions, and other relevant details.",
+      "q2": "How accurate are the fuel consumption figures?",
+      "a2": "Fuel consumption figures are based on real user reports. We average all submitted reports to provide the most accurate estimate possible. Keep in mind that actual consumption may vary based on driving style, conditions, and vehicle maintenance."
+    },
+    "comparison": {
+      "title": "Car Comparison",
+      "q1": "How many cars can I compare at once?",
+      "a1": "You can compare up to 4 cars at once. This allows you to see specifications, ratings, and fuel consumption side by side for easier comparison.",
+      "q2": "Can I save my comparisons?",
+      "a2": "Currently, comparisons are stored in your browser session. If you close your browser, the comparison will be reset. We recommend taking screenshots if you want to save a comparison."
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated",
+    "sections": {
+      "acceptance": {
+        "title": "1. Acceptance of Terms",
+        "content": "By accessing and using CarsPlatform, you accept and agree to be bound by the terms and provisions of this agreement."
+      },
+      "use": {
+        "title": "2. Use of Service",
+        "content": "You agree to use the service only for lawful purposes and in accordance with these Terms. You are responsible for all content you submit to the platform."
+      },
+      "accounts": {
+        "title": "3. User Accounts",
+        "content": "You are responsible for safeguarding your account password and for any activities or actions under your account."
+      },
+      "content": {
+        "title": "4. User Content",
+        "content": "By submitting reviews, fuel reports, or other content, you grant us the right to use, modify, and display that content on the platform."
+      },
+      "moderation": {
+        "title": "5. Content Moderation",
+        "content": "We reserve the right to remove any content that violates our guidelines or is deemed inappropriate."
+      },
+      "disclaimer": {
+        "title": "6. Disclaimer",
+        "content": "The service is provided 'as is' without warranties of any kind. We do not guarantee the accuracy of user-submitted data."
+      }
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated",
+    "sections": {
+      "collect": {
+        "title": "1. Information We Collect",
+        "content": "We collect information you provide directly to us, such as when you create an account, submit a review, or contact us."
+      },
+      "use": {
+        "title": "2. How We Use Your Information",
+        "content": "We use the information to provide, maintain, and improve our services, and to communicate with you."
+      },
+      "sharing": {
+        "title": "3. Information Sharing",
+        "content": "We do not sell or share your personal information with third parties except as described in this policy."
+      },
+      "security": {
+        "title": "4. Data Security",
+        "content": "We implement appropriate security measures to protect your personal information."
+      },
+      "rights": {
+        "title": "5. Your Rights",
+        "content": "You have the right to access, correct, or delete your personal information at any time through your account settings."
+      },
+      "contact": {
+        "title": "6. Contact Us",
+        "content": "If you have questions about this Privacy Policy, please contact us."
+      }
+    }
+  }
+}

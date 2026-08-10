@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { IoHomeOutline, IoArrowBackOutline, IoSearchOutline } from 'react-icons/io5';
 import { Button } from '../components/ui';
 
 
 const NotFoundPage = () => {
+  const { t } = useTranslation();
+  
   return (
     <div className="min-h-[calc(100vh-16rem)] flex items-center justify-center px-4">
       <div className="text-center max-w-md">
@@ -17,12 +20,12 @@ const NotFoundPage = () => {
 
         {/* Title */}
         <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-3">
-          Page not found
+          {t('errors.pageNotFound')}
         </h1>
 
         {/* Description */}
         <p className="text-neutral-600 dark:text-neutral-400 mb-8">
-          Sorry, the page you are looking for doesn't exist or has been moved.
+          {t('errors.pageNotFoundDescription')}
         </p>
 
         {/* Action buttons */}
@@ -33,7 +36,7 @@ const NotFoundPage = () => {
             size="lg"
             leftIcon={<IoHomeOutline className="w-5 h-5" />}
           >
-            Go to Home
+            {t('errors.goHome')}
           </Button>
           
           <Button
@@ -42,7 +45,7 @@ const NotFoundPage = () => {
             size="lg"
             leftIcon={<IoSearchOutline className="w-5 h-5" />}
           >
-            Browse Cars
+            {t('navigation.cars')}
           </Button>
         </div>
 
@@ -53,7 +56,7 @@ const NotFoundPage = () => {
             className="inline-flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
           >
             <IoArrowBackOutline className="w-4 h-4" />
-            Go back to previous page
+            {t('buttons.back')}
           </button>
         </div>
       </div>

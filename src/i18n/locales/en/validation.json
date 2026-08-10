@@ -1,0 +1,50 @@
+{
+  "required": "This field is required",
+  "email": "Please enter a valid email address",
+  "minLength": "Must be at least {{min}} characters",
+  "maxLength": "Must be at most {{max}} characters",
+  "passwordMatch": "Passwords must match",
+  "invalidFormat": "Invalid format",
+  "positiveNumber": "Must be a positive number",
+  "integer": "Must be a whole number",
+  "minValue": "Must be at least {{min}}",
+  "maxValue": "Must be at most {{max}}",
+  "username": {
+    "required": "Username is required",
+    "minLength": "Username must be at least 3 characters",
+    "maxLength": "Username must be at most 50 characters",
+    "invalid": "Username can only contain letters, numbers, and underscores"
+  },
+  "password": {
+    "required": "Password is required",
+    "minLength": "Password must be at least 6 characters",
+    "maxLength": "Password must be at most 100 characters",
+    "weak": "Password is too weak",
+    "mismatch": "Passwords do not match"
+  },
+  "emailField": {
+    "required": "Email is required",
+    "invalid": "Please enter a valid email address"
+  },
+  "review": {
+    "titleRequired": "Review title is required",
+    "titleMinLength": "Title must be at least 5 characters",
+    "contentRequired": "Review content is required",
+    "contentMinLength": "Review must be at least 20 characters",
+    "ratingRequired": "Please provide a rating"
+  },
+  "fuelReport": {
+    "consumptionRequired": "Fuel consumption is required",
+    "consumptionPositive": "Fuel consumption must be a positive number",
+    "mileageRequired": "Mileage is required",
+    "mileagePositive": "Mileage must be a positive number",
+    "dateRequired": "Date is required",
+    "dateFuture": "Date cannot be in the future"
+  },
+  "proposal": {
+    "categoryRequired": "Category is required",
+    "fieldRequired": "Field is required",
+    "valueRequired": "Proposed value is required",
+    "descriptionRequired": "Description is required"
+  }
+}

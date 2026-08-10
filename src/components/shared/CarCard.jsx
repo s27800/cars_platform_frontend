@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { 
   IoSpeedometerOutline, 
   IoFlashOutline, 
@@ -15,6 +16,7 @@ const CarCard = ({
   onToggleComparison,
   className = '',
 }) => {
+  const { t } = useTranslation('cars');
   const {
     id,
     name,
@@ -103,12 +105,12 @@ const CarCard = ({
         <div className="mt-3 flex flex-wrap gap-1.5">
           {engine?.engineType && (
             <Badge variant="primary" size="sm">
-              {engine.engineType}
+              {t(`engineTypes.${engine.engineType}`, engine.engineType)}
             </Badge>
           )}
           {chassis?.drive && (
             <Badge variant="default" size="sm">
-              {chassis.drive}
+              {t(`driveTypes.${chassis.drive}`, chassis.drive)}
             </Badge>
           )}
         </div>
@@ -120,7 +122,7 @@ const CarCard = ({
             size="sm"
             className="flex-1"
           >
-            Details
+            {t('card.details')}
           </Button>
           
           {onToggleComparison && (
@@ -137,7 +139,7 @@ const CarCard = ({
                 : <IoAddOutline className="w-4 h-4" />
               }
             >
-              {isInComparison ? 'Added' : 'Compare'}
+              {isInComparison ? t('card.added') : t('card.compare')}
             </Button>
           )}
         </div>

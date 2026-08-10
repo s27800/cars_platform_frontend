@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { 
   IoCarSportOutline,
   IoCogOutline, 
@@ -29,6 +30,7 @@ import { MAX_COMPARISON_CARS, STORAGE_KEYS } from '../utils/constants';
 const CarDetailsPage = () => {
   const { id } = useParams();
   const { isAuthenticated } = useAuth();
+  const { t } = useTranslation('cars');
   const [showProposalModal, setShowProposalModal] = useState(false);
 
   const [comparisonCars, setComparisonCars] = useState(() => 
@@ -74,14 +76,14 @@ const CarDetailsPage = () => {
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="max-w-md text-center">
           <IoCarSportOutline className="w-16 h-16 mx-auto text-neutral-400 mb-4" />
-          <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">Car not found</h1>
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">{t('details.carNotFound')}</h1>
           <p className="text-neutral-600 dark:text-neutral-400 mb-6">
             {error?.response?.status === 404 
-              ? "The car you're looking for doesn't exist or has been removed."
-              : "Something went wrong while loading car details."
+              ? t('details.carNotFoundDescription')
+              : t('details.loadError')
             }
           </p>
-          <Button to="/cars" variant="primary">Browse Cars</Button>
+          <Button to="/cars" variant="primary">{t('details.browseCars')}</Button>
         </div>
       </div>
     );
@@ -163,17 +165,17 @@ const CarDetailsPage = () => {
                 )}
                 {bodyType?.name && (
                   <Badge variant="default" size="md">
-                    {bodyType.name}
+                    {t(`bodyTypes.${bodyType.name}`, bodyType.name)}
                   </Badge>
                 )}
                 {engine?.engineType && (
                   <Badge variant="default" size="md">
-                    {engine.engineType}
+                    {t(`engineTypes.${engine.engineType}`, engine.engineType)}
                   </Badge>
                 )}
                 {chassis?.drive && (
                   <Badge variant="default" size="md">
-                    {chassis.drive}
+                    {t(`driveTypes.${chassis.drive}`, chassis.drive)}
                   </Badge>
                 )}
               </div>
@@ -195,28 +197,28 @@ const CarDetailsPage = () => {
               {engine?.maxPower && (
                 <QuickSpec 
                   icon={<IoFlashOutline />}
-                  label="Power"
+                  label={t('specs.maxPower')}
                   value={`${engine.maxPower} HP`}
                 />
               )}
               {performance?.maxSpeed && (
                 <QuickSpec 
                   icon={<IoSpeedometerOutline />}
-                  label="Top Speed"
+                  label={t('specs.topSpeed')}
                   value={`${performance.maxSpeed} km/h`}
                 />
               )}
               {performance?.acceleration0100 && (
                 <QuickSpec 
                   icon={<IoSpeedometerOutline />}
-                  label="0-100 km/h"
+                  label={t('specs.acceleration')}
                   value={`${performance.acceleration0100}s`}
                 />
               )}
               {engine?.displacement && (
                 <QuickSpec 
                   icon={<IoCogOutline />}
-                  label="Engine"
+                  label={t('specs.displacement')}
                   value={`${(engine.displacement / 1000).toFixed(1)}L`}
                 />
               )}
@@ -236,7 +238,7 @@ const CarDetailsPage = () => {
                 onClick={handleToggleComparison}
                 leftIcon={<IoGitCompareOutline className="w-5 h-5" />}
               >
-                {isInComparison ? 'Remove from Compare' : 'Add to Compare'}
+                {isInComparison ? t('details.removeCompare') : t('details.compare')}
               </Button>
 
               {isAuthenticated && (
@@ -245,7 +247,7 @@ const CarDetailsPage = () => {
                   onClick={() => setShowProposalModal(true)}
                   leftIcon={<IoCreateOutline className="w-5 h-5" />}
                 >
-                  Suggest Correction
+                  {t('details.suggestCorrection')}
                 </Button>
               )}
             </div>
@@ -254,9 +256,9 @@ const CarDetailsPage = () => {
             {comparisonCars.length > 0 && (
               <div className="mt-4 p-3 bg-primary-50 dark:bg-primary-900/20 rounded-lg">
                 <p className="text-sm text-primary-700 dark:text-primary-300">
-                  <strong>{comparisonCars.length}</strong> car{comparisonCars.length > 1 ? 's' : ''} in comparison list.{' '}
+                  {t('details.carsInComparison', { count: comparisonCars.length })}{' '}
                   <Link to="/comparison" className="underline hover:no-underline">
-                    View comparison →
+                    {t('details.viewComparison')} →
                   </Link>
                 </p>
               </div>
@@ -268,49 +270,49 @@ const CarDetailsPage = () => {
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4 flex items-center gap-2">
             <IoSettingsOutline className="w-6 h-6 text-primary-600" />
-            Technical Specifications
+            {t('details.technicalSpecifications')}
           </h2>
 
           <div className="space-y-3">
 
             {/* Basic Info */}
             <SpecificationSection
-              title="Basic Information"
+              title={t('specs.groups.basic')}
               icon={<IoCarSportOutline className="w-5 h-5" />}
               defaultOpen={true}
             >
               <SpecificationSection.Grid>
-                <SpecificationSection.Item label="Brand" value={car.brand?.name} />
-                <SpecificationSection.Item label="Model" value={car.model?.name} />
-                <SpecificationSection.Item label="Generation" value={car.generation?.name} />
-                <SpecificationSection.Item label="Production Years" value={productionYears} />
-                <SpecificationSection.Item label="Body Type" value={bodyType?.name} />
-                <SpecificationSection.Item label="Doors" value={doorsNumber} />
-                <SpecificationSection.Item label="Seats" value={seatsNumber} />
+                <SpecificationSection.Item label={t('specs.brand')} value={car.brand?.name} />
+                <SpecificationSection.Item label={t('specs.model')} value={car.model?.name} />
+                <SpecificationSection.Item label={t('specs.generation')} value={car.generation?.name} />
+                <SpecificationSection.Item label={t('specs.productionYears')} value={productionYears} />
+                <SpecificationSection.Item label={t('specs.bodyType')} value={bodyType?.name ? t(`bodyTypes.${bodyType.name}`, bodyType.name) : null} />
+                <SpecificationSection.Item label={t('specs.doors')} value={doorsNumber} />
+                <SpecificationSection.Item label={t('specs.seats')} value={seatsNumber} />
               </SpecificationSection.Grid>
             </SpecificationSection>
 
             {/* Engine */}
             {engine && (
               <SpecificationSection
-                title="Engine"
+                title={t('specs.groups.engine')}
                 icon={<IoCogOutline className="w-5 h-5" />}
                 defaultOpen={true}
               >
                 <SpecificationSection.Grid>
-                  <SpecificationSection.Item label="Engine Code" value={engine.engineCode} />
-                  <SpecificationSection.Item label="Type" value={engine.engineType} />
-                  <SpecificationSection.Item label="Displacement" value={engine.displacement} unit="cc" />
-                  <SpecificationSection.Item label="Max Power" value={engine.maxPower} unit="HP" />
-                  <SpecificationSection.Item label="Power @ RPM" value={engine.maxPowerRotationSpeed} unit="rpm" />
-                  <SpecificationSection.Item label="Max Torque" value={engine.maxTorque} unit="Nm" />
-                  <SpecificationSection.Item label="Torque @ RPM" value={engine.maxTorqueRotationSpeed} unit="rpm" />
-                  <SpecificationSection.Item label="Cylinders" value={engine.cylindersNumber} />
-                  <SpecificationSection.Item label="Cylinders Layout" value={engine.cylindersLayout} />
-                  <SpecificationSection.Item label="Valves" value={engine.valvesNumber} />
-                  <SpecificationSection.Item label="Turbo" value={engine.turbo} />
-                  <SpecificationSection.Item label="Ignition" value={engine.ignition} />
-                  <SpecificationSection.Item label="Injection" value={engine.injectionType} />
+                  <SpecificationSection.Item label={t('specs.engineCode')} value={engine.engineCode} />
+                  <SpecificationSection.Item label={t('specs.fuelType')} value={engine.engineType ? t(`engineTypes.${engine.engineType}`, engine.engineType) : null} />
+                  <SpecificationSection.Item label={t('specs.displacement')} value={engine.displacement} unit="cc" />
+                  <SpecificationSection.Item label={t('specs.maxPower')} value={engine.maxPower} unit="HP" />
+                  <SpecificationSection.Item label={t('specs.maxPowerRpm')} value={engine.maxPowerRotationSpeed} unit="rpm" />
+                  <SpecificationSection.Item label={t('specs.maxTorque')} value={engine.maxTorque} unit="Nm" />
+                  <SpecificationSection.Item label={t('specs.maxTorqueRpm')} value={engine.maxTorqueRotationSpeed} unit="rpm" />
+                  <SpecificationSection.Item label={t('specs.cylinders')} value={engine.cylindersNumber} />
+                  <SpecificationSection.Item label={t('specs.cylindersLayout')} value={engine.cylindersLayout} />
+                  <SpecificationSection.Item label={t('specs.valves')} value={engine.valvesNumber} />
+                  <SpecificationSection.Item label={t('specs.turbo')} value={engine.turbo != null ? (engine.turbo ? t('common.yes') : t('common.no')) : null} />
+                  <SpecificationSection.Item label={t('specs.ignition')} value={engine.ignition} />
+                  <SpecificationSection.Item label={t('specs.injection')} value={engine.injectionType} />
                 </SpecificationSection.Grid>
               </SpecificationSection>
             )}
@@ -318,15 +320,15 @@ const CarDetailsPage = () => {
             {/* Transmission */}
             {transmission && (
               <SpecificationSection
-                title="Transmission"
+                title={t('specs.groups.transmission')}
                 icon={<IoSettingsOutline className="w-5 h-5" />}
                 defaultOpen={true}
               >
                 <SpecificationSection.Grid>
-                  <SpecificationSection.Item label="Type" value={transmission.transmissionType} />
-                  <SpecificationSection.Item label="Name" value={transmission.transmissionName} />
-                  <SpecificationSection.Item label="Gears" value={transmission.gearsNumber} />
-                  <SpecificationSection.Item label="Clutch" value={transmission.clutchType} />
+                  <SpecificationSection.Item label={t('specs.transmissionType')} value={transmission.transmissionType ? t(`transmissionTypes.${transmission.transmissionType}`, transmission.transmissionType) : null} />
+                  <SpecificationSection.Item label={t('specs.transmissionName')} value={transmission.transmissionName} />
+                  <SpecificationSection.Item label={t('specs.gears')} value={transmission.gearsNumber} />
+                  <SpecificationSection.Item label={t('specs.clutch')} value={transmission.clutchType} />
                 </SpecificationSection.Grid>
               </SpecificationSection>
             )}
@@ -334,23 +336,23 @@ const CarDetailsPage = () => {
             {/* Performance */}
             {performance && (
               <SpecificationSection
-                title="Performance"
+                title={t('specs.groups.performance')}
                 icon={<IoSpeedometerOutline className="w-5 h-5" />}
                 defaultOpen={true}
               >
                 <SpecificationSection.Grid>
-                  <SpecificationSection.Item label="Top Speed" value={performance.maxSpeed} unit="km/h" />
-                  <SpecificationSection.Item label="0-100 km/h" value={performance.acceleration0100} unit="s" />
-                  <SpecificationSection.Item label="100-200 km/h" value={performance.acceleration100200} unit="s" />
-                  <SpecificationSection.Item label="Fuel Tank" value={performance.fuelTankCapacity} unit="L" />
-                  <SpecificationSection.Item label="City Consumption" value={performance.fuelConsumptionCity} unit="L/100km" />
-                  <SpecificationSection.Item label="Highway Consumption" value={performance.fuelConsumptionRoute} unit="L/100km" />
-                  <SpecificationSection.Item label="Mixed Consumption" value={performance.fuelConsumptionMixed} unit="L/100km" />
-                  <SpecificationSection.Item label="City Range" value={performance.rangeCity} unit="km" />
-                  <SpecificationSection.Item label="Highway Range" value={performance.rangeRoute} unit="km" />
-                  <SpecificationSection.Item label="Mixed Range" value={performance.rangeMixed} unit="km" />
-                  <SpecificationSection.Item label="CO2 Emissions" value={performance.emissionCo2} unit="g/km" />
-                  <SpecificationSection.Item label="Emission Standard" value={performance.fuelEmissionNorm} />
+                  <SpecificationSection.Item label={t('specs.topSpeed')} value={performance.maxSpeed} unit="km/h" />
+                  <SpecificationSection.Item label={t('specs.acceleration')} value={performance.acceleration0100} unit="s" />
+                  <SpecificationSection.Item label={t('specs.acceleration100200')} value={performance.acceleration100200} unit="s" />
+                  <SpecificationSection.Item label={t('specs.fuelTank')} value={performance.fuelTankCapacity} unit="L" />
+                  <SpecificationSection.Item label={t('specs.consumptionCity')} value={performance.fuelConsumptionCity} unit="L/100km" />
+                  <SpecificationSection.Item label={t('specs.consumptionHighway')} value={performance.fuelConsumptionRoute} unit="L/100km" />
+                  <SpecificationSection.Item label={t('specs.consumptionMixed')} value={performance.fuelConsumptionMixed} unit="L/100km" />
+                  <SpecificationSection.Item label={t('specs.rangeCity')} value={performance.rangeCity} unit="km" />
+                  <SpecificationSection.Item label={t('specs.rangeHighway')} value={performance.rangeRoute} unit="km" />
+                  <SpecificationSection.Item label={t('specs.rangeMixed')} value={performance.rangeMixed} unit="km" />
+                  <SpecificationSection.Item label={t('specs.co2Emissions')} value={performance.emissionCo2} unit="g/km" />
+                  <SpecificationSection.Item label={t('specs.emissionStandard')} value={performance.fuelEmissionNorm} />
                 </SpecificationSection.Grid>
               </SpecificationSection>
             )}
@@ -358,21 +360,21 @@ const CarDetailsPage = () => {
             {/* Chassis */}
             {chassis && (
               <SpecificationSection
-                title="Chassis & Brakes"
+                title={t('specs.groups.chassis')}
                 icon={<IoLayersOutline className="w-5 h-5" />}
                 defaultOpen={true}
               >
                 <SpecificationSection.Grid>
-                  <SpecificationSection.Item label="Drive" value={chassis.drive} />
-                  <SpecificationSection.Item label="Suspension" value={chassis.suspension} />
-                  <SpecificationSection.Item label="Front Brakes" value={chassis.frontBrakes} />
-                  <SpecificationSection.Item label="Rear Brakes" value={chassis.backBrakes} />
-                  <SpecificationSection.Item label="Front Brake Radius" value={chassis.frontBrakesRadius} unit="mm" />
-                  <SpecificationSection.Item label="Rear Brake Radius" value={chassis.backBrakesRadius} unit="mm" />
-                  <SpecificationSection.Item label="Basic Rims" value={chassis.basicRims} />
-                  <SpecificationSection.Item label="Optional Rims" value={chassis.optionalRims} />
-                  <SpecificationSection.Item label="Basic Tires" value={chassis.basicTires} />
-                  <SpecificationSection.Item label="Optional Tires" value={chassis.optionalTires} />
+                  <SpecificationSection.Item label={t('specs.drive')} value={chassis.drive ? t(`driveTypes.${chassis.drive}`, chassis.drive) : null} />
+                  <SpecificationSection.Item label={t('specs.suspension')} value={chassis.suspension} />
+                  <SpecificationSection.Item label={t('specs.frontBrakes')} value={chassis.frontBrakes} />
+                  <SpecificationSection.Item label={t('specs.rearBrakes')} value={chassis.backBrakes} />
+                  <SpecificationSection.Item label={t('specs.frontBrakesRadius')} value={chassis.frontBrakesRadius} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.rearBrakesRadius')} value={chassis.backBrakesRadius} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.basicRims')} value={chassis.basicRims} />
+                  <SpecificationSection.Item label={t('specs.optionalRims')} value={chassis.optionalRims} />
+                  <SpecificationSection.Item label={t('specs.basicTires')} value={chassis.basicTires} />
+                  <SpecificationSection.Item label={t('specs.optionalTires')} value={chassis.optionalTires} />
                 </SpecificationSection.Grid>
               </SpecificationSection>
             )}
@@ -380,23 +382,23 @@ const CarDetailsPage = () => {
             {/* Outside Dimensions */}
             {outsideDimensions && (
               <SpecificationSection
-                title="Outside Dimensions"
+                title={t('specs.groups.outsideDimensions')}
                 icon={<IoResizeOutline className="w-5 h-5" />}
                 defaultOpen={true}
               >
                 <SpecificationSection.Grid>
-                  <SpecificationSection.Item label="Length" value={outsideDimensions.length} unit="mm" />
-                  <SpecificationSection.Item label="Width" value={outsideDimensions.width} unit="mm" />
-                  <SpecificationSection.Item label="Width with Mirrors" value={outsideDimensions.widthWithMirrors} unit="mm" />
-                  <SpecificationSection.Item label="Height" value={outsideDimensions.height} unit="mm" />
-                  <SpecificationSection.Item label="Height with Trunk Open" value={outsideDimensions.heightWithOpenTrunk} unit="mm" />
-                  <SpecificationSection.Item label="Wheelbase" value={outsideDimensions.wheelBase} unit="mm" />
-                  <SpecificationSection.Item label="Front Track" value={outsideDimensions.wheelBaseFront} unit="mm" />
-                  <SpecificationSection.Item label="Rear Track" value={outsideDimensions.wheelBaseBack} unit="mm" />
-                  <SpecificationSection.Item label="Front Overhang" value={outsideDimensions.overhangFront} unit="mm" />
-                  <SpecificationSection.Item label="Rear Overhang" value={outsideDimensions.overhangBack} unit="mm" />
-                  <SpecificationSection.Item label="Ground Clearance" value={outsideDimensions.clearance} unit="mm" />
-                  <SpecificationSection.Item label="Max Roof Load" value={outsideDimensions.maxRoofLoad} unit="kg" />
+                  <SpecificationSection.Item label={t('specs.length')} value={outsideDimensions.length} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.width')} value={outsideDimensions.width} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.widthWithMirrors')} value={outsideDimensions.widthWithMirrors} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.height')} value={outsideDimensions.height} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.heightWithTrunk')} value={outsideDimensions.heightWithOpenTrunk} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.wheelbase')} value={outsideDimensions.wheelBase} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.frontTrack')} value={outsideDimensions.wheelBaseFront} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.rearTrack')} value={outsideDimensions.wheelBaseBack} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.frontOverhang')} value={outsideDimensions.overhangFront} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.rearOverhang')} value={outsideDimensions.overhangBack} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.clearance')} value={outsideDimensions.clearance} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.maxRoofLoad')} value={outsideDimensions.maxRoofLoad} unit="kg" />
                 </SpecificationSection.Grid>
               </SpecificationSection>
             )}
@@ -404,19 +406,19 @@ const CarDetailsPage = () => {
             {/* Inside Dimensions */}
             {insideDimensions && (
               <SpecificationSection
-                title="Inside Dimensions"
+                title={t('specs.groups.insideDimensions')}
                 icon={<IoGridOutline className="w-5 h-5" />}
                 defaultOpen={true}
               >
                 <SpecificationSection.Grid>
-                  <SpecificationSection.Item label="Front Headroom" value={insideDimensions.heightFromSeatToRoofFront} unit="mm" />
-                  <SpecificationSection.Item label="Rear Headroom" value={insideDimensions.heightFromSeatToRoofBack} unit="mm" />
-                  <SpecificationSection.Item label="Min Trunk Space" value={insideDimensions.minTrunkSpace} unit="L" />
-                  <SpecificationSection.Item label="Max Trunk Space" value={insideDimensions.maxTrunkSpace} unit="L" />
-                  <SpecificationSection.Item label="Min Trunk Length" value={insideDimensions.minTrunkLength} unit="mm" />
-                  <SpecificationSection.Item label="Max Trunk Length" value={insideDimensions.maxTrunkLength} unit="mm" />
-                  <SpecificationSection.Item label="Trunk Width" value={insideDimensions.trunkWidth} unit="mm" />
-                  <SpecificationSection.Item label="Trunk Height" value={insideDimensions.trunkHeight} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.frontHeadroom')} value={insideDimensions.heightFromSeatToRoofFront} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.rearHeadroom')} value={insideDimensions.heightFromSeatToRoofBack} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.trunkMin')} value={insideDimensions.minTrunkSpace} unit="L" />
+                  <SpecificationSection.Item label={t('specs.trunkMax')} value={insideDimensions.maxTrunkSpace} unit="L" />
+                  <SpecificationSection.Item label={t('specs.trunkLengthMin')} value={insideDimensions.minTrunkLength} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.trunkLengthMax')} value={insideDimensions.maxTrunkLength} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.trunkWidth')} value={insideDimensions.trunkWidth} unit="mm" />
+                  <SpecificationSection.Item label={t('specs.trunkHeight')} value={insideDimensions.trunkHeight} unit="mm" />
                 </SpecificationSection.Grid>
               </SpecificationSection>
             )}
@@ -427,8 +429,8 @@ const CarDetailsPage = () => {
         <section>
           <Tabs defaultValue="reviews">
             <Tabs.List>
-              <Tabs.Trigger value="reviews">Reviews</Tabs.Trigger>
-              <Tabs.Trigger value="fuelReports">Fuel Reports</Tabs.Trigger>
+              <Tabs.Trigger value="reviews">{t('details.reviews')}</Tabs.Trigger>
+              <Tabs.Trigger value="fuelReports">{t('details.fuelReports')}</Tabs.Trigger>
             </Tabs.List>
 
             <Tabs.Content value="reviews">

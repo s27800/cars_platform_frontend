@@ -1,28 +1,31 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { IoLockClosedOutline, IoPersonOutline, IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 import { useAuth } from '../hooks';
 import { Button, Input } from '../components/ui';
 
 
-const validationSchema = Yup.object({
-  username: Yup.string()
-    .required('Username is required')
-    .min(3, 'Username must be at least 3 characters'),
-  password: Yup.string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters'),
-});
-
 const LoginPage = () => {
+  const { t } = useTranslation('auth');
+  const { t: tValidation } = useTranslation('validation');
   const { login, isLoading, isAuthenticated, error, clearError } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
 
   const from = location.state?.from?.pathname || '/';
+
+  const validationSchema = Yup.object({
+    username: Yup.string()
+      .required(tValidation('username.required'))
+      .min(3, tValidation('username.minLength')),
+    password: Yup.string()
+      .required(tValidation('password.required'))
+      .min(6, tValidation('password.minLength')),
+  });
 
   if (isAuthenticated)
     return <Navigate to={from} replace />;
@@ -50,10 +53,10 @@ const LoginPage = () => {
         <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-neutral-900 dark:text-white">
-              Welcome back
+              {t('login.title')}
             </h1>
             <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-              Sign in to your account
+              {t('login.subtitle')}
             </p>
           </div>
 
@@ -65,10 +68,10 @@ const LoginPage = () => {
 
           <form onSubmit={formik.handleSubmit} className="space-y-5">
             <Input
-              label="Username"
+              label={t('login.username')}
               name="username"
               type="text"
-              placeholder="Enter your username"
+              placeholder={t('login.usernamePlaceholder')}
               leftIcon={<IoPersonOutline className="w-5 h-5" />}
               value={formik.values.username}
               onChange={formik.handleChange}
@@ -78,10 +81,10 @@ const LoginPage = () => {
             />
 
             <Input
-              label="Password"
+              label={t('login.password')}
               name="password"
               type={showPassword ? 'text' : 'password'}
-              placeholder="Enter your password"
+              placeholder={t('login.passwordPlaceholder')}
               leftIcon={<IoLockClosedOutline className="w-5 h-5" />}
               rightIcon={
                 <button
@@ -107,18 +110,18 @@ const LoginPage = () => {
               loading={isLoading}
               disabled={isLoading || !formik.isValid}
             >
-              Sign In
+              {t('login.submit')}
             </Button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-neutral-600 dark:text-neutral-400">
-              Don't have an account?{' '}
+              {t('login.noAccount')}{' '}
               <Link 
                 to="/register" 
                 className="text-primary-600 dark:text-primary-400 hover:underline font-medium"
               >
-                Sign up
+                {t('login.register')}
               </Link>
             </p>
           </div>

@@ -1,0 +1,102 @@
+{
+  "title": "Panel administratora",
+  "navigation": {
+    "dashboard": "Pulpit",
+    "reviews": "Opinie",
+    "fuelReports": "Raporty spalania",
+    "proposals": "Propozycje danych",
+    "users": "Użytkownicy"
+  },
+  "dashboard": {
+    "title": "Pulpit",
+    "stats": {
+      "totalUsers": "Użytkowników",
+      "totalReviews": "Opinii",
+      "totalFuelReports": "Raportów spalania",
+      "pendingProposals": "Oczekujących propozycji"
+    },
+    "recentActivity": "Ostatnia aktywność",
+    "pendingItems": "Elementy oczekujące na weryfikację"
+  },
+  "reviews": {
+    "title": "Zarządzaj opiniami",
+    "table": {
+      "author": "Autor",
+      "car": "Samochód",
+      "rating": "Ocena",
+      "date": "Data",
+      "status": "Status",
+      "actions": "Akcje"
+    },
+    "approve": "Zatwierdź",
+    "reject": "Odrzuć",
+    "delete": "Usuń",
+    "view": "Zobacz",
+    "confirmDelete": "Czy na pewno chcesz usunąć tę opinię?",
+    "deleted": "Opinia usunięta pomyślnie",
+    "approved": "Opinia zatwierdzona",
+    "rejected": "Opinia odrzucona"
+  },
+  "fuelReports": {
+    "title": "Zarządzaj raportami spalania",
+    "table": {
+      "author": "Autor",
+      "car": "Samochód",
+      "consumption": "Spalanie",
+      "date": "Data",
+      "status": "Status",
+      "actions": "Akcje"
+    },
+    "approve": "Zatwierdź",
+    "reject": "Odrzuć",
+    "delete": "Usuń",
+    "confirmDelete": "Czy na pewno chcesz usunąć ten raport spalania?",
+    "deleted": "Raport spalania usunięty pomyślnie",
+    "approved": "Raport spalania zatwierdzony",
+    "rejected": "Raport spalania odrzucony"
+  },
+  "proposals": {
+    "title": "Propozycje danych",
+    "table": {
+      "author": "Autor",
+      "car": "Samochód",
+      "category": "Kategoria",
+      "field": "Pole",
+      "currentValue": "Obecna wartość",
+      "proposedValue": "Proponowana wartość",
+      "date": "Data",
+      "status": "Status",
+      "actions": "Akcje"
+    },
+    "approve": "Zatwierdź",
+    "reject": "Odrzuć",
+    "view": "Zobacz szczegóły",
+    "confirmApprove": "Czy na pewno chcesz zatwierdzić tę propozycję?",
+    "confirmReject": "Czy na pewno chcesz odrzucić tę propozycję?",
+    "approved": "Propozycja zatwierdzona i dane zaktualizowane",
+    "rejected": "Propozycja odrzucona",
+    "categories": {
+      "ENGINE": "Silnik",
+      "TRANSMISSION": "Skrzynia biegów",
+      "CHASSIS": "Podwozie i hamulce",
+      "PERFORMANCE": "Osiągi",
+      "OUTSIDE_DIMENSIONS": "Wymiary zewnętrzne",
+      "INSIDE_DIMENSIONS": "Wymiary wewnętrzne",
+      "BASIC_INFO": "Podstawowe informacje"
+    }
+  },
+  "filters": {
+    "all": "Wszystkie",
+    "pending": "Oczekujące",
+    "approved": "Zatwierdzone",
+    "rejected": "Odrzucone",
+    "search": "Szukaj...",
+    "dateFrom": "Od daty",
+    "dateTo": "Do daty"
+  },
+  "common": {
+    "noData": "Brak danych do wyświetlenia",
+    "loading": "Ładowanie...",
+    "error": "Błąd ładowania danych"
+  }
+}

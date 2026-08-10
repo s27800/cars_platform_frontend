@@ -1,0 +1,65 @@
+{
+  "hero": {
+    "title": "Znajdź swój",
+    "titleHighlight": "idealny samochód",
+    "subtitle": "Przeglądaj tysiące samochodów, porównuj modele, czytaj prawdziwe opinie właścicieli i sprawdzaj rzeczywiste dane o spalaniu.",
+    "searchPlaceholder": "Szukaj samochodu...",
+    "searchButton": "Szukaj",
+    "browseAll": "Przeglądaj wszystkie"
+  },
+  "quickFilters": {
+    "title": "Popularne kategorie",
+    "economical": {
+      "title": "Ekonomiczne",
+      "description": "Samochody o niskim spalaniu"
+    },
+    "sporty": {
+      "title": "Sportowe",
+      "description": "Mocne i dynamiczne auta"
+    },
+    "family": {
+      "title": "Rodzinne",
+      "description": "Przestronne i komfortowe"
+    },
+    "electric": {
+      "title": "Elektryczne",
+      "description": "Pojazdy w pełni elektryczne"
+    }
+  },
+  "popularBrands": {
+    "title": "Popularne marki",
+    "viewAll": "Zobacz wszystkie marki"
+  },
+  "stats": {
+    "carModels": "Modeli samochodów",
+    "userReviews": "Opinii użytkowników",
+    "fuelReports": "Raportów spalania",
+    "brandsInDatabase": "Marek w bazie"
+  },
+  "features": {
+    "title": "Dlaczego CarsPlatform?",
+    "subtitle": "Wszystko, czego potrzebujesz, aby wybrać odpowiedni samochód",
+    "specs": {
+      "title": "Szczegółowe specyfikacje",
+      "description": "Kompletne dane techniczne dla każdego modelu"
+    },
+    "comparison": {
+      "title": "Porównanie modeli",
+      "description": "Porównuj wiele samochodów obok siebie"
+    },
+    "fuel": {
+      "title": "Rzeczywiste spalanie",
+      "description": "Dane od użytkowników, nie od producentów"
+    },
+    "reviews": {
+      "title": "Opinie właścicieli",
+      "description": "Recenzje od prawdziwych kierowców"
+    }
+  },
+  "cta": {
+    "title": "Gotowy, aby znaleźć swój samochód?",
+    "subtitle": "Zacznij szukać teraz lub załóż konto, aby uzyskać dostęp do wszystkich funkcji",
+    "searchButton": "Szukaj samochodów",
+    "registerButton": "Załóż konto"
+  }
+}

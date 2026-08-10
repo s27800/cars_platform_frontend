@@ -1,0 +1,76 @@
+{
+  "title": "Opinie",
+  "writeReview": "Napisz opinię",
+  "editReview": "Edytuj opinię",
+  "deleteReview": "Usuń opinię",
+  "yourReview": "Twoja opinia",
+  "ratings": {
+    "overall": "Ogólna ocena",
+    "engine": "Silnik",
+    "engineDesc": "Osiągi, dźwięk, reakcja",
+    "transmission": "Skrzynia biegów",
+    "transmissionDesc": "Płynność zmiany biegów",
+    "steering": "Układ kierowniczy",
+    "steeringDesc": "Czucie, precyzja, informacja zwrotna",
+    "suspension": "Zawieszenie",
+    "suspensionDesc": "Komfort, balans prowadzenia",
+    "visibility": "Widoczność",
+    "visibilityDesc": "Lusterka, martwe pola, parkowanie",
+    "ergonomics": "Ergonomia",
+    "ergonomicsDesc": "Obsługa, pozycja za kierownicą",
+    "soundProofing": "Wyciszenie",
+    "soundProofingDesc": "Hałas drogi, szum wiatru",
+    "interiorSpace": "Przestrzeń wewnętrzna",
+    "interiorSpaceDesc": "Miejsce na nogi, bagażnik, schowki",
+    "maintenance": "Utrzymanie",
+    "maintenanceDesc": "Koszty serwisu, niezawodność",
+    "priceQuality": "Cena/Jakość",
+    "priceQualityDesc": "Stosunek jakości do ceny",
+    "reliability": "Niezawodność",
+    "reliabilityDesc": "Częstotliwość awarii, trwałość"
+  },
+  "form": {
+    "title": "Tytuł opinii",
+    "titlePlaceholder": "Podsumuj swoje doświadczenie",
+    "content": "Twoja opinia",
+    "contentPlaceholder": "Podziel się swoim doświadczeniem z tym samochodem...",
+    "ownershipPeriod": "Okres posiadania",
+    "ownershipPeriodPlaceholder": "np. 2 lata",
+    "mileage": "Przejechany dystans",
+    "mileagePlaceholder": "np. 50000",
+    "pros": "Zalety",
+    "prosPlaceholder": "Co Ci się podoba w tym samochodzie?",
+    "cons": "Wady",
+    "consPlaceholder": "Co można by poprawić?",
+    "submit": "Wyślij opinię",
+    "update": "Zaktualizuj opinię",
+    "cancel": "Anuluj"
+  },
+  "messages": {
+    "submitSuccess": "Opinia wysłana pomyślnie!",
+    "updateSuccess": "Opinia zaktualizowana pomyślnie!",
+    "deleteSuccess": "Opinia usunięta pomyślnie!",
+    "deleteConfirm": "Czy na pewno chcesz usunąć tę opinię?",
+    "loginRequired": "Zaloguj się, aby napisać opinię",
+    "alreadyReviewed": "Już oceniłeś ten samochód"
+  },
+  "sort": {
+    "newest": "Najnowsze",
+    "oldest": "Najstarsze",
+    "highestRated": "Najwyżej oceniane",
+    "lowestRated": "Najniżej oceniane",
+    "mostHelpful": "Najbardziej pomocne"
+  },
+  "empty": {
+    "noReviews": "Brak opinii",
+    "noReviewsDescription": "Bądź pierwszy, który podzieli się swoim doświadczeniem z tym samochodem",
+    "noUserReviews": "Nie napisałeś jeszcze żadnych opinii"
+  },
+  "helpful": {
+    "wasHelpful": "Czy ta opinia była pomocna?",
+    "yes": "Tak",
+    "no": "Nie",
+    "helpfulCount": "{{count}} osoba uznała to za pomocne",
+    "helpfulCount_plural": "{{count}} osób uznało to za pomocne"
+  }
+}

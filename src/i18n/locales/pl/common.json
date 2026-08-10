@@ -1,0 +1,124 @@
+{
+  "navigation": {
+    "home": "Strona główna",
+    "cars": "Samochody",
+    "comparison": "Porównanie",
+    "profile": "Profil",
+    "admin": "Panel administratora",
+    "login": "Zaloguj się",
+    "register": "Zarejestruj się",
+    "logout": "Wyloguj się",
+    "search": "Szukaj samochodu...",
+    "settings": "Ustawienia"
+  },
+  "footer": {
+    "description": "Twoje kompleksowe źródło informacji o samochodach. Porównuj modele, czytaj recenzje, analizuj raporty spalania i znajdź swój wymarzony samochód.",
+    "navigation": "Nawigacja",
+    "followUs": "Obserwuj nas",
+    "aboutUs": "O nas",
+    "faq": "FAQ",
+    "terms": "Regulamin",
+    "privacy": "Polityka prywatności",
+    "copyright": "© {{year}} CarsPlatform. Wszelkie prawa zastrzeżone."
+  },
+  "buttons": {
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "edit": "Edytuj",
+    "submit": "Wyślij",
+    "confirm": "Potwierdź",
+    "close": "Zamknij",
+    "back": "Wstecz",
+    "next": "Dalej",
+    "previous": "Poprzedni",
+    "search": "Szukaj",
+    "clear": "Wyczyść",
+    "reset": "Resetuj",
+    "apply": "Zastosuj",
+    "showMore": "Pokaż więcej",
+    "showLess": "Pokaż mniej",
+    "seeAll": "Zobacz wszystko",
+    "loading": "Ładowanie..."
+  },
+  "status": {
+    "pending": "Oczekujące",
+    "approved": "Zatwierdzone",
+    "rejected": "Odrzucone",
+    "active": "Aktywne",
+    "inactive": "Nieaktywne"
+  },
+  "pagination": {
+    "previous": "Poprzednia",
+    "next": "Następna",
+    "page": "Strona",
+    "of": "z",
+    "showing": "Pokazuję",
+    "to": "do",
+    "results": "wyników"
+  },
+  "errors": {
+    "somethingWentWrong": "Coś poszło nie tak",
+    "pageNotFound": "Strona nie znaleziona",
+    "pageNotFoundDescription": "Strona, której szukasz, nie istnieje lub została przeniesiona.",
+    "goHome": "Wróć na stronę główną",
+    "unauthorized": "Brak autoryzacji",
+    "forbidden": "Dostęp zabroniony",
+    "serverError": "Błąd serwera",
+    "networkError": "Błąd sieci. Sprawdź swoje połączenie.",
+    "tryAgain": "Spróbuj ponownie"
+  },
+  "empty": {
+    "noResults": "Brak wyników",
+    "noData": "Brak danych"
+  },
+  "time": {
+    "justNow": "Przed chwilą",
+    "minutesAgo": "{{count}} minutę temu",
+    "minutesAgo_plural": "{{count}} minut temu",
+    "hoursAgo": "{{count}} godzinę temu",
+    "hoursAgo_plural": "{{count}} godzin temu",
+    "daysAgo": "{{count}} dzień temu",
+    "daysAgo_plural": "{{count}} dni temu"
+  },
+  "about": {
+    "title": "O nas",
+    "subtitle": "Twoje kompleksowe źródło informacji o samochodach",
+    "mission": {
+      "title": "Nasza misja",
+      "description": "Dążymy do dostarczania najbardziej dokładnych i kompleksowych informacji o samochodach, pomagając Ci podejmować świadome decyzje przy wyborze kolejnego pojazdu."
+    },
+    "features": {
+      "title": "Co oferujemy",
+      "specs": "Szczegółowe specyfikacje",
+      "specsDesc": "Kompletne dane techniczne dla każdego modelu",
+      "comparison": "Porównanie modeli",
+      "comparisonDesc": "Porównuj wiele samochodów obok siebie",
+      "fuel": "Rzeczywiste spalanie",
+      "fuelDesc": "Dane od użytkowników, nie od producentów",
+      "reviews": "Opinie właścicieli",
+      "reviewsDesc": "Szczere recenzje od prawdziwych kierowców"
+    }
+  },
+  "faq": {
+    "title": "Często zadawane pytania",
+    "subtitle": "Znajdź odpowiedzi na najczęstsze pytania dotyczące naszej platformy",
+    "searchPlaceholder": "Szukaj pytań...",
+    "categories": {
+      "account": "Konto",
+      "cars": "Samochody i wyszukiwanie",
+      "reviews": "Recenzje",
+      "fuelReports": "Raporty spalania",
+      "technical": "Techniczne",
+      "privacy": "Prywatność i bezpieczeństwo"
+    }
+  },
+  "terms": {
+    "title": "Regulamin",
+    "lastUpdated": "Ostatnia aktualizacja: {{date}}"
+  },
+  "privacy": {
+    "title": "Polityka prywatności",
+    "lastUpdated": "Ostatnia aktualizacja: {{date}}"
+  }
+}

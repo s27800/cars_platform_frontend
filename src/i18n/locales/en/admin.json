@@ -1,0 +1,102 @@
+{
+  "title": "Admin Panel",
+  "navigation": {
+    "dashboard": "Dashboard",
+    "reviews": "Reviews",
+    "fuelReports": "Fuel Reports",
+    "proposals": "Data Proposals",
+    "users": "Users"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "stats": {
+      "totalUsers": "Total users",
+      "totalReviews": "Total reviews",
+      "totalFuelReports": "Fuel reports",
+      "pendingProposals": "Pending proposals"
+    },
+    "recentActivity": "Recent activity",
+    "pendingItems": "Items pending review"
+  },
+  "reviews": {
+    "title": "Manage Reviews",
+    "table": {
+      "author": "Author",
+      "car": "Car",
+      "rating": "Rating",
+      "date": "Date",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "approve": "Approve",
+    "reject": "Reject",
+    "delete": "Delete",
+    "view": "View",
+    "confirmDelete": "Are you sure you want to delete this review?",
+    "deleted": "Review deleted successfully",
+    "approved": "Review approved",
+    "rejected": "Review rejected"
+  },
+  "fuelReports": {
+    "title": "Manage Fuel Reports",
+    "table": {
+      "author": "Author",
+      "car": "Car",
+      "consumption": "Consumption",
+      "date": "Date",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "approve": "Approve",
+    "reject": "Reject",
+    "delete": "Delete",
+    "confirmDelete": "Are you sure you want to delete this fuel report?",
+    "deleted": "Fuel report deleted successfully",
+    "approved": "Fuel report approved",
+    "rejected": "Fuel report rejected"
+  },
+  "proposals": {
+    "title": "Data Proposals",
+    "table": {
+      "author": "Author",
+      "car": "Car",
+      "category": "Category",
+      "field": "Field",
+      "currentValue": "Current value",
+      "proposedValue": "Proposed value",
+      "date": "Date",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "approve": "Approve",
+    "reject": "Reject",
+    "view": "View details",
+    "confirmApprove": "Are you sure you want to approve this proposal?",
+    "confirmReject": "Are you sure you want to reject this proposal?",
+    "approved": "Proposal approved and data updated",
+    "rejected": "Proposal rejected",
+    "categories": {
+      "ENGINE": "Engine",
+      "TRANSMISSION": "Transmission",
+      "CHASSIS": "Chassis & Brakes",
+      "PERFORMANCE": "Performance",
+      "OUTSIDE_DIMENSIONS": "Outside Dimensions",
+      "INSIDE_DIMENSIONS": "Inside Dimensions",
+      "BASIC_INFO": "Basic Information"
+    }
+  },
+  "filters": {
+    "all": "All",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "search": "Search...",
+    "dateFrom": "From date",
+    "dateTo": "To date"
+  },
+  "common": {
+    "noData": "No data to display",
+    "loading": "Loading...",
+    "error": "Error loading data"
+  }
+}
