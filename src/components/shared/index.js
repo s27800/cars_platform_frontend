@@ -3,3 +3,4 @@ export { default as ProtectedRoute } from './ProtectedRoute';
 export { default as CarCard } from './CarCard';
 export { default as FiltersPanel } from './FiltersPanel';
 export { default as DataProposalModal } from './DataProposalModal';
+export { default as GlobalSearch } from './GlobalSearch';

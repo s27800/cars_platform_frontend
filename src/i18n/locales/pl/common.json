@@ -72,6 +72,11 @@
     "noResults": "Brak wyników",
     "noData": "Brak danych"
   },
+  "search": {
+    "noResults": "Nie znaleziono wyników",
+    "searchAll": "Szukaj",
+    "viewAll": "Zobacz wszystkie wyniki dla"
+  },
   "time": {
     "justNow": "Przed chwilą",
     "minutesAgo": "{{count}} minutę temu",

@@ -16,6 +16,7 @@ export const getCarById = async (id) => {
  * GET /api/cars/search
  * 
  * @param {Object} params - Search parameters
+ * @param {string} params.search - Text search query
  * @param {number[]} params.brandIds - Filter by brand IDs
  * @param {number[]} params.modelIds - Filter by model IDs
  * @param {number[]} params.generationIds - Filter by generation IDs

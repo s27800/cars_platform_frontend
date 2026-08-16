@@ -72,6 +72,11 @@
     "noResults": "No results found",
     "noData": "No data available"
   },
+  "search": {
+    "noResults": "No results found",
+    "searchAll": "Search for",
+    "viewAll": "View all results for"
+  },
   "time": {
     "justNow": "Just now",
     "minutesAgo": "{{count}} minute ago",
