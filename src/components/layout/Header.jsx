@@ -3,7 +3,6 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   IoCarSportOutline,
-  IoSearchOutline,
   IoChevronDownOutline,
   IoMenuOutline,
   IoCloseOutline,
@@ -14,7 +13,8 @@ import {
   IoMoonOutline,
 } from 'react-icons/io5';
 import { useAuth, useTheme, useLanguage } from '../../hooks';
-import { Button, Input, NavLink, Avatar, Dropdown, IconButton, LanguageSwitcher } from '../ui';
+import { Button, NavLink, Avatar, Dropdown, IconButton, LanguageSwitcher } from '../ui';
+import { GlobalSearch } from '../shared';
 
 
 const Header = () => {
@@ -27,7 +27,6 @@ const Header = () => {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const dropdownRef = useRef(null);
 
   const navLinks = [
@@ -57,13 +56,8 @@ const Header = () => {
     return location.pathname.startsWith(path);
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/cars?search=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery('');
-      setIsMobileMenuOpen(false);
-    }
+  const handleMobileSearchSubmit = () => {
+    setIsMobileMenuOpen(false);
   };
 
   const handleLogout = () => {
@@ -106,16 +100,7 @@ const Header = () => {
 
           {/* Desktop search */}
           <div className="hidden md:flex flex-1 max-w-md mx-8">
-            <form onSubmit={handleSearch} className="w-full">
-              <Input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={t('navigation.search')}
-                leftIcon={<IoSearchOutline className="w-5 h-5" />}
-                aria-label={t('navigation.search')}
-              />
-            </form>
+            <GlobalSearch className="w-full" />
           </div>
 
           {/* Right side controls */}
@@ -211,16 +196,11 @@ const Header = () => {
           <div className="px-4 py-4 space-y-4">
 
             {/* Mobile search */}
-            <form onSubmit={handleSearch}>
-              <Input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={t('navigation.search')}
-                size="lg"
-                aria-label={t('navigation.search')}
-              />
-            </form>
+            <GlobalSearch 
+              className="w-full" 
+              size="lg"
+              onSearchSubmit={handleMobileSearchSubmit}
+            />
 
             {/* Mobile nav links */}
             <div className="space-y-1">

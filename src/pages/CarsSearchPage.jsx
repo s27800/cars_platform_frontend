@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -14,8 +14,16 @@ const CarsSearchPage = () => {
   const { t: tCommon } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  
+  // Initialize search from URL param
+  const urlSearch = searchParams.get('search') || '';
+  const [searchQuery, setSearchQuery] = useState(urlSearch);
   const debouncedSearch = useDebounce(searchQuery, 400);
+
+  // Sync URL search param with local state on URL change
+  useEffect(() => {
+    setSearchQuery(urlSearch);
+  }, [urlSearch]);
 
   const SORT_OPTIONS = [
     { value: '', label: t('search.sortDefault') },
@@ -53,6 +61,7 @@ const CarsSearchPage = () => {
   const queryParams = useMemo(() => {
     const params = { page, size };
     
+    if (debouncedSearch) params.search = debouncedSearch;
     if (sort) params.sort = sort;
     if (filters.brandIds.length) params.brandIds = filters.brandIds;
     if (filters.modelIds.length) params.modelIds = filters.modelIds;
@@ -68,7 +77,7 @@ const CarsSearchPage = () => {
     if (filters.maxDisplacement) params.maxDisplacement = filters.maxDisplacement;
     
     return params;
-  }, [page, size, sort, filters]);
+  }, [page, size, sort, filters, debouncedSearch]);
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['cars', 'search', queryParams],
@@ -108,6 +117,21 @@ const CarsSearchPage = () => {
     setSearchQuery('');
   };
 
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+
+    // Update URL when search changes (with reset to page 0)
+    const newParams = new URLSearchParams(searchParams);
+    if (value) {
+      newParams.set('search', value);
+    } else {
+      newParams.delete('search');
+    }
+    newParams.set('page', '0');
+    setSearchParams(newParams);
+  };
+
   const handlePageChange = (newPage) => {
     updateSearchParams({ page: newPage });
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -121,19 +145,10 @@ const CarsSearchPage = () => {
     updateSearchParams({ size: e.target.value, page: 0 });
   };
 
-  const filteredCars = useMemo(() => {
-    if (!debouncedSearch) return cars;
-    
-    const query = debouncedSearch.toLowerCase();
-    return cars.filter(car => {
-      const name = `${car.brand?.name || ''} ${car.model?.name || ''} ${car.generation?.name || ''}`.toLowerCase();
-      return name.includes(query);
-    });
-  }, [cars, debouncedSearch]);
-
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
       <div className="max-w-7xl mx-auto px-4 py-6">
+      
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-neutral-900 dark:text-white flex items-center gap-3">
@@ -164,7 +179,7 @@ const CarsSearchPage = () => {
                     placeholder={t('search.searchPlaceholder')}
                     leftIcon={<IoSearchOutline className="w-5 h-5" />}
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={handleSearchChange}
                   />
                 </div>
 
@@ -198,7 +213,7 @@ const CarsSearchPage = () => {
                 {isLoading ? (
                   tCommon('buttons.loading')
                 ) : (
-                  t('search.showingResults', { count: filteredCars.length, total: totalElements })
+                  t('search.showingResults', { count: cars.length, total: totalElements })
                 )}
               </div>
             </div>
@@ -218,7 +233,7 @@ const CarsSearchPage = () => {
                   {tCommon('buttons.retry')}
                 </Button>
               </div>
-            ) : filteredCars.length === 0 ? (
+            ) : cars.length === 0 ? (
               <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-neutral-200 dark:border-neutral-700 p-12 text-center">
                 <IoCarSportOutline className="w-16 h-16 mx-auto text-neutral-400" />
                 <h3 className="mt-4 text-lg font-medium text-neutral-900 dark:text-white">
@@ -238,7 +253,7 @@ const CarsSearchPage = () => {
             ) : (
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                  {filteredCars.map((car) => (
+                  {cars.map((car) => (
                     <CarCard
                       key={car.id}
                       car={car}
