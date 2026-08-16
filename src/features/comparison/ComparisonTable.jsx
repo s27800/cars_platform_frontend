@@ -407,6 +407,7 @@ ComparisonTable.Header = ({ cars, onRemove }) => {
  * Mobile-specific comparison layout
  */
 ComparisonTable.Mobile = ({ cars }) => {
+  const { t } = useTranslation('cars');
   const validCars = useMemo(() => cars.filter(Boolean), [cars]);
 
   if (validCars.length === 0)
@@ -432,6 +433,7 @@ ComparisonTable.Mobile = ({ cars }) => {
           key={group.key}
           group={group}
           cars={validCars}
+          t={t}
         />
       ))}
     </div>
