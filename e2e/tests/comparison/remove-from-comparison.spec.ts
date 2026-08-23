@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { ComparisonPage, CarDetailsPage } from '../../pages';
 
+
 test.describe('Comparison - Remove Cars', () => {
   let comparisonPage: ComparisonPage;
 
@@ -9,6 +10,7 @@ test.describe('Comparison - Remove Cars', () => {
     
     // Clear and add cars for comparison
     await page.goto('/');
+
     await page.evaluate(() => {
       localStorage.removeItem('comparisonCars');
     });
@@ -47,6 +49,7 @@ test.describe('Comparison - Remove Cars', () => {
         const stored = localStorage.getItem('comparisonCars');
         return stored ? JSON.parse(stored).length : 0;
       });
+
       expect(initialStored).toBe(2);
 
       // Remove a car
@@ -58,6 +61,7 @@ test.describe('Comparison - Remove Cars', () => {
         const stored = localStorage.getItem('comparisonCars');
         return stored ? JSON.parse(stored).length : 0;
       });
+
       expect(afterRemove).toBe(1);
     });
   });
@@ -88,6 +92,7 @@ test.describe('Comparison - Remove Cars', () => {
         const data = localStorage.getItem('comparisonCars');
         return data ? JSON.parse(data).length : 0;
       });
+
       expect(stored).toBe(0);
     });
   });
@@ -132,6 +137,7 @@ test.describe('Comparison - Remove Cars', () => {
 
       // Go back and add the car again
       const detailsPage = new CarDetailsPage(page);
+      
       await detailsPage.goto(1);
       await detailsPage.waitForLoading();
       

@@ -2,17 +2,19 @@ import { test, expect } from '@playwright/test';
 import { CarDetailsPage } from '../../pages';
 import { TEST_USERS } from '../../fixtures';
 
+
 test.describe('Fuel Reports - Unauthenticated', () => {
   test('FUEL-001: should display existing fuel reports', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
+
     await carPage.goto(1);
     await carPage.waitForLoading();
 
     // Fuel reports section should be visible - click on the tab
     const fuelTab = page.getByRole('tab', { name: /fuel reports/i });
-    if (await fuelTab.isVisible()) {
+
+    if (await fuelTab.isVisible())
       await fuelTab.click();
-    }
 
     // Should see fuel data or reports section
     await expect(page.getByText(/fuel reports/i).first()).toBeVisible();
@@ -22,6 +24,7 @@ test.describe('Fuel Reports - Unauthenticated', () => {
 
     // Clear auth
     await page.goto('/');
+
     await page.evaluate(() => {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -32,9 +35,9 @@ test.describe('Fuel Reports - Unauthenticated', () => {
 
     // Navigate to fuel section
     const fuelTab = page.getByRole('tab', { name: /fuel reports/i });
-    if (await fuelTab.isVisible()) {
+
+    if (await fuelTab.isVisible())
       await fuelTab.click();
-    }
 
     // Should not see add form or should see login prompt
     const addButton = page.getByRole('button', { name: /add report/i }).first();
@@ -62,12 +65,14 @@ test.describe('Fuel Reports - Authenticated', () => {
 
   test('FUEL-002: should show fuel report form for authenticated user', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
+
     await carPage.goto(1);
     await carPage.waitForLoading();
 
     // Navigate to fuel section - it's a tab, scroll into view first for mobile
     const fuelTab = page.getByRole('tab', { name: /fuel reports/i });
     await fuelTab.scrollIntoViewIfNeeded();
+
     if (await fuelTab.isVisible()) {
       await fuelTab.click();
       await page.waitForTimeout(300);
@@ -75,16 +80,19 @@ test.describe('Fuel Reports - Authenticated', () => {
 
     // Should be able to see Add Report button (or form)
     const addButton = page.getByRole('button', { name: /add.*report|submit/i }).first();
+
     await addButton.scrollIntoViewIfNeeded();
     await expect(addButton).toBeVisible({ timeout: 5000 });
   });
 
   test('FUEL-003: should validate required fields', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
+
     await carPage.goto(1);
     await carPage.waitForLoading();
 
     const fuelTab = page.getByRole('tab', { name: /fuel reports/i });
+
     if (await fuelTab.isVisible()) {
       await fuelTab.click();
       await page.waitForTimeout(300);
@@ -112,13 +120,14 @@ test.describe('Fuel Reports - Authenticated', () => {
 
   test('FUEL-004: should validate consumption value range', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
+
     await carPage.goto(1);
     await carPage.waitForLoading();
 
     const fuelTab = page.getByRole('tab', { name: /fuel reports/i });
-    if (await fuelTab.isVisible()) {
+
+    if (await fuelTab.isVisible())
       await fuelTab.click();
-    }
 
     const addButton = page.getByRole('button', { name: /add report/i }).first();
     
@@ -162,9 +171,9 @@ test.describe('Fuel Reports - Statistics', () => {
     await carPage.waitForLoading();
 
     const fuelTab = page.getByRole('tab', { name: /fuel reports/i });
-    if (await fuelTab.isVisible()) {
+
+    if (await fuelTab.isVisible())
       await fuelTab.click();
-    }
 
     // Look for chart or graph
     const chart = page.locator('canvas, svg[class*="chart"], [class*="chart"]');
@@ -182,9 +191,9 @@ test.describe('Fuel Reports - Driving Styles', () => {
     await carPage.waitForLoading();
 
     const fuelTab = page.getByRole('tab', { name: /fuel reports/i });
-    if (await fuelTab.isVisible()) {
+
+    if (await fuelTab.isVisible())
       await fuelTab.click();
-    }
 
     // Look for driving style filter
     const styleFilter = page.getByRole('combobox', { name: /style|styl/i }).or(
@@ -198,9 +207,9 @@ test.describe('Fuel Reports - Driving Styles', () => {
       
       // Select an option
       const option = page.getByRole('option', { name: /city|miejska/i });
-      if (await option.isVisible()) {
+
+      if (await option.isVisible())
         await option.click();
-      }
     }
   });
 });

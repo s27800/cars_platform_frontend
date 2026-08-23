@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { HomePage } from '../../pages';
 import { ROUTES } from '../../fixtures';
 
+
 test.describe('Navigation and Routing', () => {
   
   test.describe('Main Navigation', () => {
@@ -11,14 +12,16 @@ test.describe('Navigation and Routing', () => {
       await homePage.goto();
 
       // Open hamburger menu on mobile
-      if (isMobile) await homePage.openHamburgerMenuIfMobile();
+      if (isMobile)
+        await homePage.openHamburgerMenuIfMobile();
 
       // Navigate to cars
       await homePage.navigateToCars();
       await expect(page).toHaveURL(/\/cars/);
 
       // Open hamburger menu again on mobile for next navigation
-      if (isMobile) await homePage.openHamburgerMenuIfMobile();
+      if (isMobile)
+        await homePage.openHamburgerMenuIfMobile();
 
       // Navigate to comparison
       await homePage.navigateToComparison();
@@ -33,22 +36,28 @@ test.describe('Navigation and Routing', () => {
       
       // Clear auth
       await page.goto('/');
+
       await page.evaluate(() => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
       });
+
       await page.reload();
       await page.waitForLoadState('networkidle');
 
       // Open hamburger menu on mobile to see auth links
       const homePage = new HomePage(page);
-      if (isMobile) await homePage.openHamburgerMenuIfMobile();
+
+      if (isMobile)
+        await homePage.openHamburgerMenuIfMobile();
 
       // Should see sign in button (in the main navigation or mobile menu)
       const container = isMobile 
         ? page.locator('#mobile-menu')
         : page.locator('nav[aria-label="Main navigation"]');
+
       const signInButton = container.getByRole('link', { name: /sign in|zaloguj/i }).first();
+
       await expect(signInButton).toBeVisible();
     });
   });
@@ -114,6 +123,7 @@ test.describe('Navigation and Routing', () => {
 
       // About page
       const aboutLink = page.locator('footer').getByRole('link', { name: /about|o nas/i });
+
       if (await aboutLink.isVisible()) {
         await aboutLink.click();
         await expect(page).toHaveURL(/\/about/);
@@ -121,7 +131,9 @@ test.describe('Navigation and Routing', () => {
 
       // FAQ page
       await page.goto('/');
+
       const faqLink = page.locator('footer').getByRole('link', { name: /faq/i });
+
       if (await faqLink.isVisible()) {
         await faqLink.click();
         await expect(page).toHaveURL(/\/faq/);
@@ -129,7 +141,9 @@ test.describe('Navigation and Routing', () => {
 
       // Terms page
       await page.goto('/');
+
       const termsLink = page.locator('footer').getByRole('link', { name: /terms|regulamin/i });
+
       if (await termsLink.isVisible()) {
         await termsLink.click();
         await expect(page).toHaveURL(/\/terms/);
@@ -137,7 +151,9 @@ test.describe('Navigation and Routing', () => {
 
       // Privacy page
       await page.goto('/');
+
       const privacyLink = page.locator('footer').getByRole('link', { name: /privacy|prywatność/i });
+      
       if (await privacyLink.isVisible()) {
         await privacyLink.click();
         await expect(page).toHaveURL(/\/privacy/);

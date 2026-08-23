@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage, HomePage } from '../../pages';
 import { TEST_USERS } from '../../fixtures';
 
+
 test.describe('Logout', () => {
   
   // Helper to find user menu button
@@ -9,6 +10,7 @@ test.describe('Logout', () => {
 
     // Wait for page to fully load - find user menu button by aria-haspopup attribute
     const userMenu = page.locator('button[aria-haspopup="true"]').first();
+
     await userMenu.waitFor({ state: 'visible', timeout: 10000 });
     await userMenu.click();
   };
@@ -19,15 +21,17 @@ test.describe('Logout', () => {
     await logoutButton.click();
   };
 
+  // Login first
   test.beforeEach(async ({ page }) => {
-
-    // Login first
     const loginPage = new LoginPage(page);
+
     await loginPage.goto();
+
     await loginPage.login(
       TEST_USERS.regularUser.username,
       TEST_USERS.regularUser.password
     );
+
     await loginPage.expectLoginSuccess();
   });
 
@@ -109,7 +113,7 @@ test.describe('Logout', () => {
     const container = isMobile 
       ? page.locator('#mobile-menu')
       : page.locator('nav[aria-label="Main navigation"]');
-      
+
     await expect(container.getByText(/Sign in|Zaloguj/i).first()).toBeVisible();
   });
 });

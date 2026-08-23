@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { CarsSearchPage } from '../../pages';
 import { TEST_BRANDS } from '../../fixtures';
 
+
 test.describe('Cars Search', () => {
   let carsPage: CarsSearchPage;
 
@@ -100,7 +101,9 @@ test.describe('Cars Search', () => {
 
       // First card should have visible content
       await carsPage.waitForCarCards();
+      
       const firstCard = carsPage.carCards.first();
+
       await expect(firstCard).toBeVisible();
       
       // Card should have a title (h3 with car name)

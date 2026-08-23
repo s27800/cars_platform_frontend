@@ -2,16 +2,18 @@ import { test, expect } from '@playwright/test';
 import { CarsSearchPage } from '../../pages';
 import { TEST_BRANDS, FILTER_OPTIONS } from '../../fixtures';
 
+
 test.describe('Cars Filters', () => {
   let carsPage: CarsSearchPage;
 
   // Open mobile filters drawer if on mobile
   test.beforeEach(async ({ page, isMobile }) => {
     carsPage = new CarsSearchPage(page);
+
     await carsPage.goto();
     await carsPage.waitForLoading();
     
-    // Open filters panel on mobile (it's a drawer)
+    // Open filters panel on mobile (drawer)
     await carsPage.openFiltersIfMobile(isMobile);
   });
 
@@ -24,6 +26,7 @@ test.describe('Cars Filters', () => {
       // Select Volkswagen brand
       await carsPage.selectBrand('Volkswagen');
       await carsPage.waitForLoading();
+
       await page.waitForTimeout(500); // Wait for API response
 
       // Filter should change results
@@ -43,6 +46,7 @@ test.describe('Cars Filters', () => {
 
       // URL should contain brand filter parameter
       const url = page.url();
+
       expect(url).toMatch(/brandIds=/);
     });
   });
@@ -73,9 +77,7 @@ test.describe('Cars Filters', () => {
       await carsPage.waitForLoading();
 
       // Should show results filtered by power
-      await carsPage.expectResultsCountGreaterThan(0).catch(() => {
-        // Or no results if no cars match
-      });
+      await carsPage.expectResultsCountGreaterThan(0).catch(() => {});
     });
 
     test('FILTER-007: should filter by power range', async ({ page }) => {
@@ -86,6 +88,7 @@ test.describe('Cars Filters', () => {
 
       // Should filter results
       const carCount = await carsPage.carCards.count();
+
       expect(carCount).toBeGreaterThanOrEqual(0);
     });
   });
@@ -99,6 +102,7 @@ test.describe('Cars Filters', () => {
       await page.waitForTimeout(500); // Wait for API response
 
       const countAfterBrand = await carsPage.carCards.count();
+
       expect(countAfterBrand).toBeGreaterThan(0);
 
       // Apply body type filter
@@ -108,7 +112,7 @@ test.describe('Cars Filters', () => {
 
       const countAfterBodyType = await carsPage.carCards.count();
 
-      // Both filters should be active - count should be same or less (more restrictive)
+      // Both filters should be active - count should be same or less
       // Or no results if the combination doesn't match any cars
       expect(countAfterBodyType).toBeLessThanOrEqual(countAfterBrand);
     });
@@ -127,6 +131,7 @@ test.describe('Cars Filters', () => {
 
       // Filtered should have some results
       const filteredCount = await carsPage.carCards.count();
+
       expect(filteredCount).toBeGreaterThan(0);
 
       // Reset filters
@@ -136,6 +141,7 @@ test.describe('Cars Filters', () => {
 
       // Should show results again - count should be at least initial
       const resetCount = await carsPage.carCards.count();
+
       expect(resetCount).toBeGreaterThanOrEqual(initialCount);
 
       // URL should not have filter params
@@ -179,7 +185,7 @@ test.describe('Cars Filters', () => {
       await carsPage.selectBrand('Audi');
       await carsPage.waitForLoading();
 
-      // Click on a car to navigate to details (navigation handled in clickCarCard)
+      // Click on a car to navigate to details
       await carsPage.clickCarCard(0);
 
       // Go back
@@ -206,9 +212,9 @@ test.describe('Cars Filters', () => {
       // Click to open filters
       await carsPage.openMobileFilters();
 
-      // Mobile filters panel should be visible (it's a modal/overlay, not the aside)
-      // Check for the filter title within the mobile panel
+      // Mobile filters panel should be visible
       const mobileFilterPanel = page.locator('.fixed').filter({ hasText: /filters|filtry/i });
+
       await expect(mobileFilterPanel).toBeVisible();
     });
   });

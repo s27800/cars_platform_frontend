@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { CarDetailsPage, CarsSearchPage } from '../../pages';
 
+
 test.describe('Car Details', () => {
   let carDetailsPage: CarDetailsPage;
 
@@ -13,6 +14,7 @@ test.describe('Car Details', () => {
 
       // First get a car ID from search
       const searchPage = new CarsSearchPage(page);
+
       await searchPage.goto();
       await searchPage.waitForLoading();
       
@@ -40,7 +42,6 @@ test.describe('Car Details', () => {
     test('CAR-002: should display image gallery', async ({ page }) => {
       await carDetailsPage.goto(1);
       await carDetailsPage.waitForLoading();
-
       await carDetailsPage.expectImageGalleryVisible();
     });
 
@@ -52,6 +53,7 @@ test.describe('Car Details', () => {
       const hasNextButton = await carDetailsPage.galleryNext.isVisible().catch(() => false);
       
       if (hasNextButton) {
+
         // Click next
         await carDetailsPage.clickNextImage();
         
@@ -65,7 +67,6 @@ test.describe('Car Details', () => {
     test('CAR-003: should display specifications section', async ({ page }) => {
       await carDetailsPage.goto(1);
       await carDetailsPage.waitForLoading();
-
       await carDetailsPage.expectSpecificationsVisible();
     });
   });
@@ -74,8 +75,6 @@ test.describe('Car Details', () => {
     test('CAR-004: should display reviews section', async ({ page }) => {
       await carDetailsPage.goto(1);
       await carDetailsPage.waitForLoading();
-
-      // Reviews section should be visible (even if empty)
       await carDetailsPage.expectReviewsSection();
     });
   });
@@ -95,6 +94,7 @@ test.describe('Car Details', () => {
       const comparison = await page.evaluate(() => {
         return localStorage.getItem('comparisonCars');
       });
+
       expect(comparison).toBeTruthy();
     });
   });
@@ -103,7 +103,6 @@ test.describe('Car Details', () => {
     test('CAR-008: should display breadcrumb navigation', async ({ page }) => {
       await carDetailsPage.goto(1);
       await carDetailsPage.waitForLoading();
-
       await carDetailsPage.expectBreadcrumbsVisible();
     });
 
@@ -158,8 +157,10 @@ test.describe('Car Details', () => {
       
       // Login first
       const loginPage = new (await import('../../pages/LoginPage')).LoginPage(page);
+
       await loginPage.goto();
       await loginPage.login('john_smith', 'Test123!');
+
       await page.waitForURL(/\/(cars|home|$)/);
       
       await carDetailsPage.goto(1);
@@ -196,6 +197,7 @@ test.describe('Car Details', () => {
 
       // Fuel reports section should exist
       const section = carDetailsPage.fuelReportsSection;
+      
       await expect(section).toBeVisible();
     });
   });

@@ -3,11 +3,13 @@ import { test as authTest } from '../../fixtures/auth.fixture';
 import { ProfilePage } from '../../pages';
 import { TEST_USERS } from '../../fixtures';
 
+
 test.describe('Profile Page - Unauthenticated', () => {
   test('PROF-002: should redirect unauthenticated user to login', async ({ page }) => {
 
     // Clear any existing auth
     await page.goto('/');
+
     await page.evaluate(() => {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -39,7 +41,6 @@ test.describe('Profile Page - Authenticated', () => {
   test.describe('View Profile', () => {
     test('PROF-001: should display profile information', async () => {
       await profilePage.goto();
-      
       await profilePage.expectPageVisible();
     });
 
@@ -88,9 +89,9 @@ test.describe('Profile Page - Authenticated', () => {
       
       // Look for cancel button if available, otherwise just verify form is there
       const cancelBtn = page.getByRole('button', { name: /cancel|anuluj/i });
-      if (await cancelBtn.isVisible()) {
+
+      if (await cancelBtn.isVisible())
         await cancelBtn.click();
-      }
 
       // Just verify page is still accessible
       await profilePage.expectPageVisible();

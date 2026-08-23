@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { RegisterPage } from '../../pages';
 import { TEST_USERS, generateNewUser, ROUTES } from '../../fixtures';
 
+
 test.describe('Register Page', () => {
   let registerPage: RegisterPage;
 

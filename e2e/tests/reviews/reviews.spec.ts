@@ -2,9 +2,11 @@ import { test, expect } from '@playwright/test';
 import { CarDetailsPage } from '../../pages';
 import { TEST_USERS } from '../../fixtures';
 
+
 test.describe('Reviews - Unauthenticated', () => {
   test('REV-001: should display existing reviews', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
+
     await carPage.goto(1);
     await carPage.waitForLoading();
 
@@ -16,8 +18,10 @@ test.describe('Reviews - Unauthenticated', () => {
   });
 
   test('should not show review form for unauthenticated user', async ({ page }) => {
+
     // Clear auth
     await page.goto('/');
+
     await page.evaluate(() => {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -55,6 +59,7 @@ test.describe('Reviews - Authenticated', () => {
 
   test('REV-002: should show review form for authenticated user', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
+
     await carPage.goto(1);
     await carPage.waitForLoading();
 
@@ -67,6 +72,7 @@ test.describe('Reviews - Authenticated', () => {
 
   test('REV-003: should validate review rating', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
+
     await carPage.goto(1);
     await carPage.waitForLoading();
 
@@ -75,6 +81,7 @@ test.describe('Reviews - Authenticated', () => {
 
     // Try to add a review - use exact match to avoid ambiguity
     const addButton = page.getByRole('button', { name: 'Add Review', exact: true });
+
     if (await addButton.isVisible()) {
       await addButton.click();
       await page.waitForTimeout(300);
@@ -91,6 +98,7 @@ test.describe('Reviews - Authenticated', () => {
 
   test('REV-004: should validate review content', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
+
     await carPage.goto(1);
     await carPage.waitForLoading();
 
@@ -99,9 +107,9 @@ test.describe('Reviews - Authenticated', () => {
 
     // Click add review - use exact match to avoid ambiguity
     const addButton = page.getByRole('button', { name: 'Add Review', exact: true });
-    if (await addButton.isVisible()) {
+
+    if (await addButton.isVisible())
       await addButton.click();
-    }
 
     // Try to submit without content
     const submitButton = page.getByRole('button', { name: /submit|add|save/i }).last();
@@ -122,6 +130,7 @@ test.describe('Reviews - Authenticated', () => {
 test.describe('Reviews - Display', () => {
   test('REV-006: should display review author', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
+
     await carPage.goto(1);
     await carPage.waitForLoading();
 
@@ -130,6 +139,7 @@ test.describe('Reviews - Display', () => {
     const hasReviews = await reviewItems.first().isVisible().catch(() => false);
 
     if (hasReviews) {
+
       // Should show author name
       const authorName = reviewItems.first().locator('[class*="author"], [class*="name"]');
       await expect(authorName).toBeVisible();
@@ -138,6 +148,7 @@ test.describe('Reviews - Display', () => {
 
   test('REV-007: should display review date', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
+
     await carPage.goto(1);
     await carPage.waitForLoading();
 
@@ -154,6 +165,7 @@ test.describe('Reviews - Display', () => {
 
   test('REV-008: should display review rating stars', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
+
     await carPage.goto(1);
     await carPage.waitForLoading();
 
@@ -172,11 +184,13 @@ test.describe('Reviews - Display', () => {
 test.describe('Reviews - Pagination', () => {
   test('REV-010: should paginate reviews if many', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
+
     await carPage.goto(1);
     await carPage.waitForLoading();
 
     // Check if pagination exists in reviews section
     const reviewsSection = carPage.reviewsSection;
+    
     const pagination = reviewsSection.locator('[class*="pagination"], nav').or(
       page.getByRole('navigation', { name: /reviews|recenzje/i })
     );

@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { ComparisonPage, CarDetailsPage } from '../../pages';
 
+
 test.describe('Comparison Table', () => {
   let comparisonPage: ComparisonPage;
 
@@ -9,23 +10,27 @@ test.describe('Comparison Table', () => {
     
     // Clear localStorage
     await page.goto('/');
+
     await page.evaluate(() => {
       localStorage.removeItem('comparisonCars');
     });
 
-    // On mobile, set comparison cars via localStorage directly to avoid button interaction issues
     if (isMobile) {
+
+      // On mobile, set comparison cars via localStorage directly to avoid button interaction issues
       await page.evaluate(() => {
         const cars = [
           { id: 1, name: 'Test Car 1' },
           { id: 2, name: 'Test Car 2' }
         ];
+
         localStorage.setItem('comparisonCars', JSON.stringify(cars));
       });
     } else {
 
       // On desktop, add via UI
       const detailsPage = new CarDetailsPage(page);
+
       await detailsPage.goto(1);
       await detailsPage.waitForLoading();
       await detailsPage.addToComparison();
@@ -72,6 +77,7 @@ test.describe('Comparison Table', () => {
         // Desktop: Check that table rows exist
         const tableRows = page.locator('table tr');
         await tableRows.first().waitFor({ state: 'attached', timeout: 5000 }).catch(() => {});
+
         const rowCount = await tableRows.count();
         
         expect(rowCount).toBeGreaterThan(0);
@@ -89,6 +95,7 @@ test.describe('Comparison Table', () => {
         // Mobile: Look for dimension-related text in visible lg:hidden container
         const mobileContainer = page.locator('.lg\\:hidden');
         const dimensionText = mobileContainer.getByText(/length|długość|width|szerokość|height|wysokość/i);
+
         await expect(dimensionText.first()).toBeVisible();
       } else {
 
@@ -109,9 +116,10 @@ test.describe('Comparison Table', () => {
         // Mobile: Look for performance-related text in visible lg:hidden container
         const mobileContainer = page.locator('.lg\\:hidden');
         const performanceText = mobileContainer.getByText(/power|moc|torque|moment|acceleration|przyspieszenie/i);
+
         await expect(performanceText.first()).toBeVisible();
       } else {
-        
+
         // Desktop: Look for performance-related text in visible table
         const performanceText = page.getByText(/power|moc|torque|moment|acceleration|przyspieszenie/i);
         await expect(performanceText.first()).toBeVisible();
@@ -150,6 +158,7 @@ test.describe('Comparison Table', () => {
       
       // May or may not have highlighting depending on implementation
       const count = await highlightedCells.count();
+      
       expect(count).toBeGreaterThanOrEqual(0);
     });
   });

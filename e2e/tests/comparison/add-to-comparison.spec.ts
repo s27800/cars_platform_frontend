@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { ComparisonPage, CarDetailsPage, CarsSearchPage } from '../../pages';
 
+
 test.describe('Comparison - Add Cars', () => {
   let comparisonPage: ComparisonPage;
 
@@ -8,6 +9,7 @@ test.describe('Comparison - Add Cars', () => {
 
     // Clear comparison from localStorage
     await page.goto('/');
+
     await page.evaluate(() => {
       localStorage.removeItem('comparisonCars');
     });
@@ -18,6 +20,7 @@ test.describe('Comparison - Add Cars', () => {
   test.describe('Add to Comparison', () => {
     test('COMP-001: should add car to comparison from search list', async ({ page }) => {
       const searchPage = new CarsSearchPage(page);
+
       await searchPage.goto();
       await searchPage.waitForLoading();
 
@@ -38,6 +41,7 @@ test.describe('Comparison - Add Cars', () => {
 
     test('COMP-002: should add car from details page', async ({ page }) => {
       const detailsPage = new CarDetailsPage(page);
+
       await detailsPage.goto(1);
       await detailsPage.waitForLoading();
 
@@ -56,6 +60,7 @@ test.describe('Comparison - Add Cars', () => {
       // Add multiple cars
       for (let i = 1; i <= 5; i++) {
         const detailsPage = new CarDetailsPage(page);
+
         await detailsPage.goto(i);
         await detailsPage.waitForLoading();
 
@@ -83,6 +88,7 @@ test.describe('Comparison - Add Cars', () => {
 
     test('COMP-004: should prevent duplicate cars', async ({ page }) => {
       const detailsPage = new CarDetailsPage(page);
+
       await detailsPage.goto(1);
       await detailsPage.waitForLoading();
 
@@ -95,6 +101,7 @@ test.describe('Comparison - Add Cars', () => {
 
     test('COMP-005: should persist comparison in localStorage', async ({ page }) => {
       const detailsPage = new CarDetailsPage(page);
+      
       await detailsPage.goto(1);
       await detailsPage.waitForLoading();
 

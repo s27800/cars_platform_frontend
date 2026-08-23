@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { CarsSearchPage } from '../../pages';
 import { PAGINATION } from '../../fixtures';
 
+
 test.describe('Cars Pagination', () => {
   let carsPage: CarsSearchPage;
 
@@ -28,7 +29,6 @@ test.describe('Cars Pagination', () => {
     test('should navigate to next page', async () => {
       await carsPage.goToNextPage();
       await carsPage.waitForLoading();
-
       await carsPage.expectCurrentPage(2);
     });
 
@@ -42,6 +42,7 @@ test.describe('Cars Pagination', () => {
       await carsPage.goToPreviousPage();
       await carsPage.waitForLoading();
 
+      // Should be on page 1
       await carsPage.expectCurrentPage(1);
     });
   });
@@ -56,11 +57,13 @@ test.describe('Cars Pagination', () => {
         await carsPage.waitForLoading();
         
         const cardCount = await carsPage.carCards.count();
+
         expect(cardCount).toBeLessThanOrEqual(24);
       } else {
 
         // Default page size is 12
         let cardCount = await carsPage.carCards.count();
+
         expect(cardCount).toBeLessThanOrEqual(12);
 
         // Change to 24
@@ -69,6 +72,7 @@ test.describe('Cars Pagination', () => {
 
         // Should show more results (if available)
         cardCount = await carsPage.carCards.count();
+
         expect(cardCount).toBeLessThanOrEqual(24);
       }
     });
@@ -89,8 +93,11 @@ test.describe('Cars Pagination', () => {
         await carsPage.waitForLoading();
         
         const url = page.url();
+
         expect(url).toMatch(/size=24/);
       } else {
+
+        // Desktop: change page size via UI
         await carsPage.selectPageSize(24);
         await carsPage.waitForLoading();
 
@@ -98,10 +105,12 @@ test.describe('Cars Pagination', () => {
 
         // Reload and verify
         await page.reload();
+
         await carsPage.waitForLoading();
 
         // Page size should be preserved
         const url = page.url();
+
         expect(url).toMatch(/size=24/);
       }
     });
@@ -135,12 +144,14 @@ test.describe('Cars Pagination', () => {
       await carsPage.search('BMW');
       await carsPage.waitForLoading();
 
-      // Should reset to page 1 - either via pagination button or URL (pagination might be hidden if only 1 page)
+      // Should reset to page 1 - either via pagination button or URL
       const url = page.url();
+
       expect(url).toMatch(/page=0|page=$/i);
     });
 
     test('should reset to page 1 when search changes', async ({ page }) => {
+
       // Go to page 2
       await carsPage.goToPage(2);
       await carsPage.waitForLoading();
@@ -149,8 +160,9 @@ test.describe('Cars Pagination', () => {
       await carsPage.search('Audi');
       await carsPage.waitForLoading();
 
-      // Should reset to page 1 - either via URL (pagination might be hidden if only 1 page)
+      // Should reset to page 1 - either via URL
       const url = page.url();
+
       expect(url).toMatch(/page=0|page=$/i);
     });
   });
@@ -168,6 +180,7 @@ test.describe('Cars Pagination', () => {
 
       // Sort should be preserved in URL
       const url = page.url();
+
       expect(url).toMatch(/sort=name/);
     });
   });
@@ -190,11 +203,13 @@ test.describe('Cars Pagination', () => {
       let scrollY = 0;
       for (let attempt = 0; attempt < 5; attempt++) {
         await page.waitForTimeout(200);
+
         scrollY = await page.evaluate(() => Math.max(
           window.scrollY,
           document.documentElement.scrollTop,
           document.body.scrollTop
         ));
+
         if (scrollY > 100) break;
 
         // Try scrolling again if it didn't work
@@ -218,12 +233,16 @@ test.describe('Cars Pagination', () => {
       // Wait for scroll to complete with multiple attempts
       for (let attempt = 0; attempt < 5; attempt++) {
         scrollY = await page.evaluate(() => window.scrollY);
-        if (scrollY < 200) break;
+
+        if (scrollY < 200)
+          break;
+
         await page.waitForTimeout(500);
       }
 
       // Should scroll to top
       scrollY = await page.evaluate(() => window.scrollY);
+
       expect(scrollY).toBeLessThan(300);
     });
   });
@@ -236,8 +255,10 @@ test.describe('Cars Pagination', () => {
       const buttonsCount = await paginationButtons.count();
       
       if (buttonsCount > 2) {
-        // Click on last numbered button (before next button)
+
+        // Click on last numbered button
         const lastPageButton = paginationButtons.nth(buttonsCount - 2);
+        
         await lastPageButton.click();
         await carsPage.waitForLoading();
 
