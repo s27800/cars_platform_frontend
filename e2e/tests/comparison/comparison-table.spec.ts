@@ -54,9 +54,6 @@ test.describe('Comparison Table', () => {
 
   test.describe('Specifications Comparison', () => {
     test('COMP-007: should compare engine specifications', async ({ page, isMobile }) => {
-      // Skip on mobile - desktop table is hidden, mobile uses different layout
-      test.skip(isMobile, 'Desktop comparison table is hidden on mobile');
-      
       await comparisonPage.goto();
       
       // Wait for page content and verify table is visible
@@ -65,36 +62,60 @@ test.describe('Comparison Table', () => {
       // Wait for data to load - collapsible sections may take time
       await page.waitForTimeout(500);
       
-      // Check that table rows exist (using proper table locator)
-      const tableRows = page.locator('table tr');
-      await tableRows.first().waitFor({ state: 'attached', timeout: 5000 }).catch(() => {});
-      const rowCount = await tableRows.count();
-      
-      expect(rowCount).toBeGreaterThan(0);
+      if (isMobile) {
+
+        // Mobile: Check for card-based layout with specification data
+        const specText = page.getByText(/engine|silnik|power|moc|hp|km/i);
+        await expect(specText.first()).toBeVisible();
+      } else {
+
+        // Desktop: Check that table rows exist
+        const tableRows = page.locator('table tr');
+        await tableRows.first().waitFor({ state: 'attached', timeout: 5000 }).catch(() => {});
+        const rowCount = await tableRows.count();
+        
+        expect(rowCount).toBeGreaterThan(0);
+      }
     });
 
     test('COMP-008: should compare dimensions', async ({ page, isMobile }) => {
-
-      // Skip on mobile - desktop table is hidden, mobile uses different layout
-      test.skip(isMobile, 'Desktop comparison table is hidden on mobile');
-      
       await comparisonPage.goto();
       
-      // Look for dimension-related text
-      const dimensionText = page.getByText(/length|długość|width|szerokość|height|wysokość/i);
-      await expect(dimensionText.first()).toBeVisible();
+      // Wait for page to load
+      await page.waitForTimeout(500);
+      
+      if (isMobile) {
+
+        // Mobile: Look for dimension-related text in visible lg:hidden container
+        const mobileContainer = page.locator('.lg\\:hidden');
+        const dimensionText = mobileContainer.getByText(/length|długość|width|szerokość|height|wysokość/i);
+        await expect(dimensionText.first()).toBeVisible();
+      } else {
+
+        // Desktop: Look for dimension-related text in visible table
+        const dimensionText = page.getByText(/length|długość|width|szerokość|height|wysokość/i);
+        await expect(dimensionText.first()).toBeVisible();
+      }
     });
 
     test('COMP-009: should compare performance', async ({ page, isMobile }) => {
-
-      // Skip on mobile - desktop table is hidden, mobile uses different layout
-      test.skip(isMobile, 'Desktop comparison table is hidden on mobile');
-      
       await comparisonPage.goto();
       
-      // Look for performance-related text
-      const performanceText = page.getByText(/power|moc|torque|moment|acceleration|przyspieszenie/i);
-      await expect(performanceText.first()).toBeVisible();
+      // Wait for page to load
+      await page.waitForTimeout(500);
+      
+      if (isMobile) {
+
+        // Mobile: Look for performance-related text in visible lg:hidden container
+        const mobileContainer = page.locator('.lg\\:hidden');
+        const performanceText = mobileContainer.getByText(/power|moc|torque|moment|acceleration|przyspieszenie/i);
+        await expect(performanceText.first()).toBeVisible();
+      } else {
+        
+        // Desktop: Look for performance-related text in visible table
+        const performanceText = page.getByText(/power|moc|torque|moment|acceleration|przyspieszenie/i);
+        await expect(performanceText.first()).toBeVisible();
+      }
     });
   });
 

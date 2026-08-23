@@ -39,6 +39,17 @@ export class BasePage {
     return this.page.locator('[role="dialog"], [data-testid="modal"]');
   }
 
+  /** Hamburger menu button (mobile only) */
+  get hamburgerButton(): Locator {
+    // The hamburger button has aria-controls="mobile-menu" which is more reliable
+    return this.page.locator('button[aria-controls="mobile-menu"]');
+  }
+
+  /** Mobile menu container */
+  get mobileMenu(): Locator {
+    return this.page.locator('#mobile-menu');
+  }
+
 
   // ============ NAVIGATION METHODS ============
 
@@ -60,32 +71,116 @@ export class BasePage {
 
   // ============ HEADER NAVIGATION ============
 
+  /** Open hamburger menu if on mobile (menu button is visible) */
+  async openHamburgerMenuIfMobile(): Promise<void> {
+
+    // Wait for page to be ready
+    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForTimeout(500);
+    
+    // Check if hamburger button exists and is visible
+    const buttonCount = await this.hamburgerButton.count();
+    if (buttonCount === 0) return;
+    
+    // Wait for button to be visible and stable
+    try {
+      await this.hamburgerButton.waitFor({ state: 'visible', timeout: 3000 });
+    } catch {
+      return;
+    }
+    
+    const isExpanded = await this.hamburgerButton.getAttribute('aria-expanded');
+    if (isExpanded !== 'true') {
+
+      // Click the button
+      await this.hamburgerButton.click();
+      
+      // Wait for menu to appear - retry if needed
+      try {
+        await this.mobileMenu.waitFor({ state: 'visible', timeout: 5000 });
+      } catch {
+
+        // If menu didn't appear, try clicking again
+        await this.hamburgerButton.click();
+        await this.mobileMenu.waitFor({ state: 'visible', timeout: 5000 });
+      }
+      
+      await this.page.waitForTimeout(400);
+    }
+  }
+
+  /** Close hamburger menu if open */
+  async closeHamburgerMenuIfOpen(): Promise<void> {
+    const isVisible = await this.hamburgerButton.isVisible();
+
+    if (isVisible) {
+      const isExpanded = await this.hamburgerButton.getAttribute('aria-expanded');
+
+      if (isExpanded === 'true') {
+        await this.hamburgerButton.click();
+        await this.mobileMenu.waitFor({ state: 'hidden', timeout: 3000 }).catch(() => {});
+      }
+    }
+  }
+
   /** Click on logo to go to home */
   async clickLogo(): Promise<void> {
     await this.header.getByRole('link', { name: /carsplatform/i }).click();
   }
 
-  /** Navigate to cars search page via header */
+  /** Get navigation container - mobile menu if visible, otherwise header */
+  private async getVisibleNavContainer(): Promise<Locator> {
+
+    // On mobile, if hamburger button exists, check if mobile menu is open
+    const hasHamburgerButton = await this.hamburgerButton.count() > 0;
+    
+    if (hasHamburgerButton) {
+
+      // Wait for any animations
+      await this.page.waitForTimeout(100);
+      const isMobileMenuVisible = await this.mobileMenu.isVisible().catch(() => false);
+      
+      if (isMobileMenuVisible) {
+        return this.mobileMenu;
+      }
+    }
+    return this.header;
+  }
+
+  /** Navigate to cars search page via header or mobile menu */
   async navigateToCars(): Promise<void> {
-    await this.header.waitFor({ state: 'visible' });
     await this.page.waitForLoadState('domcontentloaded');
-    // Use exact match to avoid matching "CarsPlatform" in the logo
-    await this.header.getByRole('link', { name: 'Cars', exact: true }).click();
+    
+    // Check if we need to use mobile menu
+    const mobileMenuVisible = await this.mobileMenu.isVisible().catch(() => false);
+    
+    if (mobileMenuVisible) {
+
+      // Click the Cars link in mobile menu
+      await this.mobileMenu.getByRole('link', { name: /cars/i }).click();
+    } else {
+      
+      // Use desktop header navigation
+      await this.header.getByRole('link', { name: 'Cars', exact: true }).click();
+    }
   }
 
-  /** Navigate to comparison page via header */
+  /** Navigate to comparison page via header or mobile menu */
   async navigateToComparison(): Promise<void> {
-    await this.header.getByRole('link', { name: /comparison|porównanie/i }).click();
+    const container = await this.getVisibleNavContainer();
+    await container.getByRole('link', { name: /comparison|porównanie/i }).click();
   }
 
-  /** Navigate to login page via header */
+  /** Navigate to login page via header or mobile menu */
   async navigateToLogin(): Promise<void> {
-    await this.header.getByRole('link', { name: /sign in/i }).click();
+    const container = await this.getVisibleNavContainer();
+    await container.getByRole('link', { name: /sign in/i }).click();
   }
 
-  /** Navigate to register page via header */
+  /** Navigate to register page via header or mobile menu */
   async navigateToRegister(): Promise<void> {
-    await this.header.getByRole('link', { name: /sign up/i }).click();
+    const container = await this.getVisibleNavContainer();
+    await container.getByRole('link', { name: /sign up/i }).click();
   }
 
 

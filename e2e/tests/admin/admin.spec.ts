@@ -69,31 +69,31 @@ test.describe('Admin Dashboard - Authorized Access', () => {
   });
 
   test.describe('Navigation', () => {
-    test('ADMIN-003: should navigate to reviews moderation', async ({ page, isMobile }) => {
-      test.skip(isMobile, 'Admin navigation may differ on mobile');
-      
+    test('ADMIN-003: should navigate to reviews moderation', async ({ page }) => {
       await adminPage.goto();
 
+      // Scroll link into view and click
+      await adminPage.reviewsLink.scrollIntoViewIfNeeded();
       await adminPage.clickReviewsLink();
 
       await expect(page).toHaveURL(/\/admin\/reviews/);
     });
 
-    test('should navigate to fuel reports moderation', async ({ page, isMobile }) => {
-      test.skip(isMobile, 'Admin navigation may differ on mobile');
-      
+    test('should navigate to fuel reports moderation', async ({ page }) => {
       await adminPage.goto();
 
+      // Scroll link into view and click
+      await adminPage.fuelReportsLink.scrollIntoViewIfNeeded();
       await adminPage.clickFuelReportsLink();
 
       await expect(page).toHaveURL(/\/admin\/fuel-reports/);
     });
 
-    test('should navigate to proposals management', async ({ page, isMobile }) => {
-      test.skip(isMobile, 'Admin navigation may differ on mobile');
-      
+    test('should navigate to proposals management', async ({ page }) => {
       await adminPage.goto();
 
+      // Scroll link into view and click
+      await adminPage.proposalsLink.scrollIntoViewIfNeeded();
       await adminPage.clickProposalsLink();
 
       await expect(page).toHaveURL(/\/admin\/proposals/);

@@ -60,17 +60,14 @@ test.describe('Fuel Reports - Authenticated', () => {
     await page.waitForURL((url) => !url.pathname.includes('/login'));
   });
 
-  test('FUEL-002: should show fuel report form for authenticated user', async ({ page, isMobile }) => {
-    
-    // Skip on mobile - tab interaction may differ
-    test.skip(isMobile, 'Fuel reports tab interaction differs on mobile');
-    
+  test('FUEL-002: should show fuel report form for authenticated user', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
     await carPage.goto(1);
     await carPage.waitForLoading();
 
-    // Navigate to fuel section - it's a tab, not a button
+    // Navigate to fuel section - it's a tab, scroll into view first for mobile
     const fuelTab = page.getByRole('tab', { name: /fuel reports/i });
+    await fuelTab.scrollIntoViewIfNeeded();
     if (await fuelTab.isVisible()) {
       await fuelTab.click();
       await page.waitForTimeout(300);
@@ -78,6 +75,7 @@ test.describe('Fuel Reports - Authenticated', () => {
 
     // Should be able to see Add Report button (or form)
     const addButton = page.getByRole('button', { name: /add.*report|submit/i }).first();
+    await addButton.scrollIntoViewIfNeeded();
     await expect(addButton).toBeVisible({ timeout: 5000 });
   });
 

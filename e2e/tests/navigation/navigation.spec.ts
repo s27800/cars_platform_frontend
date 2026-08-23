@@ -6,16 +6,19 @@ test.describe('Navigation and Routing', () => {
   
   test.describe('Main Navigation', () => {
     test('NAV-001: should navigate from header menu', async ({ page, isMobile }) => {
-
-      // Skip on mobile - navigation links are in hamburger menu
-      test.skip(isMobile, 'Navigation links are in hamburger menu on mobile');
       
       const homePage = new HomePage(page);
       await homePage.goto();
 
+      // Open hamburger menu on mobile
+      if (isMobile) await homePage.openHamburgerMenuIfMobile();
+
       // Navigate to cars
       await homePage.navigateToCars();
       await expect(page).toHaveURL(/\/cars/);
+
+      // Open hamburger menu again on mobile for next navigation
+      if (isMobile) await homePage.openHamburgerMenuIfMobile();
 
       // Navigate to comparison
       await homePage.navigateToComparison();
@@ -27,9 +30,6 @@ test.describe('Navigation and Routing', () => {
     });
 
     test('should show login/register links when not authenticated', async ({ page, isMobile }) => {
-
-      // Skip on mobile - auth buttons are in hamburger menu
-      test.skip(isMobile, 'Auth links are in hamburger menu on mobile');
       
       // Clear auth
       await page.goto('/');
@@ -40,8 +40,15 @@ test.describe('Navigation and Routing', () => {
       await page.reload();
       await page.waitForLoadState('networkidle');
 
-      // Should see sign in button (in the main navigation)
-      const signInButton = page.locator('nav[aria-label="Main navigation"]').getByRole('link', { name: /sign in|zaloguj/i }).first();
+      // Open hamburger menu on mobile to see auth links
+      const homePage = new HomePage(page);
+      if (isMobile) await homePage.openHamburgerMenuIfMobile();
+
+      // Should see sign in button (in the main navigation or mobile menu)
+      const container = isMobile 
+        ? page.locator('#mobile-menu')
+        : page.locator('nav[aria-label="Main navigation"]');
+      const signInButton = container.getByRole('link', { name: /sign in|zaloguj/i }).first();
       await expect(signInButton).toBeVisible();
     });
   });

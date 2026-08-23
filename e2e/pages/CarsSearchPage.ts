@@ -16,9 +16,30 @@ export class CarsSearchPage extends BasePage {
     return this.page.getByRole('textbox', { name: /search cars/i });
   }
 
-  /** Filter panel (desktop) */
+  /** Filter panel (desktop sidebar) */
   get filtersPanel(): Locator {
-    return this.page.locator('[data-testid="filters-panel"], .filters-panel, aside');
+    return this.page.locator('aside');
+  }
+
+  /** Mobile filter drawer (opened via button) - the drawer panel inside the overlay */
+  get mobileFiltersDrawer(): Locator {
+
+    // The mobile drawer has shadow-xl and overflow-y-auto classes, inside a fixed overlay
+    return this.page.locator('.fixed.inset-0 .shadow-xl.overflow-y-auto');
+  }
+
+  /** Get active filters container - finds the VISIBLE container with filter elements */
+  async getActiveFiltersContainer(): Promise<Locator> {
+
+    // Check if mobile drawer is visible first
+    const mobileDrawer = this.mobileFiltersDrawer;
+    const isMobileDrawerVisible = await mobileDrawer.isVisible().catch(() => false);
+    
+    if (isMobileDrawerVisible)
+      return mobileDrawer;
+
+    // Fall back to desktop sidebar
+    return this.filtersPanel;
   }
 
   /** Mobile filters button */
@@ -180,57 +201,149 @@ export class CarsSearchPage extends BasePage {
   }
 
   async resetFilters(): Promise<void> {
-    await this.resetFiltersButton.click();
-    await this.page.waitForLoadState('networkidle');
+
+    // Ensure mobile drawer is open if on mobile, get the active container
+    const container = await this.ensureMobileDrawerOpenAndGetContainer();
+    
+    // Find reset button within the active container
+    const resetBtn = container.getByRole('button', { name: /reset|wyczyść|clear/i });
+    await resetBtn.waitFor({ state: 'visible', timeout: 5000 });
+    await resetBtn.scrollIntoViewIfNeeded();
+    
+    // Get current URL to detect change
+    const currentUrl = this.page.url();
+    
+    await resetBtn.click();
+    
+    // Wait for URL to change (filters cleared)
+    if (currentUrl.includes('brandIds') || currentUrl.includes('bodyTypeIds') || currentUrl.includes('engineTypeIds')) {
+      await this.page.waitForFunction(
+        (patterns) => !patterns.some(p => window.location.href.includes(p)),
+        ['brandIds=', 'bodyTypeIds=', 'engineTypeIds='],
+        { timeout: 10000 }
+      );
+    }
+    
+    await this.page.waitForLoadState('domcontentloaded');
     await this.page.waitForTimeout(300);
   }
 
   async openMobileFilters(): Promise<void> {
     await this.mobileFiltersButton.click();
+
+    // Wait for drawer to open
+    await this.mobileFiltersDrawer.waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.waitForTimeout(300);
+  }
+
+  /** Open filters panel - handles mobile drawer automatically */
+  async openFiltersIfMobile(isMobile: boolean): Promise<void> {
+    if (isMobile) {
+      const isFilterButtonVisible = await this.mobileFiltersButton.isVisible();
+      if (isFilterButtonVisible) {
+        await this.mobileFiltersButton.click();
+
+        // Wait for drawer to be visible
+        await this.mobileFiltersDrawer.waitFor({ state: 'visible', timeout: 5000 });
+        await this.page.waitForTimeout(300);
+      }
+    }
   }
 
 
   // ============ FILTER ACTIONS ============
 
+  /** Helper to ensure mobile filter drawer is open if on mobile, returns the active container */
+  private async ensureMobileDrawerOpenAndGetContainer(): Promise<Locator> {
+
+    // First, check if mobile drawer is already visible
+    const drawer = this.mobileFiltersDrawer;
+    const isDrawerAlreadyVisible = await drawer.isVisible().catch(() => false);
+    if (isDrawerAlreadyVisible) {
+      return drawer;
+    }
+    
+    // Use viewport width as the authoritative source for mobile vs desktop
+    const viewport = this.page.viewportSize();
+    const isMobileViewport = viewport && viewport.width < 768;
+    
+    if (isMobileViewport) {
+
+      // We're on mobile - need to open drawer
+      const mobileFilterBtn = this.mobileFiltersButton;
+      const isBtnVisible = await mobileFilterBtn.isVisible().catch(() => false);
+      if (isBtnVisible) {
+        await mobileFilterBtn.click();
+        await drawer.waitFor({ state: 'visible', timeout: 5000 });
+        await this.page.waitForTimeout(300);
+        return drawer;
+      }
+    }
+    
+    // Desktop - return sidebar
+    return this.filtersPanel;
+  }
+
   async selectBrand(brandName: string): Promise<void> {
-    const brandSelect = this.filtersPanel.locator('select').first();
+    const container = await this.ensureMobileDrawerOpenAndGetContainer();
+    const brandSelect = container.locator('select').first();
+    await brandSelect.waitFor({ state: 'visible', timeout: 5000 });
     await brandSelect.selectOption({ label: brandName });
   }
 
   async selectBodyType(bodyType: string): Promise<void> {
-    const label = this.filtersPanel.locator('label').filter({ hasText: new RegExp(bodyType, 'i') });
+    const container = await this.ensureMobileDrawerOpenAndGetContainer();
+    const label = container.locator('label').filter({ hasText: new RegExp(bodyType, 'i') });
+    await label.waitFor({ state: 'visible', timeout: 5000 });
     await label.click();
   }
 
   async selectEngineType(engineType: string): Promise<void> {
-    const label = this.filtersPanel.locator('label').filter({ hasText: new RegExp(engineType, 'i') });
+    const container = await this.ensureMobileDrawerOpenAndGetContainer();
+    const label = container.locator('label').filter({ hasText: new RegExp(engineType, 'i') });
+    await label.waitFor({ state: 'visible', timeout: 5000 });
     await label.click();
   }
 
   async expandPowerRangeSection(): Promise<void> {
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
     
-    const powerButton = this.filtersPanel.locator('button').filter({ hasText: /power|moc/i }).first();
-    const numberInputs = this.filtersPanel.locator('input[type="number"]');
+    const container = await this.ensureMobileDrawerOpenAndGetContainer();
+    const powerButton = container.locator('button').filter({ hasText: /power|moc/i }).first();
+    const numberInputs = container.locator('input[type="number"]');
     
-    const inputsVisible = await numberInputs.first().isVisible().catch(() => false);
-    if (!inputsVisible) {
-      await powerButton.evaluate((el) => {
-        el.scrollIntoView({ behavior: 'instant', block: 'center' });
-      });
+    // Retry logic for expanding the power section
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const inputsVisible = await numberInputs.first().isVisible().catch(() => false);
+      if (inputsVisible) break;
+      
+      // Scroll the power section into view within the container
+      await powerButton.waitFor({ state: 'attached', timeout: 5000 });
+      await powerButton.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
       await this.page.waitForTimeout(200);
       
       await powerButton.waitFor({ state: 'visible', timeout: 10000 });
-      await powerButton.evaluate((el: HTMLElement) => el.click());
+      await powerButton.click();
       
+      // Wait for expansion animation
+      await this.page.waitForTimeout(500);
+      
+      // Check if inputs appeared
+      const appeared = await numberInputs.first().isVisible().catch(() => false);
+      if (appeared) break;
+      
+      // If not, wait a bit more before retry
       await this.page.waitForTimeout(300);
-      await numberInputs.first().waitFor({ state: 'visible', timeout: 5000 });
     }
+    
+    // Final wait for inputs to be visible
+    await numberInputs.first().waitFor({ state: 'visible', timeout: 10000 });
   }
 
   async setMinPower(value: number): Promise<void> {
     await this.expandPowerRangeSection();
-    const inputs = this.filtersPanel.locator('input[type="number"]');
+    const container = await this.ensureMobileDrawerOpenAndGetContainer();
+    const inputs = container.locator('input[type="number"]');
     await inputs.first().fill(value.toString());
     await inputs.first().blur();
     await this.page.waitForTimeout(500);
@@ -238,7 +351,8 @@ export class CarsSearchPage extends BasePage {
 
   async setMaxPower(value: number): Promise<void> {
     await this.expandPowerRangeSection();
-    const inputs = this.filtersPanel.locator('input[type="number"]');
+    const container = await this.ensureMobileDrawerOpenAndGetContainer();
+    const inputs = container.locator('input[type="number"]');
     await inputs.nth(1).fill(value.toString());
     await inputs.nth(1).blur();
     await this.page.waitForTimeout(500);

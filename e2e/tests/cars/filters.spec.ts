@@ -5,13 +5,14 @@ import { TEST_BRANDS, FILTER_OPTIONS } from '../../fixtures';
 test.describe('Cars Filters', () => {
   let carsPage: CarsSearchPage;
 
-  // Skip all filter tests on mobile - filters panel is collapsed/hidden
+  // Open mobile filters drawer if on mobile
   test.beforeEach(async ({ page, isMobile }) => {
-    test.skip(isMobile, 'Filters panel is collapsed on mobile');
-    
     carsPage = new CarsSearchPage(page);
     await carsPage.goto();
     await carsPage.waitForLoading();
+    
+    // Open filters panel on mobile (it's a drawer)
+    await carsPage.openFiltersIfMobile(isMobile);
   });
 
   test.describe('Brand Filter', () => {

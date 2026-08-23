@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages';
+import { LoginPage, HomePage } from '../../pages';
 import { TEST_USERS } from '../../fixtures';
 
 test.describe('Logout', () => {
@@ -92,9 +92,6 @@ test.describe('Logout', () => {
 
   test('should show login button in header after logout', async ({ page, isMobile }) => {
     
-    // Skip on mobile - sign in button is in hamburger menu
-    test.skip(isMobile, 'Sign in button is in hamburger menu on mobile');
-    
     // Perform logout
     await clickUserMenu(page);
     await clickLogout(page);
@@ -102,7 +99,17 @@ test.describe('Logout', () => {
     // Wait for logout
     await page.waitForURL('/');
 
-    // Should see Sign in link in header
-    await expect(page.getByText('Sign in')).toBeVisible();
+    // Open hamburger menu on mobile to see auth links
+    const homePage = new HomePage(page);
+
+    if (isMobile) 
+      await homePage.openHamburgerMenuIfMobile();
+
+    // Should see Sign in link in header or mobile menu
+    const container = isMobile 
+      ? page.locator('#mobile-menu')
+      : page.locator('nav[aria-label="Main navigation"]');
+      
+    await expect(container.getByText(/Sign in|Zaloguj/i).first()).toBeVisible();
   });
 });
