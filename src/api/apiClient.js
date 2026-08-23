@@ -40,10 +40,15 @@ apiClient.interceptors.response.use(
 
         // Unauthorized
         case 401:
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          showToast.warning('Session expired. Please log in again.');
-          window.location.href = '/login';
+
+          // Don't redirect if already on login page
+          if (!window.location.pathname.includes('/login')) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            showToast.warning('Session expired. Please log in again.');
+            window.location.href = '/login';
+          }
+
           break;
 
         // Forbidden

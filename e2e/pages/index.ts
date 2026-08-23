@@ -1,0 +1,10 @@
+
+export { BasePage } from './BasePage';
+export { HomePage } from './HomePage';
+export { LoginPage } from './LoginPage';
+export { RegisterPage } from './RegisterPage';
+export { CarsSearchPage } from './CarsSearchPage';
+export { CarDetailsPage } from './CarDetailsPage';
+export { ComparisonPage } from './ComparisonPage';
+export { ProfilePage } from './ProfilePage';
+export { AdminDashboardPage } from './AdminDashboardPage';
