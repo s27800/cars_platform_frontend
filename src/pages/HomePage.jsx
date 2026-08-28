@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
@@ -15,41 +16,64 @@ import {
 } from 'react-icons/io5';
 import { Button } from '../components/ui';
 import { getBrands } from '../api/brands';
+import { getTags } from '../api/tags';
 
 
 const HomePage = () => {
   const { t } = useTranslation('home');
-  
-  const quickFilters = [
+
+  // Fetch tags from API
+  const { data: tagsData } = useQuery({
+    queryKey: ['tags'],
+    queryFn: getTags,
+  });
+
+  // Helper to find tag ID by name
+  const getTagIdByName = (name) => {
+    const tag = tagsData?.find(t => t.name.toLowerCase() === name.toLowerCase());
+    return tag?.id;
+  };
+
+  const quickFilters = useMemo(() => [
     {
       titleKey: 'quickFilters.economical.title',
       descriptionKey: 'quickFilters.economical.description',
       icon: <IoFlashOutline className="w-8 h-8" />,
-      link: '/cars?tagIds=b0000001-0000-0000-0000-000000000003',
+      tagName: 'Economic',
       color: 'bg-green-500',
     },
     {
       titleKey: 'quickFilters.sporty.title',
       descriptionKey: 'quickFilters.sporty.description',
       icon: <IoTrendingUpOutline className="w-8 h-8" />,
-      link: '/cars?tagIds=b0000001-0000-0000-0000-000000000001',
+      tagName: 'Sporty',
       color: 'bg-red-500',
     },
     {
       titleKey: 'quickFilters.family.title',
       descriptionKey: 'quickFilters.family.description',
       icon: <IoPeopleOutline className="w-8 h-8" />,
-      link: '/cars?tagIds=b0000001-0000-0000-0000-000000000002',
+      tagName: 'Family',
       color: 'bg-blue-500',
     },
     {
       titleKey: 'quickFilters.electric.title',
       descriptionKey: 'quickFilters.electric.description',
       icon: <IoBatteryChargingOutline className="w-8 h-8" />,
-      link: '/cars?engineTypes=Electric',
+      engineType: 'Electric',
       color: 'bg-yellow-500',
     },
-  ];
+  ], []);
+
+  // Build link for a filter
+  const getFilterLink = (filter) => {
+    if (filter.engineType)
+      return `/cars?engineTypes=${filter.engineType}`;
+
+    const tagId = getTagIdByName(filter.tagName);
+    
+    return tagId ? `/cars?tagIds=${tagId}` : '/cars';
+  };
 
   // Fetch brands from API
   const { data: brandsData } = useQuery({
@@ -161,7 +185,7 @@ const HomePage = () => {
           {quickFilters.map((filter, index) => (
             <Link
               key={index}
-              to={filter.link}
+              to={getFilterLink(filter)}
               className="group relative bg-white dark:bg-neutral-800 rounded-2xl p-6 border border-neutral-200 dark:border-neutral-700 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
               <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl ${filter.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>
