@@ -86,7 +86,10 @@
   "card": {
     "details": "Details",
     "compare": "Compare",
-    "added": "Added"
+    "added": "Added",
+    "from": "from",
+    "specs": "{{power}} hp • {{engine}}",
+    "viewDetails": "View details"
   },
   "details": {
     "specifications": "Specifications",
@@ -108,7 +111,8 @@
     "browseCars": "Browse Cars",
     "technicalSpecifications": "Technical Specifications",
     "suggestCorrection": "Suggest Correction",
-    "carsInComparison": "<strong>{{count}}</strong> car in comparison list.|<strong>{{count}}</strong> cars in comparison list.",
+    "carsInComparison": "{{count}} car in comparison list.",
+    "carsInComparison_plural": "{{count}} cars in comparison list.",
     "viewComparison": "View comparison",
     "similarCars": "Similar cars"
   },
@@ -157,11 +161,6 @@
     "variants": "Variants",
     "productionPeriod": "Production period",
     "viewAllVariants": "View all variants"
-  },
-  "card": {
-    "from": "from",
-    "specs": "{{power}} hp • {{engine}}",
-    "viewDetails": "View details"
   },
   "like": {
     "add": "Add to favorites",

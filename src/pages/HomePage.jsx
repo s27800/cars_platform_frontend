@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from '@tanstack/react-query';
 import {
   IoFlashOutline,
   IoTrendingUpOutline,
@@ -13,6 +14,7 @@ import {
   IoChevronForwardOutline,
 } from 'react-icons/io5';
 import { Button } from '../components/ui';
+import { getBrands } from '../api/brands';
 
 
 const HomePage = () => {
@@ -23,21 +25,21 @@ const HomePage = () => {
       titleKey: 'quickFilters.economical.title',
       descriptionKey: 'quickFilters.economical.description',
       icon: <IoFlashOutline className="w-8 h-8" />,
-      link: '/cars?tagIds=3',
+      link: '/cars?tagIds=b0000001-0000-0000-0000-000000000003',
       color: 'bg-green-500',
     },
     {
       titleKey: 'quickFilters.sporty.title',
       descriptionKey: 'quickFilters.sporty.description',
       icon: <IoTrendingUpOutline className="w-8 h-8" />,
-      link: '/cars?tagIds=1',
+      link: '/cars?tagIds=b0000001-0000-0000-0000-000000000001',
       color: 'bg-red-500',
     },
     {
       titleKey: 'quickFilters.family.title',
       descriptionKey: 'quickFilters.family.description',
       icon: <IoPeopleOutline className="w-8 h-8" />,
-      link: '/cars?tagIds=2',
+      link: '/cars?tagIds=b0000001-0000-0000-0000-000000000002',
       color: 'bg-blue-500',
     },
     {
@@ -49,16 +51,14 @@ const HomePage = () => {
     },
   ];
 
-  const popularBrands = [
-    { name: 'Audi', id: 3 },
-    { name: 'BMW', id: 2 },
-    { name: 'Mercedes', id: 4 },
-    { name: 'Volkswagen', id: 1 },
-    { name: 'Toyota', id: 5 },
-    { name: 'Ford', id: 8 },
-    { name: 'Skoda', id: 9 },
-    { name: 'Porsche', id: 13 },
-  ];
+  // Fetch brands from API
+  const { data: brandsData } = useQuery({
+    queryKey: ['brands'],
+    queryFn: getBrands,
+  });
+
+  // Get first 8 brands for display
+  const popularBrands = brandsData?.slice(0, 8) || [];
 
   const stats = [
     { value: '500+', labelKey: 'stats.carModels' },
