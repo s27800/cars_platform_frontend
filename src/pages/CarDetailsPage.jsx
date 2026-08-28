@@ -20,7 +20,7 @@ import { getCarById } from '../api/cars';
 import { useAuth } from '../hooks';
 import { Button, Spinner, Badge, Tabs, Alert } from '../components/ui';
 import { DataProposalModal } from '../components/shared';
-import { ImageGallery, SpecificationSection } from '../features/cars';
+import { ImageGallery, SpecificationSection, SimilarCars } from '../features/cars';
 import { ReviewsSection } from '../features/reviews';
 import { FuelReportsSection } from '../features/fuelReports';
 import { getCarDisplayName, getStorageItem, setStorageItem } from '../utils/helpers';
@@ -442,6 +442,9 @@ const CarDetailsPage = () => {
             </Tabs.Content>
           </Tabs>
         </section>
+
+        {/* Similar cars section */}
+        <SimilarCars carId={parseInt(id)} />
       </div>
 
       {/* Data proposal modal */}

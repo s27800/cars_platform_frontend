@@ -109,7 +109,8 @@
     "technicalSpecifications": "Specyfikacja techniczna",
     "suggestCorrection": "Zaproponuj poprawkę",
     "carsInComparison": "<strong>{{count}}</strong> samochód na liście porównania.|<strong>{{count}}</strong> samochody na liście porównania.|<strong>{{count}}</strong> samochodów na liście porównania.",
-    "viewComparison": "Zobacz porównanie"
+    "viewComparison": "Zobacz porównanie",
+    "similarCars": "Podobne samochody"
   },
   "comparison": {
     "title": "Porównaj samochody",
