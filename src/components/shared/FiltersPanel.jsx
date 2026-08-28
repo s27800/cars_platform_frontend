@@ -110,7 +110,7 @@ const FiltersPanel = ({
     setGenerations([]);
     onFiltersChange({
       ...filters,
-      brandIds: brandId ? [Number(brandId)] : [],
+      brandIds: brandId ? [brandId] : [],
       modelIds: [],
       generationIds: [],
     });
@@ -121,7 +121,7 @@ const FiltersPanel = ({
     setSelectedModelId(modelId);
     onFiltersChange({
       ...filters,
-      modelIds: modelId ? [Number(modelId)] : [],
+      modelIds: modelId ? [modelId] : [],
       generationIds: [],
     });
   };
@@ -130,7 +130,7 @@ const FiltersPanel = ({
     const generationId = e.target.value;
     onFiltersChange({
       ...filters,
-      generationIds: generationId ? [Number(generationId)] : [],
+      generationIds: generationId ? [generationId] : [],
     });
   };
 

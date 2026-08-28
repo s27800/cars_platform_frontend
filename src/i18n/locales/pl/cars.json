@@ -86,7 +86,10 @@
   "card": {
     "details": "Szczegóły",
     "compare": "Porównaj",
-    "added": "Dodano"
+    "added": "Dodano",
+    "from": "od",
+    "specs": "{{power}} KM • {{engine}}",
+    "viewDetails": "Zobacz szczegóły"
   },
   "details": {
     "specifications": "Specyfikacja",
@@ -108,7 +111,10 @@
     "browseCars": "Przeglądaj samochody",
     "technicalSpecifications": "Specyfikacja techniczna",
     "suggestCorrection": "Zaproponuj poprawkę",
-    "carsInComparison": "<strong>{{count}}</strong> samochód na liście porównania.|<strong>{{count}}</strong> samochody na liście porównania.|<strong>{{count}}</strong> samochodów na liście porównania.",
+    "carsInComparison_one": "{{count}} samochód na liście porównania.",
+    "carsInComparison_few": "{{count}} samochody na liście porównania.",
+    "carsInComparison_many": "{{count}} samochodów na liście porównania.",
+    "carsInComparison_other": "{{count}} samochodów na liście porównania.",
     "viewComparison": "Zobacz porównanie",
     "similarCars": "Podobne samochody"
   },
@@ -157,11 +163,6 @@
     "variants": "Warianty",
     "productionPeriod": "Okres produkcji",
     "viewAllVariants": "Zobacz wszystkie warianty"
-  },
-  "card": {
-    "from": "od",
-    "specs": "{{power}} KM • {{engine}}",
-    "viewDetails": "Zobacz szczegóły"
   },
   "like": {
     "add": "Dodaj do ulubionych",

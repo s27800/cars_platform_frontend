@@ -40,11 +40,11 @@ const CarsSearchPage = () => {
   ];
 
   const filters = useMemo(() => ({
-    brandIds: searchParams.get('brandIds')?.split(',').map(Number).filter(Boolean) || [],
-    modelIds: searchParams.get('modelIds')?.split(',').map(Number).filter(Boolean) || [],
-    generationIds: searchParams.get('generationIds')?.split(',').map(Number).filter(Boolean) || [],
-    bodyTypeIds: searchParams.get('bodyTypeIds')?.split(',').map(Number).filter(Boolean) || [],
-    tagIds: searchParams.get('tagIds')?.split(',').map(Number).filter(Boolean) || [],
+    brandIds: searchParams.get('brandIds')?.split(',').filter(Boolean) || [],
+    modelIds: searchParams.get('modelIds')?.split(',').filter(Boolean) || [],
+    generationIds: searchParams.get('generationIds')?.split(',').filter(Boolean) || [],
+    bodyTypeIds: searchParams.get('bodyTypeIds')?.split(',').filter(Boolean) || [],
+    tagIds: searchParams.get('tagIds')?.split(',').filter(Boolean) || [],
     engineTypes: searchParams.get('engineTypes')?.split(',').filter(Boolean) || [],
     drives: searchParams.get('drives')?.split(',').filter(Boolean) || [],
     transmissionTypes: searchParams.get('transmissionTypes')?.split(',').filter(Boolean) || [],

@@ -44,19 +44,19 @@ const CarDetailsPage = () => {
   });
 
   const carName = getCarDisplayName(car) || 'Loading...';
-  const isInComparison = comparisonCars.some(c => c.id === parseInt(id));
+  const isInComparison = comparisonCars.some(c => c.id === id);
 
   const handleToggleComparison = () => {
     let newList;
 
     if (isInComparison) {
-      newList = comparisonCars.filter(c => c.id !== parseInt(id));
+      newList = comparisonCars.filter(c => c.id !== id);
     } else {
       if (comparisonCars.length >= MAX_COMPARISON_CARS) {
         alert(`You can compare up to ${MAX_COMPARISON_CARS} cars at a time.`);
         return;
       }
-      newList = [...comparisonCars, { id: parseInt(id), name: carName }];
+      newList = [...comparisonCars, { id: id, name: carName }];
     }
 
     setComparisonCars(newList);
@@ -434,24 +434,24 @@ const CarDetailsPage = () => {
             </Tabs.List>
 
             <Tabs.Content value="reviews">
-              <ReviewsSection carId={parseInt(id)} />
+              <ReviewsSection carId={id} />
             </Tabs.Content>
 
             <Tabs.Content value="fuelReports">
-              <FuelReportsSection carId={parseInt(id)} />
+              <FuelReportsSection carId={id} />
             </Tabs.Content>
           </Tabs>
         </section>
 
         {/* Similar cars section */}
-        <SimilarCars carId={parseInt(id)} />
+        <SimilarCars carId={id} />
       </div>
 
       {/* Data proposal modal */}
       <DataProposalModal
         isOpen={showProposalModal}
         onClose={() => setShowProposalModal(false)}
-        carId={parseInt(id)}
+        carId={id}
         carName={carName}
       />
     </div>
