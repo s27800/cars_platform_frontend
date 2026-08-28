@@ -109,7 +109,8 @@
     "technicalSpecifications": "Technical Specifications",
     "suggestCorrection": "Suggest Correction",
     "carsInComparison": "<strong>{{count}}</strong> car in comparison list.|<strong>{{count}}</strong> cars in comparison list.",
-    "viewComparison": "View comparison"
+    "viewComparison": "View comparison",
+    "similarCars": "Similar cars"
   },
   "comparison": {
     "title": "Compare Cars",

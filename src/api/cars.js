@@ -14,7 +14,7 @@ export const getCarById = async (id) => {
 /**
  * Search cars with filters and pagination
  * GET /api/cars/search
- * 
+ *
  * @param {Object} params - Search parameters
  * @param {string} params.search - Text search query
  * @param {number[]} params.brandIds - Filter by brand IDs
@@ -42,5 +42,20 @@ export const getCarById = async (id) => {
 export const searchCars = async (params = {}) => {
   const response = await apiClient.get('/cars/search', { params });
 
+  return response.data;
+};
+
+/**
+ * Get similar cars for a specific car
+ * GET /api/cars/{id}/similar
+ *
+ * @param {number} carId - Car ID
+ * @param {number} limit - Maximum number of similar cars to return (default: 4)
+ */
+export const getSimilarCars = async (carId, limit = 4) => {
+  const response = await apiClient.get(`/cars/${carId}/similar`, {
+    params: { limit }
+  });
+  
   return response.data;
 };
