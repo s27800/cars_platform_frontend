@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { ToastContainer } from '../Toast';
 import { ToastContext, ToastProvider } from '../../../contexts/ToastContext';
 
@@ -212,13 +212,13 @@ describe('ToastContainer', () => {
 
 describe('showToast exports', () => {
   it('should export setToastRef function', async () => {
-    const { setToastRef } = await import('../Toast');
+    const { setToastRef } = await import('../../../utils/toastBus');
 
     expect(typeof setToastRef).toBe('function');
   });
 
   it('should export showToast object', async () => {
-    const { showToast } = await import('../Toast');
+    const { showToast } = await import('../../../utils/toastBus');
 
     expect(showToast).toBeDefined();
     expect(typeof showToast.success).toBe('function');
@@ -228,7 +228,7 @@ describe('showToast exports', () => {
   });
 
   it('should handle showToast calls when ref is not set', async () => {
-    const { showToast, setToastRef } = await import('../Toast');
+    const { showToast, setToastRef } = await import('../../../utils/toastBus');
     
     setToastRef(null);
     
