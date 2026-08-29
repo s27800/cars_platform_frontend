@@ -113,10 +113,24 @@ const CarDetailsPage = () => {
         <div className="max-w-7xl mx-auto px-4 py-3">
           <nav className="flex items-center gap-2 text-sm flex-wrap">
             <Link 
-              to={`/brands/${car.brand?.id}`}
+              to="/"
               className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400 flex items-center gap-1"
             >
               <IoChevronBackOutline className="w-4 h-4" />
+              Home
+            </Link>
+            <span className="text-neutral-400">/</span>
+            <Link 
+              to="/cars"
+              className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400"
+            >
+              All Cars
+            </Link>
+            <span className="text-neutral-400">/</span>
+            <Link 
+              to={`/brands/${car.brand?.id}`}
+              className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400"
+            >
               {car.brand?.name}
             </Link>
             <span className="text-neutral-400">/</span>

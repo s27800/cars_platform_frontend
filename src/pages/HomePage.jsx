@@ -241,9 +241,16 @@ const HomePage = () => {
       {/* Popular Brands Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-neutral-900 dark:text-white">
+          <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-3">
             {t('popularBrands.title')}
           </h2>
+          <Link
+            to="/brands"
+            className="inline-flex items-center gap-1 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium transition-colors"
+          >
+            {t('popularBrands.viewAll')}
+            <IoChevronForwardOutline className="w-4 h-4" />
+          </Link>
         </div>
 
         <div className="grid grid-cols-4 sm:grid-cols-8 gap-4">

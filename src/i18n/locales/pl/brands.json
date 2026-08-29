@@ -1,0 +1,10 @@
+{
+  "title": "Wszystkie marki",
+  "subtitle": "Przeglądaj {{count}} producentów samochodów w naszej bazie",
+  "breadcrumb": "Wszystkie marki",
+  "searchPlaceholder": "Szukaj marek...",
+  "foundedYear": "Założono",
+  "noBrands": "Nie znaleziono marek",
+  "errorTitle": "Nie udało się załadować marek",
+  "errorDescription": "Wystąpił problem podczas ładowania listy marek. Spróbuj ponownie później."
+}

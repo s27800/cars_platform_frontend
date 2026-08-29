@@ -5,6 +5,7 @@ export { default as RegisterPage } from './RegisterPage';
 export { default as CarsSearchPage } from './CarsSearchPage';
 export { default as CarDetailsPage } from './CarDetailsPage';
 export { default as BrandDetailsPage } from './BrandDetailsPage';
+export { default as BrandsListPage } from './BrandsListPage';
 export { default as ModelDetailsPage } from './ModelDetailsPage';
 export { default as GenerationDetailsPage } from './GenerationDetailsPage';
 export { default as ComparisonPage } from './ComparisonPage';

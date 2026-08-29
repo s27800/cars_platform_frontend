@@ -90,6 +90,13 @@ const BrandDetailsPage = () => {
               Home
             </Link>
             <span className="text-neutral-400">/</span>
+            <Link
+              to="/brands"
+              className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400"
+            >
+              All Brands
+            </Link>
+            <span className="text-neutral-400">/</span>
             <span className="text-neutral-900 dark:text-white font-medium truncate">
               {name}
             </span>
