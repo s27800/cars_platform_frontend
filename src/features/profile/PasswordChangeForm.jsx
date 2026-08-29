@@ -10,7 +10,12 @@ const validationSchema = Yup.object({
     .required('Current password is required'),
   newPassword: Yup.string()
     .required('New password is required')
-    .min(6, 'Password must be at least 6 characters')
+    .min(8, 'Password must be at least 8 characters')
+    .max(72, 'Password cannot exceed 72 characters')
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
+      'Password must contain a lowercase letter, an uppercase letter and a digit'
+    )
     .notOneOf([Yup.ref('currentPassword')], 'New password must be different from current password'),
   confirmPassword: Yup.string()
     .required('Please confirm your new password')
@@ -109,7 +114,7 @@ const PasswordChangeForm = ({
           onBlur={formik.handleBlur}
           error={formik.touched.newPassword && formik.errors.newPassword}
           disabled={isLoading}
-          hint="Password must be at least 6 characters"
+          hint="At least 8 characters, with a lowercase letter, an uppercase letter and a digit"
         />
 
         <Input

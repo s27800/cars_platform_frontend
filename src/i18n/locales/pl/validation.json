@@ -17,10 +17,11 @@
   },
   "password": {
     "required": "Hasło jest wymagane",
-    "minLength": "Hasło musi mieć co najmniej 6 znaków",
-    "maxLength": "Hasło może mieć maksymalnie 100 znaków",
+    "minLength": "Hasło musi mieć co najmniej 8 znaków",
+    "maxLength": "Hasło może mieć maksymalnie 72 znaki",
     "weak": "Hasło jest zbyt słabe",
-    "mismatch": "Hasła nie są identyczne"
+    "mismatch": "Hasła nie są identyczne",
+    "complexity": "Hasło musi zawierać małą literę, wielką literę i cyfrę"
   },
   "emailField": {
     "required": "Email jest wymagany",

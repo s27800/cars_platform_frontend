@@ -33,7 +33,9 @@ const RegisterPage = () => {
       .email(tValidation('email.invalid')),
     password: Yup.string()
       .required(tValidation('password.required'))
-      .min(6, tValidation('password.minLength')),
+      .min(8, tValidation('password.minLength'))
+      .max(72, tValidation('password.maxLength'))
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/, tValidation('password.complexity')),
     confirmPassword: Yup.string()
       .required(tValidation('confirmPassword.required'))
       .oneOf([Yup.ref('password')], tValidation('confirmPassword.match')),
