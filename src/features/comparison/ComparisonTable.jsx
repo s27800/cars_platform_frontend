@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { 
+import {
   IoCogOutline,
   IoSpeedometerOutline,
   IoSettingsOutline,
@@ -104,7 +104,7 @@ const SPEC_GROUPS = [
 const getNestedValue = (obj, path) => {
   if (!obj || !path)
     return null;
-  
+
   return path.split('.').reduce((current, key) => {
     return current && current[key] !== undefined ? current[key] : null;
   }, obj);
@@ -126,22 +126,40 @@ const formatValue = (value, unit, t) => {
 
 
 /**
- * Determine which value is better
+ * Find the best value index(es)
  */
-const compareValues = (val1, val2, compareType) => {
-  if (!compareType || val1 === null || val2 === null)
-    return null;
-  
-  const num1 = parseFloat(val1);
-  const num2 = parseFloat(val2);
-  
-  if (isNaN(num1) || isNaN(num2)) return null;
-  if (num1 === num2) return 'equal';
+const findBestValueIndexes = (values, compareType) => {
+  if (!compareType || values.length < 2)
+    return [];
 
-  if (compareType === 'higher')
-    return num1 > num2 ? 'first' : 'second';
-  else
-    return num1 < num2 ? 'first' : 'second';
+  const numericValues = values.map(v => {
+    if (v === null || v === undefined)
+      return null;
+
+    const num = parseFloat(v);
+
+    return isNaN(num) ? null : num;
+  });
+
+  // Need at least 2 valid numeric values to compare
+  const validCount = numericValues.filter(v => v !== null).length;
+  if (validCount < 2)
+    return [];
+
+  // Find best value
+  const validNumbers = numericValues.filter(v => v !== null);
+  const bestValue = compareType === 'higher'
+    ? Math.max(...validNumbers)
+    : Math.min(...validNumbers);
+
+  // Check if all values are the same
+  if (validNumbers.every(v => v === bestValue))
+    return [];
+
+  // Return indexes of best values
+  return numericValues
+    .map((v, idx) => v === bestValue ? idx : -1)
+    .filter(idx => idx !== -1);
 };
 
 
@@ -158,7 +176,7 @@ const ComparisonTable = ({ cars = [] }) => {
   return (
     <div className="space-y-6">
       {SPEC_GROUPS.map(group => (
-        <ComparisonGroup 
+        <ComparisonGroup
           key={group.key}
           group={group}
           cars={validCars}
@@ -177,7 +195,7 @@ const ComparisonGroup = ({ group, cars, defaultOpen = true, t }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const { titleKey, icon, specs } = group;
 
-  const hasData = specs.some(spec => 
+  const hasData = specs.some(spec =>
     cars.some(car => getNestedValue(car, spec.path) !== null)
   );
 
@@ -186,7 +204,7 @@ const ComparisonGroup = ({ group, cars, defaultOpen = true, t }) => {
 
   return (
     <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-neutral-200 dark:border-neutral-700 overflow-hidden">
-      
+
       {/* Group header */}
       <button
         type="button"
@@ -198,7 +216,7 @@ const ComparisonGroup = ({ group, cars, defaultOpen = true, t }) => {
           <span className="text-primary-600 dark:text-primary-400">{icon}</span>
           <h3 className="font-semibold text-neutral-900 dark:text-white">{t(titleKey)}</h3>
         </div>
-        <IoChevronDownOutline 
+        <IoChevronDownOutline
           className={`w-5 h-5 text-neutral-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
         />
       </button>
@@ -210,35 +228,33 @@ const ComparisonGroup = ({ group, cars, defaultOpen = true, t }) => {
           <tbody>
             {specs.map(spec => {
               const values = cars.map(car => getNestedValue(car, spec.path));
-              
+
               // Skip row if no car has this value
               if (values.every(v => v === null || v === undefined))
                 return null;
 
-              // Determine which value is better
-              const comparison = cars.length === 2 
-                ? compareValues(values[0], values[1], spec.compare)
-                : null;
+              // Find indexes with the best value(s)
+              const bestIndexes = findBestValueIndexes(values, spec.compare);
 
               return (
-                <tr 
+                <tr
                   key={spec.key}
                   className="border-b border-neutral-100 dark:border-neutral-700 last:border-0"
                 >
                   <td className="px-4 py-3 text-sm text-neutral-600 dark:text-neutral-400 w-1/4 min-w-[140px]">
                     {t(spec.labelKey)}
                   </td>
-                  
+
                   {values.map((value, idx) => {
-                    const isBetter = comparison === (idx === 0 ? 'first' : 'second');
-                    
+                    const isBetter = bestIndexes.includes(idx);
+
                     return (
-                      <td 
+                      <td
                         key={idx}
                         className={`
                           px-4 py-3 text-sm font-medium text-center
-                          ${isBetter 
-                            ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20' 
+                          ${isBetter
+                            ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
                             : 'text-neutral-900 dark:text-white'
                           }
                         `}
@@ -264,7 +280,7 @@ const ComparisonGroup = ({ group, cars, defaultOpen = true, t }) => {
  */
 const MobileComparisonCards = ({ cars, group, t }) => {
   const { specs } = group;
-  
+
   return (
     <div className="space-y-4">
       {cars.map((car, carIndex) => (
@@ -277,13 +293,13 @@ const MobileComparisonCards = ({ cars, group, t }) => {
               {car.name || `${car.brand?.name} ${car.model?.name}`}
             </span>
           </div>
-          
+
           {/* Specs grid */}
           <div className="grid grid-cols-2 gap-2">
             {specs.map(spec => {
               const value = getNestedValue(car, spec.path);
               if (value === null || value === undefined) return null;
-              
+
               return (
                 <div key={spec.key} className="py-2">
                   <div className="text-xs text-neutral-500 dark:text-neutral-400">{t(spec.labelKey)}</div>
@@ -308,7 +324,7 @@ const MobileComparisonGroup = ({ group, cars, defaultOpen = true, t }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const { titleKey, icon, specs } = group;
 
-  const hasData = specs.some(spec => 
+  const hasData = specs.some(spec =>
     cars.some(car => getNestedValue(car, spec.path) !== null)
   );
 
@@ -327,7 +343,7 @@ const MobileComparisonGroup = ({ group, cars, defaultOpen = true, t }) => {
           <span className="text-primary-600 dark:text-primary-400">{icon}</span>
           <h3 className="font-semibold text-neutral-900 dark:text-white">{t(titleKey)}</h3>
         </div>
-        <IoChevronDownOutline 
+        <IoChevronDownOutline
           className={`w-5 h-5 text-neutral-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
         />
       </button>
@@ -354,15 +370,15 @@ ComparisonTable.Header = ({ cars, onRemove }) => {
   return (
     <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${validCars.length}, 1fr)` }}>
       {validCars.map((car, idx) => (
-        <div 
+        <div
           key={car.id}
           className="bg-white dark:bg-neutral-800 rounded-2xl border border-neutral-200 dark:border-neutral-700 p-4"
         >
           {/* Car image */}
           <div className="aspect-[16/10] bg-neutral-100 dark:bg-neutral-700 rounded-xl overflow-hidden mb-4">
             {car.images?.[0]?.imageUrl ? (
-              <img 
-                src={car.images[0].imageUrl} 
+              <img
+                src={car.images[0].imageUrl}
                 alt={car.name || 'Car'}
                 className="w-full h-full object-cover"
               />
@@ -374,7 +390,7 @@ ComparisonTable.Header = ({ cars, onRemove }) => {
           </div>
 
           {/* Car name */}
-          <Link 
+          <Link
             to={`/cars/${car.id}`}
             className="block text-lg font-semibold text-neutral-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors mb-2 text-center"
           >
@@ -427,9 +443,9 @@ ComparisonTable.Mobile = ({ cars }) => {
           </div>
         ))}
       </div>
-      
+
       {SPEC_GROUPS.map(group => (
-        <MobileComparisonGroup 
+        <MobileComparisonGroup
           key={group.key}
           group={group}
           cars={validCars}
