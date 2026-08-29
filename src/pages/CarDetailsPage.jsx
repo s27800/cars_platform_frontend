@@ -18,7 +18,7 @@ import {
 } from 'react-icons/io5';
 import { getCarById } from '../api/cars';
 import { useAuth } from '../hooks';
-import { Button, Spinner, Badge, Tabs, Alert } from '../components/ui';
+import { Button, Spinner, Badge, Tabs } from '../components/ui';
 import { DataProposalModal } from '../components/shared';
 import { ImageGallery, SpecificationSection, SimilarCars } from '../features/cars';
 import { ReviewsSection } from '../features/reviews';

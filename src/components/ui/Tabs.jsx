@@ -34,7 +34,7 @@ const Tabs = ({
 
 
 // Container for tab trigger buttons
-Tabs.List = ({ className = '', children }) => {
+const TabsList = ({ className = '', children }) => {
   return (
     <div 
       className={`
@@ -50,7 +50,7 @@ Tabs.List = ({ className = '', children }) => {
 
 
 // Individual tab trigger button
-Tabs.Trigger = ({ value, className = '', disabled = false, children }) => {
+const TabsTrigger = ({ value, className = '', disabled = false, children }) => {
   const context = useContext(TabsContext);
   
   if (!context)
@@ -84,7 +84,7 @@ Tabs.Trigger = ({ value, className = '', disabled = false, children }) => {
 
 
 // Container for tab content panels
-Tabs.Content = ({ value, className = '', children }) => {
+const TabsContent = ({ value, className = '', children }) => {
   const context = useContext(TabsContext);
   
   if (!context)
@@ -104,5 +104,9 @@ Tabs.Content = ({ value, className = '', children }) => {
     </div>
   );
 };
+
+Tabs.List = TabsList;
+Tabs.Trigger = TabsTrigger;
+Tabs.Content = TabsContent;
 
 export default Tabs;

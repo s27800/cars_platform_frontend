@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { ComparisonPage, CarDetailsPage, CarsSearchPage } from '../../pages';
+import { testCars } from '../../fixtures/cars.fixture';
 
 
 test.describe('Comparison - Add Cars', () => {
@@ -42,7 +43,7 @@ test.describe('Comparison - Add Cars', () => {
     test('COMP-002: should add car from details page', async ({ page }) => {
       const detailsPage = new CarDetailsPage(page);
 
-      await detailsPage.goto(1);
+      await detailsPage.goto(testCars().first.id);
       await detailsPage.waitForLoading();
 
       // Add to comparison
@@ -57,11 +58,11 @@ test.describe('Comparison - Add Cars', () => {
 
     test('COMP-003: should limit maximum cars in comparison', async ({ page }) => {
 
-      // Add multiple cars
-      for (let i = 1; i <= 5; i++) {
+      // Add more cars than the limit allows
+      for (const car of testCars().all) {
         const detailsPage = new CarDetailsPage(page);
 
-        await detailsPage.goto(i);
+        await detailsPage.goto(car.id);
         await detailsPage.waitForLoading();
 
         const addButton = detailsPage.addToComparisonButton;
@@ -89,7 +90,7 @@ test.describe('Comparison - Add Cars', () => {
     test('COMP-004: should prevent duplicate cars', async ({ page }) => {
       const detailsPage = new CarDetailsPage(page);
 
-      await detailsPage.goto(1);
+      await detailsPage.goto(testCars().first.id);
       await detailsPage.waitForLoading();
 
       // Add same car twice
@@ -102,7 +103,7 @@ test.describe('Comparison - Add Cars', () => {
     test('COMP-005: should persist comparison in localStorage', async ({ page }) => {
       const detailsPage = new CarDetailsPage(page);
       
-      await detailsPage.goto(1);
+      await detailsPage.goto(testCars().first.id);
       await detailsPage.waitForLoading();
 
       await detailsPage.addToComparison();

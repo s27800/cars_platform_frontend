@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { 
-  IoPersonOutline, 
   IoPencilOutline, 
   IoLockClosedOutline,
   IoArrowBackOutline,
@@ -142,10 +141,14 @@ const ProfilePage = () => {
     }
   }, [passwordSuccess]);
 
-  useEffect(() => {
+  // Clear success banners when switching tabs
+  const [lastTab, setLastTab] = useState(activeTab);
+
+  if (lastTab !== activeTab) {
+    setLastTab(activeTab);
     setProfileSuccess(false);
     setPasswordSuccess(false);
-  }, [activeTab]);
+  }
 
   if (authLoading) {
     return (

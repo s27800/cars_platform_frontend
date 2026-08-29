@@ -43,6 +43,7 @@ export default defineConfig({
     // Setup project - runs authentication
     {
       name: 'setup',
+      testDir: './e2e',
       testMatch: /global-setup\.ts/,
     },
 

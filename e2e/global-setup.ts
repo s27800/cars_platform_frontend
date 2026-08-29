@@ -1,6 +1,7 @@
 import { test as setup } from '@playwright/test';
 import { TEST_USERS } from './fixtures/test-data.fixture';
 import { ADMIN_AUTH_FILE, USER_AUTH_FILE } from './fixtures/auth.fixture';
+import { MISSING_CAR_ID, TEST_CARS_FILE, writeTestCars } from './fixtures/cars.fixture';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -75,4 +76,43 @@ setup('authenticate as regular user', async ({ page }) => {
   await page.context().storageState({ path: USER_AUTH_FILE });
 
   console.log('✓ Regular user authentication state saved');
+});
+
+
+const API_URL = process.env.E2E_API_URL ?? 'http://localhost:8080/api';
+
+setup('resolve car ids from the API', async ({ request }) => {
+
+  // Get first 5 cars
+  const response = await request.get(`${API_URL}/cars/search`, {
+    params: { size: '5', sort: 'name,asc' },
+  });
+
+  if (!response.ok()) {
+    throw new Error(
+      `Could not reach ${API_URL}/cars/search (HTTP ${response.status()}). ` +
+      'Start the backend and database before running E2E tests.'
+    );
+  }
+
+  const content = (await response.json()).content ?? [];
+
+  if (content.length < 5) {
+    throw new Error(
+      `The API returned ${content.length} car(s); the E2E suite needs at least 5. ` +
+      'Load docker/init/02-test-data.sql into the database.'
+    );
+  }
+
+  const pick = (car: { id: string; name: string }) => ({ id: car.id, name: car.name });
+
+  writeTestCars({
+    first: pick(content[0]),
+    second: pick(content[1]),
+    third: pick(content[2]),
+    all: content.map(pick),
+    missing: MISSING_CAR_ID,
+  });
+
+  console.log(`✓ Resolved test car ids -> ${TEST_CARS_FILE}`);
 });

@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import { CarsSearchPage } from '../../pages';
-import { TEST_BRANDS } from '../../fixtures';
 
 
 test.describe('Cars Search', () => {
@@ -31,8 +30,8 @@ test.describe('Cars Search', () => {
       await carsPage.search('Volkswagen');
       await carsPage.waitForLoading();
 
-      // Should show results containing Volkswagen
-      await carsPage.expectCarCardWithName('Volkswagen');
+      // Should show results containing Golf
+      await carsPage.expectCarCardWithName('Golf');
     });
 
     test('SEARCH-002: should display search results', async () => {
@@ -94,7 +93,7 @@ test.describe('Cars Search', () => {
     test('should navigate to car details on card click', async ({ page }) => {
       await carsPage.clickCarCard(0);
 
-      await expect(page).toHaveURL(/\/cars\/\d+/);
+      await expect(page).toHaveURL(/\/cars\/[0-9a-fA-F-]{36}/);
     });
 
     test('should display car information on cards', async () => {

@@ -46,10 +46,13 @@ const Header = () => {
   }, []);
 
   // Close menus on route change
-  useEffect(() => {
+  const [lastPathname, setLastPathname] = useState(location.pathname);
+
+  if (lastPathname !== location.pathname) {
+    setLastPathname(location.pathname);
     setIsMobileMenuOpen(false);
     setIsUserDropdownOpen(false);
-  }, [location.pathname]);
+  }
 
   const isActiveLink = (path) => {
     if (path === '/') return location.pathname === '/';

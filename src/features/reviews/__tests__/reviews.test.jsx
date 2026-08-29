@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 
 
 // Mock react-query
@@ -33,9 +32,9 @@ vi.mock('../../../hooks', () => ({
 
 // Mock UI components
 vi.mock('../../../components/ui', () => ({
-  Avatar: ({ name, size }) => <div data-testid="avatar" data-name={name} data-size={size}>{name?.charAt(0)}</div>,
+  Avatar: ({ name }) => <div data-testid="avatar" data-name={name}>{name?.charAt(0)}</div>,
   Badge: ({ children, variant }) => <span data-testid="badge" data-variant={variant}>{children}</span>,
-  Rating: ({ value, readonly, size, onChange }) => (
+  Rating: ({ value, readonly, onChange }) => (
     <div data-testid="rating" data-value={value} data-readonly={readonly}>
       {[1, 2, 3, 4, 5].map(i => (
         <button key={i} onClick={() => onChange?.(i)} data-star={i}>★</button>

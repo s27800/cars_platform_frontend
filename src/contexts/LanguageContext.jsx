@@ -103,7 +103,7 @@ export const LanguageProvider = ({ children }) => {
   }, [language, changeLanguage]);
 
   const availableLanguages = useMemo(() => 
-    Object.entries(LANGUAGES).map(([key, value]) => ({
+    Object.values(LANGUAGES).map((value) => ({
       code: value,
       name: LANGUAGE_NAMES[value],
     }))

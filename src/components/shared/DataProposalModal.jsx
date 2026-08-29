@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useCallback } from 'react';
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -132,7 +132,9 @@ const DataProposalModal = ({ isOpen, onClose, carId, carName }) => {
     },
   });
 
-  formikRef.current = formik;
+  useEffect(() => {
+    formikRef.current = formik;
+  });
 
   const selectedFields = useMemo(() => 
     CATEGORY_FIELDS[formik.values.category] || [],

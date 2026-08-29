@@ -220,7 +220,7 @@ const ModelDetailsPage = () => {
 };
 
 
-const GenerationCard = ({ generation, brandId, modelId }) => {
+const GenerationCard = ({ generation }) => {
   const { id, name, carsCount = 0 } = generation;
 
   return (

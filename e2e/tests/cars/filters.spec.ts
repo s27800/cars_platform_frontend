@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import { CarsSearchPage } from '../../pages';
-import { TEST_BRANDS, FILTER_OPTIONS } from '../../fixtures';
 
 
 test.describe('Cars Filters', () => {

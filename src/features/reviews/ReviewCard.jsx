@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { IoHeartOutline, IoHeart } from 'react-icons/io5';
 import { toggleReviewLike, getReviewLikeStatus } from '../../api/likes';
@@ -9,7 +9,7 @@ import { formatDate, calculateAverage } from '../../utils/helpers';
 
 
 // Reusable component displaying a single review with ratings breakdown and like button
-const ReviewCard = ({ review, carId }) => {
+const ReviewCard = ({ review }) => {
   const { isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
   const [isLiked, setIsLiked] = useState(false);
@@ -23,13 +23,13 @@ const ReviewCard = ({ review, carId }) => {
     staleTime: 30000,
   });
 
-  // Update local state when like status is fetched
-  useEffect(() => {
-    if (likeStatus) {
-      setIsLiked(likeStatus.liked);
-      setLikeCount(likeStatus.likesCount);
-    }
-  }, [likeStatus]);
+  const [lastLikeStatus, setLastLikeStatus] = useState(null);
+
+  if (likeStatus && lastLikeStatus !== likeStatus) {
+    setLastLikeStatus(likeStatus);
+    setIsLiked(likeStatus.liked);
+    setLikeCount(likeStatus.likesCount);
+  }
 
   const likeMutation = useMutation({
     mutationFn: () => toggleReviewLike(review.id),

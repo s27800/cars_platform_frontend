@@ -63,7 +63,7 @@ vi.mock('../../components/ui', () => ({
     </select>
   ),
   Tabs: ({ children }) => <div data-testid="tabs">{children}</div>,
-  Rating: ({ value, readOnly }) => <div data-testid="rating" data-value={value}>{value}</div>,
+  Rating: ({ value }) => <div data-testid="rating" data-value={value}>{value}</div>,
   TextArea: ({ label, value, onChange }) => <textarea data-testid={`textarea-${label}`} value={value} onChange={onChange} />,
 }));
 

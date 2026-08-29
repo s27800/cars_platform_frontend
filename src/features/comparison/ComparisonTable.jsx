@@ -7,7 +7,6 @@ import {
   IoSettingsOutline,
   IoResizeOutline,
   IoLayersOutline,
-  IoFlashOutline,
   IoCarSportOutline,
   IoChevronDownOutline,
 } from 'react-icons/io5';
@@ -361,7 +360,7 @@ const MobileComparisonGroup = ({ group, cars, defaultOpen = true, t }) => {
 /**
  * Header row showing car names and images
  */
-ComparisonTable.Header = ({ cars, onRemove }) => {
+const ComparisonTableHeader = ({ cars, onRemove }) => {
   const validCars = cars.filter(Boolean);
 
   if (validCars.length === 0)
@@ -369,7 +368,7 @@ ComparisonTable.Header = ({ cars, onRemove }) => {
 
   return (
     <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${validCars.length}, 1fr)` }}>
-      {validCars.map((car, idx) => (
+      {validCars.map((car) => (
         <div
           key={car.id}
           className="bg-white dark:bg-neutral-800 rounded-2xl border border-neutral-200 dark:border-neutral-700 p-4"
@@ -422,7 +421,7 @@ ComparisonTable.Header = ({ cars, onRemove }) => {
 /**
  * Mobile-specific comparison layout
  */
-ComparisonTable.Mobile = ({ cars }) => {
+const ComparisonTableMobile = ({ cars }) => {
   const { t } = useTranslation('cars');
   const validCars = useMemo(() => cars.filter(Boolean), [cars]);
 
@@ -456,5 +455,8 @@ ComparisonTable.Mobile = ({ cars }) => {
   );
 };
 
+
+ComparisonTable.Header = ComparisonTableHeader;
+ComparisonTable.Mobile = ComparisonTableMobile;
 
 export default ComparisonTable;

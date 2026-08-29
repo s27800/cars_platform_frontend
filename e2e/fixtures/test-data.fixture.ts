@@ -23,7 +23,7 @@ export const TEST_USERS = {
   regularUser: {
     username: 'john_smith',
     password: 'Test123!',
-    email: 'john.smith@carsplatform.com',
+    email: 'john.smith@email.com',
     firstName: 'John',
     lastName: 'Smith',
     isAdmin: false,
@@ -31,7 +31,7 @@ export const TEST_USERS = {
   secondUser: {
     username: 'anna_jones',
     password: 'Test123!',
-    email: 'anna.jones@carsplatform.com',
+    email: 'anna.jones@email.com',
     firstName: 'Anna',
     lastName: 'Jones',
     isAdmin: false,
@@ -39,7 +39,7 @@ export const TEST_USERS = {
   thirdUser: {
     username: 'peter_wilson',
     password: 'Test123!',
-    email: 'peter.wilson@carsplatform.com',
+    email: 'peter.wilson@email.com',
     firstName: 'Peter',
     lastName: 'Wilson',
     isAdmin: false,
@@ -92,13 +92,6 @@ export const TEST_MODELS = {
   a3: { id: 11, brandId: 3, name: 'A3' },
   a4: { id: 12, brandId: 3, name: 'A4' },
   a6: { id: 13, brandId: 3, name: 'A6' },
-};
-
-// ============ TEST CARS ============
-export const TEST_CARS = {
-  volkswagenGolf: { id: 1, name: 'Volkswagen Golf' },
-  bmwSeries3: { id: 2, name: 'BMW 3 Series' },
-  audiA4: { id: 3, name: 'Audi A4' },
 };
 
 // ============ FILTER OPTIONS ============
@@ -181,10 +174,10 @@ export const ROUTES = {
   login: '/login',
   register: '/register',
   cars: '/cars',
-  carDetails: (id: number) => `/cars/${id}`,
-  brands: (id: number) => `/brands/${id}`,
-  models: (id: number) => `/models/${id}`,
-  generations: (id: number) => `/generations/${id}`,
+  carDetails: (id: string) => `/cars/${id}`,
+  brands: (id: string) => `/brands/${id}`,
+  models: (id: string) => `/models/${id}`,
+  generations: (id: string) => `/generations/${id}`,
   comparison: '/comparison',
   profile: '/profile',
   profilePassword: '/profile/password',

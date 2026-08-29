@@ -71,7 +71,7 @@ const ComparisonStats = ({ carIds = [] }) => {
 /**
  * Compare average ratings across all categories
  */
-const RatingsComparison = ({ queries, carIds, isLoading, t }) => {
+const RatingsComparison = ({ queries, isLoading, t }) => {
   const [isOpen, setIsOpen] = useState(true);
   const getBackendKey = (key) => `avg${key.charAt(0).toUpperCase()}${key.slice(1)}`;
   

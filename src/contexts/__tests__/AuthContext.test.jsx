@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, waitFor, act } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AuthProvider, AuthContext } from '../AuthContext';
 import { useContext } from 'react';
@@ -24,13 +24,17 @@ const TestConsumer = () => {
   const handleLogin = async () => {
     try {
       await context.login({ username: 'test', password: 'pass' });
-    } catch (e) {}
+    } catch {
+      // do nothing
+    }
   };
   
   const handleRegister = async () => {
     try {
       await context.register({ username: 'newuser', password: 'pass', email: 'test@example.com' });
-    } catch (e) {}
+    } catch {
+      // do nothing
+    }
   };
   
   return (
@@ -560,7 +564,9 @@ describe('AuthContext', () => {
         const handleLogin = async () => {
           try {
             await context.login({ username: 'test', password: 'pass' });
-          } catch (e) {}
+          } catch {
+            // do nothing
+          }
         };
         
         return (

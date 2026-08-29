@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CarDetailsPage } from '../../pages';
+import { testCars } from '../../fixtures/cars.fixture';
 import { TEST_USERS } from '../../fixtures';
 
 
@@ -7,7 +8,7 @@ test.describe('Fuel Reports - Unauthenticated', () => {
   test('FUEL-001: should display existing fuel reports', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
 
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     // Fuel reports section should be visible - click on the tab
@@ -31,7 +32,7 @@ test.describe('Fuel Reports - Unauthenticated', () => {
     });
 
     const carPage = new CarDetailsPage(page);
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
 
     // Navigate to fuel section
     const fuelTab = page.getByRole('tab', { name: /fuel reports/i });
@@ -66,7 +67,7 @@ test.describe('Fuel Reports - Authenticated', () => {
   test('FUEL-002: should show fuel report form for authenticated user', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
 
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     // Navigate to fuel section - it's a tab, scroll into view first for mobile
@@ -88,7 +89,7 @@ test.describe('Fuel Reports - Authenticated', () => {
   test('FUEL-003: should validate required fields', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
 
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     const fuelTab = page.getByRole('tab', { name: /fuel reports/i });
@@ -121,7 +122,7 @@ test.describe('Fuel Reports - Authenticated', () => {
   test('FUEL-004: should validate consumption value range', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
 
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     const fuelTab = page.getByRole('tab', { name: /fuel reports/i });
@@ -157,7 +158,7 @@ test.describe('Fuel Reports - Authenticated', () => {
 test.describe('Fuel Reports - Statistics', () => {
   test('FUEL-006: should display average consumption', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     // Should show average fuel consumption
@@ -167,7 +168,7 @@ test.describe('Fuel Reports - Statistics', () => {
 
   test('FUEL-007: should display consumption chart', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     const fuelTab = page.getByRole('tab', { name: /fuel reports/i });
@@ -187,7 +188,7 @@ test.describe('Fuel Reports - Statistics', () => {
 test.describe('Fuel Reports - Driving Styles', () => {
   test('FUEL-008: should filter by driving style', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     const fuelTab = page.getByRole('tab', { name: /fuel reports/i });

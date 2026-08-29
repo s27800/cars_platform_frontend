@@ -196,7 +196,7 @@ export class CarsSearchPage extends BasePage {
       await this.page.goto(href);
     } else {
       await link.click();
-      await this.page.waitForURL(/\/cars\/\d+/, { timeout: 15000 });
+      await this.page.waitForURL(/\/cars\/[0-9a-fA-F-]{36}/, { timeout: 15000 });
     }
   }
 
