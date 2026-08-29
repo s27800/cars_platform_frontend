@@ -12,6 +12,7 @@ import profileEN from './locales/en/profile.json';
 import adminEN from './locales/en/admin.json';
 import validationEN from './locales/en/validation.json';
 import pagesEN from './locales/en/pages.json';
+import brandsEN from './locales/en/brands.json';
 
 import commonPL from './locales/pl/common.json';
 import homePL from './locales/pl/home.json';
@@ -22,6 +23,7 @@ import profilePL from './locales/pl/profile.json';
 import adminPL from './locales/pl/admin.json';
 import validationPL from './locales/pl/validation.json';
 import pagesPL from './locales/pl/pages.json';
+import brandsPL from './locales/pl/brands.json';
 
 
 export const LANGUAGES = {
@@ -45,6 +47,7 @@ const resources = {
     admin: adminEN,
     validation: validationEN,
     pages: pagesEN,
+    brands: brandsEN,
   },
   pl: {
     common: commonPL,
@@ -56,6 +59,7 @@ const resources = {
     admin: adminPL,
     validation: validationPL,
     pages: pagesPL,
+    brands: brandsPL,
   },
 };
 
@@ -66,7 +70,7 @@ i18n
     resources,
     fallbackLng: LANGUAGES.EN,
     defaultNS: 'common',
-    ns: ['common', 'home', 'auth', 'cars', 'reviews', 'profile', 'admin', 'validation', 'pages'],
+    ns: ['common', 'home', 'auth', 'cars', 'reviews', 'profile', 'admin', 'validation', 'pages', 'brands'],
     
     detection: {
       order: ['localStorage', 'navigator'],

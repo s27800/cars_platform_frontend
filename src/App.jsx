@@ -11,6 +11,7 @@ const RegisterPage = lazy(() => import('./pages/RegisterPage'));
 const CarsSearchPage = lazy(() => import('./pages/CarsSearchPage'));
 const CarDetailsPage = lazy(() => import('./pages/CarDetailsPage'));
 const BrandDetailsPage = lazy(() => import('./pages/BrandDetailsPage'));
+const BrandsListPage = lazy(() => import('./pages/BrandsListPage'));
 const ModelDetailsPage = lazy(() => import('./pages/ModelDetailsPage'));
 const GenerationDetailsPage = lazy(() => import('./pages/GenerationDetailsPage'));
 const ComparisonPage = lazy(() => import('./pages/ComparisonPage'));
@@ -45,6 +46,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/cars" element={<CarsSearchPage />} />
             <Route path="/cars/:id" element={<CarDetailsPage />} />
+            <Route path="/brands" element={<BrandsListPage />} />
             <Route path="/brands/:id" element={<BrandDetailsPage />} />
             <Route path="/models/:id" element={<ModelDetailsPage />} />
             <Route path="/generations/:id" element={<GenerationDetailsPage />} />

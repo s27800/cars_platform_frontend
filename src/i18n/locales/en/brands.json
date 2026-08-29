@@ -1,0 +1,10 @@
+{
+  "title": "All Brands",
+  "subtitle": "Browse {{count}} car manufacturers in our database",
+  "breadcrumb": "All Brands",
+  "searchPlaceholder": "Search brands...",
+  "foundedYear": "Founded",
+  "noBrands": "No brands found",
+  "errorTitle": "Failed to load brands",
+  "errorDescription": "Something went wrong while loading the brands list. Please try again later."
+}
