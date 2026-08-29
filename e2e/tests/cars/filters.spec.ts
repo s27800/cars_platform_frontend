@@ -20,17 +20,23 @@ test.describe('Cars Filters', () => {
     test('FILTER-001: should filter by brand', async ({ page }) => {
 
       // Get initial count
+      await carsPage.waitForCarCards();
+
       const initialCount = await carsPage.carCards.count();
       
       // Select Volkswagen brand
       await carsPage.selectBrand('Volkswagen');
       await carsPage.waitForLoading();
-
-      await page.waitForTimeout(500); // Wait for API response
+      
+      // Wait for network and loading states
+      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(500);
+      
+      // Wait for cards to appear after filter
+      await carsPage.waitForCarCards();
 
       // Filter should change results
-      const cards = carsPage.carCards;
-      const count = await cards.count();
+      const count = await carsPage.carCards.count();
       
       // Should have results and count should be different from initial (filtering worked)
       expect(count).toBeGreaterThan(0);
@@ -152,14 +158,19 @@ test.describe('Cars Filters', () => {
       // Apply filter
       await carsPage.selectBrand('BMW');
       await carsPage.waitForLoading();
+      
+      // Wait for URL to contain filter parameter
+      await expect(page).toHaveURL(/brandIds=/, { timeout: 10000 });
 
       // Reset
       await carsPage.resetFilters();
       await carsPage.waitForLoading();
+      
+      // Wait for network
+      await page.waitForLoadState('networkidle');
 
       // URL should not contain filter params
-      const url = page.url();
-      expect(url).not.toMatch(/brandIds=/);
+      await expect(page).not.toHaveURL(/brandIds=/);
     });
   });
 
