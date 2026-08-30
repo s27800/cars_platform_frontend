@@ -38,8 +38,8 @@ describe('constants', () => {
   });
 
   describe('PROPOSAL_CATEGORIES', () => {
-    it('should have 7 proposal categories', () => {
-      expect(PROPOSAL_CATEGORIES).toHaveLength(7);
+    it('should have 8 proposal categories', () => {
+      expect(PROPOSAL_CATEGORIES).toHaveLength(8);
     });
 
     it('should have value and label for each category', () => {

@@ -467,6 +467,7 @@ const CarDetailsPage = () => {
         onClose={() => setShowProposalModal(false)}
         carId={id}
         carName={carName}
+        currentTags={tags}
       />
     </div>
   );

@@ -238,7 +238,9 @@ export class CarsSearchPage extends BasePage {
   }
 
   async openMobileFilters(): Promise<void> {
-    await this.mobileFiltersButton.click();
+    await this.mobileFiltersButton.waitFor({ state: 'visible', timeout: 10000 });
+    await this.page.waitForTimeout(300);
+    await this.mobileFiltersButton.click({ force: true });
 
     // Wait for drawer to open
     await this.mobileFiltersDrawer.waitFor({ state: 'visible', timeout: 5000 });
@@ -443,7 +445,7 @@ export class CarsSearchPage extends BasePage {
   }
 
   async waitForCarCards(timeout: number = 15000): Promise<void> {
-    await this.page.waitForLoadState('networkidle', { timeout });
+    await this.page.waitForLoadState('domcontentloaded', { timeout });
     await this.page.locator('.animate-pulse, .skeleton').first().waitFor({ state: 'hidden', timeout: 5000 }).catch(() => {});
     await this.page.getByText(/^Loading\.\.\.$/i).waitFor({ state: 'hidden', timeout: 5000 }).catch(() => {});
     await this.carCards.first().waitFor({ state: 'visible', timeout });
