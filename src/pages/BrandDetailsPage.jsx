@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, Link, useNavigationType } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import {
   IoChevronBackOutline,
@@ -14,6 +15,8 @@ import { ModelsGrid } from '../features/brands';
 
 
 const BrandDetailsPage = () => {
+  const { t } = useTranslation('brands');
+  const { t: tCommon } = useTranslation('common');
   const { id } = useParams();
   const navigationType = useNavigationType();
 
@@ -43,14 +46,14 @@ const BrandDetailsPage = () => {
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="max-w-md text-center">
           <IoCarSportOutline className="w-16 h-16 mx-auto text-neutral-400 mb-4" />
-          <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">Brand not found</h1>
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">{t('errorTitle')}</h1>
           <p className="text-neutral-600 dark:text-neutral-400 mb-6">
             {error?.response?.status === 404
-              ? "The brand you're looking for doesn't exist or has been removed."
-              : "Something went wrong while loading brand details."
+              ? t('errorNotFound')
+              : t('errorDescription')
             }
           </p>
-          <Button to="/" variant="primary">Go Home</Button>
+          <Button to="/" variant="primary">{tCommon('buttons.home')}</Button>
         </div>
       </div>
     );
@@ -87,14 +90,14 @@ const BrandDetailsPage = () => {
               className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400 flex items-center gap-1"
             >
               <IoChevronBackOutline className="w-4 h-4" />
-              Home
+              {tCommon('navigation.home')}
             </Link>
             <span className="text-neutral-400">/</span>
             <Link
               to="/brands"
               className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400"
             >
-              All Brands
+              {t('breadcrumb')}
             </Link>
             <span className="text-neutral-400">/</span>
             <span className="text-neutral-900 dark:text-white font-medium truncate">
@@ -143,12 +146,12 @@ const BrandDetailsPage = () => {
                 {foundedYear && (
                   <Badge variant="default" size="md">
                     <IoCalendarOutline className="w-3.5 h-3.5 mr-1" />
-                    Founded {foundedYear}
+                    {t('foundedYear')} {foundedYear}
                   </Badge>
                 )}
                 <Badge variant="primary" size="md">
                   <IoGridOutline className="w-3.5 h-3.5 mr-1" />
-                  {models.length} {models.length === 1 ? 'model' : 'models'}
+                  {t('modelsCount', { count: models.length })}
                 </Badge>
               </div>
 
@@ -166,7 +169,7 @@ const BrandDetailsPage = () => {
                 variant="primary"
                 leftIcon={<IoCarSportOutline className="w-4 h-4" />}
               >
-                View all cars
+                {t('viewAllCars')}
               </Button>
             </div>
           </div>
@@ -176,22 +179,22 @@ const BrandDetailsPage = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <QuickStat
             icon={<IoGridOutline className="w-5 h-5" />}
-            label="Models"
+            label={t('stats.models')}
             value={models.length}
           />
           <QuickStat
             icon={<IoGlobeOutline className="w-5 h-5" />}
-            label="Country"
-            value={country || 'N/A'}
+            label={t('stats.country')}
+            value={country || t('stats.notAvailable')}
           />
           <QuickStat
             icon={<IoCalendarOutline className="w-5 h-5" />}
-            label="Founded"
-            value={foundedYear || 'N/A'}
+            label={t('stats.founded')}
+            value={foundedYear || t('stats.notAvailable')}
           />
           <QuickStat
             icon={<IoCarSportOutline className="w-5 h-5" />}
-            label="Generations"
+            label={t('stats.generations')}
             value={models.reduce((acc, m) => acc + (m.generationsCount || 0), 0) || '—'}
           />
         </div>
@@ -201,10 +204,10 @@ const BrandDetailsPage = () => {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">
-                Models
+                {t('modelsSection.title')}
               </h2>
               <p className="text-neutral-600 dark:text-neutral-400 mt-1">
-                Click on a model to view its details
+                {t('modelsSection.subtitle')}
               </p>
             </div>
           </div>
@@ -217,7 +220,7 @@ const BrandDetailsPage = () => {
             <div className="text-center py-12 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700">
               <IoCarSportOutline className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
               <p className="text-neutral-600 dark:text-neutral-400">
-                No models available for this brand yet.
+                {t('modelsSection.empty')}
               </p>
             </div>
           )}

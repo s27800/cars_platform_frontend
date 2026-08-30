@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useTranslation } from 'react-i18next';
 import { 
   IoChevronBackOutline, 
   IoChevronForwardOutline, 
@@ -12,6 +13,7 @@ import { IconButton } from '../../components/ui';
 
 // Image gallery component with thumbnail navigation and lightbox mode.
 const ImageGallery = ({ images = [], carName = 'Car' }) => {
+  const { t } = useTranslation('cars');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const validImages = images.filter(img => img?.imageUrl);
@@ -66,7 +68,7 @@ const ImageGallery = ({ images = [], carName = 'Car' }) => {
       <div className="aspect-[16/9] bg-neutral-100 dark:bg-neutral-700 rounded-2xl flex items-center justify-center">
         <div className="text-center text-neutral-400">
           <IoImageOutline className="w-16 h-16 mx-auto mb-2" />
-          <p>No images available</p>
+          <p>{t('details.noImages')}</p>
         </div>
       </div>
     );

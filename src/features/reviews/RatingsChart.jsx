@@ -1,28 +1,31 @@
+import { useTranslation } from 'react-i18next';
 import { Rating } from '../../components/ui';
 import { RATING_CATEGORIES } from '../../utils/constants';
 import { calculateAverage } from '../../utils/helpers';
 
 
 // Map API field names
-const RATING_LABELS = Object.fromEntries(
-  RATING_CATEGORIES.map(cat => [`avg${cat.key.charAt(0).toUpperCase()}${cat.key.slice(1)}`, cat.label])
+const RATING_LABEL_KEYS = Object.fromEntries(
+  RATING_CATEGORIES.map(cat => [`avg${cat.key.charAt(0).toUpperCase()}${cat.key.slice(1)}`, cat.labelKey])
 );
 
-RATING_LABELS.avgFailureFreeRating = 'Reliability';
+RATING_LABEL_KEYS.avgFailureFreeRating = 'reliability';
 
 
 // Reusable bar chart component showing average ratings across all categories
 const RatingsChart = ({ averageRatings, className = '' }) => {
+  const { t } = useTranslation('reviews');
+
   if (!averageRatings) {
     return (
       <div className={`text-center py-8 text-neutral-500 dark:text-neutral-400 ${className}`}>
-        No rating data available
+        {t('empty.noReviews')}
       </div>
     );
   }
 
   const ratingEntries = Object.entries(averageRatings)
-    .filter(([key, value]) => key.startsWith('avg') && value !== null && RATING_LABELS[key])
+    .filter(([key, value]) => key.startsWith('avg') && value !== null && RATING_LABEL_KEYS[key])
     .sort(([, a], [, b]) => b - a);
 
   const overallAverage = calculateAverage(ratingEntries.map(([, v]) => v));
@@ -30,7 +33,7 @@ const RatingsChart = ({ averageRatings, className = '' }) => {
   if (ratingEntries.length === 0) {
     return (
       <div className={`text-center py-8 text-neutral-500 dark:text-neutral-400 ${className}`}>
-        No rating data available yet
+        {t('empty.noReviews')}
       </div>
     );
   }
@@ -41,7 +44,7 @@ const RatingsChart = ({ averageRatings, className = '' }) => {
       {/* Overall summary */}
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-neutral-200 dark:border-neutral-700">
         <div>
-          <h4 className="text-sm font-medium text-neutral-600 dark:text-neutral-400">Overall Rating</h4>
+          <h4 className="text-sm font-medium text-neutral-600 dark:text-neutral-400">{t('ratings.overall')}</h4>
           <div className="flex items-center gap-2 mt-1">
             <Rating value={overallAverage} readonly size="lg" />
             <span className="text-2xl font-bold text-neutral-900 dark:text-white">
@@ -49,7 +52,7 @@ const RatingsChart = ({ averageRatings, className = '' }) => {
             </span>
           </div>
         </div>
-        <span className="text-sm text-neutral-500">Based on {ratingEntries.length} categories</span>
+        <span className="text-sm text-neutral-500">{t('basedOnCategories', 'Based on {{count}} categories', { count: ratingEntries.length })}</span>
       </div>
 
       {/* Category bars */}
@@ -57,7 +60,7 @@ const RatingsChart = ({ averageRatings, className = '' }) => {
         {ratingEntries.map(([key, value]) => (
           <RatingBar
             key={key}
-            label={RATING_LABELS[key]}
+            label={t(`ratings.${RATING_LABEL_KEYS[key]}`)}
             value={value}
           />
         ))}

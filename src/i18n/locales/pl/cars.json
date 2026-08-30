@@ -105,6 +105,7 @@
     "noReviewsDescription": "Bądź pierwszy, który oceni ten samochód",
     "noFuelReports": "Brak raportów spalania",
     "noFuelReportsDescription": "Bądź pierwszy, który doda raport spalania",
+    "noImages": "Brak dostępnych zdjęć",
     "carNotFound": "Nie znaleziono samochodu",
     "carNotFoundDescription": "Samochód, którego szukasz, nie istnieje lub został usunięty.",
     "loadError": "Wystąpił błąd podczas ładowania szczegółów samochodu.",
@@ -127,6 +128,8 @@
     "removeCar": "Usuń",
     "clearAll": "Wyczyść wszystko",
     "maxReached": "Można porównać maksymalnie {{max}} samochodów",
+    "maxCarsWarning": "Możesz porównać maksymalnie {{count}} samochodów jednocześnie.",
+    "viewComparison": "Zobacz porównanie ({{count}})",
     "selectCar": "Wybierz samochód",
     "specifications": "Specyfikacja",
     "ratingsAndFuel": "Oceny i spalanie",
@@ -157,12 +160,48 @@
   "model": {
     "generations": "Generacje",
     "currentGeneration": "Aktualna generacja",
-    "viewAllGenerations": "Zobacz wszystkie generacje"
+    "viewAllGenerations": "Zobacz wszystkie generacje",
+    "errorTitle": "Nie znaleziono modelu",
+    "errorDescription": "Coś poszło nie tak podczas ładowania szczegółów modelu.",
+    "errorNotFound": "Model, którego szukasz, nie istnieje lub został usunięty.",
+    "generationsCount": "{{count}} generacji",
+    "generationsCount_one": "{{count}} generacja",
+    "generationsCount_few": "{{count}} generacje",
+    "carsCount": "{{count}} samochodów",
+    "carsCount_one": "{{count}} samochód",
+    "carsCount_few": "{{count}} samochody",
+    "stats": {
+      "generations": "Generacje",
+      "totalCars": "Wszystkie samochody",
+      "brand": "Marka"
+    },
+    "generationsSection": {
+      "title": "Generacje",
+      "subtitle": "Kliknij na generację, aby zobaczyć jej samochody",
+      "empty": "Brak dostępnych generacji dla tego modelu."
+    }
   },
   "generation": {
     "variants": "Warianty",
     "productionPeriod": "Okres produkcji",
-    "viewAllVariants": "Zobacz wszystkie warianty"
+    "viewAllVariants": "Zobacz wszystkie warianty",
+    "errorTitle": "Nie znaleziono generacji",
+    "errorDescription": "Coś poszło nie tak podczas ładowania szczegółów generacji.",
+    "errorNotFound": "Generacja, której szukasz, nie istnieje lub została usunięta.",
+    "carsCount": "{{count}} samochodów",
+    "carsCount_one": "{{count}} samochód",
+    "carsCount_few": "{{count}} samochody",
+    "searchAllCars": "Szukaj wszystkich samochodów",
+    "stats": {
+      "cars": "Samochody",
+      "model": "Model",
+      "brand": "Marka"
+    },
+    "carsSection": {
+      "title": "Samochody",
+      "subtitle": "Kliknij na samochód, aby zobaczyć szczegóły lub dodać do porównania",
+      "empty": "Brak dostępnych samochodów dla tej generacji."
+    }
   },
   "like": {
     "add": "Dodaj do ulubionych",
@@ -251,5 +290,53 @@
   "common": {
     "yes": "Tak",
     "no": "Nie"
+  },
+  "fuelReports": {
+    "submitted": "{{count}} raportów przesłanych",
+    "submitted_one": "{{count}} raport przesłany",
+    "unit": "L/100km",
+    "basedOnReports": "Na podstawie {{count}} raportów użytkowników",
+    "basedOnReports_one": "Na podstawie {{count}} raportu użytkownika",
+    "disclaimer": "Rzeczywiste spalanie może różnić się od specyfikacji producenta w zależności od warunków jazdy, stylu jazdy i konserwacji.",
+    "loginRequired": "Zaloguj się, aby dodawać raporty",
+    "level": {
+      "excellent": "Doskonałe",
+      "good": "Dobre",
+      "average": "Średnie",
+      "poor": "Słabe"
+    },
+    "status": {
+      "approved": "Zatwierdzony",
+      "pending": "Oczekujący",
+      "rejected": "Odrzucony"
+    },
+    "deleteReport": "Usuń raport paliwowy",
+    "confirmDelete": "Czy na pewno chcesz usunąć raport paliwowy dla {{car}}?",
+    "submitSuccess": "Raport przesłany pomyślnie!",
+    "pendingApproval": "Twój raport paliwowy będzie widoczny po zatwierdzeniu przez moderatora.",
+    "howToCalculate": "Jak obliczyć spalanie",
+    "howToCalculateDesc": "Zatankuj do pełna, wyzeruj licznik przebiegu i jedź normalnie. Przy następnym tankowaniu zapisz ilość zatankowanych litrów i przejechane kilometry. Oblicz: (Litry × 100) ÷ Kilometry = L/100km",
+    "fuelConsumption": "Spalanie",
+    "additionalComments": "Dodatkowe komentarze (opcjonalnie)",
+    "commentPlaceholder": "Podaj szczegóły dotyczące warunków jazdy: proporcja miasto/trasa, pora roku, styl jazdy, używanie klimatyzacji itp.",
+    "submitReport": "Prześlij raport"
+  },
+  "proposals": {
+    "submitted": "{{count}} propozycji przesłanych",
+    "submitted_one": "{{count}} propozycja przesłana",
+    "status": {
+      "approved": "Zatwierdzona",
+      "pending": "Oczekująca",
+      "rejected": "Odrzucona"
+    },
+    "categories": {
+      "technical": "Techniczne",
+      "images": "Obrazy",
+      "description": "Opis",
+      "other": "Inne"
+    },
+    "yourComment": "Twój komentarz",
+    "proposedChanges": "Proponowane zmiany",
+    "adminFeedback": "Odpowiedź administratora"
   }
 }

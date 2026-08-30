@@ -43,57 +43,111 @@
     "howItWorks": {
       "title": "Jak to działa",
       "step1": {
-        "title": "Szukaj i przeglądaj",
-        "description": "Użyj naszych zaawansowanych filtrów wyszukiwania lub przeglądaj według marki, aby znaleźć samochody spełniające Twoje kryteria."
+        "title": "Szukaj i filtruj",
+        "description": "Użyj naszego zaawansowanego wyszukiwania, aby znaleźć samochody spełniające Twoje kryteria."
       },
       "step2": {
-        "title": "Porównuj i badaj",
-        "description": "Dodaj samochody do porównania, czytaj opinie użytkowników i sprawdzaj rzeczywiste dane o zużyciu paliwa."
+        "title": "Porównuj",
+        "description": "Dodaj samochody do porównania i zobacz szczegółowe specyfikacje obok siebie."
       },
       "step3": {
-        "title": "Podejmij świadomą decyzję",
-        "description": "Wykorzystaj wszystkie zebrane dane, aby wybrać samochód, który najlepiej odpowiada Twoim potrzebom."
+        "title": "Czytaj opinie",
+        "description": "Sprawdź opinie i raporty spalania od prawdziwych właścicieli samochodów."
+      },
+      "step4": {
+        "title": "Współtwórz",
+        "description": "Podziel się własnym doświadczeniem, pisząc opinie i zgłaszając zużycie paliwa."
       }
     },
     "cta": {
       "title": "Gotowy znaleźć swój idealny samochód?",
-      "button": "Zacznij przeglądać"
+      "description": "Zacznij eksplorować naszą bazę samochodów, porównuj modele i podejmij świadomą decyzję.",
+      "button": "Przeglądaj samochody",
+      "createAccount": "Załóż konto"
     }
   },
   "faq": {
     "title": "Często zadawane pytania",
-    "subtitle": "Znajdź odpowiedzi na najczęściej zadawane pytania dotyczące CarsPlatform",
-    "general": {
-      "title": "Pytania ogólne",
-      "q1": "Czym jest CarsPlatform?",
-      "a1": "CarsPlatform to kompleksowa platforma informacyjna o samochodach, która pozwala wyszukiwać, porównywać i oceniać samochody. Zapewniamy szczegółowe specyfikacje, opinie użytkowników i rzeczywiste dane o zużyciu paliwa.",
-      "q2": "Czy CarsPlatform jest darmowy?",
-      "a2": "Tak, CarsPlatform jest całkowicie darmowy. Możesz przeglądać samochody, czytać opinie i sprawdzać raporty spalania bez żadnych kosztów. Rejestracja jest wymagana tylko do dodawania opinii i raportów spalania.",
-      "q3": "Jak założyć konto?",
-      "a3": "Kliknij przycisk 'Zarejestruj się' w prawym górnym rogu strony. Wypełnij dane, w tym nazwę użytkownika, email i hasło. Po rejestracji możesz od razu zacząć współtworzyć platformę."
+    "subtitle": "Znajdź odpowiedzi na najczęściej zadawane pytania",
+    "contact": "Nie znalazłeś odpowiedzi? Skontaktuj się z nami:",
+    "stillHaveQuestions": {
+      "title": "Nadal masz pytania?",
+      "description": "Jeśli nie znalazłeś szukanej odpowiedzi, skontaktuj się z naszym zespołem wsparcia.",
+      "contactSupport": "Kontakt z pomocą",
+      "aboutUs": "O nas"
     },
-    "reviews": {
-      "title": "Opinie i oceny",
-      "q1": "Jak obliczane są oceny samochodów?",
-      "a1": "Oceny samochodów są średnią ze wszystkich opinii użytkowników. Każda opinia ocenia samochód w 11 różnych kategoriach, a ogólna ocena jest średnią wszystkich ocen kategorii.",
-      "q2": "Czy mogę edytować swoją opinię?",
-      "a2": "Tak, możesz edytować swoje opinie w każdej chwili ze swojej strony profilu. Po prostu przejdź do sekcji swoich opinii i kliknij przycisk edycji przy dowolnej przesłanej opinii.",
-      "q3": "Dlaczego moja opinia nie została opublikowana?",
-      "a3": "Wszystkie opinie przechodzą proces moderacji w celu zapewnienia jakości. Jeśli Twoja opinia nie spełnia naszych wytycznych (np. zawiera nieodpowiednie treści, jest zbyt krótka lub brakuje jej treści), może zostać odrzucona."
-    },
-    "fuel": {
-      "title": "Raporty spalania",
-      "q1": "Jak działają raporty spalania?",
-      "a1": "Użytkownicy mogą przesyłać raporty o zużyciu paliwa dla samochodów, które posiadają lub regularnie prowadzą. Każdy raport zawiera średnie zużycie paliwa, warunki jazdy i inne istotne szczegóły.",
-      "q2": "Jak dokładne są dane o zużyciu paliwa?",
-      "a2": "Dane o zużyciu paliwa opierają się na rzeczywistych raportach użytkowników. Uśredniamy wszystkie przesłane raporty, aby zapewnić jak najdokładniejsze oszacowanie. Pamiętaj, że rzeczywiste zużycie może się różnić w zależności od stylu jazdy, warunków i konserwacji pojazdu."
-    },
-    "comparison": {
-      "title": "Porównanie samochodów",
-      "q1": "Ile samochodów mogę porównać naraz?",
-      "a1": "Możesz porównać do 4 samochodów naraz. Pozwala to zobaczyć specyfikacje, oceny i zużycie paliwa obok siebie dla łatwiejszego porównania.",
-      "q2": "Czy mogę zapisać swoje porównania?",
-      "a2": "Obecnie porównania są przechowywane w sesji przeglądarki. Jeśli zamkniesz przeglądarkę, porównanie zostanie zresetowane. Zalecamy robienie zrzutów ekranu, jeśli chcesz zapisać porównanie."
+    "categories": {
+      "account": {
+        "title": "Konto i rejestracja",
+        "q1": "Jak założyć konto?",
+        "a1": "Kliknij \"Zarejestruj się\" w górnej nawigacji. Wypełnij nazwę użytkownika, email, hasło i dane osobowe. Po rejestracji możesz od razu korzystać ze wszystkich funkcji platformy.",
+        "q2": "Czy rejestracja jest darmowa?",
+        "a2": "Tak, wszystkie funkcje, włącznie z rejestracją, są dostępne bezpłatnie.",
+        "q3": "Jak zmienić hasło?",
+        "a3": "Przejdź do strony Profil, kliknij zakładkę \"Hasło\" i użyj formularza zmiany hasła. Musisz podać obecne hasło oraz dwukrotnie nowe hasło w celu potwierdzenia.",
+        "q4": "Czy mogę usunąć konto?",
+        "a4": "Obecnie usuwanie konta nie jest dostępne."
+      },
+      "search": {
+        "title": "Wyszukiwanie i przeglądanie samochodów",
+        "q1": "Jak wyszukać konkretny samochód?",
+        "a1": "Użyj paska wyszukiwania w nawigacji lub przejdź do strony Samochody i skorzystaj z zaawansowanych filtrów.",
+        "q2": "Jakie filtry są dostępne?",
+        "a2": "Nasze zaawansowane wyszukiwanie obejmuje: markę, model, generację, typ nadwozia, tagi, typ silnika i więcej.",
+        "q3": "Jak dokładne są dane o samochodach?",
+        "a3": "Staramy się dostarczać dokładne i aktualne informacje. Jednak użytkownicy mogą przesyłać propozycje poprawek danych, jeśli znajdą nieścisłości. Wszystkie propozycje są weryfikowane przez nasz zespół administracyjny przed zastosowaniem.",
+        "q4": "Dlaczego nie mogę znaleźć konkretnego modelu?",
+        "a4": "Nasza baza danych jest stale rozbudowywana. Jeśli brakuje jakiegoś modelu, może zostać dodany w przyszłych aktualizacjach."
+      },
+      "comparison": {
+        "title": "Porównywanie samochodów",
+        "q1": "Jak porównać samochody?",
+        "a1": "Znajdź samochód, który chcesz porównać, a następnie kliknij przycisk \"Dodaj do porównania\" na stronie szczegółów samochodu. Następnie przejdź do strony Porównanie z menu nawigacji. Możesz porównać do 4 samochodów obok siebie.",
+        "q2": "Jakie dane są pokazywane w porównaniach?",
+        "a2": "Porównania pokazują wszystkie dostępne dane o samochodzie.",
+        "q3": "Czy moje wybory porównań są zapisywane?",
+        "a3": "Tak, lista porównań jest zapisywana w przeglądarce. Będzie dostępna nawet po zamknięciu przeglądarki, ale nie synchronizuje się między różnymi urządzeniami."
+      },
+      "reviews": {
+        "title": "Opinie",
+        "q1": "Jak napisać opinię?",
+        "a1": "Przejdź do strony szczegółów dowolnego samochodu i przewiń do sekcji Opinie. Kliknij \"+ Dodaj opinię\" (tylko zalogowani użytkownicy). Wypełnij oceny dla wszystkich kategorii i dodaj komentarz.",
+        "q2": "Jakie kategorie są oceniane w opiniach?",
+        "a2": "Opinie oceniają 11 kategorii (od 1 do 5): Silnik, Skrzynia biegów, Układ kierowniczy, Zawieszenie, Widoczność, Ergonomia, Wygłuszenie, Przestrzeń wewnętrzna, Koszty utrzymania, Stosunek ceny do jakości i Niezawodność.",
+        "q3": "Dlaczego moja opinia nie jest jeszcze widoczna?",
+        "a3": "Wszystkie opinie przechodzą proces moderacji przed publikacją, aby zapewnić jakość i dokładność.",
+        "q4": "Czy mogę edytować lub usunąć swoją opinię?",
+        "a4": "Obecnie nie można edytować opinii po przesłaniu. Wszystkie przesłane opinie możesz zobaczyć w swoim Profilu."
+      },
+      "fuel": {
+        "title": "Raporty spalania",
+        "q1": "Co to jest raport spalania?",
+        "a1": "Raporty spalania to przesyłane przez użytkowników rzeczywiste dane o zużyciu paliwa. Pomagają innym użytkownikom zrozumieć faktyczną efektywność paliwową wykraczającą poza deklaracje producentów.",
+        "q2": "Jak przesłać raport spalania?",
+        "a2": "Przejdź do strony szczegółów samochodu, przewiń do sekcji Raporty spalania i kliknij \"+ Dodaj raport\". Wpisz zmierzone zużycie paliwa (L/100km) i opcjonalnie dodaj komentarz o warunkach jazdy.",
+        "q3": "Jak obliczane jest średnie spalanie?",
+        "a3": "Pokazywana średnia jest obliczana ze wszystkich zatwierdzonych raportów spalania dla danego samochodu."
+      },
+      "proposals": {
+        "title": "Propozycje danych i moderacja",
+        "q1": "Jak mogę zasugerować poprawkę danych?",
+        "a1": "Na stronie szczegółów dowolnego samochodu kliknij \"Zasugeruj poprawkę\". Wybierz kategorię (Silnik, Skrzynia biegów itp.), opisz co należy zmienić i podaj prawidłowe wartości.",
+        "q2": "Jak długo trwa moderacja?",
+        "a2": "Czas moderacji zależy od złożoności propozycji i liczby innych przesłanych propozycji. Status propozycji możesz sprawdzić w Profil -> Moja aktywność -> Propozycje.",
+        "q3": "Co się stanie, jeśli moja propozycja zostanie odrzucona?",
+        "a3": "Jeśli zostanie odrzucona, zobaczysz zmianę statusu w swoim Profilu. Administrator może dodać komentarz wyjaśniający przyczynę. W razie potrzeby możesz przesłać nową propozycję z poprawkami."
+      },
+      "technical": {
+        "title": "Sprawy techniczne i inne",
+        "q1": "Czy platforma ma tryb ciemny?",
+        "a1": "Tak, kliknij ikonę słońca/księżyca w pasku nawigacji, aby przełączać między trybem jasnym a ciemnym. Twoje preferencje są automatycznie zapisywane w przeglądarce.",
+        "q2": "Czy jest aplikacja mobilna?",
+        "a2": "Nie, ale nasza strona jest w pełni dostosowana do urządzeń mobilnych.",
+        "q3": "Jak zgłosić błąd lub zasugerować funkcję?",
+        "a3": "Obecnie zgłaszanie błędów i sugerowanie funkcji nie jest dostępne. Skontaktuj się z nami pod adresem contact@carsplatform.com, podając szczegóły błędu lub sugestię funkcji. Doceniamy każdą opinię.",
+        "q4": "Z kim mogę się skontaktować w sprawie pomocy?",
+        "a4": "W przypadku pytań lub problemów napisz do nas na contact@carsplatform.com."
+      }
     }
   },
   "terms": {

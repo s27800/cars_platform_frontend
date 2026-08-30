@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navigate, Link, useLocation } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { 
   IoArrowBackOutline,
   IoCarSportOutline,
@@ -22,7 +23,7 @@ import { formatDate, calculateAverage } from '../utils/helpers';
 
 
 // Review card component for admin view
-const ReviewCard = ({ review, onApprove, onReject, isResolving }) => {
+const ReviewCard = ({ review, onApprove, onReject, isResolving, t }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const carInfo = review.carInfo;
   
@@ -62,7 +63,7 @@ const ReviewCard = ({ review, onApprove, onReject, isResolving }) => {
           
           <Badge variant="warning" size="md" className="shadow-sm">
             <IoTimeOutline className="w-4 h-4 mr-1.5" />
-            Pending
+            {t('reviews.pending')}
           </Badge>
         </div>
       </div>
@@ -82,7 +83,7 @@ const ReviewCard = ({ review, onApprove, onReject, isResolving }) => {
           </div>
           <div className="flex items-center gap-2 text-neutral-600 dark:text-neutral-400">
             <IoHeartOutline className="w-4 h-4 text-neutral-400 dark:text-neutral-500" />
-            <span>{review.likesCount || 0} likes</span>
+            <span>{t('reviews.likes', { count: review.likesCount || 0 })}</span>
           </div>
         </div>
 
@@ -90,7 +91,7 @@ const ReviewCard = ({ review, onApprove, onReject, isResolving }) => {
         {review.comment && (
           <div className="mb-5">
             <p className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2">
-              Review comment:
+              {t('reviews.reviewComment')}
             </p>
             <p className="text-neutral-600 dark:text-neutral-400 p-4 bg-neutral-50 dark:bg-neutral-700/50 rounded-xl border border-neutral-100 dark:border-neutral-600/50 leading-relaxed">
               {review.comment}
@@ -107,7 +108,7 @@ const ReviewCard = ({ review, onApprove, onReject, isResolving }) => {
             <span className={`flex items-center justify-center w-5 h-5 rounded-md bg-neutral-100 dark:bg-neutral-700 group-hover:bg-primary-100 dark:group-hover:bg-primary-900/30 transition-colors ${isExpanded ? 'rotate-180' : ''}`}>
               <IoChevronDownOutline className="w-3.5 h-3.5 transition-transform" />
             </span>
-            View detailed ratings ({RATING_CATEGORIES.length} categories)
+            {t('reviews.viewDetailedRatings', { count: RATING_CATEGORIES.length })}
           </button>
           
           {isExpanded && (
@@ -145,7 +146,7 @@ const ReviewCard = ({ review, onApprove, onReject, isResolving }) => {
             className="flex items-center gap-2 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-700 dark:hover:text-green-300 border border-transparent hover:border-green-200 dark:hover:border-green-800 disabled:text-green-400 disabled:opacity-60"
           >
             <IoCheckmarkCircleOutline className="w-4 h-4" />
-            Approve
+            {t('reviews.approve')}
           </Button>
           <Button
             variant="danger"
@@ -155,7 +156,7 @@ const ReviewCard = ({ review, onApprove, onReject, isResolving }) => {
             className="flex items-center gap-2"
           >
             <IoCloseCircleOutline className="w-4 h-4" />
-            Reject
+            {t('reviews.reject')}
           </Button>
         </div>
       </div>
@@ -168,6 +169,7 @@ const AdminReviewsPage = () => {
   const location = useLocation();
   const { isAuthenticated, isAdmin, isLoading: authLoading } = useAuth();
   const queryClient = useQueryClient();
+  const { t } = useTranslation('admin');
 
   const [page, setPage] = useState(0);
   const pageSize = 10;
@@ -236,7 +238,7 @@ const AdminReviewsPage = () => {
           className="inline-flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors mb-6 group"
         >
           <IoArrowBackOutline className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-          Back to Dashboard
+          {t('reviews.backToDashboard')}
         </Link>
 
         <div className="flex items-start gap-4">
@@ -245,10 +247,10 @@ const AdminReviewsPage = () => {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-1">
-              Review Moderation
+              {t('reviews.title')}
             </h1>
             <p className="text-neutral-500 dark:text-neutral-400">
-              Review and moderate user-submitted car reviews
+              {t('reviews.subtitle')}
             </p>
           </div>
         </div>
@@ -258,7 +260,7 @@ const AdminReviewsPage = () => {
       {isLoading ? (
         <div className="flex flex-col justify-center items-center py-16">
           <Spinner size="lg" />
-          <p className="mt-4 text-sm text-neutral-500 dark:text-neutral-400">Loading reviews...</p>
+          <p className="mt-4 text-sm text-neutral-500 dark:text-neutral-400">{t('reviews.loading')}</p>
         </div>
       ) : error ? (
         <Card variant="bordered" padding="lg" className="text-center">
@@ -266,10 +268,10 @@ const AdminReviewsPage = () => {
             <IoCloseCircleOutline className="w-6 h-6 text-red-500" />
           </div>
           <p className="text-red-600 dark:text-red-400 mb-4 font-medium">
-            Failed to load reviews. Please try again.
+            {t('reviews.failedToLoad')}
           </p>
           <Button variant="secondary" onClick={() => window.location.reload()}>
-            Retry
+            {t('reviews.retry')}
           </Button>
         </Card>
       ) : reviews.length === 0 ? (
@@ -278,10 +280,10 @@ const AdminReviewsPage = () => {
             <IoCheckmarkCircleOutline className="w-8 h-8 text-green-500" />
           </div>
           <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">
-            All caught up!
+            {t('reviews.allCaughtUp')}
           </h3>
           <p className="text-neutral-500 dark:text-neutral-400 max-w-sm mx-auto">
-            There are no pending reviews to moderate. Check back later.
+            {t('reviews.noPendingReviews')}
           </p>
         </Card>
       ) : (
@@ -291,7 +293,7 @@ const AdminReviewsPage = () => {
           <div className="mb-6 px-4 py-3 bg-neutral-100/80 dark:bg-neutral-800/50 rounded-xl border border-neutral-200 dark:border-neutral-700">
             <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
               <span className="text-lg font-bold text-neutral-900 dark:text-white">{totalElements}</span>
-              {' '}review{totalElements !== 1 ? 's' : ''} pending moderation
+              {' '}{t('reviews.pendingModeration', { count: totalElements })}
             </p>
           </div>
 
@@ -304,6 +306,7 @@ const AdminReviewsPage = () => {
                 onApprove={handleApprove}
                 onReject={handleReject}
                 isResolving={resolveMutation.isPending}
+                t={t}
               />
             ))}
           </div>

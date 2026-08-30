@@ -1,12 +1,21 @@
 {
   "title": "My Profile",
+  "subtitle": "Manage your account settings and preferences",
+  "backToHome": "Back to Home",
   "tabs": {
     "overview": "Overview",
+    "editProfile": "Edit Profile",
     "reviews": "My Reviews",
     "fuelReports": "Fuel Reports",
     "proposals": "Data Proposals",
-    "password": "Change Password",
+    "password": "Password",
+    "activity": "My Activity",
     "settings": "Settings"
+  },
+  "activityTypes": {
+    "reviews": "Reviews",
+    "reports": "Fuel Reports",
+    "proposals": "Proposals"
   },
   "overview": {
     "memberSince": "Member since",
@@ -14,18 +23,34 @@
     "totalFuelReports": "Fuel reports",
     "totalProposals": "Data proposals"
   },
+  "profileInfo": {
+    "memberSince": "Member since {{date}}",
+    "role": "Role",
+    "admin": "Administrator",
+    "user": "User",
+    "stats": "Your Statistics",
+    "reviews": "Reviews",
+    "fuelReports": "Fuel Reports",
+    "proposals": "Data Proposals"
+  },
   "editProfile": {
     "title": "Edit profile",
-    "username": "Username",
+    "firstName": "First Name",
+    "lastName": "Last Name",
     "email": "Email",
+    "username": "Username",
     "currentPassword": "Current password",
     "newPassword": "New password",
     "confirmPassword": "Confirm new password",
     "save": "Save changes",
-    "cancel": "Cancel"
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "success": "Profile updated successfully!",
+    "error": "Failed to update profile. Please try again."
   },
   "changePassword": {
     "title": "Change password",
+    "description": "Update your password to keep your account secure",
     "currentPassword": "Current password",
     "currentPasswordPlaceholder": "Enter current password",
     "newPassword": "New password",
@@ -33,8 +58,17 @@
     "confirmPassword": "Confirm new password",
     "confirmPasswordPlaceholder": "Repeat new password",
     "submit": "Change password",
+    "submitting": "Changing...",
     "success": "Password changed successfully!",
-    "wrongPassword": "Current password is incorrect"
+    "wrongPassword": "Current password is incorrect",
+    "error": "Failed to change password. Please try again."
+  },
+  "deleteAccount": {
+    "title": "Delete Account",
+    "description": "Permanently delete your account and all associated data",
+    "warning": "This action cannot be undone. All your data will be permanently deleted.",
+    "confirm": "Delete Account",
+    "cancel": "Cancel"
   },
   "settings": {
     "title": "Settings",
@@ -46,6 +80,11 @@
     "notifications": "Notifications",
     "emailNotifications": "Email notifications",
     "save": "Save settings"
+  },
+  "reviews": {
+    "title": "My reviews",
+    "empty": "No reviews yet",
+    "emptyDescription": "Share your experience with cars you've driven"
   },
   "fuelReports": {
     "title": "My fuel reports",
@@ -66,6 +105,9 @@
       "rejected": "Rejected"
     }
   },
+  "loading": "Loading profile...",
+  "loadError": "Failed to load profile data. Please try again.",
+  "retry": "Retry",
   "messages": {
     "profileUpdated": "Profile updated successfully!",
     "settingsSaved": "Settings saved successfully!"

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { 
   IoPersonOutline, 
   IoMailOutline, 
@@ -7,29 +8,31 @@ import { Card, Avatar } from '../../components/ui';
 
 
 const ProfileInfo = ({ user }) => {
+  const { t } = useTranslation('profile');
+
   if (!user)
     return null;
 
   const infoItems = [
     {
       icon: <IoAtOutline className="w-5 h-5" />,
-      label: 'Username',
+      label: t('editProfile.username'),
       value: user.username,
     },
     {
       icon: <IoMailOutline className="w-5 h-5" />,
-      label: 'Email',
+      label: t('editProfile.email'),
       value: user.email,
     },
     {
       icon: <IoPersonOutline className="w-5 h-5" />,
-      label: 'First Name',
-      value: user.firstName || 'Not set',
+      label: t('editProfile.firstName'),
+      value: user.firstName || t('common:notSet', 'Not set'),
     },
     {
       icon: <IoPersonOutline className="w-5 h-5" />,
-      label: 'Last Name',
-      value: user.lastName || 'Not set',
+      label: t('editProfile.lastName'),
+      value: user.lastName || t('common:notSet', 'Not set'),
     },
   ];
 

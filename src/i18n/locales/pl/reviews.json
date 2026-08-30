@@ -4,6 +4,7 @@
   "editReview": "Edytuj opinię",
   "deleteReview": "Usuń opinię",
   "yourReview": "Twoja opinia",
+  "basedOnCategories": "Na podstawie {{count}} kategorii",
   "ratings": {
     "overall": "Ogólna ocena",
     "engine": "Silnik",
@@ -44,7 +45,8 @@
     "consPlaceholder": "Co można by poprawić?",
     "submit": "Wyślij opinię",
     "update": "Zaktualizuj opinię",
-    "cancel": "Anuluj"
+    "cancel": "Anuluj",
+    "rateAspects": "Oceń różne aspekty (1-5 gwiazdek)"
   },
   "messages": {
     "submitSuccess": "Opinia wysłana pomyślnie!",
@@ -52,7 +54,8 @@
     "deleteSuccess": "Opinia usunięta pomyślnie!",
     "deleteConfirm": "Czy na pewno chcesz usunąć tę opinię?",
     "loginRequired": "Zaloguj się, aby napisać opinię",
-    "alreadyReviewed": "Już oceniłeś ten samochód"
+    "alreadyReviewed": "Już oceniłeś ten samochód",
+    "pendingApproval": "Twoja opinia będzie widoczna po zatwierdzeniu przez moderatora."
   },
   "sort": {
     "newest": "Najnowsze",
@@ -72,5 +75,15 @@
     "no": "Nie",
     "helpfulCount": "{{count}} osoba uznała to za pomocne",
     "helpfulCount_plural": "{{count}} osób uznało to za pomocne"
-  }
+  },
+  "status": {
+    "approved": "Zatwierdzona",
+    "pending": "Oczekująca",
+    "rejected": "Odrzucona"
+  },
+  "submitted": "{{count}} opinii przesłanych",
+  "submitted_one": "{{count}} opinia przesłana",
+  "likes": "{{count}} polubień",
+  "likes_one": "{{count}} polubienie",
+  "confirmDelete": "Czy na pewno chcesz usunąć swoją opinię dla {{car}}?"
 }

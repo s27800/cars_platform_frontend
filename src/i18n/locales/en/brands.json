@@ -5,6 +5,22 @@
   "searchPlaceholder": "Search brands...",
   "foundedYear": "Founded",
   "noBrands": "No brands found",
-  "errorTitle": "Failed to load brands",
-  "errorDescription": "Something went wrong while loading the brands list. Please try again later."
+  "errorTitle": "Brand not found",
+  "errorDescription": "Something went wrong while loading brand details.",
+  "errorNotFound": "The brand you're looking for doesn't exist or has been removed.",
+  "viewAllCars": "View all cars",
+  "modelsCount": "{{count}} models",
+  "modelsCount_one": "{{count}} model",
+  "stats": {
+    "models": "Models",
+    "country": "Country",
+    "founded": "Founded",
+    "generations": "Generations",
+    "notAvailable": "N/A"
+  },
+  "modelsSection": {
+    "title": "Models",
+    "subtitle": "Click on a model to view its details",
+    "empty": "No models available for this brand yet."
+  }
 }

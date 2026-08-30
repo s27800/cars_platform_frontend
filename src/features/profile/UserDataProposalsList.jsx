@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import {
   IoCarSportOutline,
   IoCreateOutline,
@@ -16,6 +17,7 @@ import { formatDate } from '../../utils/helpers';
 
 
 const UserDataProposalsList = () => {
+  const { t } = useTranslation('profile');
   const [page, setPage] = useState(0);
   const pageSize = 5;
 
@@ -47,10 +49,10 @@ const UserDataProposalsList = () => {
     return (
       <div className="text-center py-8">
         <p className="text-red-500 dark:text-red-400 mb-4">
-          Failed to load your data proposals. Please try again.
+          {t('common:error.loadFailed', 'Failed to load your data proposals. Please try again.')}
         </p>
         <Button variant="secondary" onClick={() => window.location.reload()}>
-          Retry
+          {t('common:retry', 'Retry')}
         </Button>
       </div>
     );
@@ -62,13 +64,13 @@ const UserDataProposalsList = () => {
       <div className="text-center py-8">
         <IoCreateOutline className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
         <h3 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">
-          No data proposals yet
+          {t('proposals.empty')}
         </h3>
         <p className="text-neutral-600 dark:text-neutral-400 mb-4">
-          You haven't submitted any data change proposals yet.
+          {t('proposals.emptyDescription')}
         </p>
         <Button to="/cars" variant="primary">
-          Browse Cars
+          {t('common:browseCars', 'Browse Cars')}
         </Button>
       </div>
     );
@@ -77,12 +79,12 @@ const UserDataProposalsList = () => {
   return (
     <div>
       <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
-        {totalElements} {totalElements === 1 ? 'proposal' : 'proposals'} submitted
+        {t('cars:proposals.submitted', '{{count}} proposals submitted', { count: totalElements })}
       </p>
 
       <div className="space-y-4">
         {proposals.map((proposal) => (
-          <UserDataProposalCard key={proposal.id} proposal={proposal} />
+          <UserDataProposalCard key={proposal.id} proposal={proposal} t={t} />
         ))}
       </div>
 
@@ -104,41 +106,42 @@ const UserDataProposalsList = () => {
 
 
 // Helper function to get status badge config
-const getStatusConfig = (status) => {
+const getStatusConfig = (status, t) => {
   switch (status) {
     case 'APPROVED':
       return {
         variant: 'success',
-        label: 'Approved',
+        label: t('cars:proposals.status.approved', 'Approved'),
         icon: IoCheckmarkCircleOutline,
       };
     case 'REJECTED':
       return {
         variant: 'danger',
-        label: 'Rejected',
+        label: t('cars:proposals.status.rejected', 'Rejected'),
         icon: IoCloseCircleOutline,
       };
     case 'PENDING':
     default:
       return {
         variant: 'warning',
-        label: 'Pending',
+        label: t('cars:proposals.status.pending', 'Pending'),
         icon: IoTimeOutline,
       };
   }
 };
 
 // Helper function to get category label
-const getCategoryLabel = (categoryValue) => {
+const getCategoryLabel = (categoryValue, t) => {
   const category = PROPOSAL_CATEGORIES.find(cat => cat.value === categoryValue);
-  return category?.label || categoryValue;
+  return category ? t(`cars:proposals.categories.${categoryValue.toLowerCase()}`, category.label) : categoryValue;
 };
 
 
 // Card component for displaying user's data proposal with car info
-const UserDataProposalCard = ({ proposal }) => {
+const UserDataProposalCard = ({ proposal, t }) => {
+  const { t: tCars } = useTranslation('cars');
   const carInfo = proposal.carInfo;
-  const statusConfig = getStatusConfig(proposal.status);
+  const statusConfig = getStatusConfig(proposal.status, tCars);
   const StatusIcon = statusConfig.icon;
 
   return (
@@ -175,7 +178,7 @@ const UserDataProposalCard = ({ proposal }) => {
         {/* Category and Date */}
         <div className="flex items-center justify-between mb-3">
           <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wide">
-            {getCategoryLabel(proposal.category)}
+            {getCategoryLabel(proposal.category, tCars)}
           </span>
           <p className="text-sm text-neutral-500 dark:text-neutral-400">
             {formatDate(proposal.createdAt)}
@@ -185,7 +188,7 @@ const UserDataProposalCard = ({ proposal }) => {
         {/* Comment */}
         {proposal.comment && (
           <div className="mb-3">
-            <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-1">Your comment:</p>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-1">{tCars('proposals.yourComment', 'Your comment')}:</p>
             <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed p-3 bg-neutral-50 dark:bg-neutral-700/50 rounded-lg">
               {proposal.comment}
             </p>
@@ -195,7 +198,7 @@ const UserDataProposalCard = ({ proposal }) => {
         {/* Proposed Changes Preview */}
         {proposal.proposedValues && Object.keys(proposal.proposedValues).length > 0 && (
           <div className="mb-3">
-            <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-1">Proposed changes:</p>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-1">{tCars('proposals.proposedChanges', 'Proposed changes')}:</p>
             <div className="p-3 bg-neutral-50 dark:bg-neutral-700/50 rounded-lg">
               <pre className="text-xs text-neutral-600 dark:text-neutral-400 whitespace-pre-wrap break-all font-mono">
                 {JSON.stringify(proposal.proposedValues, null, 2)}
@@ -211,7 +214,7 @@ const UserDataProposalCard = ({ proposal }) => {
               <IoInformationCircleOutline className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm font-medium text-red-700 dark:text-red-400 mb-1">
-                  Admin feedback:
+                  {tCars('proposals.adminFeedback', 'Admin feedback')}:
                 </p>
                 <p className="text-sm text-red-600 dark:text-red-300">
                   {proposal.adminComment}

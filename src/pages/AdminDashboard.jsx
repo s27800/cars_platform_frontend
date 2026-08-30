@@ -1,5 +1,6 @@
 import { Navigate, Link, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { 
   IoDocumentTextOutline, 
   IoSpeedometerOutline,
@@ -14,7 +15,7 @@ import { Card, Spinner } from '../components/ui';
 
 
 // Dashboard stat card component
-const StatCard = ({ icon: Icon, title, count, description, linkTo, isLoading, error, colorClass }) => {
+const StatCard = ({ icon: Icon, title, count, description, linkTo, isLoading, error, colorClass, errorText }) => {
   const cardContent = (
     <Card 
       variant="bordered" 
@@ -42,7 +43,7 @@ const StatCard = ({ icon: Icon, title, count, description, linkTo, isLoading, er
           </div>
         ) : error ? (
           <p className="text-sm text-red-500 dark:text-red-400">
-            Error loading data
+            {errorText}
           </p>
         ) : (
           <p className="text-3xl font-bold text-neutral-900 dark:text-white">
@@ -72,6 +73,7 @@ const StatCard = ({ icon: Icon, title, count, description, linkTo, isLoading, er
 const AdminDashboard = () => {
   const location = useLocation();
   const { isAuthenticated, isAdmin, isLoading: authLoading } = useAuth();
+  const { t } = useTranslation('admin');
 
   // Fetch pending reviews count
   const { 
@@ -143,11 +145,11 @@ const AdminDashboard = () => {
             <IoShieldCheckmarkOutline className="w-6 h-6 text-primary-600 dark:text-primary-400" />
           </div>
           <h1 className="text-2xl font-bold text-neutral-900 dark:text-white">
-            Admin Dashboard
+            {t('dashboard.title')}
           </h1>
         </div>
         <p className="text-neutral-600 dark:text-neutral-400">
-          Manage pending content and moderate user submissions
+          {t('dashboard.subtitle')}
         </p>
       </div>
 
@@ -156,19 +158,19 @@ const AdminDashboard = () => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h2 className="text-lg font-semibold text-neutral-900 dark:text-white mb-1">
-              Pending Items Overview
+              {t('dashboard.overview.title')}
             </h2>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm">
               {totalPending === 0 
-                ? 'All caught up! No items waiting for review.'
-                : `You have ${totalPending} item${totalPending !== 1 ? 's' : ''} waiting for your review.`
+                ? t('dashboard.overview.allCaughtUp')
+                : t('dashboard.overview.pendingMessage', { count: totalPending })
               }
             </p>
           </div>
           {totalPending > 0 && (
             <div className="flex items-center gap-2">
               <span className="px-4 py-2 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 rounded-full text-sm font-medium">
-                {totalPending} pending
+                {t('dashboard.overview.pending', { count: totalPending })}
               </span>
             </div>
           )}
@@ -179,34 +181,37 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatCard
           icon={IoDocumentTextOutline}
-          title="Pending Reviews"
+          title={t('dashboard.stats.pendingReviews')}
           count={reviewsCount}
-          description="User reviews waiting for approval"
+          description={t('dashboard.stats.pendingReviewsDesc')}
           linkTo="/admin/reviews"
           isLoading={reviewsLoading}
           error={reviewsError}
+          errorText={t('common.error')}
           colorClass="bg-blue-500"
         />
 
         <StatCard
           icon={IoSpeedometerOutline}
-          title="Pending Fuel Reports"
+          title={t('dashboard.stats.pendingFuelReports')}
           count={fuelReportsCount}
-          description="Fuel consumption reports to verify"
+          description={t('dashboard.stats.pendingFuelReportsDesc')}
           linkTo="/admin/fuel-reports"
           isLoading={fuelReportsLoading}
           error={fuelReportsError}
+          errorText={t('common.error')}
           colorClass="bg-emerald-500"
         />
 
         <StatCard
           icon={IoCreateOutline}
-          title="Pending Data Proposals"
+          title={t('dashboard.stats.pendingDataProposals')}
           count={proposalsCount}
-          description="Car data change requests to review"
+          description={t('dashboard.stats.pendingDataProposalsDesc')}
           linkTo="/admin/proposals"
           isLoading={proposalsLoading}
           error={proposalsError}
+          errorText={t('common.error')}
           colorClass="bg-violet-500"
         />
       </div>

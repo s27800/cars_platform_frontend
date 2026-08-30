@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, Link, useNavigationType } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import {
   IoChevronBackOutline,
@@ -12,6 +13,9 @@ import { Button, Spinner, Badge } from '../components/ui';
 
 
 const ModelDetailsPage = () => {
+  const { t } = useTranslation('cars');
+  const { t: tCommon } = useTranslation('common');
+  const { t: tBrands } = useTranslation('brands');
   const { id } = useParams();
   const navigationType = useNavigationType();
 
@@ -41,14 +45,14 @@ const ModelDetailsPage = () => {
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="max-w-md text-center">
           <IoCarSportOutline className="w-16 h-16 mx-auto text-neutral-400 mb-4" />
-          <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">Model not found</h1>
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">{t('model.errorTitle')}</h1>
           <p className="text-neutral-600 dark:text-neutral-400 mb-6">
             {error?.response?.status === 404
-              ? "The model you're looking for doesn't exist or has been removed."
-              : "Something went wrong while loading model details."
+              ? t('model.errorNotFound')
+              : t('model.errorDescription')
             }
           </p>
-          <Button to="/" variant="primary">Go Home</Button>
+          <Button to="/" variant="primary">{tCommon('buttons.home')}</Button>
         </div>
       </div>
     );
@@ -75,14 +79,14 @@ const ModelDetailsPage = () => {
               className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400 flex items-center gap-1"
             >
               <IoChevronBackOutline className="w-4 h-4" />
-              Home
+              {tCommon('navigation.home')}
             </Link>
             <span className="text-neutral-400">/</span>
             <Link
               to="/brands"
               className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400"
             >
-              All Brands
+              {tBrands('breadcrumb')}
             </Link>
             <span className="text-neutral-400">/</span>
             <Link
@@ -134,11 +138,11 @@ const ModelDetailsPage = () => {
               <div className="flex flex-wrap items-center gap-3 mb-4">
                 <Badge variant="primary" size="md">
                   <IoLayersOutline className="w-3.5 h-3.5 mr-1" />
-                  {generations.length} {generations.length === 1 ? 'generation' : 'generations'}
+                  {t('model.generationsCount', { count: generations.length })}
                 </Badge>
                 <Badge variant="default" size="md">
                   <IoCarSportOutline className="w-3.5 h-3.5 mr-1" />
-                  {totalCars} {totalCars === 1 ? 'car' : 'cars'}
+                  {t('model.carsCount', { count: totalCars })}
                 </Badge>
               </div>
 
@@ -156,7 +160,7 @@ const ModelDetailsPage = () => {
                 variant="primary"
                 leftIcon={<IoCarSportOutline className="w-4 h-4" />}
               >
-                View all cars
+                {tBrands('viewAllCars')}
               </Button>
             </div>
           </div>
@@ -166,18 +170,18 @@ const ModelDetailsPage = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
           <QuickStat
             icon={<IoLayersOutline className="w-5 h-5" />}
-            label="Generations"
+            label={t('model.stats.generations')}
             value={generations.length}
           />
           <QuickStat
             icon={<IoCarSportOutline className="w-5 h-5" />}
-            label="Total Cars"
+            label={t('model.stats.totalCars')}
             value={totalCars}
           />
           <QuickStat
             icon={<IoCarSportOutline className="w-5 h-5" />}
-            label="Brand"
-            value={brand?.name || 'N/A'}
+            label={t('model.stats.brand')}
+            value={brand?.name || tBrands('stats.notAvailable')}
           />
         </div>
 
@@ -186,10 +190,10 @@ const ModelDetailsPage = () => {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">
-                Generations
+                {t('model.generationsSection.title')}
               </h2>
               <p className="text-neutral-600 dark:text-neutral-400 mt-1">
-                Click on a generation to view its cars
+                {t('model.generationsSection.subtitle')}
               </p>
             </div>
           </div>
@@ -202,6 +206,7 @@ const ModelDetailsPage = () => {
                   generation={generation}
                   brandId={brand?.id}
                   modelId={id}
+                  t={t}
                 />
               ))}
             </div>
@@ -209,7 +214,7 @@ const ModelDetailsPage = () => {
             <div className="text-center py-12 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700">
               <IoLayersOutline className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
               <p className="text-neutral-600 dark:text-neutral-400">
-                No generations available for this model yet.
+                {t('model.generationsSection.empty')}
               </p>
             </div>
           )}
@@ -220,7 +225,7 @@ const ModelDetailsPage = () => {
 };
 
 
-const GenerationCard = ({ generation }) => {
+const GenerationCard = ({ generation, t }) => {
   const { id, name, carsCount = 0 } = generation;
 
   return (
@@ -241,7 +246,7 @@ const GenerationCard = ({ generation }) => {
       {/* Cars count */}
       <div className="flex items-center gap-1 text-sm text-neutral-500 dark:text-neutral-400">
         <IoCarSportOutline className="w-4 h-4" />
-        <span>{carsCount} {carsCount === 1 ? 'car' : 'cars'}</span>
+        <span>{t('model.carsCount', { count: carsCount })}</span>
       </div>
 
       {/* Arrow indicator */}

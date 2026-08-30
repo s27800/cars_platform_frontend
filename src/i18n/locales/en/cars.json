@@ -105,6 +105,7 @@
     "noReviewsDescription": "Be the first to review this car",
     "noFuelReports": "No fuel reports yet",
     "noFuelReportsDescription": "Be the first to add a fuel report",
+    "noImages": "No images available",
     "carNotFound": "Car not found",
     "carNotFoundDescription": "The car you're looking for doesn't exist or has been removed.",
     "loadError": "Something went wrong while loading car details.",
@@ -125,6 +126,8 @@
     "removeCar": "Remove",
     "clearAll": "Clear all",
     "maxReached": "Maximum {{max}} cars can be compared",
+    "maxCarsWarning": "You can compare up to {{count}} cars at a time.",
+    "viewComparison": "View comparison ({{count}})",
     "selectCar": "Select a car",
     "specifications": "Specifications",
     "ratingsAndFuel": "Ratings & Fuel",
@@ -155,12 +158,45 @@
   "model": {
     "generations": "Generations",
     "currentGeneration": "Current generation",
-    "viewAllGenerations": "View all generations"
+    "viewAllGenerations": "View all generations",
+    "errorTitle": "Model not found",
+    "errorDescription": "Something went wrong while loading model details.",
+    "errorNotFound": "The model you're looking for doesn't exist or has been removed.",
+    "generationsCount": "{{count}} generations",
+    "generationsCount_one": "{{count}} generation",
+    "carsCount": "{{count}} cars",
+    "carsCount_one": "{{count}} car",
+    "stats": {
+      "generations": "Generations",
+      "totalCars": "Total Cars",
+      "brand": "Brand"
+    },
+    "generationsSection": {
+      "title": "Generations",
+      "subtitle": "Click on a generation to view its cars",
+      "empty": "No generations available for this model yet."
+    }
   },
   "generation": {
     "variants": "Variants",
     "productionPeriod": "Production period",
-    "viewAllVariants": "View all variants"
+    "viewAllVariants": "View all variants",
+    "errorTitle": "Generation not found",
+    "errorDescription": "Something went wrong while loading generation details.",
+    "errorNotFound": "The generation you're looking for doesn't exist or has been removed.",
+    "carsCount": "{{count}} cars",
+    "carsCount_one": "{{count}} car",
+    "searchAllCars": "Search all cars",
+    "stats": {
+      "cars": "Cars",
+      "model": "Model",
+      "brand": "Brand"
+    },
+    "carsSection": {
+      "title": "Cars",
+      "subtitle": "Click on a car to view its details or add to comparison",
+      "empty": "No cars available for this generation yet."
+    }
   },
   "like": {
     "add": "Add to favorites",
@@ -249,5 +285,53 @@
   "common": {
     "yes": "Yes",
     "no": "No"
+  },
+  "fuelReports": {
+    "submitted": "{{count}} reports submitted",
+    "submitted_one": "{{count}} report submitted",
+    "unit": "L/100km",
+    "basedOnReports": "Based on {{count}} user reports",
+    "basedOnReports_one": "Based on {{count}} user report",
+    "disclaimer": "Real-world fuel consumption may differ from manufacturer specifications based on driving conditions, style, and maintenance.",
+    "loginRequired": "Log in to add reports",
+    "level": {
+      "excellent": "Excellent",
+      "good": "Good",
+      "average": "Average",
+      "poor": "Poor"
+    },
+    "status": {
+      "approved": "Approved",
+      "pending": "Pending",
+      "rejected": "Rejected"
+    },
+    "deleteReport": "Delete Fuel Report",
+    "confirmDelete": "Are you sure you want to delete your fuel report for {{car}}?",
+    "submitSuccess": "Report submitted successfully!",
+    "pendingApproval": "Your fuel report will be visible after moderation approval.",
+    "howToCalculate": "How to calculate your fuel consumption",
+    "howToCalculateDesc": "Fill your tank completely, reset your trip meter, and drive normally. At the next fill-up, note the liters used and kilometers driven. Calculate: (Liters × 100) ÷ Kilometers = L/100km",
+    "fuelConsumption": "Fuel Consumption",
+    "additionalComments": "Additional Comments (optional)",
+    "commentPlaceholder": "Share details about your driving conditions: city/highway ratio, season, driving style, AC usage, etc.",
+    "submitReport": "Submit Report"
+  },
+  "proposals": {
+    "submitted": "{{count}} proposals submitted",
+    "submitted_one": "{{count}} proposal submitted",
+    "status": {
+      "approved": "Approved",
+      "pending": "Pending",
+      "rejected": "Rejected"
+    },
+    "categories": {
+      "technical": "Technical",
+      "images": "Images",
+      "description": "Description",
+      "other": "Other"
+    },
+    "yourComment": "Your comment",
+    "proposedChanges": "Proposed changes",
+    "adminFeedback": "Admin feedback"
   }
 }

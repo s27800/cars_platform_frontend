@@ -1,17 +1,17 @@
 
 // Rating categories for reviews
 export const RATING_CATEGORIES = [
-  { key: 'engineRating', label: 'Engine', description: 'Performance, sound, response' },
-  { key: 'transmissionRating', label: 'Transmission', description: 'Smooth shifts, gear ratios' },
-  { key: 'steeringRating', label: 'Steering', description: 'Feel, precision, feedback' },
-  { key: 'suspensionRating', label: 'Suspension', description: 'Comfort, handling balance' },
-  { key: 'visibilityRating', label: 'Visibility', description: 'Mirrors, blind spots, parking' },
-  { key: 'ergonomicsRating', label: 'Ergonomics', description: 'Controls, seating position' },
-  { key: 'soundProofingRating', label: 'Sound proofing', description: 'Road noise, wind noise' },
-  { key: 'interiorSpaceRating', label: 'Interior space', description: 'Legroom, cargo, storage' },
-  { key: 'maintenanceRating', label: 'Maintenance', description: 'Service costs, reliability' },
-  { key: 'priceQualityRating', label: 'Price/Quality', description: 'Value for money' },
-  { key: 'failureFreeRating', label: 'Reliability', description: 'Breakdown frequency, durability' },
+  { key: 'engineRating', labelKey: 'engine', descKey: 'engineDesc' },
+  { key: 'transmissionRating', labelKey: 'transmission', descKey: 'transmissionDesc' },
+  { key: 'steeringRating', labelKey: 'steering', descKey: 'steeringDesc' },
+  { key: 'suspensionRating', labelKey: 'suspension', descKey: 'suspensionDesc' },
+  { key: 'visibilityRating', labelKey: 'visibility', descKey: 'visibilityDesc' },
+  { key: 'ergonomicsRating', labelKey: 'ergonomics', descKey: 'ergonomicsDesc' },
+  { key: 'soundProofingRating', labelKey: 'soundProofing', descKey: 'soundProofingDesc' },
+  { key: 'interiorSpaceRating', labelKey: 'interiorSpace', descKey: 'interiorSpaceDesc' },
+  { key: 'maintenanceRating', labelKey: 'maintenance', descKey: 'maintenanceDesc' },
+  { key: 'priceQualityRating', labelKey: 'priceQuality', descKey: 'priceQualityDesc' },
+  { key: 'failureFreeRating', labelKey: 'reliability', descKey: 'reliabilityDesc' },
 ];
 
 // Data proposal categories

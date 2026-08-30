@@ -8,18 +8,33 @@
     "users": "Users"
   },
   "dashboard": {
-    "title": "Dashboard",
+    "title": "Admin Dashboard",
+    "subtitle": "Manage pending content and moderate user submissions",
     "stats": {
       "totalUsers": "Total users",
       "totalReviews": "Total reviews",
       "totalFuelReports": "Fuel reports",
-      "pendingProposals": "Pending proposals"
+      "pendingProposals": "Pending proposals",
+      "pendingReviews": "Pending Reviews",
+      "pendingReviewsDesc": "User reviews waiting for approval",
+      "pendingFuelReports": "Pending Fuel Reports",
+      "pendingFuelReportsDesc": "Fuel consumption reports to verify",
+      "pendingDataProposals": "Pending Data Proposals",
+      "pendingDataProposalsDesc": "Car data change requests to review"
+    },
+    "overview": {
+      "title": "Pending Items Overview",
+      "allCaughtUp": "All caught up! No items waiting for review.",
+      "pendingMessage": "You have {{count}} item waiting for your review.",
+      "pendingMessage_plural": "You have {{count}} items waiting for your review.",
+      "pending": "{{count}} pending"
     },
     "recentActivity": "Recent activity",
     "pendingItems": "Items pending review"
   },
   "reviews": {
-    "title": "Manage Reviews",
+    "title": "Review Moderation",
+    "subtitle": "Review and moderate user-submitted car reviews",
     "table": {
       "author": "Author",
       "car": "Car",
@@ -35,10 +50,23 @@
     "confirmDelete": "Are you sure you want to delete this review?",
     "deleted": "Review deleted successfully",
     "approved": "Review approved",
-    "rejected": "Review rejected"
+    "rejected": "Review rejected",
+    "backToDashboard": "Back to Dashboard",
+    "loading": "Loading reviews...",
+    "failedToLoad": "Failed to load reviews. Please try again.",
+    "retry": "Retry",
+    "allCaughtUp": "All caught up!",
+    "noPendingReviews": "There are no pending reviews to moderate. Check back later.",
+    "pendingModeration": "{{count}} review pending moderation",
+    "pendingModeration_plural": "{{count}} reviews pending moderation",
+    "reviewComment": "Review comment:",
+    "viewDetailedRatings": "View detailed ratings ({{count}} categories)",
+    "pending": "Pending",
+    "likes": "{{count}} likes"
   },
   "fuelReports": {
-    "title": "Manage Fuel Reports",
+    "title": "Fuel Report Moderation",
+    "subtitle": "Review and verify user-submitted fuel consumption reports",
     "table": {
       "author": "Author",
       "car": "Car",
@@ -53,10 +81,23 @@
     "confirmDelete": "Are you sure you want to delete this fuel report?",
     "deleted": "Fuel report deleted successfully",
     "approved": "Fuel report approved",
-    "rejected": "Fuel report rejected"
+    "rejected": "Fuel report rejected",
+    "backToDashboard": "Back to Dashboard",
+    "loading": "Loading fuel reports...",
+    "failedToLoad": "Failed to load fuel reports. Please try again.",
+    "retry": "Retry",
+    "allCaughtUp": "All caught up!",
+    "noPendingReports": "There are no pending fuel reports to verify. Check back later.",
+    "pendingVerification": "{{count}} fuel report pending verification",
+    "pendingVerification_plural": "{{count}} fuel reports pending verification",
+    "reportedConsumption": "Reported fuel consumption",
+    "userComment": "User's comment:",
+    "pending": "Pending",
+    "likes": "{{count}} likes"
   },
   "proposals": {
     "title": "Data Proposals",
+    "subtitle": "Review and moderate user-submitted data change requests",
     "table": {
       "author": "Author",
       "car": "Car",
@@ -75,6 +116,26 @@
     "confirmReject": "Are you sure you want to reject this proposal?",
     "approved": "Proposal approved and data updated",
     "rejected": "Proposal rejected",
+    "backToDashboard": "Back to Dashboard",
+    "loading": "Loading proposals...",
+    "failedToLoad": "Failed to load proposals. Please try again.",
+    "retry": "Retry",
+    "allCaughtUp": "All caught up!",
+    "noPendingProposals": "There are no pending data proposals to review. Check back later.",
+    "pendingReview": "{{count}} proposal pending review",
+    "pendingReview_plural": "{{count}} proposals pending review",
+    "pending": "Pending",
+    "userComment": "User's comment:",
+    "proposedChanges": "Proposed changes ({{count}} field)",
+    "proposedChanges_plural": "Proposed changes ({{count}} fields)",
+    "rejectModal": {
+      "title": "Reject Proposal",
+      "warning": "Are you sure you want to reject this data proposal? You can optionally provide feedback to the user.",
+      "reasonLabel": "Rejection reason (optional)",
+      "reasonPlaceholder": "Explain why this proposal was rejected...",
+      "cancel": "Cancel",
+      "confirm": "Reject Proposal"
+    },
     "categories": {
       "ENGINE": "Engine",
       "TRANSMISSION": "Transmission",

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   IoCarSportOutline,
   IoSearchOutline,
@@ -13,44 +14,53 @@ import { Card } from '../components/ui';
 
 
 const AboutPage = () => {
+  const { t } = useTranslation('pages');
+
   const features = [
     {
       icon: IoSearchOutline,
-      title: 'Advanced Search',
-      description: 'Find cars using detailed filters including brand, model, engine type, power, and more.',
+      title: t('about.features.search.title'),
+      description: t('about.features.search.description'),
     },
     {
       icon: IoStatsChartOutline,
-      title: 'Car Comparison',
-      description: 'Compare up to 4 cars side by side with detailed specifications and ratings.',
+      title: t('about.features.comparison.title'),
+      description: t('about.features.comparison.description'),
     },
     {
       icon: IoDocumentTextOutline,
-      title: 'User Reviews',
-      description: 'Read honest reviews from real car owners with detailed ratings across 11 categories.',
+      title: t('about.features.reviews.title'),
+      description: t('about.features.reviews.description'),
     },
     {
       icon: IoSpeedometerOutline,
-      title: 'Fuel Reports',
-      description: 'Check real-world fuel consumption data reported by the community.',
+      title: t('about.features.fuel.title'),
+      description: t('about.features.fuel.description'),
     },
     {
       icon: IoShieldCheckmarkOutline,
-      title: 'Moderated Content',
-      description: 'All reviews and reports are verified by our admin team for quality and accuracy.',
+      title: t('about.features.moderated.title'),
+      description: t('about.features.moderated.description'),
     },
     {
       icon: IoPeopleOutline,
-      title: 'Community Driven',
-      description: 'Users can suggest data corrections to keep our database accurate and up-to-date.',
+      title: t('about.features.community.title'),
+      description: t('about.features.community.description'),
     },
   ];
 
   const stats = [
-    { value: '500+', label: 'Car Models' },
-    { value: '50+', label: 'Brands' },
-    { value: '1000+', label: 'Reviews' },
-    { value: '5000+', label: 'Fuel Reports' },
+    { value: '500+', label: t('about.stats.carModels') },
+    { value: '50+', label: t('about.stats.brands') },
+    { value: '1000+', label: t('about.stats.reviews') },
+    { value: '5000+', label: t('about.stats.fuelReports') },
+  ];
+
+  const steps = [
+    { step: 1, title: t('about.howItWorks.step1.title'), description: t('about.howItWorks.step1.description') },
+    { step: 2, title: t('about.howItWorks.step2.title'), description: t('about.howItWorks.step2.description') },
+    { step: 3, title: t('about.howItWorks.step3.title'), description: t('about.howItWorks.step3.description') },
+    { step: 4, title: t('about.howItWorks.step4.title'), description: t('about.howItWorks.step4.description') },
   ];
 
   return (
@@ -64,11 +74,10 @@ const AboutPage = () => {
             </div>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            About CarsPlatform
+            {t('about.title')}
           </h1>
           <p className="text-xl text-primary-100 max-w-2xl mx-auto leading-relaxed">
-            Your comprehensive source for car information, reviews, and real-world fuel consumption data. 
-            Built by car enthusiasts, for car enthusiasts.
+            {t('about.subtitle')}
           </p>
         </div>
       </section>
@@ -78,12 +87,10 @@ const AboutPage = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">
-              Our Mission
+              {t('about.mission.title')}
             </h2>
             <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
-              We believe that choosing a car should be based on real data and honest opinions. 
-              Our platform brings together detailed specifications, user reviews, and actual fuel consumption 
-              reports to help you make informed decisions.
+              {t('about.mission.description')}
             </p>
           </div>
 
@@ -108,10 +115,10 @@ const AboutPage = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">
-              Platform Features
+              {t('about.features.title')}
             </h2>
             <p className="text-neutral-600 dark:text-neutral-400">
-              Everything you need to research and compare cars
+              {t('about.features.subtitle')}
             </p>
           </div>
 
@@ -142,17 +149,12 @@ const AboutPage = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">
-              How It Works
+              {t('about.howItWorks.title')}
             </h2>
           </div>
 
           <div className="space-y-8">
-            {[
-              { step: 1, title: 'Search & Filter', description: 'Use our advanced search to find cars that match your criteria.' },
-              { step: 2, title: 'Compare', description: 'Add cars to comparison and see detailed side-by-side specifications.' },
-              { step: 3, title: 'Read Reviews', description: 'Check out reviews and fuel reports from real car owners.' },
-              { step: 4, title: 'Contribute', description: 'Share your own experience by writing reviews and reporting fuel consumption.' },
-            ].map(({ step, title, description }) => (
+            {steps.map(({ step, title, description }) => (
               <div key={step} className="flex items-start gap-6">
                 <div className="flex-shrink-0 w-12 h-12 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
                   {step}
@@ -180,10 +182,10 @@ const AboutPage = () => {
             </div>
           </div>
           <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-4">
-            Ready to Find Your Perfect Car?
+            {t('about.cta.title')}
           </h2>
           <p className="text-neutral-600 dark:text-neutral-400 mb-8 max-w-lg mx-auto">
-            Start exploring our database of cars, compare models, and make an informed decision.
+            {t('about.cta.description')}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
@@ -191,13 +193,13 @@ const AboutPage = () => {
               className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-xl transition-colors"
             >
               <IoSearchOutline className="w-5 h-5" />
-              Browse Cars
+              {t('about.cta.button')}
             </Link>
             <Link
               to="/register"
               className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white font-medium rounded-xl border border-neutral-200 dark:border-neutral-700 transition-colors"
             >
-              Create Account
+              {t('about.cta.createAccount')}
             </Link>
           </div>
         </div>

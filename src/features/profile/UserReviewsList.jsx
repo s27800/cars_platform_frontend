@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { IoCarSportOutline, IoDocumentTextOutline, IoTrashOutline } from 'react-icons/io5';
 import { getUserReviews } from '../../api/users';
 import { deleteReview } from '../../api/reviews';
@@ -10,6 +11,7 @@ import { formatDate, calculateAverage } from '../../utils/helpers';
 
 
 const UserReviewsList = () => {
+  const { t } = useTranslation('profile');
   const [page, setPage] = useState(0);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const pageSize = 5;
@@ -62,10 +64,10 @@ const UserReviewsList = () => {
     return (
       <div className="text-center py-8">
         <p className="text-red-500 dark:text-red-400 mb-4">
-          Failed to load your reviews. Please try again.
+          {t('common:error.loadFailed', 'Failed to load your reviews. Please try again.')}
         </p>
         <Button variant="secondary" onClick={() => window.location.reload()}>
-          Retry
+          {t('common:retry', 'Retry')}
         </Button>
       </div>
     );
@@ -77,13 +79,13 @@ const UserReviewsList = () => {
       <div className="text-center py-8">
         <IoDocumentTextOutline className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
         <h3 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">
-          No reviews yet
+          {t('reviews.empty')}
         </h3>
         <p className="text-neutral-600 dark:text-neutral-400 mb-4">
-          You haven't submitted any car reviews yet.
+          {t('reviews.emptyDescription')}
         </p>
         <Button to="/cars" variant="primary">
-          Browse Cars
+          {t('common:browseCars', 'Browse Cars')}
         </Button>
       </div>
     );
@@ -92,7 +94,7 @@ const UserReviewsList = () => {
   return (
     <div>
       <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
-        {totalElements} {totalElements === 1 ? 'review' : 'reviews'} submitted
+        {t('reviews:submitted', '{{count}} reviews submitted', { count: totalElements })}
       </p>
 
       <div className="space-y-4">
@@ -101,6 +103,7 @@ const UserReviewsList = () => {
             key={review.id} 
             review={review} 
             onDelete={() => handleDeleteClick(review)}
+            t={t}
           />
         ))}
       </div>
@@ -123,9 +126,9 @@ const UserReviewsList = () => {
         isOpen={!!deleteTarget}
         onClose={() => setDeleteTarget(null)}
         onConfirm={handleDeleteConfirm}
-        title="Delete Review"
-        message={`Are you sure you want to delete your review for ${deleteTarget?.carInfo?.brandName} ${deleteTarget?.carInfo?.modelName}?`}
-        confirmText="Delete Review"
+        title={t('reviews:deleteReview', 'Delete Review')}
+        message={t('reviews:confirmDelete', 'Are you sure you want to delete your review for {{car}}?', { car: `${deleteTarget?.carInfo?.brandName} ${deleteTarget?.carInfo?.modelName}` })}
+        confirmText={t('reviews:deleteReview', 'Delete Review')}
         variant="danger"
         isLoading={deleteMutation.isPending}
       />
@@ -135,7 +138,8 @@ const UserReviewsList = () => {
 
 
 // Card component for displaying user's review with car info
-const UserReviewCard = ({ review, onDelete }) => {
+const UserReviewCard = ({ review, onDelete, t }) => {
+  const { t: tReviews } = useTranslation('reviews');
   const ratings = RATING_CATEGORIES.map(cat => review[cat.key]);
   const averageRating = calculateAverage(ratings);
   const carInfo = review.carInfo;
@@ -166,7 +170,7 @@ const UserReviewCard = ({ review, onDelete }) => {
           variant={review.isApproved ? 'success' : 'warning'} 
           size="sm"
         >
-          {review.isApproved ? 'Approved' : 'Pending'}
+          {review.isApproved ? tReviews('status.approved', 'Approved') : tReviews('status.pending', 'Pending')}
         </Badge>
       </div>
 
@@ -215,13 +219,13 @@ const UserReviewCard = ({ review, onDelete }) => {
         {/* Footer with likes and delete */}
         <div className="mt-3 pt-3 border-t border-neutral-100 dark:border-neutral-700 flex items-center justify-between">
           <span className="text-sm text-neutral-500 dark:text-neutral-400">
-            {review.likesCount || 0} {review.likesCount === 1 ? 'like' : 'likes'}
+            {tReviews('likes', '{{count}} likes', { count: review.likesCount || 0 })}
           </span>
           <IconButton
             variant="ghost"
             size="sm"
             onClick={onDelete}
-            label="Delete review"
+            label={tReviews('deleteReview', 'Delete review')}
             className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
           >
             <IoTrashOutline className="w-4 h-4" />
