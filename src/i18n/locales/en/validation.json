@@ -1,6 +1,9 @@
 {
   "required": "This field is required",
-  "email": "Please enter a valid email address",
+  "email": {
+    "required": "Email is required",
+    "invalid": "Please enter a valid email address"
+  },
   "minLength": "Must be at least {{min}} characters",
   "maxLength": "Must be at most {{max}} characters",
   "passwordMatch": "Passwords must match",
@@ -13,7 +16,8 @@
     "required": "Username is required",
     "minLength": "Username must be at least 3 characters",
     "maxLength": "Username must be at most 50 characters",
-    "invalid": "Username can only contain letters, numbers, and underscores"
+    "invalid": "Username can only contain letters, numbers, and underscores",
+    "pattern": "Username can only contain letters, numbers, and underscores"
   },
   "password": {
     "required": "Password is required",
@@ -21,11 +25,24 @@
     "maxLength": "Password must be at most 72 characters",
     "weak": "Password is too weak",
     "mismatch": "Passwords do not match",
-    "complexity": "Password must contain a lowercase letter, an uppercase letter and a digit"
+    "complexity": "Password must contain a lowercase letter, an uppercase letter and a digit",
+    "hint": "At least 8 characters, with a lowercase letter, an uppercase letter and a digit"
   },
   "emailField": {
     "required": "Email is required",
     "invalid": "Please enter a valid email address"
+  },
+  "confirmPassword": {
+    "required": "Please confirm your password",
+    "match": "Passwords must match"
+  },
+  "firstName": {
+    "required": "First name is required",
+    "minLength": "First name must be at least 2 characters"
+  },
+  "lastName": {
+    "required": "Last name is required",
+    "minLength": "Last name must be at least 2 characters"
   },
   "review": {
     "titleRequired": "Review title is required",

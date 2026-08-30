@@ -5,6 +5,23 @@
   "searchPlaceholder": "Szukaj marek...",
   "foundedYear": "Założono",
   "noBrands": "Nie znaleziono marek",
-  "errorTitle": "Nie udało się załadować marek",
-  "errorDescription": "Wystąpił problem podczas ładowania listy marek. Spróbuj ponownie później."
+  "errorTitle": "Nie znaleziono marki",
+  "errorDescription": "Wystąpił problem podczas ładowania szczegółów marki.",
+  "errorNotFound": "Szukana marka nie istnieje lub została usunięta.",
+  "viewAllCars": "Zobacz wszystkie samochody",
+  "modelsCount": "{{count}} modeli",
+  "modelsCount_one": "{{count}} model",
+  "modelsCount_few": "{{count}} modele",
+  "stats": {
+    "models": "Modele",
+    "country": "Kraj",
+    "founded": "Założono",
+    "generations": "Generacje",
+    "notAvailable": "Brak"
+  },
+  "modelsSection": {
+    "title": "Modele",
+    "subtitle": "Kliknij model, aby zobaczyć szczegóły",
+    "empty": "Brak dostępnych modeli dla tej marki."
+  }
 }

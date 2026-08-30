@@ -31,6 +31,7 @@ const CarDetailsPage = () => {
   const { id } = useParams();
   const { isAuthenticated } = useAuth();
   const { t } = useTranslation('cars');
+  const { t: tCommon } = useTranslation('common');
   const [showProposalModal, setShowProposalModal] = useState(false);
 
   const [comparisonCars, setComparisonCars] = useState(() => 
@@ -43,7 +44,7 @@ const CarDetailsPage = () => {
     enabled: !!id,
   });
 
-  const carName = getCarDisplayName(car) || 'Loading...';
+  const carName = getCarDisplayName(car) || tCommon('loading');
   const isInComparison = comparisonCars.some(c => c.id === id);
 
   const handleToggleComparison = () => {
@@ -117,14 +118,14 @@ const CarDetailsPage = () => {
               className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400 flex items-center gap-1"
             >
               <IoChevronBackOutline className="w-4 h-4" />
-              Home
+              {tCommon('navigation.home')}
             </Link>
             <span className="text-neutral-400">/</span>
             <Link 
               to="/cars"
               className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400"
             >
-              All Cars
+              {tCommon('navigation.cars')}
             </Link>
             <span className="text-neutral-400">/</span>
             <Link 

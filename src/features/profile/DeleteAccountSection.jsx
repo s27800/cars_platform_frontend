@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { IoTrashOutline, IoWarningOutline } from 'react-icons/io5';
 import { deleteAccount } from '../../api/users';
 import { useAuth } from '../../hooks';
@@ -12,6 +13,7 @@ import { Button, ConfirmModal, Alert } from '../../components/ui';
  * Shows a warning about the irreversible action and requires confirmation.
  */
 const DeleteAccountSection = () => {
+  const { t } = useTranslation('profile');
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ const DeleteAccountSection = () => {
       navigate('/', { replace: true });
     },
     onError: (err) => {
-      setError(err.response?.data?.message || 'Failed to delete account. Please try again.');
+      setError(err.response?.data?.message || t('deleteAccount.error', 'Failed to delete account. Please try again.'));
       setShowConfirm(false);
     },
   });
@@ -41,7 +43,7 @@ const DeleteAccountSection = () => {
       <div className="flex items-center gap-2 mb-4">
         <IoWarningOutline className="w-5 h-5 text-red-500" />
         <h3 className="text-lg font-semibold text-red-600 dark:text-red-400">
-          Danger Zone
+          {t('common:dangerZone', 'Danger Zone')}
         </h3>
       </div>
 
@@ -56,11 +58,10 @@ const DeleteAccountSection = () => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h4 className="font-medium text-neutral-900 dark:text-white mb-1">
-              Delete Account
+              {t('deleteAccount.title')}
             </h4>
             <p className="text-sm text-neutral-600 dark:text-neutral-400">
-              Permanently delete your account and all associated data including reviews, 
-              fuel reports, and proposals. This action cannot be undone.
+              {t('deleteAccount.description')}
             </p>
           </div>
           <Button
@@ -70,7 +71,7 @@ const DeleteAccountSection = () => {
             onClick={() => setShowConfirm(true)}
             className="shrink-0"
           >
-            Delete Account
+            {t('deleteAccount.confirm')}
           </Button>
         </div>
       </div>
@@ -80,9 +81,9 @@ const DeleteAccountSection = () => {
         isOpen={showConfirm}
         onClose={() => setShowConfirm(false)}
         onConfirm={handleDeleteConfirm}
-        title="Delete Account"
-        message="Are you sure you want to permanently delete your account? All your data including reviews, fuel reports, and proposals will be permanently removed."
-        confirmText="Delete My Account"
+        title={t('deleteAccount.title')}
+        message={t('deleteAccount.warning')}
+        confirmText={t('deleteAccount.confirm')}
         variant="danger"
         isLoading={deleteMutation.isPending}
       />

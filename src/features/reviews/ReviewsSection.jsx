@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { IoAddOutline, IoStarOutline, IoChevronDownOutline } from 'react-icons/io5';
 import { getReviews, getAverageRatings } from '../../api/reviews';
 import { useAuth } from '../../hooks';
@@ -11,6 +12,7 @@ import RatingsChart from './RatingsChart';
 
 // Reusable component for displaying reviews section with average ratings chart, reviews list, and add review functionality
 const ReviewsSection = ({ carId, defaultOpen = true, className = '' }) => {
+  const { t } = useTranslation('reviews');
   const { isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [page, setPage] = useState(0);
@@ -60,11 +62,11 @@ const ReviewsSection = ({ carId, defaultOpen = true, className = '' }) => {
         <div className="flex items-center gap-3">
           <IoStarOutline className="w-6 h-6 text-primary-600 dark:text-primary-400" />
           <h2 className="text-xl font-semibold text-neutral-900 dark:text-white">
-            Reviews
+            {t('title')}
           </h2>
           {totalElements > 0 && (
             <span className="text-sm text-neutral-500">
-              ({totalElements} {totalElements === 1 ? 'review' : 'reviews'})
+              ({t('submitted', { count: totalElements })})
             </span>
           )}
         </div>
@@ -80,7 +82,7 @@ const ReviewsSection = ({ carId, defaultOpen = true, className = '' }) => {
               }}
               leftIcon={<IoAddOutline className="w-4 h-4" />}
             >
-              Add Review
+              {t('writeReview')}
             </Button>
           )}
           <IoChevronDownOutline 
@@ -110,17 +112,17 @@ const ReviewsSection = ({ carId, defaultOpen = true, className = '' }) => {
           <Spinner size="lg" />
         </div>
       ) : isReviewsError ? (
-        <Alert variant="error" title="Failed to load reviews">
-          Something went wrong while loading reviews. Please try refreshing the page.
+        <Alert variant="error" title={t('common:errors.somethingWentWrong')}>
+          {t('common:errors.tryAgain')}
         </Alert>
       ) : reviews.length === 0 ? (
         <div className="text-center py-12 bg-neutral-50 dark:bg-neutral-800/50 rounded-xl">
           <IoStarOutline className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
           <h3 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">
-            No reviews yet
+            {t('empty.noReviews')}
           </h3>
           <p className="text-neutral-600 dark:text-neutral-400 mb-4">
-            Be the first to share your experience with this car!
+            {t('empty.noReviewsDescription')}
           </p>
           {isAuthenticated ? (
             <Button
@@ -128,14 +130,14 @@ const ReviewsSection = ({ carId, defaultOpen = true, className = '' }) => {
               onClick={() => setShowAddForm(true)}
               leftIcon={<IoAddOutline className="w-4 h-4" />}
             >
-              Write a Review
+              {t('writeReview')}
             </Button>
           ) : (
             <p className="text-sm text-neutral-500">
               <Button to="/login" variant="ghost" size="sm">
-                Login
+                {t('auth:login')}
               </Button>
-              to write a review
+              {t('messages.loginRequired')}
             </p>
           )}
         </div>
@@ -170,7 +172,7 @@ const ReviewsSection = ({ carId, defaultOpen = true, className = '' }) => {
       <Modal
         isOpen={showAddForm}
         onClose={() => setShowAddForm(false)}
-        title="Write a Review"
+        title={t('writeReview')}
         size="lg"
       >
         <AddReviewForm

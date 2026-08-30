@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { IoHeartOutline, IoHeart, IoSpeedometerOutline } from 'react-icons/io5';
 import { toggleFuelReportLike, getFuelReportLikeStatus } from '../../api/likes';
 import { useAuth } from '../../hooks';
@@ -9,6 +10,7 @@ import { formatDate, getConsumptionLevel } from '../../utils/helpers';
 
 // Reusable card component displaying fuel consumption report with like functionality
 const FuelReportCard = ({ report }) => {
+  const { t } = useTranslation('cars');
   const { isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
   const [isLiked, setIsLiked] = useState(false);
@@ -70,16 +72,16 @@ const FuelReportCard = ({ report }) => {
 
         <div className="flex items-center gap-3">
           {report.isApproved === false && (
-            <Badge variant="warning" size="sm">Pending</Badge>
+            <Badge variant="warning" size="sm">{t('fuelReports.status.pending')}</Badge>
           )}
           
           <div className="text-right">
             <div className="flex items-center gap-1.5">
               <IoSpeedometerOutline className={`w-5 h-5 ${level.color}`} />
               <span className={`text-2xl font-bold ${level.color}`}>{fuelValue}</span>
-              <span className="text-sm text-neutral-500 dark:text-neutral-400">L/100km</span>
+              <span className="text-sm text-neutral-500 dark:text-neutral-400">{t('fuelReports.unit')}</span>
             </div>
-            <span className={`text-xs ${level.color}`}>{level.label}</span>
+            <span className={`text-xs ${level.color}`}>{t(`fuelReports.level.${level.label.toLowerCase()}`)}</span>
           </div>
         </div>
       </div>
@@ -103,14 +105,14 @@ const FuelReportCard = ({ report }) => {
             }
             ${isLiked ? 'text-red-500' : 'text-neutral-600 dark:text-neutral-400'}
           `}
-          title={isAuthenticated ? 'Like this report' : 'Login to like reports'}
+          title={isAuthenticated ? t('reviews:helpful.yes') : t('fuelReports.loginRequired')}
         >
           {isLiked ? <IoHeart className="w-5 h-5" /> : <IoHeartOutline className="w-5 h-5" />}
           <span className="text-sm font-medium">{likeCount}</span>
         </button>
 
         {!isAuthenticated && (
-          <span className="text-xs text-neutral-400">Login to interact</span>
+          <span className="text-xs text-neutral-400">{t('fuelReports.loginRequired')}</span>
         )}
       </div>
     </div>

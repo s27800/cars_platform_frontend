@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { IoAddOutline, IoFlameOutline, IoSpeedometerOutline, IoChevronDownOutline } from 'react-icons/io5';
 import { getFuelReports, getAverageConsumption } from '../../api/fuelReports';
 import { useAuth } from '../../hooks';
@@ -10,6 +11,7 @@ import AddFuelReportForm from './AddFuelReportForm';
 
 // Reusable section component for displaying fuel reports and average consumption
 const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
+  const { t } = useTranslation('cars');
   const { isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [page, setPage] = useState(0);
@@ -68,11 +70,11 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
         <div className="flex items-center gap-3">
           <IoFlameOutline className="w-6 h-6 text-primary-600 dark:text-primary-400" />
           <h2 className="text-xl font-semibold text-neutral-900 dark:text-white">
-            Fuel Reports
+            {t('details.fuelReports')}
           </h2>
           {totalElements > 0 && (
             <span className="text-sm text-neutral-500">
-              ({totalElements} {totalElements === 1 ? 'report' : 'reports'})
+              ({t('fuelReports.submitted', { count: totalElements })})
             </span>
           )}
         </div>
@@ -88,7 +90,7 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
               }}
               leftIcon={<IoAddOutline className="w-4 h-4" />}
             >
-              Add Report
+              {t('details.addFuelReport')}
             </Button>
           )}
           <IoChevronDownOutline 
@@ -110,10 +112,10 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
           <div className="flex items-center justify-between">
             <div>
               <h4 className="text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-1">
-                Average Real-World Consumption
+                {t('stats.fuelConsumption')}
               </h4>
               <p className="text-sm text-neutral-500">
-                Based on {totalElements} user {totalElements === 1 ? 'report' : 'reports'}
+                {t('fuelReports.basedOnReports', 'Based on {{count}} user reports', { count: totalElements })}
               </p>
             </div>
             
@@ -124,7 +126,7 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
                   {avgValue}
                 </span>
                 <span className="text-lg text-neutral-500 dark:text-neutral-400 ml-1">
-                  L/100km
+                  {t('fuelReports.unit')}
                 </span>
               </div>
             </div>
@@ -133,8 +135,7 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
           {/* Comparison with manufacturer data */}
           <div className="mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700">
             <p className="text-xs text-neutral-500 dark:text-neutral-400">
-              Real-world fuel consumption may differ from manufacturer specifications 
-              based on driving conditions, style, and maintenance.
+              {t('fuelReports.disclaimer', 'Real-world fuel consumption may differ from manufacturer specifications based on driving conditions, style, and maintenance.')}
             </p>
           </div>
         </div>
@@ -142,7 +143,7 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
         <div className="bg-neutral-50 dark:bg-neutral-800/50 rounded-xl p-6 mb-6 text-center">
           <IoSpeedometerOutline className="w-10 h-10 mx-auto text-neutral-400 mb-2" />
           <p className="text-neutral-500 dark:text-neutral-400">
-            No consumption data available yet
+            {t('details.noFuelReports')}
           </p>
         </div>
       )}
@@ -153,17 +154,17 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
           <Spinner size="lg" />
         </div>
       ) : isReportsError ? (
-        <Alert variant="error" title="Failed to load reports">
-          Something went wrong while loading fuel reports. Please try refreshing the page.
+        <Alert variant="error" title={t('common:errors.somethingWentWrong')}>
+          {t('common:errors.tryAgain')}
         </Alert>
       ) : reports.length === 0 ? (
         <div className="text-center py-12 bg-neutral-50 dark:bg-neutral-800/50 rounded-xl">
           <IoFlameOutline className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
           <h3 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">
-            No fuel reports yet
+            {t('details.noFuelReports')}
           </h3>
           <p className="text-neutral-600 dark:text-neutral-400 mb-4">
-            Help others by sharing your real fuel consumption data!
+            {t('details.noFuelReportsDescription')}
           </p>
           {isAuthenticated ? (
             <Button
@@ -171,14 +172,14 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
               onClick={() => setShowAddForm(true)}
               leftIcon={<IoAddOutline className="w-4 h-4" />}
             >
-              Add Fuel Report
+              {t('details.addFuelReport')}
             </Button>
           ) : (
             <p className="text-sm text-neutral-500">
               <Button to="/login" variant="ghost" size="sm">
-                Login
+                {t('auth:login')}
               </Button>
-              to add a report
+              {t('fuelReports.loginRequired', 'to add a report')}
             </p>
           )}
         </div>
@@ -213,7 +214,7 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
       <Modal
         isOpen={showAddForm}
         onClose={() => setShowAddForm(false)}
-        title="Add Fuel Report"
+        title={t('details.addFuelReport')}
         size="md"
       >
         <AddFuelReportForm

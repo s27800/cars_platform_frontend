@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { 
   IoPencilOutline, 
   IoLockClosedOutline,
@@ -17,11 +18,11 @@ import { ProfileInfo, ProfileEditForm, PasswordChangeForm, UserReviewsList, User
 
 
 // Activity type selector component
-const ActivityTypeSelector = ({ value, onChange }) => {
+const ActivityTypeSelector = ({ value, onChange, t }) => {
   const activityTypes = [
-    { id: 'reviews', label: 'Reviews', icon: IoDocumentTextOutline },
-    { id: 'reports', label: 'Fuel Reports', icon: IoSpeedometerOutline },
-    { id: 'proposals', label: 'Proposals', icon: IoCreateOutline },
+    { id: 'reviews', label: t('activityTypes.reviews'), icon: IoDocumentTextOutline },
+    { id: 'reports', label: t('activityTypes.reports'), icon: IoSpeedometerOutline },
+    { id: 'proposals', label: t('activityTypes.proposals'), icon: IoCreateOutline },
   ];
 
   return (
@@ -53,6 +54,7 @@ const ProfilePage = () => {
   const queryClient = useQueryClient();
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation('profile');
 
   // Set active tab from URL
   const { activeTab, activityType } = useMemo(() => {
@@ -191,14 +193,14 @@ const ProfilePage = () => {
             size="sm"
             leftIcon={<IoArrowBackOutline className="w-4 h-4" />}
           >
-            Back to Home
+            {t('backToHome')}
           </Button>
         </div>
         <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">
-          My Profile
+          {t('title')}
         </h1>
         <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-          Manage your account settings and preferences
+          {t('subtitle')}
         </p>
       </div>
 
@@ -213,13 +215,13 @@ const ProfilePage = () => {
       {fetchError && !isLoading && (
         <Card variant="bordered" padding="lg" className="text-center">
           <p className="text-red-500 dark:text-red-400 mb-4">
-            Failed to load profile data. Please try again.
+            {t('loadError')}
           </p>
           <Button 
             onClick={() => queryClient.invalidateQueries(['userProfile'])}
             variant="secondary"
           >
-            Retry
+            {t('retry')}
           </Button>
         </Card>
       )}
@@ -241,19 +243,19 @@ const ProfilePage = () => {
                   <Tabs.Trigger value="profile">
                     <span className="flex items-center gap-2">
                       <IoPencilOutline className="w-4 h-4" />
-                      Edit Profile
+                      {t('tabs.editProfile')}
                     </span>
                   </Tabs.Trigger>
                   <Tabs.Trigger value="password">
                     <span className="flex items-center gap-2">
                       <IoLockClosedOutline className="w-4 h-4" />
-                      Password
+                      {t('tabs.password')}
                     </span>
                   </Tabs.Trigger>
                   <Tabs.Trigger value="activity">
                     <span className="flex items-center gap-2">
                       <IoListOutline className="w-4 h-4" />
-                      My Activity
+                      {t('tabs.activity')}
                     </span>
                   </Tabs.Trigger>
                 </Tabs.List>
@@ -282,7 +284,7 @@ const ProfilePage = () => {
                   </Tabs.Content>
 
                   <Tabs.Content value="activity">
-                    <ActivityTypeSelector value={activityType} onChange={setActivityType} />
+                    <ActivityTypeSelector value={activityType} onChange={setActivityType} t={t} />
                     {activityType === 'reviews' && <UserReviewsList />}
                     {activityType === 'reports' && <UserFuelReportsList />}
                     {activityType === 'proposals' && <UserDataProposalsList />}

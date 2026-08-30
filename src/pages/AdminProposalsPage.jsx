@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navigate, Link, useLocation } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { 
   IoArrowBackOutline,
   IoCarSportOutline,
@@ -20,14 +21,13 @@ import { formatDate } from '../utils/helpers';
 
 
 // Helper function to get category label
-const getCategoryLabel = (categoryValue) => {
-  const category = PROPOSAL_CATEGORIES.find(cat => cat.value === categoryValue);
-  return category?.label || categoryValue;
+const getCategoryLabel = (categoryValue, t) => {
+  return t(`proposals.categories.${categoryValue}`, categoryValue);
 };
 
 
 // Proposal card component for admin view
-const ProposalCard = ({ proposal, onApprove, onReject, isResolving }) => {
+const ProposalCard = ({ proposal, onApprove, onReject, isResolving, t }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const carInfo = proposal.carInfo;
   const changesCount = proposal.proposedValues ? Object.keys(proposal.proposedValues).length : 0;
@@ -56,7 +56,7 @@ const ProposalCard = ({ proposal, onApprove, onReject, isResolving }) => {
 
         <Badge variant="warning" size="md" className="shadow-sm">
           <IoTimeOutline className="w-4 h-4 mr-1.5" />
-          Pending
+          {t('proposals.pending')}
         </Badge>
       </div>
 
@@ -74,7 +74,7 @@ const ProposalCard = ({ proposal, onApprove, onReject, isResolving }) => {
             <span>{formatDate(proposal.createdAt)}</span>
           </div>
           <span className="px-2.5 py-1 bg-neutral-100 dark:bg-neutral-700 rounded-md text-xs font-semibold uppercase tracking-wide text-neutral-600 dark:text-neutral-300">
-            {getCategoryLabel(proposal.category)}
+            {getCategoryLabel(proposal.category, t)}
           </span>
         </div>
 
@@ -82,7 +82,7 @@ const ProposalCard = ({ proposal, onApprove, onReject, isResolving }) => {
         {proposal.comment && (
           <div className="mb-5">
             <p className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2">
-              User's comment:
+              {t('proposals.userComment')}
             </p>
             <p className="text-neutral-600 dark:text-neutral-400 p-4 bg-neutral-50 dark:bg-neutral-700/50 rounded-xl border border-neutral-100 dark:border-neutral-600/50 leading-relaxed">
               {proposal.comment}
@@ -100,7 +100,7 @@ const ProposalCard = ({ proposal, onApprove, onReject, isResolving }) => {
               <span className={`flex items-center justify-center w-5 h-5 rounded-md bg-neutral-100 dark:bg-neutral-700 group-hover:bg-primary-100 dark:group-hover:bg-primary-900/30 transition-colors ${isExpanded ? 'rotate-180' : ''}`}>
                 <IoChevronDownOutline className="w-3.5 h-3.5 transition-transform" />
               </span>
-              Proposed changes ({changesCount} field{changesCount !== 1 ? 's' : ''})
+              {t('proposals.proposedChanges', { count: changesCount })}
             </button>
             
             {isExpanded && (
@@ -133,7 +133,7 @@ const ProposalCard = ({ proposal, onApprove, onReject, isResolving }) => {
             className="flex items-center gap-2 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-700 dark:hover:text-green-300 border border-transparent hover:border-green-200 dark:hover:border-green-800 disabled:text-green-400 disabled:opacity-60"
           >
             <IoCheckmarkCircleOutline className="w-4 h-4" />
-            Approve
+            {t('proposals.approve')}
           </Button>
           <Button
             variant="danger"
@@ -143,7 +143,7 @@ const ProposalCard = ({ proposal, onApprove, onReject, isResolving }) => {
             className="flex items-center gap-2"
           >
             <IoCloseCircleOutline className="w-4 h-4" />
-            Reject
+            {t('proposals.reject')}
           </Button>
         </div>
       </div>
@@ -153,7 +153,7 @@ const ProposalCard = ({ proposal, onApprove, onReject, isResolving }) => {
 
 
 // Rejection modal component
-const RejectModal = ({ isOpen, onClose, onConfirm, isLoading }) => {
+const RejectModal = ({ isOpen, onClose, onConfirm, isLoading, t }) => {
   const [comment, setComment] = useState('');
 
   const handleSubmit = () => {
@@ -167,32 +167,32 @@ const RejectModal = ({ isOpen, onClose, onConfirm, isLoading }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} title="Reject Proposal" size="md">
+    <Modal isOpen={isOpen} onClose={handleClose} title={t('proposals.rejectModal.title')} size="md">
       <div className="p-6">
         <div className="flex items-start gap-4 mb-5 p-4 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-100 dark:border-red-900/50">
           <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/40 flex items-center justify-center flex-shrink-0">
             <IoCloseCircleOutline className="w-5 h-5 text-red-500" />
           </div>
           <p className="text-sm text-red-700 dark:text-red-300 leading-relaxed">
-            Are you sure you want to reject this data proposal? You can optionally provide feedback to the user.
+            {t('proposals.rejectModal.warning')}
           </p>
         </div>
         
         <TextArea
-          label="Rejection reason (optional)"
+          label={t('proposals.rejectModal.reasonLabel')}
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          placeholder="Explain why this proposal was rejected..."
+          placeholder={t('proposals.rejectModal.reasonPlaceholder')}
           rows={3}
         />
 
         <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-neutral-200 dark:border-neutral-700">
           <Button variant="ghost" onClick={handleClose} disabled={isLoading}>
-            Cancel
+            {t('proposals.rejectModal.cancel')}
           </Button>
           <Button variant="danger" onClick={handleSubmit} disabled={isLoading}>
             {isLoading ? <Spinner size="sm" className="mr-2" /> : null}
-            Reject Proposal
+            {t('proposals.rejectModal.confirm')}
           </Button>
         </div>
       </div>
@@ -205,6 +205,7 @@ const AdminProposalsPage = () => {
   const location = useLocation();
   const { isAuthenticated, isAdmin, isLoading: authLoading } = useAuth();
   const queryClient = useQueryClient();
+  const { t } = useTranslation('admin');
 
   const [page, setPage] = useState(0);
   const [rejectModalOpen, setRejectModalOpen] = useState(false);
@@ -290,7 +291,7 @@ const AdminProposalsPage = () => {
           className="inline-flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors mb-6 group"
         >
           <IoArrowBackOutline className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-          Back to Dashboard
+          {t('proposals.backToDashboard')}
         </Link>
 
         <div className="flex items-start gap-4">
@@ -299,10 +300,10 @@ const AdminProposalsPage = () => {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-1">
-              Data Proposals
+              {t('proposals.title')}
             </h1>
             <p className="text-neutral-500 dark:text-neutral-400">
-              Review and moderate user-submitted data change requests
+              {t('proposals.subtitle')}
             </p>
           </div>
         </div>
@@ -312,7 +313,7 @@ const AdminProposalsPage = () => {
       {isLoading ? (
         <div className="flex flex-col justify-center items-center py-16">
           <Spinner size="lg" />
-          <p className="mt-4 text-sm text-neutral-500 dark:text-neutral-400">Loading proposals...</p>
+          <p className="mt-4 text-sm text-neutral-500 dark:text-neutral-400">{t('proposals.loading')}</p>
         </div>
       ) : error ? (
         <Card variant="bordered" padding="lg" className="text-center">
@@ -320,10 +321,10 @@ const AdminProposalsPage = () => {
             <IoCloseCircleOutline className="w-6 h-6 text-red-500" />
           </div>
           <p className="text-red-600 dark:text-red-400 mb-4 font-medium">
-            Failed to load proposals. Please try again.
+            {t('proposals.failedToLoad')}
           </p>
           <Button variant="secondary" onClick={() => window.location.reload()}>
-            Retry
+            {t('proposals.retry')}
           </Button>
         </Card>
       ) : proposals.length === 0 ? (
@@ -332,10 +333,10 @@ const AdminProposalsPage = () => {
             <IoCheckmarkCircleOutline className="w-8 h-8 text-green-500" />
           </div>
           <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">
-            All caught up!
+            {t('proposals.allCaughtUp')}
           </h3>
           <p className="text-neutral-500 dark:text-neutral-400 max-w-sm mx-auto">
-            There are no pending data proposals to review. Check back later.
+            {t('proposals.noPendingProposals')}
           </p>
         </Card>
       ) : (
@@ -344,7 +345,7 @@ const AdminProposalsPage = () => {
           <div className="mb-6 px-4 py-3 bg-neutral-100/80 dark:bg-neutral-800/50 rounded-xl border border-neutral-200 dark:border-neutral-700">
             <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
               <span className="text-lg font-bold text-neutral-900 dark:text-white">{totalElements}</span>
-              {' '}proposal{totalElements !== 1 ? 's' : ''} pending review
+              {' '}{t('proposals.pendingReview', { count: totalElements })}
             </p>
           </div>
 
@@ -357,6 +358,7 @@ const AdminProposalsPage = () => {
                 onApprove={handleApprove}
                 onReject={handleRejectClick}
                 isResolving={resolveMutation.isPending}
+                t={t}
               />
             ))}
           </div>
@@ -385,6 +387,7 @@ const AdminProposalsPage = () => {
         }}
         onConfirm={handleRejectConfirm}
         isLoading={resolveMutation.isPending}
+        t={t}
       />
     </div>
   );

@@ -1,12 +1,21 @@
 {
   "title": "Mój profil",
+  "subtitle": "Zarządzaj ustawieniami konta i preferencjami",
+  "backToHome": "Powrót do strony głównej",
   "tabs": {
     "overview": "Przegląd",
+    "editProfile": "Edytuj profil",
     "reviews": "Moje opinie",
     "fuelReports": "Raporty spalania",
     "proposals": "Propozycje danych",
-    "password": "Zmień hasło",
+    "password": "Hasło",
+    "activity": "Moja aktywność",
     "settings": "Ustawienia"
+  },
+  "activityTypes": {
+    "reviews": "Opinie",
+    "reports": "Raporty spalania",
+    "proposals": "Propozycje"
   },
   "overview": {
     "memberSince": "Członek od",
@@ -14,18 +23,34 @@
     "totalFuelReports": "Raportów spalania",
     "totalProposals": "Propozycji danych"
   },
+  "profileInfo": {
+    "memberSince": "Członek od {{date}}",
+    "role": "Rola",
+    "admin": "Administrator",
+    "user": "Użytkownik",
+    "stats": "Twoje statystyki",
+    "reviews": "Opinie",
+    "fuelReports": "Raporty spalania",
+    "proposals": "Propozycje danych"
+  },
   "editProfile": {
     "title": "Edytuj profil",
-    "username": "Nazwa użytkownika",
+    "firstName": "Imię",
+    "lastName": "Nazwisko",
     "email": "Email",
+    "username": "Nazwa użytkownika",
     "currentPassword": "Aktualne hasło",
     "newPassword": "Nowe hasło",
     "confirmPassword": "Potwierdź nowe hasło",
     "save": "Zapisz zmiany",
-    "cancel": "Anuluj"
+    "saving": "Zapisywanie...",
+    "cancel": "Anuluj",
+    "success": "Profil zaktualizowany pomyślnie!",
+    "error": "Nie udało się zaktualizować profilu. Spróbuj ponownie."
   },
   "changePassword": {
     "title": "Zmień hasło",
+    "description": "Zaktualizuj hasło, aby chronić swoje konto",
     "currentPassword": "Aktualne hasło",
     "currentPasswordPlaceholder": "Wprowadź aktualne hasło",
     "newPassword": "Nowe hasło",
@@ -33,8 +58,17 @@
     "confirmPassword": "Potwierdź nowe hasło",
     "confirmPasswordPlaceholder": "Powtórz nowe hasło",
     "submit": "Zmień hasło",
+    "submitting": "Zmienianie...",
     "success": "Hasło zmienione pomyślnie!",
-    "wrongPassword": "Aktualne hasło jest nieprawidłowe"
+    "wrongPassword": "Aktualne hasło jest nieprawidłowe",
+    "error": "Nie udało się zmienić hasła. Spróbuj ponownie."
+  },
+  "deleteAccount": {
+    "title": "Usuń konto",
+    "description": "Trwale usuń swoje konto i wszystkie powiązane dane",
+    "warning": "Ta akcja jest nieodwracalna. Wszystkie Twoje dane zostaną trwale usunięte.",
+    "confirm": "Usuń konto",
+    "cancel": "Anuluj"
   },
   "settings": {
     "title": "Ustawienia",
@@ -46,6 +80,11 @@
     "notifications": "Powiadomienia",
     "emailNotifications": "Powiadomienia email",
     "save": "Zapisz ustawienia"
+  },
+  "reviews": {
+    "title": "Moje opinie",
+    "empty": "Brak opinii",
+    "emptyDescription": "Podziel się swoimi doświadczeniami z samochodami, którymi jeździłeś"
   },
   "fuelReports": {
     "title": "Moje raporty spalania",
@@ -66,6 +105,9 @@
       "rejected": "Odrzucona"
     }
   },
+  "loading": "Ładowanie profilu...",
+  "loadError": "Nie udało się załadować danych profilu. Spróbuj ponownie.",
+  "retry": "Ponów",
   "messages": {
     "profileUpdated": "Profil zaktualizowany pomyślnie!",
     "settingsSaved": "Ustawienia zapisane pomyślnie!"

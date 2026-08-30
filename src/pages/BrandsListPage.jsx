@@ -100,7 +100,7 @@ const BrandsListPage = () => {
               className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400 flex items-center gap-1"
             >
               <IoChevronBackOutline className="w-4 h-4" />
-              {tCommon('home')}
+              {tCommon('navigation.home')}
             </Link>
             <span className="text-neutral-400">/</span>
             <span className="text-neutral-900 dark:text-white font-medium">

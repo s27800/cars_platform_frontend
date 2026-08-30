@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link, useNavigationType } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import {
   IoChevronBackOutline,
   IoCarSportOutline,
@@ -20,6 +21,9 @@ const CARS_PER_PAGE = 12;
 const GenerationDetailsPage = () => {
   const { id } = useParams();
   const navigationType = useNavigationType();
+  const { t } = useTranslation('cars');
+  const { t: tBrands } = useTranslation('brands');
+  const { t: tCommon } = useTranslation('common');
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(0);
@@ -72,7 +76,7 @@ const GenerationDetailsPage = () => {
       newList = comparisonCars.filter(c => c.id !== car.id);
     } else {
       if (comparisonCars.length >= MAX_COMPARISON_CARS) {
-        alert(`You can compare up to ${MAX_COMPARISON_CARS} cars at a time.`);
+        alert(t('comparison.maxCarsWarning', { count: MAX_COMPARISON_CARS }));
         return;
       }
       // Store minimal car info for comparison
@@ -104,14 +108,14 @@ const GenerationDetailsPage = () => {
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="max-w-md text-center">
           <IoLayersOutline className="w-16 h-16 mx-auto text-neutral-400 mb-4" />
-          <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">Generation not found</h1>
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">{t('generation.errorTitle')}</h1>
           <p className="text-neutral-600 dark:text-neutral-400 mb-6">
             {error?.response?.status === 404
-              ? "The generation you're looking for doesn't exist or has been removed."
-              : "Something went wrong while loading generation details."
+              ? t('generation.errorNotFound')
+              : t('generation.errorDescription')
             }
           </p>
-          <Button to="/" variant="primary">Go Home</Button>
+          <Button to="/" variant="primary">{tCommon('goHome')}</Button>
         </div>
       </div>
     );
@@ -138,14 +142,14 @@ const GenerationDetailsPage = () => {
               className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400 flex items-center gap-1"
             >
               <IoChevronBackOutline className="w-4 h-4" />
-              Home
+              {tCommon('navigation.home')}
             </Link>
             <span className="text-neutral-400">/</span>
             <Link
               to="/brands"
               className="text-neutral-500 hover:text-primary-600 dark:hover:text-primary-400"
             >
-              All Brands
+              {tBrands('breadcrumb')}
             </Link>
             <span className="text-neutral-400">/</span>
             <Link
@@ -204,7 +208,7 @@ const GenerationDetailsPage = () => {
               <div className="flex flex-wrap items-center gap-3 mb-4">
                 <Badge variant="primary" size="md">
                   <IoCarSportOutline className="w-3.5 h-3.5 mr-1" />
-                  {totalCars} {totalCars === 1 ? 'car' : 'cars'}
+                  {t('generation.carsCount', { count: totalCars })}
                 </Badge>
               </div>
             </div>
@@ -216,7 +220,7 @@ const GenerationDetailsPage = () => {
                 variant="primary"
                 leftIcon={<IoCarSportOutline className="w-4 h-4" />}
               >
-                Search all cars
+                {t('generation.searchAllCars')}
               </Button>
               {comparisonCars.length > 0 && (
                 <Button
@@ -224,7 +228,7 @@ const GenerationDetailsPage = () => {
                   variant="outline"
                   size="sm"
                 >
-                  View comparison ({comparisonCars.length})
+                  {t('comparison.viewComparison', { count: comparisonCars.length })}
                 </Button>
               )}
             </div>
@@ -235,18 +239,18 @@ const GenerationDetailsPage = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
           <QuickStat
             icon={<IoCarSportOutline className="w-5 h-5" />}
-            label="Cars"
+            label={t('generation.stats.cars')}
             value={totalCars}
           />
           <QuickStat
             icon={<IoGridOutline className="w-5 h-5" />}
-            label="Model"
-            value={model?.name || 'N/A'}
+            label={t('generation.stats.model')}
+            value={model?.name || tBrands('stats.notAvailable')}
           />
           <QuickStat
             icon={<IoCarSportOutline className="w-5 h-5" />}
-            label="Brand"
-            value={brand?.name || 'N/A'}
+            label={t('generation.stats.brand')}
+            value={brand?.name || tBrands('stats.notAvailable')}
           />
         </div>
 
@@ -255,10 +259,10 @@ const GenerationDetailsPage = () => {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">
-                Cars
+                {t('generation.carsSection.title')}
               </h2>
               <p className="text-neutral-600 dark:text-neutral-400 mt-1">
-                Click on a car to view its details or add to comparison
+                {t('generation.carsSection.subtitle')}
               </p>
             </div>
           </div>
@@ -298,7 +302,7 @@ const GenerationDetailsPage = () => {
             <div className="text-center py-12 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700">
               <IoCarSportOutline className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
               <p className="text-neutral-600 dark:text-neutral-400">
-                No cars available for this generation yet.
+                {t('generation.carsSection.empty')}
               </p>
             </div>
           )}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { IoCarSportOutline, IoSpeedometerOutline, IoTrashOutline } from 'react-icons/io5';
 import { getUserFuelReports } from '../../api/users';
 import { deleteFuelReport } from '../../api/fuelReports';
@@ -9,6 +10,7 @@ import { formatDate, getConsumptionLevel } from '../../utils/helpers';
 
 
 const UserFuelReportsList = () => {
+  const { t } = useTranslation('profile');
   const [page, setPage] = useState(0);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const pageSize = 5;
@@ -61,10 +63,10 @@ const UserFuelReportsList = () => {
     return (
       <div className="text-center py-8">
         <p className="text-red-500 dark:text-red-400 mb-4">
-          Failed to load your fuel reports. Please try again.
+          {t('common:error.loadFailed', 'Failed to load your fuel reports. Please try again.')}
         </p>
         <Button variant="secondary" onClick={() => window.location.reload()}>
-          Retry
+          {t('common:retry', 'Retry')}
         </Button>
       </div>
     );
@@ -76,13 +78,13 @@ const UserFuelReportsList = () => {
       <div className="text-center py-8">
         <IoSpeedometerOutline className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
         <h3 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">
-          No fuel reports yet
+          {t('fuelReports.empty')}
         </h3>
         <p className="text-neutral-600 dark:text-neutral-400 mb-4">
-          You haven't submitted any fuel consumption reports yet.
+          {t('fuelReports.emptyDescription')}
         </p>
         <Button to="/cars" variant="primary">
-          Browse Cars
+          {t('common:browseCars', 'Browse Cars')}
         </Button>
       </div>
     );
@@ -91,7 +93,7 @@ const UserFuelReportsList = () => {
   return (
     <div>
       <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
-        {totalElements} {totalElements === 1 ? 'report' : 'reports'} submitted
+        {t('cars:fuelReports.submitted', '{{count}} reports submitted', { count: totalElements })}
       </p>
 
       <div className="space-y-4">
@@ -100,6 +102,7 @@ const UserFuelReportsList = () => {
             key={report.id} 
             report={report} 
             onDelete={() => handleDeleteClick(report)}
+            t={t}
           />
         ))}
       </div>
@@ -122,9 +125,9 @@ const UserFuelReportsList = () => {
         isOpen={!!deleteTarget}
         onClose={() => setDeleteTarget(null)}
         onConfirm={handleDeleteConfirm}
-        title="Delete Fuel Report"
-        message={`Are you sure you want to delete your fuel report for ${deleteTarget?.carInfo?.brandName} ${deleteTarget?.carInfo?.modelName}?`}
-        confirmText="Delete Report"
+        title={t('cars:fuelReports.deleteReport', 'Delete Fuel Report')}
+        message={t('cars:fuelReports.confirmDelete', 'Are you sure you want to delete your fuel report for {{car}}?', { car: `${deleteTarget?.carInfo?.brandName} ${deleteTarget?.carInfo?.modelName}` })}
+        confirmText={t('cars:fuelReports.deleteReport', 'Delete Report')}
         variant="danger"
         isLoading={deleteMutation.isPending}
       />
@@ -134,7 +137,8 @@ const UserFuelReportsList = () => {
 
 
 // Card component for displaying user's fuel report with car info
-const UserFuelReportCard = ({ report, onDelete }) => {
+const UserFuelReportCard = ({ report, onDelete, t }) => {
+  const { t: tCars } = useTranslation('cars');
   const carInfo = report.carInfo;
   const fuelValue = parseFloat(report.fuelConsumption || 0).toFixed(1);
   const level = getConsumptionLevel(fuelValue);
@@ -165,7 +169,7 @@ const UserFuelReportCard = ({ report, onDelete }) => {
           variant={report.isApproved ? 'success' : 'warning'} 
           size="sm"
         >
-          {report.isApproved ? 'Approved' : 'Pending'}
+          {report.isApproved ? tCars('fuelReports.status.approved', 'Approved') : tCars('fuelReports.status.pending', 'Pending')}
         </Badge>
       </div>
 
@@ -177,9 +181,9 @@ const UserFuelReportCard = ({ report, onDelete }) => {
           <div className="flex items-center gap-2">
             <IoSpeedometerOutline className={`w-6 h-6 ${level.color}`} />
             <span className={`text-2xl font-bold ${level.color}`}>{fuelValue}</span>
-            <span className="text-sm text-neutral-500 dark:text-neutral-400">L/100km</span>
+            <span className="text-sm text-neutral-500 dark:text-neutral-400">{tCars('fuelReports.unit', 'L/100km')}</span>
             <Badge variant={level.variant} size="sm" className="ml-2">
-              {level.label}
+              {tCars(`fuelReports.level.${level.label.toLowerCase()}`, level.label)}
             </Badge>
           </div>
           <p className="text-sm text-neutral-500 dark:text-neutral-400">
@@ -200,7 +204,7 @@ const UserFuelReportCard = ({ report, onDelete }) => {
             variant="ghost"
             size="sm"
             onClick={onDelete}
-            label="Delete fuel report"
+            label={tCars('fuelReports.deleteReport', 'Delete fuel report')}
             className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
           >
             <IoTrashOutline className="w-4 h-4" />

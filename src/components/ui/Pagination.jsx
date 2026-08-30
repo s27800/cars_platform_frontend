@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 
 
@@ -10,6 +11,8 @@ const Pagination = ({
   showInfo = true,
   className = '',
 }) => {
+  const { t } = useTranslation('common');
+
   if (totalPages <= 1) return null;
 
   const pages = [];
@@ -51,9 +54,7 @@ const Pagination = ({
     <div className={`flex flex-col sm:flex-row items-center justify-between gap-4 ${className}`}>
       {showInfo && (
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          Showing <span className="font-medium">{startIndex}</span> to{' '}
-          <span className="font-medium">{endIndex}</span> of{' '}
-          <span className="font-medium">{totalElements}</span> results
+          {t('pagination.showing', { start: startIndex, end: endIndex, total: totalElements })}
         </p>
       )}
 

@@ -8,18 +8,33 @@
     "users": "Użytkownicy"
   },
   "dashboard": {
-    "title": "Pulpit",
+    "title": "Panel administratora",
+    "subtitle": "Zarządzaj oczekującymi treściami i moderuj zgłoszenia użytkowników",
     "stats": {
       "totalUsers": "Użytkowników",
       "totalReviews": "Opinii",
       "totalFuelReports": "Raportów spalania",
-      "pendingProposals": "Oczekujących propozycji"
+      "pendingProposals": "Oczekujących propozycji",
+      "pendingReviews": "Oczekujące opinie",
+      "pendingReviewsDesc": "Opinie użytkowników czekające na zatwierdzenie",
+      "pendingFuelReports": "Oczekujące raporty spalania",
+      "pendingFuelReportsDesc": "Raporty zużycia paliwa do weryfikacji",
+      "pendingDataProposals": "Oczekujące propozycje danych",
+      "pendingDataProposalsDesc": "Propozycje zmian danych samochodów do przeglądu"
+    },
+    "overview": {
+      "title": "Przegląd oczekujących elementów",
+      "allCaughtUp": "Wszystko zrobione! Brak elementów oczekujących na weryfikację.",
+      "pendingMessage": "Masz {{count}} element oczekujący na weryfikację.",
+      "pendingMessage_plural": "Masz {{count}} elementy/ów oczekujących na weryfikację.",
+      "pending": "{{count}} oczekujących"
     },
     "recentActivity": "Ostatnia aktywność",
     "pendingItems": "Elementy oczekujące na weryfikację"
   },
   "reviews": {
-    "title": "Zarządzaj opiniami",
+    "title": "Moderacja opinii",
+    "subtitle": "Przeglądaj i moderuj opinie użytkowników o samochodach",
     "table": {
       "author": "Autor",
       "car": "Samochód",
@@ -35,10 +50,23 @@
     "confirmDelete": "Czy na pewno chcesz usunąć tę opinię?",
     "deleted": "Opinia usunięta pomyślnie",
     "approved": "Opinia zatwierdzona",
-    "rejected": "Opinia odrzucona"
+    "rejected": "Opinia odrzucona",
+    "backToDashboard": "Powrót do pulpitu",
+    "loading": "Ładowanie opinii...",
+    "failedToLoad": "Nie udało się załadować opinii. Spróbuj ponownie.",
+    "retry": "Ponów",
+    "allCaughtUp": "Wszystko zrobione!",
+    "noPendingReviews": "Brak oczekujących opinii do moderacji. Sprawdź później.",
+    "pendingModeration": "{{count}} opinia oczekuje na moderację",
+    "pendingModeration_plural": "{{count}} opinii oczekuje na moderację",
+    "reviewComment": "Komentarz do opinii:",
+    "viewDetailedRatings": "Zobacz szczegółowe oceny ({{count}} kategorii)",
+    "pending": "Oczekuje",
+    "likes": "{{count}} polubień"
   },
   "fuelReports": {
-    "title": "Zarządzaj raportami spalania",
+    "title": "Moderacja raportów spalania",
+    "subtitle": "Przeglądaj i weryfikuj raporty zużycia paliwa użytkowników",
     "table": {
       "author": "Autor",
       "car": "Samochód",
@@ -53,10 +81,23 @@
     "confirmDelete": "Czy na pewno chcesz usunąć ten raport spalania?",
     "deleted": "Raport spalania usunięty pomyślnie",
     "approved": "Raport spalania zatwierdzony",
-    "rejected": "Raport spalania odrzucony"
+    "rejected": "Raport spalania odrzucony",
+    "backToDashboard": "Powrót do pulpitu",
+    "loading": "Ładowanie raportów spalania...",
+    "failedToLoad": "Nie udało się załadować raportów spalania. Spróbuj ponownie.",
+    "retry": "Ponów",
+    "allCaughtUp": "Wszystko zrobione!",
+    "noPendingReports": "Brak oczekujących raportów spalania do weryfikacji. Sprawdź później.",
+    "pendingVerification": "{{count}} raport spalania oczekuje na weryfikację",
+    "pendingVerification_plural": "{{count}} raportów spalania oczekuje na weryfikację",
+    "reportedConsumption": "Zgłoszone zużycie paliwa",
+    "userComment": "Komentarz użytkownika:",
+    "pending": "Oczekuje",
+    "likes": "{{count}} polubień"
   },
   "proposals": {
-    "title": "Propozycje danych",
+    "title": "Propozycje zmian danych",
+    "subtitle": "Przeglądaj i moderuj zgłoszone przez użytkowników zmiany danych",
     "table": {
       "author": "Autor",
       "car": "Samochód",
@@ -75,6 +116,26 @@
     "confirmReject": "Czy na pewno chcesz odrzucić tę propozycję?",
     "approved": "Propozycja zatwierdzona i dane zaktualizowane",
     "rejected": "Propozycja odrzucona",
+    "backToDashboard": "Powrót do pulpitu",
+    "loading": "Ładowanie propozycji...",
+    "failedToLoad": "Nie udało się załadować propozycji. Spróbuj ponownie.",
+    "retry": "Ponów",
+    "allCaughtUp": "Wszystko zrobione!",
+    "noPendingProposals": "Brak oczekujących propozycji danych do przeglądu. Sprawdź później.",
+    "pendingReview": "{{count}} propozycja oczekuje na przegląd",
+    "pendingReview_plural": "{{count}} propozycji oczekuje na przegląd",
+    "pending": "Oczekuje",
+    "userComment": "Komentarz użytkownika:",
+    "proposedChanges": "Proponowane zmiany ({{count}} pole)",
+    "proposedChanges_plural": "Proponowane zmiany ({{count}} pól)",
+    "rejectModal": {
+      "title": "Odrzuć propozycję",
+      "warning": "Czy na pewno chcesz odrzucić tę propozycję danych? Możesz opcjonalnie podać powód użytkownikowi.",
+      "reasonLabel": "Powód odrzucenia (opcjonalnie)",
+      "reasonPlaceholder": "Wyjaśnij dlaczego ta propozycja została odrzucona...",
+      "cancel": "Anuluj",
+      "confirm": "Odrzuć propozycję"
+    },
     "categories": {
       "ENGINE": "Silnik",
       "TRANSMISSION": "Skrzynia biegów",

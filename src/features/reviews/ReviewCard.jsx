@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { IoHeartOutline, IoHeart } from 'react-icons/io5';
 import { toggleReviewLike, getReviewLikeStatus } from '../../api/likes';
 import { useAuth } from '../../hooks';
@@ -10,6 +11,7 @@ import { formatDate, calculateAverage } from '../../utils/helpers';
 
 // Reusable component displaying a single review with ratings breakdown and like button
 const ReviewCard = ({ review }) => {
+  const { t } = useTranslation('reviews');
   const { isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
   const [isLiked, setIsLiked] = useState(false);
@@ -79,7 +81,7 @@ const ReviewCard = ({ review }) => {
           {/* Approval status badge */}
           {review.isApproved === false && (
             <Badge variant="warning" size="sm">
-              Pending
+              {t('status.pending')}
             </Badge>
           )}
           
@@ -102,14 +104,14 @@ const ReviewCard = ({ review }) => {
 
       {/* Detailed ratings grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-4 p-3 bg-neutral-50 dark:bg-neutral-700/50 rounded-lg">
-        {RATING_CATEGORIES.map(({ key, label }) => {
+        {RATING_CATEGORIES.map(({ key, labelKey }) => {
           const value = review[key];
           if (value === null || value === undefined) return null;
           
           return (
             <div key={key} className="text-center">
               <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-1">
-                {label}
+                {t(`ratings.${labelKey}`)}
               </p>
               <div className="flex items-center justify-center gap-1">
                 <Rating value={value} readonly size="sm" max={5} />
@@ -132,14 +134,14 @@ const ReviewCard = ({ review }) => {
             }
             ${isLiked ? 'text-red-500' : 'text-neutral-600 dark:text-neutral-400'}
           `}
-          title={isAuthenticated ? 'Like this review' : 'Login to like reviews'}
+          title={isAuthenticated ? t('helpful.yes') : t('messages.loginRequired')}
         >
           {isLiked ? <IoHeart className="w-5 h-5" /> : <IoHeartOutline className="w-5 h-5" />}
           <span className="text-sm font-medium">{likeCount}</span>
         </button>
 
         {!isAuthenticated && (
-          <span className="text-xs text-neutral-400">Login to interact</span>
+          <span className="text-xs text-neutral-400">{t('messages.loginRequired')}</span>
         )}
       </div>
     </div>

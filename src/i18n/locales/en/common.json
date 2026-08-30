@@ -41,6 +41,9 @@
     "seeAll": "See all",
     "loading": "Loading..."
   },
+  "pagination": {
+    "showing": "Showing {{start}} to {{end}} of {{total}} results"
+  },
   "status": {
     "pending": "Pending",
     "approved": "Approved",
@@ -66,8 +69,11 @@
     "forbidden": "Access forbidden",
     "serverError": "Server error",
     "networkError": "Network error. Please check your connection.",
-    "tryAgain": "Try again"
+    "tryAgain": "Try again",
+    "loadFailed": "Failed to load. Please try again."
   },
+  "retry": "Retry",
+  "browseCars": "Browse Cars",
   "empty": {
     "noResults": "No results found",
     "noData": "No data available"
@@ -125,5 +131,6 @@
   "privacy": {
     "title": "Privacy Policy",
     "lastUpdated": "Last updated: {{date}}"
-  }
+  },
+  "dangerZone": "Danger Zone"
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   IoHelpCircleOutline,
   IoChevronDownOutline,
@@ -82,147 +83,74 @@ const FAQCategory = ({ icon: Icon, title, faqs }) => {
 
 
 const FAQPage = () => {
+  const { t } = useTranslation('pages');
+
   const faqCategories = [
     {
       icon: IoPersonOutline,
-      title: 'Account & Registration',
+      title: t('faq.categories.account.title'),
       faqs: [
-        {
-          question: 'How do I create an account?',
-          answer: 'Click on "Sign Up" in the top navigation bar. Fill in your username, email, password, and personal details. After registration, you can immediately start using all platform features.',
-        },
-        {
-          question: 'Is registration free?',
-          answer: 'Yes, all features, including registration, are available at no cost.',
-        },
-        {
-          question: 'How do I change my password?',
-          answer: 'Go to your Profile page, click on the "Password" tab, and use the password change form. You\'ll need to enter your current password and the new password twice for confirmation.',
-        },
-        {
-          question: 'Can I delete my account?',
-          answer: 'Currently, account deletion is not available.',
-        },
+        { question: t('faq.categories.account.q1'), answer: t('faq.categories.account.a1') },
+        { question: t('faq.categories.account.q2'), answer: t('faq.categories.account.a2') },
+        { question: t('faq.categories.account.q3'), answer: t('faq.categories.account.a3') },
+        { question: t('faq.categories.account.q4'), answer: t('faq.categories.account.a4') },
       ],
     },
     {
       icon: IoCarSportOutline,
-      title: 'Searching & Browsing Cars',
+      title: t('faq.categories.search.title'),
       faqs: [
-        {
-          question: 'How do I search for a specific car?',
-          answer: 'Use the search bar in the navigation, or go to the Cars page and use the advanced filters.',
-        },
-        {
-          question: 'What filters are available?',
-          answer: 'Our advanced search includes: brand, model, generation, body type, tags, engine type and more.',
-        },
-        {
-          question: 'How accurate is the car data?',
-          answer: 'We try our best to provide accurate and up-to-date information. However, users can submit data correction proposals if they find inaccuracies. All proposals are reviewed by our admin team before being applied.',
-        },
-        {
-          question: 'Why can\'t I find a specific car model?',
-          answer: 'Our database is continuously expanding. If a car model is missing, it may be added in future updates.',
-        },
+        { question: t('faq.categories.search.q1'), answer: t('faq.categories.search.a1') },
+        { question: t('faq.categories.search.q2'), answer: t('faq.categories.search.a2') },
+        { question: t('faq.categories.search.q3'), answer: t('faq.categories.search.a3') },
+        { question: t('faq.categories.search.q4'), answer: t('faq.categories.search.a4') },
       ],
     },
     {
       icon: IoSearchOutline,
-      title: 'Car Comparison',
+      title: t('faq.categories.comparison.title'),
       faqs: [
-        {
-          question: 'How do I compare cars?',
-          answer: 'Find a car you want to compare, then click the "Add to Compare" button in the car detail page. Next, go to the Comparison page from the navigation menu. You can compare up to 4 cars side by side.',
-        },
-        {
-          question: 'What data is shown in comparisons?',
-          answer: 'Comparisons show all available car data.',
-        },
-        {
-          question: 'Are my comparison selections saved?',
-          answer: 'Yes, your comparison list is saved in your browser. It will persist even if you close the browser, but won\'t sync across different devices.',
-        },
+        { question: t('faq.categories.comparison.q1'), answer: t('faq.categories.comparison.a1') },
+        { question: t('faq.categories.comparison.q2'), answer: t('faq.categories.comparison.a2') },
+        { question: t('faq.categories.comparison.q3'), answer: t('faq.categories.comparison.a3') },
       ],
     },
     {
       icon: IoDocumentTextOutline,
-      title: 'Reviews',
+      title: t('faq.categories.reviews.title'),
       faqs: [
-        {
-          question: 'How do I write a review?',
-          answer: 'Navigate to any car\'s detail page and scroll to the Reviews section. Click "+ Add Review" (only logged in users). Fill in ratings for all categories and add your comment.',
-        },
-        {
-          question: 'What categories are rated in reviews?',
-          answer: 'Reviews rate 11 categories (from 1 to 5): Engine, Transmission, Steering, Suspension, Visibility, Ergonomics, Sound Proofing, Interior Space, Maintenance, Price/Quality Ratio, and Reliability.',
-        },
-        {
-          question: 'Why isn\'t my review visible yet?',
-          answer: 'All reviews go through a moderation process before being published to ensure quality and accuracy.',
-        },
-        {
-          question: 'Can I edit or delete my review?',
-          answer: 'Currently, you cannot edit reviews after submission. You can view all your submitted reviews in your Profile.',
-        },
+        { question: t('faq.categories.reviews.q1'), answer: t('faq.categories.reviews.a1') },
+        { question: t('faq.categories.reviews.q2'), answer: t('faq.categories.reviews.a2') },
+        { question: t('faq.categories.reviews.q3'), answer: t('faq.categories.reviews.a3') },
+        { question: t('faq.categories.reviews.q4'), answer: t('faq.categories.reviews.a4') },
       ],
     },
     {
       icon: IoSpeedometerOutline,
-      title: 'Fuel Reports',
+      title: t('faq.categories.fuel.title'),
       faqs: [
-        {
-          question: 'What is a fuel report?',
-          answer: 'Fuel reports are user-submitted real-world fuel consumption data. They help other users understand actual fuel efficiency beyond manufacturer claims.',
-        },
-        {
-          question: 'How do I submit a fuel report?',
-          answer: 'Go to a car\'s detail page, scroll to the Fuel Reports section, and click "+ Add Report". Enter your measured fuel consumption (L/100km) and optionally add a comment about driving conditions.',
-        },
-        {
-          question: 'How is the average consumption calculated?',
-          answer: 'The average shown is calculated from all approved fuel reports for that car.',
-        },
+        { question: t('faq.categories.fuel.q1'), answer: t('faq.categories.fuel.a1') },
+        { question: t('faq.categories.fuel.q2'), answer: t('faq.categories.fuel.a2') },
+        { question: t('faq.categories.fuel.q3'), answer: t('faq.categories.fuel.a3') },
       ],
     },
     {
       icon: IoShieldCheckmarkOutline,
-      title: 'Data Proposals & Moderation',
+      title: t('faq.categories.proposals.title'),
       faqs: [
-        {
-          question: 'How can I suggest a data correction?',
-          answer: 'On any car\'s detail page, click "Suggest Correction". Select the category (Engine, Transmission, etc.), describe what needs to be changed, and provide the correct values.',
-        },
-        {
-          question: 'How long does moderation take?',
-          answer: 'Moderation time varies depending on the complexity of the proposal and the number of other proposals submitted. You can check the status of your proposals in Profile -> My Activity -> Proposals.',
-        },
-        {
-          question: 'What happens if my proposal is rejected?',
-          answer: 'If rejected, you\'ll see the status change in your Profile. The admin may provide a comment explaining why. You can submit a new proposal with corrections if needed.',
-        },
+        { question: t('faq.categories.proposals.q1'), answer: t('faq.categories.proposals.a1') },
+        { question: t('faq.categories.proposals.q2'), answer: t('faq.categories.proposals.a2') },
+        { question: t('faq.categories.proposals.q3'), answer: t('faq.categories.proposals.a3') },
       ],
     },
     {
       icon: IoSettingsOutline,
-      title: 'Technical & Other',
+      title: t('faq.categories.technical.title'),
       faqs: [
-        {
-          question: 'Does the platform have a dark mode?',
-          answer: 'Yes, click the sun/moon icon in the navigation bar to toggle between light and dark mode. Your preference is saved automatically in your browser.',
-        },
-        {
-          question: 'Is there a mobile app?',
-          answer: 'No, but our website is fully adapted for mobile devices.',
-        },
-        {
-          question: 'How do I report a bug or suggest a feature?',
-          answer: 'Currently, reporting a bug or suggesting a feature is not available. Please contact us at contact@carsplatform.com with details about the bug or your feature suggestion. We appreciate all feedback.',
-        },
-        {
-          question: 'Who can I contact for support?',
-          answer: 'For any questions or issues, email us at contact@carsplatform.com.',
-        },
+        { question: t('faq.categories.technical.q1'), answer: t('faq.categories.technical.a1') },
+        { question: t('faq.categories.technical.q2'), answer: t('faq.categories.technical.a2') },
+        { question: t('faq.categories.technical.q3'), answer: t('faq.categories.technical.a3') },
+        { question: t('faq.categories.technical.q4'), answer: t('faq.categories.technical.a4') },
       ],
     },
   ];
@@ -239,15 +167,15 @@ const FAQPage = () => {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">
-                Frequently Asked Questions
+                {t('faq.title')}
               </h1>
               <p className="text-neutral-600 dark:text-neutral-400">
-                Find answers to common questions
+                {t('faq.subtitle')}
               </p>
             </div>
           </div>
           <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl">
-            Can't find what you're looking for? Contact us at{' '}
+            {t('faq.contact')}{' '}
             <a href="mailto:contact@carsplatform.com" className="text-primary-600 dark:text-primary-400 hover:underline">
               contact@carsplatform.com
             </a>
@@ -273,23 +201,23 @@ const FAQPage = () => {
       <section className="py-12 px-4 bg-white dark:bg-neutral-800 border-t border-neutral-200 dark:border-neutral-700">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-4">
-            Still have questions?
+            {t('faq.stillHaveQuestions.title')}
           </h2>
           <p className="text-neutral-600 dark:text-neutral-400 mb-8 max-w-lg mx-auto">
-            If you couldn't find the answer you were looking for, feel free to reach out to our support team.
+            {t('faq.stillHaveQuestions.description')}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="mailto:contact@carsplatform.com"
               className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-xl transition-colors"
             >
-              Contact Support
+              {t('faq.stillHaveQuestions.contactSupport')}
             </a>
             <Link
               to="/about"
               className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600 text-neutral-900 dark:text-white font-medium rounded-xl transition-colors"
             >
-              About Us
+              {t('faq.stillHaveQuestions.aboutUs')}
             </Link>
           </div>
         </div>

@@ -1,6 +1,9 @@
 {
   "required": "To pole jest wymagane",
-  "email": "Wprowadź prawidłowy adres email",
+  "email": {
+    "required": "Email jest wymagany",
+    "invalid": "Wprowadź prawidłowy adres email"
+  },
   "minLength": "Musi mieć co najmniej {{min}} znaków",
   "maxLength": "Może mieć maksymalnie {{max}} znaków",
   "passwordMatch": "Hasła muszą być identyczne",
@@ -13,7 +16,8 @@
     "required": "Nazwa użytkownika jest wymagana",
     "minLength": "Nazwa użytkownika musi mieć co najmniej 3 znaki",
     "maxLength": "Nazwa użytkownika może mieć maksymalnie 50 znaków",
-    "invalid": "Nazwa użytkownika może zawierać tylko litery, cyfry i podkreślenia"
+    "invalid": "Nazwa użytkownika może zawierać tylko litery, cyfry i podkreślenia",
+    "pattern": "Nazwa użytkownika może zawierać tylko litery, cyfry i podkreślenia"
   },
   "password": {
     "required": "Hasło jest wymagane",
@@ -21,11 +25,24 @@
     "maxLength": "Hasło może mieć maksymalnie 72 znaki",
     "weak": "Hasło jest zbyt słabe",
     "mismatch": "Hasła nie są identyczne",
-    "complexity": "Hasło musi zawierać małą literę, wielką literę i cyfrę"
+    "complexity": "Hasło musi zawierać małą literę, wielką literę i cyfrę",
+    "hint": "Minimum 8 znaków, zawierające małą literę, wielką literę i cyfrę"
   },
   "emailField": {
     "required": "Email jest wymagany",
     "invalid": "Wprowadź prawidłowy adres email"
+  },
+  "confirmPassword": {
+    "required": "Potwierdź hasło",
+    "match": "Hasła muszą być identyczne"
+  },
+  "firstName": {
+    "required": "Imię jest wymagane",
+    "minLength": "Imię musi mieć co najmniej 2 znaki"
+  },
+  "lastName": {
+    "required": "Nazwisko jest wymagane",
+    "minLength": "Nazwisko musi mieć co najmniej 2 znaki"
   },
   "review": {
     "titleRequired": "Tytuł opinii jest wymagany",

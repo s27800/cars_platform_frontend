@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   IoChevronForwardOutline,
   IoCarSportOutline,
@@ -6,7 +7,7 @@ import {
 } from 'react-icons/io5';
 
 
-const ModelCard = ({ model }) => {
+const ModelCard = ({ model, t }) => {
   const { id, name, generationsCount = 0 } = model;
 
   return (
@@ -28,7 +29,7 @@ const ModelCard = ({ model }) => {
       {/* Generations count */}
       <div className="flex items-center gap-1 text-sm text-neutral-500 dark:text-neutral-400">
         <IoLayersOutline className="w-4 h-4" />
-        <span>{generationsCount} {generationsCount === 1 ? 'generation' : 'generations'}</span>
+        <span>{t('model.generationsCount', { count: generationsCount })}</span>
       </div>
 
       {/* Arrow indicator */}
@@ -41,6 +42,7 @@ const ModelCard = ({ model }) => {
 
 
 const ModelsGrid = ({ models }) => {
+  const { t } = useTranslation('cars');
   const sortedModels = [...models].sort((a, b) => a.name.localeCompare(b.name));
 
   return (
@@ -49,6 +51,7 @@ const ModelsGrid = ({ models }) => {
         <ModelCard
           key={model.id}
           model={model}
+          t={t}
         />
       ))}
     </div>

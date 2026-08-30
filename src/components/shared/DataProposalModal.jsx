@@ -2,6 +2,7 @@ import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { IoCheckmarkCircle, IoDocumentTextOutline } from 'react-icons/io5';
 import { createProposal } from '../../api/dataProposals';
 import { getTags } from '../../api/tags';
@@ -12,73 +13,67 @@ import { PROPOSAL_CATEGORIES } from '../../utils/constants';
 // Field definitions for each data category
 const CATEGORY_FIELDS = {
   ENGINE: [
-    { name: 'engineCode', label: 'Engine Code', type: 'text' },
-    { name: 'displacement', label: 'Displacement (cc)', type: 'number' },
-    { name: 'engineType', label: 'Engine Type', type: 'text' },
-    { name: 'maxPower', label: 'Max Power (HP)', type: 'number' },
-    { name: 'maxPowerRotationSpeed', label: 'Max Power RPM', type: 'number' },
-    { name: 'maxTorque', label: 'Max Torque (Nm)', type: 'number' },
-    { name: 'maxTorqueRotationSpeed', label: 'Max Torque RPM', type: 'number' },
-    { name: 'cylindersNumber', label: 'Cylinders', type: 'number' },
-    { name: 'valvesNumber', label: 'Valves', type: 'number' },
-    { name: 'turbo', label: 'Turbo', type: 'text' },
+    { name: 'engineCode', labelKey: 'fields.engineCode', type: 'text' },
+    { name: 'displacement', labelKey: 'fields.displacement', type: 'number' },
+    { name: 'engineType', labelKey: 'fields.engineType', type: 'text' },
+    { name: 'maxPower', labelKey: 'fields.maxPower', type: 'number' },
+    { name: 'maxPowerRotationSpeed', labelKey: 'fields.maxPowerRpm', type: 'number' },
+    { name: 'maxTorque', labelKey: 'fields.maxTorque', type: 'number' },
+    { name: 'maxTorqueRotationSpeed', labelKey: 'fields.maxTorqueRpm', type: 'number' },
+    { name: 'cylindersNumber', labelKey: 'fields.cylinders', type: 'number' },
+    { name: 'valvesNumber', labelKey: 'fields.valves', type: 'number' },
+    { name: 'turbo', labelKey: 'fields.turbo', type: 'text' },
   ],
   TRANSMISSION: [
-    { name: 'transmissionType', label: 'Type', type: 'text' },
-    { name: 'transmissionName', label: 'Name', type: 'text' },
-    { name: 'gearsNumber', label: 'Gears', type: 'number' },
-    { name: 'clutchType', label: 'Clutch Type', type: 'text' },
+    { name: 'transmissionType', labelKey: 'fields.transmissionType', type: 'text' },
+    { name: 'transmissionName', labelKey: 'fields.transmissionName', type: 'text' },
+    { name: 'gearsNumber', labelKey: 'fields.gears', type: 'number' },
+    { name: 'clutchType', labelKey: 'fields.clutchType', type: 'text' },
   ],
   CHASSIS: [
-    { name: 'drive', label: 'Drive Type', type: 'text' },
-    { name: 'suspension', label: 'Suspension', type: 'text' },
-    { name: 'frontBrakes', label: 'Front Brakes', type: 'text' },
-    { name: 'backBrakes', label: 'Rear Brakes', type: 'text' },
-    { name: 'frontBrakesRadius', label: 'Front Brakes Radius (mm)', type: 'number' },
-    { name: 'backBrakesRadius', label: 'Rear Brakes Radius (mm)', type: 'number' },
+    { name: 'drive', labelKey: 'fields.driveType', type: 'text' },
+    { name: 'suspension', labelKey: 'fields.suspension', type: 'text' },
+    { name: 'frontBrakes', labelKey: 'fields.frontBrakes', type: 'text' },
+    { name: 'backBrakes', labelKey: 'fields.rearBrakes', type: 'text' },
+    { name: 'frontBrakesRadius', labelKey: 'fields.frontBrakesRadius', type: 'number' },
+    { name: 'backBrakesRadius', labelKey: 'fields.rearBrakesRadius', type: 'number' },
   ],
   PERFORMANCE: [
-    { name: 'maxSpeed', label: 'Max Speed (km/h)', type: 'number' },
-    { name: 'acceleration0100', label: '0-100 km/h (s)', type: 'number', step: '0.1' },
-    { name: 'fuelConsumptionCity', label: 'City Consumption (L/100km)', type: 'number', step: '0.1' },
-    { name: 'fuelConsumptionRoute', label: 'Highway Consumption (L/100km)', type: 'number', step: '0.1' },
-    { name: 'fuelConsumptionMixed', label: 'Mixed Consumption (L/100km)', type: 'number', step: '0.1' },
-    { name: 'fuelTankCapacity', label: 'Fuel Tank (L)', type: 'number' },
+    { name: 'maxSpeed', labelKey: 'fields.maxSpeed', type: 'number' },
+    { name: 'acceleration0100', labelKey: 'fields.acceleration', type: 'number', step: '0.1' },
+    { name: 'fuelConsumptionCity', labelKey: 'fields.cityConsumption', type: 'number', step: '0.1' },
+    { name: 'fuelConsumptionRoute', labelKey: 'fields.highwayConsumption', type: 'number', step: '0.1' },
+    { name: 'fuelConsumptionMixed', labelKey: 'fields.mixedConsumption', type: 'number', step: '0.1' },
+    { name: 'fuelTankCapacity', labelKey: 'fields.fuelTank', type: 'number' },
   ],
   OUTSIDE_DIMENSIONS: [
-    { name: 'length', label: 'Length (mm)', type: 'number' },
-    { name: 'width', label: 'Width (mm)', type: 'number' },
-    { name: 'height', label: 'Height (mm)', type: 'number' },
-    { name: 'wheelBase', label: 'Wheelbase (mm)', type: 'number' },
-    { name: 'clearance', label: 'Ground Clearance (mm)', type: 'number' },
+    { name: 'length', labelKey: 'fields.length', type: 'number' },
+    { name: 'width', labelKey: 'fields.width', type: 'number' },
+    { name: 'height', labelKey: 'fields.height', type: 'number' },
+    { name: 'wheelBase', labelKey: 'fields.wheelbase', type: 'number' },
+    { name: 'clearance', labelKey: 'fields.groundClearance', type: 'number' },
   ],
   INSIDE_DIMENSIONS: [
-    { name: 'minTrunkSpace', label: 'Min Trunk Space (L)', type: 'number' },
-    { name: 'maxTrunkSpace', label: 'Max Trunk Space (L)', type: 'number' },
-    { name: 'heightFromSeatToRoofFront', label: 'Front Headroom (mm)', type: 'number' },
-    { name: 'heightFromSeatToRoofBack', label: 'Rear Headroom (mm)', type: 'number' },
+    { name: 'minTrunkSpace', labelKey: 'fields.minTrunkSpace', type: 'number' },
+    { name: 'maxTrunkSpace', labelKey: 'fields.maxTrunkSpace', type: 'number' },
+    { name: 'heightFromSeatToRoofFront', labelKey: 'fields.frontHeadroom', type: 'number' },
+    { name: 'heightFromSeatToRoofBack', labelKey: 'fields.rearHeadroom', type: 'number' },
   ],
   BASIC_INFO: [
-    { name: 'doorsNumber', label: 'Doors', type: 'number' },
-    { name: 'seatsNumber', label: 'Seats', type: 'number' },
-    { name: 'productionYears', label: 'Production Years', type: 'text' },
-    { name: 'description', label: 'Description', type: 'text' },
+    { name: 'doorsNumber', labelKey: 'fields.doors', type: 'number' },
+    { name: 'seatsNumber', labelKey: 'fields.seats', type: 'number' },
+    { name: 'productionYears', labelKey: 'fields.productionYears', type: 'text' },
+    { name: 'description', labelKey: 'fields.description', type: 'text' },
   ],
   TAGS: [],
 };
-
-
-// Validation schema
-const proposalSchema = Yup.object().shape({
-  category: Yup.string().required('Category is required'),
-  comment: Yup.string().max(1000, 'Comment cannot exceed 1000 characters'),
-});
 
 
 /**
  * Modal component for submitting data change proposals.
  */
 const DataProposalModal = ({ isOpen, onClose, carId, carName, currentTags = [] }) => {
+  const { t } = useTranslation('cars');
   const queryClient = useQueryClient();
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [tagChanges, setTagChanges] = useState({ addTagIds: [], removeTagIds: [] });
@@ -119,6 +114,12 @@ const DataProposalModal = ({ isOpen, onClose, carId, carName, currentTags = [] }
     },
   });
 
+  // Validation schema with translations
+  const proposalSchema = useMemo(() => Yup.object().shape({
+    category: Yup.string().required(t('dataProposal.validation.categoryRequired')),
+    comment: Yup.string().max(1000, t('dataProposal.validation.commentMaxLength')),
+  }), [t]);
+
   // Form setup
   const formik = useFormik({
     initialValues: {
@@ -127,6 +128,7 @@ const DataProposalModal = ({ isOpen, onClose, carId, carName, currentTags = [] }
       proposedValues: {},
     },
     validationSchema: proposalSchema,
+    enableReinitialize: true,
     onSubmit: (values) => {
 
       // Handle TAGS category separately
@@ -134,7 +136,7 @@ const DataProposalModal = ({ isOpen, onClose, carId, carName, currentTags = [] }
         const hasChanges = tagChanges.addTagIds.length > 0 || tagChanges.removeTagIds.length > 0;
         
         if (!hasChanges) {
-          formik.setFieldError('category', 'Please select at least one tag to add or remove');
+          formik.setFieldError('category', t('dataProposal.validation.selectTag'));
           return;
         }
 
@@ -163,7 +165,7 @@ const DataProposalModal = ({ isOpen, onClose, carId, carName, currentTags = [] }
         }, {});
 
       if (Object.keys(filteredValues).length === 0) {
-        formik.setFieldError('category', 'Please fill in at least one field with proposed changes');
+        formik.setFieldError('category', t('dataProposal.validation.fillAtLeastOneField'));
         return;
       }
 
@@ -221,17 +223,17 @@ const DataProposalModal = ({ isOpen, onClose, carId, carName, currentTags = [] }
     <Modal
       isOpen={isOpen}
       onClose={handleClose}
-      title="Suggest Data Correction"
+      title={t('dataProposal.title')}
       size="lg"
     >
       {submitSuccess ? (
         <div className="text-center py-8">
           <IoCheckmarkCircle className="w-16 h-16 mx-auto text-green-500 mb-4" />
           <h3 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">
-            Proposal submitted!
+            {t('dataProposal.success.title')}
           </h3>
           <p className="text-neutral-600 dark:text-neutral-400">
-            Thank you for helping improve our database. Your proposal will be reviewed by our team.
+            {t('dataProposal.success.description')}
           </p>
         </div>
       ) : (
@@ -239,8 +241,8 @@ const DataProposalModal = ({ isOpen, onClose, carId, carName, currentTags = [] }
 
           {/* Error alert */}
           {createMutation.isError && (
-            <Alert variant="error" title="Submission failed">
-              {createMutation.error?.response?.data?.message || 'Failed to submit proposal. Please try again.'}
+            <Alert variant="error" title={t('dataProposal.error.title')}>
+              {createMutation.error?.response?.data?.message || t('dataProposal.error.description')}
             </Alert>
           )}
 
@@ -249,21 +251,28 @@ const DataProposalModal = ({ isOpen, onClose, carId, carName, currentTags = [] }
             <IoDocumentTextOutline className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-sm text-blue-800 dark:text-blue-200">
-                Suggesting corrections for <span className="font-medium">{carName}</span>
+                {t('dataProposal.info.suggesting', { carName })}
               </p>
               <p className="text-xs text-blue-600 dark:text-blue-300 mt-1">
-                Only fill in the fields you want to correct. Leave others empty.
+                {t('dataProposal.info.instructions')}
               </p>
             </div>
           </div>
 
           {/* Category select */}
           <Select
-            label="Category"
+            label={t('dataProposal.category')}
             name="category"
             options={[
-              { value: '', label: 'Select category...' },
-              ...PROPOSAL_CATEGORIES,
+              { value: '', label: t('dataProposal.selectCategory') },
+              { value: 'ENGINE', label: t('dataProposal.categories.engine') },
+              { value: 'TRANSMISSION', label: t('dataProposal.categories.transmission') },
+              { value: 'CHASSIS', label: t('dataProposal.categories.chassis') },
+              { value: 'PERFORMANCE', label: t('dataProposal.categories.performance') },
+              { value: 'OUTSIDE_DIMENSIONS', label: t('dataProposal.categories.outsideDimensions') },
+              { value: 'INSIDE_DIMENSIONS', label: t('dataProposal.categories.insideDimensions') },
+              { value: 'BASIC_INFO', label: t('dataProposal.categories.basicInfo') },
+              { value: 'TAGS', label: t('dataProposal.categories.tags') },
             ]}
             value={formik.values.category}
             onChange={handleCategoryChange}
@@ -275,22 +284,25 @@ const DataProposalModal = ({ isOpen, onClose, carId, carName, currentTags = [] }
           {selectedFields.length > 0 && (
             <div className="space-y-4">
               <h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                Proposed Values
+                {t('dataProposal.proposedValues')}
               </h4>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {selectedFields.map(field => (
-                  <Input
-                    key={field.name}
-                    label={field.label}
-                    type={field.type}
-                    step={field.step}
-                    name={`proposedValues.${field.name}`}
-                    value={formik.values.proposedValues[field.name] || ''}
-                    onChange={formik.handleChange}
-                    placeholder={`Enter new ${field.label.toLowerCase()}`}
-                  />
-                ))}
+                {selectedFields.map(field => {
+                  const label = t(`dataProposal.${field.labelKey}`);
+                  return (
+                    <Input
+                      key={field.name}
+                      label={label}
+                      type={field.type}
+                      step={field.step}
+                      name={`proposedValues.${field.name}`}
+                      value={formik.values.proposedValues[field.name] || ''}
+                      onChange={formik.handleChange}
+                      placeholder={t('dataProposal.enterNew', { field: label.toLowerCase() })}
+                    />
+                  );
+                })}
               </div>
             </div>
           )}
@@ -299,10 +311,10 @@ const DataProposalModal = ({ isOpen, onClose, carId, carName, currentTags = [] }
           {formik.values.category === 'TAGS' && (
             <div className="space-y-4">
               <h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                Modify Tags
+                {t('dataProposal.tags.title')}
               </h4>
               <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                Check tags to add or uncheck current tags to remove them.
+                {t('dataProposal.tags.instructions')}
               </p>
 
               {/* Current tags section */}
