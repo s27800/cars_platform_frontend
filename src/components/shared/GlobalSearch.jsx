@@ -54,12 +54,13 @@ const GlobalSearch = ({
   }, []);
 
   // Reset highlight when results change
-  const [lastResults, setLastResults] = useState(results);
-
-  if (lastResults !== results) {
-    setLastResults(results);
-    setHighlightedIndex(-1);
-  }
+  const prevResultsRef = useRef(results);
+  useEffect(() => {
+    if (prevResultsRef.current !== results) {
+      prevResultsRef.current = results;
+      setHighlightedIndex(-1);
+    }
+  }, [results]);
 
   const handleSelect = useCallback((car) => {
     navigate(`/cars/${car.id}`);
