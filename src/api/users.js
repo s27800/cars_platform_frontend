@@ -66,3 +66,14 @@ export const getUserDataProposals = async (params = {}) => {
 
   return response.data;
 };
+
+/**
+ * Delete current user's account
+ * DELETE /api/users/me
+ * Requires authentication
+ */
+export const deleteAccount = async () => {
+  const response = await apiClient.delete('/users/me');
+
+  return response.data;
+};

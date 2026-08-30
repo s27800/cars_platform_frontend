@@ -12,6 +12,7 @@ export { default as Dropdown } from './Dropdown';
 export { default as Pagination } from './Pagination';
 export { default as Spinner } from './Spinner';
 export { default as Modal } from './Modal';
+export { default as ConfirmModal } from './ConfirmModal';
 export { default as TextArea } from './TextArea';
 export { default as Rating } from './Rating';
 export { default as Tabs } from './Tabs';

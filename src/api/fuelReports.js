@@ -36,3 +36,14 @@ export const createFuelReport = async (carId, reportData) => {
 
   return response.data;
 };
+
+/**
+ * Delete own fuel report
+ * DELETE /api/fuel-reports/{fuelReportId}
+ * Requires authentication
+ */
+export const deleteFuelReport = async (fuelReportId) => {
+  const response = await apiClient.delete(`/fuel-reports/${fuelReportId}`);
+
+  return response.data;
+};
