@@ -12,7 +12,6 @@ export class CarsSearchPage extends BasePage {
 
   /** Search input */
   get searchInput(): Locator {
-    // The page search is a textbox, not combobox (header search is combobox)
     return this.page.getByRole('textbox', { name: /search cars/i });
   }
 
@@ -21,14 +20,16 @@ export class CarsSearchPage extends BasePage {
     return this.page.locator('aside');
   }
 
-  /** Mobile filter drawer (opened via button) - the drawer panel inside the overlay */
+  /** Mobile filter drawer */
   get mobileFiltersDrawer(): Locator {
-
-    // The mobile drawer has shadow-xl and overflow-y-auto classes, inside a fixed overlay
-    return this.page.locator('.fixed.inset-0 .shadow-xl.overflow-y-auto');
+    return this.page.locator('.fixed.inset-0 .shadow-xl').or(
+      this.page.locator('.fixed.inset-0 [class*="overflow-y"]')
+    ).or(
+      this.page.locator('[role="dialog"]').filter({ has: this.page.locator('select') })
+    ).first();
   }
 
-  /** Get active filters container - finds the VISIBLE container with filter elements */
+  /** Get active filters container */
   async getActiveFiltersContainer(): Promise<Locator> {
 
     // Check if mobile drawer is visible first
@@ -196,13 +197,13 @@ export class CarsSearchPage extends BasePage {
       await this.page.goto(href);
     } else {
       await link.click();
-      await this.page.waitForURL(/\/cars\/\d+/, { timeout: 15000 });
+      await this.page.waitForURL(/\/cars\/[0-9a-fA-F-]{36}/, { timeout: 15000 });
     }
   }
 
   async resetFilters(): Promise<void> {
 
-    // Ensure mobile drawer is open if on mobile, get the active container
+    // Ensure mobile drawer is open if on mobile
     const container = await this.ensureMobileDrawerOpenAndGetContainer();
     
     // Find reset button within the active container
@@ -212,16 +213,24 @@ export class CarsSearchPage extends BasePage {
     
     // Get current URL to detect change
     const currentUrl = this.page.url();
+    const hasFilterParams = currentUrl.includes('brandIds') || currentUrl.includes('bodyTypeIds') || currentUrl.includes('engineTypeIds');
     
     await resetBtn.click();
     
-    // Wait for URL to change (filters cleared)
-    if (currentUrl.includes('brandIds') || currentUrl.includes('bodyTypeIds') || currentUrl.includes('engineTypeIds')) {
-      await this.page.waitForFunction(
-        (patterns) => !patterns.some(p => window.location.href.includes(p)),
-        ['brandIds=', 'bodyTypeIds=', 'engineTypeIds='],
-        { timeout: 10000 }
-      );
+    // Wait for network
+    await this.page.waitForLoadState('networkidle').catch(() => {});
+    
+    // Wait for URL to change
+    if (hasFilterParams) {
+      try {
+        await this.page.waitForFunction(
+          (patterns) => !patterns.some(p => window.location.href.includes(p)),
+          ['brandIds=', 'bodyTypeIds=', 'engineTypeIds='],
+          { timeout: 5000 }
+        );
+      } catch {
+        await this.page.waitForTimeout(500);
+      }
     }
     
     await this.page.waitForLoadState('domcontentloaded');
@@ -259,8 +268,14 @@ export class CarsSearchPage extends BasePage {
     // First, check if mobile drawer is already visible
     const drawer = this.mobileFiltersDrawer;
     const isDrawerAlreadyVisible = await drawer.isVisible().catch(() => false);
+
     if (isDrawerAlreadyVisible) {
-      return drawer;
+
+      // Verify drawer content is visible
+      const drawerSelect = drawer.locator('select').first();
+
+      if (await drawerSelect.isVisible().catch(() => false))
+        return drawer;
     }
     
     // Use viewport width as the authoritative source for mobile vs desktop
@@ -269,15 +284,39 @@ export class CarsSearchPage extends BasePage {
     
     if (isMobileViewport) {
 
-      // We're on mobile - need to open drawer
+      // Open drawer on mobile
       const mobileFilterBtn = this.mobileFiltersButton;
-      const isBtnVisible = await mobileFilterBtn.isVisible().catch(() => false);
-      if (isBtnVisible) {
-        await mobileFilterBtn.click();
-        await drawer.waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.waitForTimeout(300);
-        return drawer;
+      
+      for (let attempt = 0; attempt < 3; attempt++) {
+        const isBtnVisible = await mobileFilterBtn.isVisible().catch(() => false);
+
+        if (isBtnVisible) {
+          await mobileFilterBtn.click();
+          
+          // Wait for drawer animation
+          await this.page.waitForTimeout(300);
+          
+          // Wait for drawer to be visible
+          try {
+            await drawer.waitFor({ state: 'visible', timeout: 3000 });
+            
+            // Verify select inside drawer is visible
+            const drawerSelect = drawer.locator('select').first();
+            await drawerSelect.waitFor({ state: 'visible', timeout: 2000 });
+            
+            return drawer;
+          } catch {
+            await this.page.waitForTimeout(200);
+          }
+        }
       }
+      
+      // Final attempt
+      await mobileFilterBtn.click({ force: true });
+      await this.page.waitForTimeout(500);
+      
+      // Return drawer
+      return drawer;
     }
     
     // Desktop - return sidebar
@@ -286,7 +325,24 @@ export class CarsSearchPage extends BasePage {
 
   async selectBrand(brandName: string): Promise<void> {
     const container = await this.ensureMobileDrawerOpenAndGetContainer();
+    
+    // Wait for container content to render
+    await this.page.waitForTimeout(200);
+    
     const brandSelect = container.locator('select').first();
+    
+    // Retry logic for finding the select element
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const isVisible = await brandSelect.isVisible().catch(() => false);
+
+      if (isVisible)
+        break;
+      
+      // Re-ensure drawer is open
+      await this.ensureMobileDrawerOpenAndGetContainer();
+      await this.page.waitForTimeout(300);
+    }
+    
     await brandSelect.waitFor({ state: 'visible', timeout: 5000 });
     await brandSelect.selectOption({ label: brandName });
   }
@@ -309,6 +365,10 @@ export class CarsSearchPage extends BasePage {
     await this.page.waitForLoadState('domcontentloaded');
     
     const container = await this.ensureMobileDrawerOpenAndGetContainer();
+    
+    // Wait for the container content to render
+    await this.page.waitForTimeout(300);
+    
     const powerButton = container.locator('button').filter({ hasText: /power|moc/i }).first();
     const numberInputs = container.locator('input[type="number"]');
     
@@ -317,20 +377,36 @@ export class CarsSearchPage extends BasePage {
       const inputsVisible = await numberInputs.first().isVisible().catch(() => false);
       if (inputsVisible) break;
       
+      // Wait for button to be attached
+      try {
+        await powerButton.waitFor({ state: 'attached', timeout: 3000 });
+      } catch {
+
+        // Re-ensure drawer is open on mobile
+        await this.ensureMobileDrawerOpenAndGetContainer();
+        await this.page.waitForTimeout(200);
+        continue;
+      }
+      
       // Scroll the power section into view within the container
-      await powerButton.waitFor({ state: 'attached', timeout: 5000 });
-      await powerButton.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
+      await powerButton.scrollIntoViewIfNeeded({ timeout: 3000 }).catch(() => {});
       await this.page.waitForTimeout(200);
       
-      await powerButton.waitFor({ state: 'visible', timeout: 10000 });
-      await powerButton.click();
+      try {
+        await powerButton.waitFor({ state: 'visible', timeout: 5000 });
+        await powerButton.click();
+      } catch {
+        await powerButton.click({ force: true });
+      }
       
       // Wait for expansion animation
       await this.page.waitForTimeout(500);
       
       // Check if inputs appeared
       const appeared = await numberInputs.first().isVisible().catch(() => false);
-      if (appeared) break;
+      
+      if (appeared)
+        break;
       
       // If not, wait a bit more before retry
       await this.page.waitForTimeout(300);

@@ -20,7 +20,7 @@ vi.mock('axios', () => ({
   },
 }));
 
-vi.mock('../../components/ui/Toast', () => ({
+vi.mock('../../utils/toastBus', () => ({
   showToast: {
     warning: vi.fn(),
     error: vi.fn(),

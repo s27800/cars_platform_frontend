@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { ComparisonPage, CarDetailsPage } from '../../pages';
+import { testCars } from '../../fixtures/cars.fixture';
 
 
 test.describe('Comparison - Remove Cars', () => {
@@ -18,11 +19,11 @@ test.describe('Comparison - Remove Cars', () => {
     // Add two cars
     const detailsPage = new CarDetailsPage(page);
     
-    await detailsPage.goto(1);
+    await detailsPage.goto(testCars().first.id);
     await detailsPage.waitForLoading();
     await detailsPage.addToComparison();
 
-    await detailsPage.goto(2);
+    await detailsPage.goto(testCars().second.id);
     await detailsPage.waitForLoading();
     await detailsPage.addToComparison();
   });
@@ -138,7 +139,7 @@ test.describe('Comparison - Remove Cars', () => {
       // Go back and add the car again
       const detailsPage = new CarDetailsPage(page);
       
-      await detailsPage.goto(1);
+      await detailsPage.goto(testCars().first.id);
       await detailsPage.waitForLoading();
       
       // Should be able to add again

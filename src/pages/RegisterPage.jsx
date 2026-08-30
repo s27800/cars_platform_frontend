@@ -33,7 +33,9 @@ const RegisterPage = () => {
       .email(tValidation('email.invalid')),
     password: Yup.string()
       .required(tValidation('password.required'))
-      .min(6, tValidation('password.minLength')),
+      .min(8, tValidation('password.minLength'))
+      .max(72, tValidation('password.maxLength'))
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/, tValidation('password.complexity')),
     confirmPassword: Yup.string()
       .required(tValidation('confirmPassword.required'))
       .oneOf([Yup.ref('password')], tValidation('confirmPassword.match')),
@@ -44,9 +46,6 @@ const RegisterPage = () => {
       .required(tValidation('lastName.required'))
       .min(2, tValidation('lastName.minLength')),
   });
-
-  if (isAuthenticated)
-    return <Navigate to="/" replace />;
 
   const formik = useFormik({
     initialValues: {
@@ -70,6 +69,10 @@ const RegisterPage = () => {
       }
     },
   });
+
+  // Redirect authenticated user
+  if (isAuthenticated)
+    return <Navigate to="/" replace />;
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12">

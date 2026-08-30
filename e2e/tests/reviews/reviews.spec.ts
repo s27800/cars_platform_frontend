@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CarDetailsPage } from '../../pages';
+import { testCars } from '../../fixtures/cars.fixture';
 import { TEST_USERS } from '../../fixtures';
 
 
@@ -7,7 +8,7 @@ test.describe('Reviews - Unauthenticated', () => {
   test('REV-001: should display existing reviews', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
 
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     // Click on Reviews tab first
@@ -28,7 +29,7 @@ test.describe('Reviews - Unauthenticated', () => {
     });
 
     const carPage = new CarDetailsPage(page);
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
 
     // Click on Reviews tab
     await carPage.clickReviewsTab();
@@ -60,7 +61,7 @@ test.describe('Reviews - Authenticated', () => {
   test('REV-002: should show review form for authenticated user', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
 
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     // Click on Reviews tab
@@ -73,7 +74,7 @@ test.describe('Reviews - Authenticated', () => {
   test('REV-003: should validate review rating', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
 
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     // Click on Reviews tab
@@ -99,7 +100,7 @@ test.describe('Reviews - Authenticated', () => {
   test('REV-004: should validate review content', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
 
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     // Click on Reviews tab
@@ -131,7 +132,7 @@ test.describe('Reviews - Display', () => {
   test('REV-006: should display review author', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
 
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     // If there are reviews
@@ -149,7 +150,7 @@ test.describe('Reviews - Display', () => {
   test('REV-007: should display review date', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
 
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     const reviewItems = page.locator('[class*="review"], [data-testid*="review"]');
@@ -166,7 +167,7 @@ test.describe('Reviews - Display', () => {
   test('REV-008: should display review rating stars', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
 
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     const reviewItems = page.locator('[class*="review"], [data-testid*="review"]');
@@ -185,7 +186,7 @@ test.describe('Reviews - Pagination', () => {
   test('REV-010: should paginate reviews if many', async ({ page }) => {
     const carPage = new CarDetailsPage(page);
 
-    await carPage.goto(1);
+    await carPage.goto(testCars().first.id);
     await carPage.waitForLoading();
 
     // Check if pagination exists in reviews section

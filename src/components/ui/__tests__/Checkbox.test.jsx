@@ -63,7 +63,7 @@ describe('Checkbox', () => {
 
     it('should generate random id if no id or name provided', () => {
       render(<Checkbox label="Test" />);
-      
+
       const checkbox = screen.getByRole('checkbox');
 
       expect(checkbox.id).toMatch(/^checkbox-/);
@@ -88,9 +88,8 @@ describe('Checkbox', () => {
     it('should associate label with checkbox', () => {
       render(<Checkbox id="test-checkbox" label="Test Label" />);
       
-      const checkbox = screen.getByRole('checkbox');
       const label = screen.getByText('Test Label');
-      
+
       expect(label.closest('label')).toHaveAttribute('for', 'test-checkbox');
     });
 

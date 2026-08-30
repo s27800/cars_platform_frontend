@@ -112,17 +112,17 @@ export class CarDetailsPage extends BasePage {
 
   /** Brand link */
   get brandLink(): Locator {
-    return this.breadcrumbs.getByRole('link').first();
+    return this.breadcrumbs.locator('a[href^="/brands/"]').first();
   }
 
   /** Model link */
   get modelLink(): Locator {
-    return this.breadcrumbs.getByRole('link').nth(1);
+    return this.breadcrumbs.locator('a[href^="/models/"]').first();
   }
 
   /** Generation link */
   get generationLink(): Locator {
-    return this.breadcrumbs.getByRole('link').nth(2);
+    return this.breadcrumbs.locator('a[href^="/generations/"]').first();
   }
 
   /** Tabs container */
@@ -133,7 +133,7 @@ export class CarDetailsPage extends BasePage {
 
   // ============ ACTIONS ============
 
-  async goto(carId: number): Promise<void> {
+  async goto(carId: string): Promise<void> {
     await this.page.goto(`/cars/${carId}`);
   }
 

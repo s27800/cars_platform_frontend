@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { 
   IoCheckmarkCircleOutline, 
@@ -106,19 +106,6 @@ const ToastContainer = () => {
   );
 };
 
-
-let toastRef = null;
-
-export const setToastRef = (ref) => {
-  toastRef = ref;
-};
-
-export const showToast = {
-  success: (message) => toastRef?.success(message),
-  error: (message) => toastRef?.error(message),
-  warning: (message) => toastRef?.warning(message),
-  info: (message) => toastRef?.info(message),
-};
 
 export { ToastContainer };
 export default ToastContainer;

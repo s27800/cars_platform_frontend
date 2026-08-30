@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { showToast } from '../components/ui/Toast';
+import { showToast } from '../utils/toastBus';
 
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';

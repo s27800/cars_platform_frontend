@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -38,7 +38,7 @@ const GlobalSearch = ({
     staleTime: 30000,
   });
 
-  const results = data?.content || [];
+  const results = useMemo(() => data?.content ?? [], [data]);
 
   // Handle click outside to close dropdown
   useEffect(() => {
@@ -54,8 +54,12 @@ const GlobalSearch = ({
   }, []);
 
   // Reset highlight when results change
+  const prevResultsRef = useRef(results);
   useEffect(() => {
-    setHighlightedIndex(-1);
+    if (prevResultsRef.current !== results) {
+      prevResultsRef.current = results;
+      setHighlightedIndex(-1);
+    }
   }, [results]);
 
   const handleSelect = useCallback((car) => {

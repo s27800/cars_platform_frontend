@@ -27,9 +27,6 @@ const LoginPage = () => {
       .min(6, tValidation('password.minLength')),
   });
 
-  if (isAuthenticated)
-    return <Navigate to={from} replace />;
-
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -46,6 +43,10 @@ const LoginPage = () => {
       }
     },
   });
+
+  // Redirect authenticated user
+  if (isAuthenticated)
+    return <Navigate to={from} replace />;
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12">

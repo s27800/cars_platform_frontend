@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 
 // Mock react-router-dom
@@ -63,7 +62,7 @@ vi.mock('../../../components/ui', () => ({
       <button onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
     </div>
   ),
-  Rating: ({ value, readOnly }) => <div data-testid="rating" data-value={value}>{value}</div>,
+  Rating: ({ value }) => <div data-testid="rating" data-value={value}>{value}</div>,
 }));
 
 // Mock API

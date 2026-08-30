@@ -1,4 +1,4 @@
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate, Link, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { 
   IoDocumentTextOutline, 
@@ -70,6 +70,7 @@ const StatCard = ({ icon: Icon, title, count, description, linkTo, isLoading, er
 
 
 const AdminDashboard = () => {
+  const location = useLocation();
   const { isAuthenticated, isAdmin, isLoading: authLoading } = useAuth();
 
   // Fetch pending reviews count
@@ -119,7 +120,7 @@ const AdminDashboard = () => {
 
   // Redirect if not authenticated
   if (!isAuthenticated)
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
 
   // Redirect if not admin
   if (!isAdmin)

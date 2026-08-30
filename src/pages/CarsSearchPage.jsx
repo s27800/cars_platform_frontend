@@ -1,11 +1,11 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { IoSearchOutline, IoFilterOutline, IoCarSportOutline } from 'react-icons/io5';
 import { searchCars } from '../api/cars';
 import { CarCard, FiltersPanel } from '../components/shared';
-import { Input, Select, Pagination, Spinner, Button, CardSkeleton } from '../components/ui';
+import { Input, Select, Pagination, Button, CardSkeleton } from '../components/ui';
 import { useDebounce } from '../hooks';
 
 
@@ -21,9 +21,12 @@ const CarsSearchPage = () => {
   const debouncedSearch = useDebounce(searchQuery, 400);
 
   // Sync URL search param with local state on URL change
-  useEffect(() => {
+  const [lastUrlSearch, setLastUrlSearch] = useState(urlSearch);
+
+  if (lastUrlSearch !== urlSearch) {
+    setLastUrlSearch(urlSearch);
     setSearchQuery(urlSearch);
-  }, [urlSearch]);
+  }
 
   const SORT_OPTIONS = [
     { value: '', label: t('search.sortDefault') },

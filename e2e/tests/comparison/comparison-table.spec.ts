@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { ComparisonPage, CarDetailsPage } from '../../pages';
+import { testCars } from '../../fixtures/cars.fixture';
 
 
 test.describe('Comparison Table', () => {
@@ -18,24 +19,24 @@ test.describe('Comparison Table', () => {
     if (isMobile) {
 
       // On mobile, set comparison cars via localStorage directly to avoid button interaction issues
-      await page.evaluate(() => {
-        const cars = [
-          { id: 1, name: 'Test Car 1' },
-          { id: 2, name: 'Test Car 2' }
-        ];
+      const { first, second } = testCars();
 
+      await page.evaluate((cars) => {
         localStorage.setItem('comparisonCars', JSON.stringify(cars));
-      });
+      }, [
+        { id: first.id, name: first.name },
+        { id: second.id, name: second.name },
+      ]);
     } else {
 
       // On desktop, add via UI
       const detailsPage = new CarDetailsPage(page);
 
-      await detailsPage.goto(1);
+      await detailsPage.goto(testCars().first.id);
       await detailsPage.waitForLoading();
       await detailsPage.addToComparison();
 
-      await detailsPage.goto(2);
+      await detailsPage.goto(testCars().second.id);
       await detailsPage.waitForLoading();
       await detailsPage.addToComparison();
     }

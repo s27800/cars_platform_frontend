@@ -13,11 +13,48 @@ test.describe('Logout', () => {
 
     await userMenu.waitFor({ state: 'visible', timeout: 10000 });
     await userMenu.click();
+    
+    // Wait for dropdown to appear
+    await page.waitForTimeout(200);
   };
 
   // Helper to find and click logout button in dropdown
   const clickLogout = async (page) => {
-    const logoutButton = page.locator('button:has-text("Sign out"), button:has-text("Wyloguj")').first();
+
+    // Retry logic for opening menu and clicking logout
+    for (let attempt = 0; attempt < 5; attempt++) {
+
+      // Wait for dropdown menu to be visible
+      const dropdownMenu = page.locator('div.absolute.right-0, div[class*="absolute"][class*="right-0"]').first();
+      const isDropdownVisible = await dropdownMenu.isVisible().catch(() => false);
+      
+      if (!isDropdownVisible) {
+
+        // Re-click user menu if dropdown closed
+        const userMenu = page.locator('button[aria-haspopup="true"]').first();
+        await userMenu.click();
+        await page.waitForTimeout(500);
+      }
+      
+      // Find logout button by text content
+      const logoutButton = page.locator('button').filter({ hasText: /^(Sign out|Wyloguj się)$/ }).first();
+      const isLogoutVisible = await logoutButton.isVisible().catch(() => false);
+      
+      if (isLogoutVisible) {
+        await logoutButton.click();
+        return;
+      }
+      
+      await page.waitForTimeout(400);
+    }
+    
+    // Final attempt
+    const userMenu = page.locator('button[aria-haspopup="true"]').first();
+    await userMenu.click();
+    await page.waitForTimeout(800);
+    
+    const logoutButton = page.locator('button').filter({ hasText: /^(Sign out|Wyloguj się)$/ }).first();
+    await logoutButton.waitFor({ state: 'visible', timeout: 10000 });
     await logoutButton.click();
   };
 

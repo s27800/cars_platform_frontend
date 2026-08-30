@@ -37,9 +37,12 @@ const GenerationDetailsPage = () => {
   }, [id, navigationType]);
 
   // Reset pagination when generation changes
-  useEffect(() => {
+  const [lastGenerationId, setLastGenerationId] = useState(id);
+
+  if (lastGenerationId !== id) {
+    setLastGenerationId(id);
     setCurrentPage(0);
-  }, [id]);
+  }
 
   const { data: generation, isLoading, isError, error } = useQuery({
     queryKey: ['generation', id],

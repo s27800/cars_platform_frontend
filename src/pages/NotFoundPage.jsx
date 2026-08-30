@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { IoHomeOutline, IoArrowBackOutline, IoSearchOutline } from 'react-icons/io5';
 import { Button } from '../components/ui';

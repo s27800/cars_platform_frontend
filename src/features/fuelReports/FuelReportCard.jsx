@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { IoHeartOutline, IoHeart, IoSpeedometerOutline } from 'react-icons/io5';
 import { toggleFuelReportLike, getFuelReportLikeStatus } from '../../api/likes';
@@ -8,7 +8,7 @@ import { formatDate, getConsumptionLevel } from '../../utils/helpers';
 
 
 // Reusable card component displaying fuel consumption report with like functionality
-const FuelReportCard = ({ report, carId }) => {
+const FuelReportCard = ({ report }) => {
   const { isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
   const [isLiked, setIsLiked] = useState(false);
@@ -22,13 +22,13 @@ const FuelReportCard = ({ report, carId }) => {
     staleTime: 30000,
   });
 
-  // Update local state when like status is fetched
-  useEffect(() => {
-    if (likeStatus) {
-      setIsLiked(likeStatus.liked);
-      setLikeCount(likeStatus.likesCount);
-    }
-  }, [likeStatus]);
+  const [lastLikeStatus, setLastLikeStatus] = useState(null);
+
+  if (likeStatus && lastLikeStatus !== likeStatus) {
+    setLastLikeStatus(likeStatus);
+    setIsLiked(likeStatus.liked);
+    setLikeCount(likeStatus.likesCount);
+  }
 
   const likeMutation = useMutation({
     mutationFn: () => toggleFuelReportLike(report.id),

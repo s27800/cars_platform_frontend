@@ -53,7 +53,7 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
     return typeof value === 'number' ? value.toFixed(1) : parseFloat(value).toFixed(1);
   };
 
-  const avgValue = formatConsumption(averageConsumption);
+  const avgValue = formatConsumption(averageConsumption?.averageFuelConsumption);
 
   return (
     <div className={`border border-neutral-200 dark:border-neutral-700 rounded-xl overflow-hidden ${className}`}>

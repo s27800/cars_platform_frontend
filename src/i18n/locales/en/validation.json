@@ -17,10 +17,11 @@
   },
   "password": {
     "required": "Password is required",
-    "minLength": "Password must be at least 6 characters",
-    "maxLength": "Password must be at most 100 characters",
+    "minLength": "Password must be at least 8 characters",
+    "maxLength": "Password must be at most 72 characters",
     "weak": "Password is too weak",
-    "mismatch": "Passwords do not match"
+    "mismatch": "Passwords do not match",
+    "complexity": "Password must contain a lowercase letter, an uppercase letter and a digit"
   },
   "emailField": {
     "required": "Email is required",
