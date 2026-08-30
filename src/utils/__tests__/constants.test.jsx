@@ -19,8 +19,8 @@ describe('constants', () => {
     it('should have required properties for each category', () => {
       RATING_CATEGORIES.forEach(category => {
         expect(category).toHaveProperty('key');
-        expect(category).toHaveProperty('label');
-        expect(category).toHaveProperty('description');
+        expect(category).toHaveProperty('labelKey');
+        expect(category).toHaveProperty('descKey');
       });
     });
 
@@ -33,7 +33,7 @@ describe('constants', () => {
     it('should include engineRating', () => {
       const engineCategory = RATING_CATEGORIES.find(c => c.key === 'engineRating');
       expect(engineCategory).toBeDefined();
-      expect(engineCategory.label).toBe('Engine');
+      expect(engineCategory.labelKey).toBe('engine');
     });
   });
 

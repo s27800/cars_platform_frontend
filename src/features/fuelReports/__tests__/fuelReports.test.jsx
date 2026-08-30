@@ -79,9 +79,9 @@ vi.mock('react-icons/io5', () => ({
 vi.mock('../../../utils/helpers', () => ({
   formatDate: (date) => date,
   getConsumptionLevel: (value) => {
-    if (value < 6) return 'low';
-    if (value < 10) return 'medium';
-    return 'high';
+    if (value < 6) return { label: 'Low', color: 'text-green-600', variant: 'success' };
+    if (value < 10) return { label: 'Medium', color: 'text-yellow-600', variant: 'warning' };
+    return { label: 'High', color: 'text-red-600', variant: 'danger' };
   },
 }));
 
@@ -148,7 +148,7 @@ describe('FuelReportCard', () => {
 
       render(<FuelReportCard report={report} carId={1} />);
 
-      expect(screen.getByText('Pending')).toBeInTheDocument();
+      expect(screen.getByText('fuelReports.status.pending')).toBeInTheDocument();
     });
   });
 });

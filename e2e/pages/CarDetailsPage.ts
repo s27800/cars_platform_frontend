@@ -82,7 +82,7 @@ export class CarDetailsPage extends BasePage {
 
   /** Add review button */
   get addReviewButton(): Locator {
-    return this.page.getByRole('button', { name: 'Add Review', exact: true });
+    return this.page.getByRole('button', { name: 'Write a review', exact: true }).first();
   }
 
   /** Average rating */
