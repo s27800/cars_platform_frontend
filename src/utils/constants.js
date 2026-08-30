@@ -23,6 +23,7 @@ export const PROPOSAL_CATEGORIES = [
   { value: 'OUTSIDE_DIMENSIONS', label: 'Outside Dimensions' },
   { value: 'INSIDE_DIMENSIONS', label: 'Inside Dimensions' },
   { value: 'BASIC_INFO', label: 'Basic Information' },
+  { value: 'TAGS', label: 'Tags' },
 ];
 
 // Pagination default values
