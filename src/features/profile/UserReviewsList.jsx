@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { IoCarSportOutline, IoDocumentTextOutline } from 'react-icons/io5';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { IoCarSportOutline, IoDocumentTextOutline, IoTrashOutline } from 'react-icons/io5';
 import { getUserReviews } from '../../api/users';
-import { Card, Spinner, Button, Badge, Rating, Pagination } from '../../components/ui';
+import { deleteReview } from '../../api/reviews';
+import { Card, Spinner, Button, Badge, Rating, Pagination, ConfirmModal, IconButton } from '../../components/ui';
 import { RATING_CATEGORIES } from '../../utils/constants';
 import { formatDate, calculateAverage } from '../../utils/helpers';
 
 
 const UserReviewsList = () => {
   const [page, setPage] = useState(0);
+  const [deleteTarget, setDeleteTarget] = useState(null);
   const pageSize = 5;
+  const queryClient = useQueryClient();
 
   const { 
     data: reviewsData, 
@@ -25,6 +28,25 @@ const UserReviewsList = () => {
   const reviews = reviewsData?.content || [];
   const totalPages = reviewsData?.totalPages || 0;
   const totalElements = reviewsData?.totalElements || 0;
+
+  // Delete mutation
+  const deleteMutation = useMutation({
+    mutationFn: deleteReview,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userReviews'] });
+      setDeleteTarget(null);
+    },
+  });
+
+  const handleDeleteClick = (review) => {
+    setDeleteTarget(review);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (deleteTarget) {
+      deleteMutation.mutate(deleteTarget.id);
+    }
+  };
 
   // Loading State
   if (isLoading) {
@@ -75,7 +97,11 @@ const UserReviewsList = () => {
 
       <div className="space-y-4">
         {reviews.map((review) => (
-          <UserReviewCard key={review.id} review={review} />
+          <UserReviewCard 
+            key={review.id} 
+            review={review} 
+            onDelete={() => handleDeleteClick(review)}
+          />
         ))}
       </div>
 
@@ -91,13 +117,25 @@ const UserReviewsList = () => {
           />
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmModal
+        isOpen={!!deleteTarget}
+        onClose={() => setDeleteTarget(null)}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Review"
+        message={`Are you sure you want to delete your review for ${deleteTarget?.carInfo?.brandName} ${deleteTarget?.carInfo?.modelName}?`}
+        confirmText="Delete Review"
+        variant="danger"
+        isLoading={deleteMutation.isPending}
+      />
     </div>
   );
 };
 
 
 // Card component for displaying user's review with car info
-const UserReviewCard = ({ review }) => {
+const UserReviewCard = ({ review, onDelete }) => {
   const ratings = RATING_CATEGORIES.map(cat => review[cat.key]);
   const averageRating = calculateAverage(ratings);
   const carInfo = review.carInfo;
@@ -174,11 +212,20 @@ const UserReviewCard = ({ review }) => {
           })}
         </div>
 
-        {/* Likes count */}
-        <div className="mt-3 pt-3 border-t border-neutral-100 dark:border-neutral-700">
+        {/* Footer with likes and delete */}
+        <div className="mt-3 pt-3 border-t border-neutral-100 dark:border-neutral-700 flex items-center justify-between">
           <span className="text-sm text-neutral-500 dark:text-neutral-400">
             {review.likesCount || 0} {review.likesCount === 1 ? 'like' : 'likes'}
           </span>
+          <IconButton
+            variant="ghost"
+            size="sm"
+            onClick={onDelete}
+            label="Delete review"
+            className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+          >
+            <IoTrashOutline className="w-4 h-4" />
+          </IconButton>
         </div>
       </div>
     </Card>

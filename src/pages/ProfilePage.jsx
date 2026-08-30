@@ -13,7 +13,7 @@ import {
 import { useAuth } from '../hooks';
 import { getProfile, updateProfile, changePassword } from '../api/users';
 import { Card, Tabs, Spinner, Button } from '../components/ui';
-import { ProfileInfo, ProfileEditForm, PasswordChangeForm, UserReviewsList, UserFuelReportsList, UserDataProposalsList } from '../features/profile';
+import { ProfileInfo, ProfileEditForm, PasswordChangeForm, UserReviewsList, UserFuelReportsList, UserDataProposalsList, DeleteAccountSection } from '../features/profile';
 
 
 // Activity type selector component
@@ -268,6 +268,7 @@ const ProfilePage = () => {
                              updateProfileMutation.error?.message}
                       success={profileSuccess}
                     />
+                    <DeleteAccountSection />
                   </Tabs.Content>
 
                   <Tabs.Content value="password">

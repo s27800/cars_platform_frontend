@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { IoCarSportOutline, IoSpeedometerOutline } from 'react-icons/io5';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { IoCarSportOutline, IoSpeedometerOutline, IoTrashOutline } from 'react-icons/io5';
 import { getUserFuelReports } from '../../api/users';
-import { Card, Spinner, Button, Badge, Pagination } from '../../components/ui';
+import { deleteFuelReport } from '../../api/fuelReports';
+import { Card, Spinner, Button, Badge, Pagination, ConfirmModal, IconButton } from '../../components/ui';
 import { formatDate, getConsumptionLevel } from '../../utils/helpers';
 
 
 const UserFuelReportsList = () => {
   const [page, setPage] = useState(0);
+  const [deleteTarget, setDeleteTarget] = useState(null);
   const pageSize = 5;
+  const queryClient = useQueryClient();
 
   const { 
     data: reportsData, 
@@ -24,6 +27,25 @@ const UserFuelReportsList = () => {
   const reports = reportsData?.content || [];
   const totalPages = reportsData?.totalPages || 0;
   const totalElements = reportsData?.totalElements || 0;
+
+  // Delete mutation
+  const deleteMutation = useMutation({
+    mutationFn: deleteFuelReport,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userFuelReports'] });
+      setDeleteTarget(null);
+    },
+  });
+
+  const handleDeleteClick = (report) => {
+    setDeleteTarget(report);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (deleteTarget) {
+      deleteMutation.mutate(deleteTarget.id);
+    }
+  };
 
   // Loading State
   if (isLoading) {
@@ -74,7 +96,11 @@ const UserFuelReportsList = () => {
 
       <div className="space-y-4">
         {reports.map((report) => (
-          <UserFuelReportCard key={report.id} report={report} />
+          <UserFuelReportCard 
+            key={report.id} 
+            report={report} 
+            onDelete={() => handleDeleteClick(report)}
+          />
         ))}
       </div>
 
@@ -90,13 +116,25 @@ const UserFuelReportsList = () => {
           />
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmModal
+        isOpen={!!deleteTarget}
+        onClose={() => setDeleteTarget(null)}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Fuel Report"
+        message={`Are you sure you want to delete your fuel report for ${deleteTarget?.carInfo?.brandName} ${deleteTarget?.carInfo?.modelName}?`}
+        confirmText="Delete Report"
+        variant="danger"
+        isLoading={deleteMutation.isPending}
+      />
     </div>
   );
 };
 
 
 // Card component for displaying user's fuel report with car info
-const UserFuelReportCard = ({ report }) => {
+const UserFuelReportCard = ({ report, onDelete }) => {
   const carInfo = report.carInfo;
   const fuelValue = parseFloat(report.fuelConsumption || 0).toFixed(1);
   const level = getConsumptionLevel(fuelValue);
@@ -155,6 +193,19 @@ const UserFuelReportCard = ({ report }) => {
             {report.comment}
           </p>
         )}
+
+        {/* Delete button */}
+        <div className="mt-3 pt-3 border-t border-neutral-100 dark:border-neutral-700 flex justify-end">
+          <IconButton
+            variant="ghost"
+            size="sm"
+            onClick={onDelete}
+            label="Delete fuel report"
+            className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+          >
+            <IoTrashOutline className="w-4 h-4" />
+          </IconButton>
+        </div>
       </div>
     </Card>
   );

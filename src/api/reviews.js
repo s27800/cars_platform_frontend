@@ -36,3 +36,14 @@ export const createReview = async (carId, reviewData) => {
 
   return response.data;
 };
+
+/**
+ * Delete own review
+ * DELETE /api/reviews/{reviewId}
+ * Requires authentication
+ */
+export const deleteReview = async (reviewId) => {
+  const response = await apiClient.delete(`/reviews/${reviewId}`);
+
+  return response.data;
+};

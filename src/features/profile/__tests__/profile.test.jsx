@@ -63,6 +63,8 @@ vi.mock('../../../components/ui', () => ({
     </div>
   ),
   Rating: ({ value }) => <div data-testid="rating" data-value={value}>{value}</div>,
+  ConfirmModal: () => null,
+  IconButton: ({ children, onClick, label }) => <button onClick={onClick} aria-label={label}>{children}</button>,
 }));
 
 // Mock API
@@ -73,10 +75,12 @@ vi.mock('../../../api/users', () => ({
 
 vi.mock('../../../api/reviews', () => ({
   getUserReviews: vi.fn(() => Promise.resolve({ content: [], totalElements: 0 })),
+  deleteReview: vi.fn(() => Promise.resolve()),
 }));
 
 vi.mock('../../../api/fuelReports', () => ({
   getUserFuelReports: vi.fn(() => Promise.resolve({ content: [], totalElements: 0 })),
+  deleteFuelReport: vi.fn(() => Promise.resolve()),
 }));
 
 vi.mock('../../../api/dataProposals', () => ({
