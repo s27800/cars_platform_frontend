@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate, Link, useLocation } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { 
   IoArrowBackOutline,
@@ -202,6 +202,7 @@ const RejectModal = ({ isOpen, onClose, onConfirm, isLoading }) => {
 
 
 const AdminProposalsPage = () => {
+  const location = useLocation();
   const { isAuthenticated, isAdmin, isLoading: authLoading } = useAuth();
   const queryClient = useQueryClient();
 
@@ -248,7 +249,7 @@ const AdminProposalsPage = () => {
 
   // Redirect if not authenticated
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   // Redirect if not admin
