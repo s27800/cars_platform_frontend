@@ -15,11 +15,21 @@ vi.mock('@tanstack/react-query', () => ({
   useQueryClient: vi.fn(() => ({
     invalidateQueries: vi.fn(),
   })),
+  useQuery: vi.fn(() => ({
+    data: [],
+    isLoading: false,
+    isError: false,
+  })),
 }));
 
 // Mock dataProposals API
 vi.mock('../../../api/dataProposals', () => ({
   createProposal: vi.fn(() => Promise.resolve({ id: 1 })),
+}));
+
+// Mock tags API
+vi.mock('../../../api/tags', () => ({
+  getTags: vi.fn(() => Promise.resolve([])),
 }));
 
 // Mock react-icons
@@ -41,47 +51,58 @@ vi.mock('../../../utils/constants', () => ({
 }));
 
 // Mock UI components
-vi.mock('../../components/ui', () => ({
-  Modal: ({ isOpen, onClose, children, title }) =>
+vi.mock('../../components/ui', () => {
+  const ModalComponent = ({ isOpen, onClose, children, title }) =>
     isOpen ? (
       <div data-testid="modal" role="dialog">
         <h2>{title}</h2>
         <button onClick={onClose} data-testid="close-modal">Close</button>
         {children}
       </div>
-    ) : null,
-  Button: ({ children, onClick, type, disabled, isLoading }) => (
-    <button onClick={onClick} type={type} disabled={disabled || isLoading}>
-      {isLoading ? 'Loading...' : children}
-    </button>
-  ),
-  Select: ({ label, options, value, onChange, error }) => (
-    <div>
-      <label>{label}</label>
-      <select value={value} onChange={onChange} data-testid={`select-${label}`}>
-        <option value="">Select...</option>
-        {options?.map(opt => (
-          <option key={opt.value} value={opt.value}>{opt.label}</option>
-        ))}
-      </select>
-      {error && <span>{error}</span>}
-    </div>
-  ),
-  TextArea: ({ label, value, onChange, error, ...props }) => (
-    <div>
-      <label>{label}</label>
-      <textarea value={value} onChange={onChange} data-testid={`textarea-${label}`} {...props} />
-      {error && <span>{error}</span>}
-    </div>
-  ),
-  Input: ({ label, value, onChange, type, ...props }) => (
-    <div>
-      <label>{label}</label>
-      <input type={type} value={value} onChange={onChange} data-testid={`input-${label}`} {...props} />
-    </div>
-  ),
-  Alert: ({ children, variant }) => <div data-testid={`alert-${variant}`}>{children}</div>,
-}));
+    ) : null;
+  ModalComponent.Footer = ({ children }) => <div data-testid="modal-footer">{children}</div>;
+
+  return {
+    Modal: ModalComponent,
+    Button: ({ children, onClick, type, disabled, isLoading }) => (
+      <button onClick={onClick} type={type} disabled={disabled || isLoading}>
+        {isLoading ? 'Loading...' : children}
+      </button>
+    ),
+    Select: ({ label, options, value, onChange, error }) => (
+      <div>
+        <label>{label}</label>
+        <select value={value} onChange={onChange} data-testid={`select-${label}`}>
+          <option value="">Select...</option>
+          {options?.map(opt => (
+            <option key={opt.value} value={opt.value}>{opt.label}</option>
+          ))}
+        </select>
+        {error && <span>{error}</span>}
+      </div>
+    ),
+    TextArea: ({ label, value, onChange, error, ...props }) => (
+      <div>
+        <label>{label}</label>
+        <textarea value={value} onChange={onChange} data-testid={`textarea-${label}`} {...props} />
+        {error && <span>{error}</span>}
+      </div>
+    ),
+    Input: ({ label, value, onChange, type, ...props }) => (
+      <div>
+        <label>{label}</label>
+        <input type={type} value={value} onChange={onChange} data-testid={`input-${label}`} {...props} />
+      </div>
+    ),
+    Alert: ({ children, variant }) => <div data-testid={`alert-${variant}`}>{children}</div>,
+    Checkbox: ({ label, checked, onChange }) => (
+      <label>
+        <input type="checkbox" checked={checked} onChange={onChange} />
+        {label}
+      </label>
+    ),
+  };
+});
 
 
 describe('DataProposalModal', () => {
