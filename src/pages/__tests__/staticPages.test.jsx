@@ -102,7 +102,7 @@ describe('AboutPage', () => {
 
       render(<AboutPage />);
       
-      expect(screen.getByText('About CarsPlatform')).toBeInTheDocument();
+      expect(screen.getByText('about.title')).toBeInTheDocument();
     });
 
     it('should render feature cards', async () => {
@@ -110,10 +110,10 @@ describe('AboutPage', () => {
 
       render(<AboutPage />);
       
-      expect(screen.getByText('Advanced Search')).toBeInTheDocument();
-      expect(screen.getByText('Car Comparison')).toBeInTheDocument();
-      expect(screen.getByText('User Reviews')).toBeInTheDocument();
-      expect(screen.getAllByText('Fuel Reports').length).toBeGreaterThan(0);
+      expect(screen.getByText('about.features.search.title')).toBeInTheDocument();
+      expect(screen.getByText('about.features.comparison.title')).toBeInTheDocument();
+      expect(screen.getByText('about.features.reviews.title')).toBeInTheDocument();
+      expect(screen.getAllByText('about.features.fuel.title').length).toBeGreaterThan(0);
     });
 
     it('should render statistics section', async () => {
@@ -122,7 +122,7 @@ describe('AboutPage', () => {
       render(<AboutPage />);
       
       expect(screen.getByText('500+')).toBeInTheDocument();
-      expect(screen.getByText('Car Models')).toBeInTheDocument();
+      expect(screen.getByText('about.stats.carModels')).toBeInTheDocument();
     });
 
     it('should render CTA section with links', async () => {
@@ -130,7 +130,7 @@ describe('AboutPage', () => {
 
       render(<AboutPage />);
       
-      expect(screen.getByText('Platform Features')).toBeInTheDocument();
+      expect(screen.getByText('about.cta.title')).toBeInTheDocument();
     });
   });
 });
@@ -151,7 +151,7 @@ describe('FAQPage', () => {
 
       render(<FAQPage />);
       
-      expect(screen.getByText('Frequently Asked Questions')).toBeInTheDocument();
+      expect(screen.getByText('faq.title')).toBeInTheDocument();
     });
 
     it('should render FAQ categories', async () => {
@@ -159,7 +159,7 @@ describe('FAQPage', () => {
 
       render(<FAQPage />);
       
-      expect(screen.getByText('Account & Registration')).toBeInTheDocument();
+      expect(screen.getByText('faq.categories.account.title')).toBeInTheDocument();
     });
 
     it('should render contact section', async () => {

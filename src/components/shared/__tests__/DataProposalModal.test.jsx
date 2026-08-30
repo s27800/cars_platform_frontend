@@ -4,6 +4,16 @@ import userEvent from '@testing-library/user-event';
 import DataProposalModal from '../DataProposalModal';
 
 
+// Mock react-i18next
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key) => key,
+    i18n: { language: 'en', changeLanguage: vi.fn() },
+  }),
+  initReactI18next: { type: '3rdParty', init: vi.fn() },
+  Trans: ({ children }) => children,
+}));
+
 // Mock react-query
 vi.mock('@tanstack/react-query', () => ({
   useMutation: vi.fn(() => ({
@@ -137,7 +147,7 @@ describe('DataProposalModal', () => {
 
     it('should render category select', () => {
       render(<DataProposalModal {...defaultProps} />);
-      expect(screen.getByLabelText('Category')).toBeInTheDocument();
+      expect(screen.getByLabelText('dataProposal.category')).toBeInTheDocument();
     });
 
     it('should render comment textarea', () => {
@@ -181,7 +191,7 @@ describe('DataProposalModal', () => {
       const user = userEvent.setup();
       render(<DataProposalModal {...defaultProps} />);
 
-      const categorySelect = screen.getByLabelText('Category');
+      const categorySelect = screen.getByLabelText('dataProposal.category');
       await user.selectOptions(categorySelect, 'ENGINE');
 
       expect(categorySelect.value).toBe('ENGINE');
@@ -191,11 +201,11 @@ describe('DataProposalModal', () => {
       const user = userEvent.setup();
       render(<DataProposalModal {...defaultProps} />);
 
-      const categorySelect = screen.getByLabelText('Category');
+      const categorySelect = screen.getByLabelText('dataProposal.category');
       await user.selectOptions(categorySelect, 'ENGINE');
 
       await waitFor(() => {
-        expect(screen.getByText('Engine Code')).toBeInTheDocument();
+        expect(screen.getByText('dataProposal.fields.engineCode')).toBeInTheDocument();
       });
     });
 
@@ -227,11 +237,11 @@ describe('DataProposalModal', () => {
       const user = userEvent.setup();
       render(<DataProposalModal {...defaultProps} />);
 
-      const categorySelect = screen.getByLabelText('Category');
+      const categorySelect = screen.getByLabelText('dataProposal.category');
       await user.selectOptions(categorySelect, 'TRANSMISSION');
 
       await waitFor(() => {
-        expect(screen.getByText('Type')).toBeInTheDocument();
+        expect(screen.getByText('dataProposal.fields.transmissionType')).toBeInTheDocument();
       });
     });
 
@@ -239,11 +249,11 @@ describe('DataProposalModal', () => {
       const user = userEvent.setup();
       render(<DataProposalModal {...defaultProps} />);
 
-      const categorySelect = screen.getByLabelText('Category');
+      const categorySelect = screen.getByLabelText('dataProposal.category');
       await user.selectOptions(categorySelect, 'CHASSIS');
 
       await waitFor(() => {
-        expect(screen.getByText('Drive Type')).toBeInTheDocument();
+        expect(screen.getByText('dataProposal.fields.driveType')).toBeInTheDocument();
       });
     });
 
@@ -251,11 +261,11 @@ describe('DataProposalModal', () => {
       const user = userEvent.setup();
       render(<DataProposalModal {...defaultProps} />);
 
-      const categorySelect = screen.getByLabelText('Category');
+      const categorySelect = screen.getByLabelText('dataProposal.category');
       await user.selectOptions(categorySelect, 'PERFORMANCE');
 
       await waitFor(() => {
-        expect(screen.getByText('Max Speed (km/h)')).toBeInTheDocument();
+        expect(screen.getByText('dataProposal.fields.maxSpeed')).toBeInTheDocument();
       });
     });
   });

@@ -154,7 +154,7 @@ describe('ReviewCard', () => {
 
       render(<ReviewCard review={review} carId={1} />);
 
-      expect(screen.getByText('Pending')).toBeInTheDocument();
+      expect(screen.getByText('status.pending')).toBeInTheDocument();
     });
 
     it('should render review comment when provided', async () => {

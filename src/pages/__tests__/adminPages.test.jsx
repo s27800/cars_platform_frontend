@@ -166,7 +166,7 @@ describe('AdminDashboard', () => {
 
       render(<AdminDashboard />);
       
-      expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
+      expect(screen.getByText('dashboard.title')).toBeInTheDocument();
     });
 
     it('should render stat cards', async () => {
@@ -184,9 +184,9 @@ describe('AdminDashboard', () => {
 
       render(<AdminDashboard />);
       
-      expect(screen.getAllByText('Pending Reviews').length).toBeGreaterThan(0);
-      expect(screen.getAllByText('Pending Fuel Reports').length).toBeGreaterThan(0);
-      expect(screen.getAllByText('Pending Data Proposals').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('dashboard.stats.pendingReviews').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('dashboard.stats.pendingFuelReports').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('dashboard.stats.pendingDataProposals').length).toBeGreaterThan(0);
     });
   });
 });
@@ -221,7 +221,7 @@ describe('AdminProposalsPage', () => {
 
       render(<AdminProposalsPage />);
       
-      expect(screen.getAllByText(/Data Proposals/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/proposals\.title/i).length).toBeGreaterThan(0);
     });
 
     it('should render back to dashboard link', async () => {
@@ -239,7 +239,7 @@ describe('AdminProposalsPage', () => {
 
       render(<AdminProposalsPage />);
       
-      expect(screen.getAllByText('Back to Dashboard').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('proposals.backToDashboard').length).toBeGreaterThan(0);
     });
   });
 });
@@ -274,7 +274,7 @@ describe('AdminReviewsPage', () => {
 
       render(<AdminReviewsPage />);
       
-      expect(screen.getAllByText('Pending Reviews').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('reviews.title').length).toBeGreaterThan(0);
     });
 
     it('should render back to dashboard link', async () => {
@@ -292,7 +292,7 @@ describe('AdminReviewsPage', () => {
       
       render(<AdminReviewsPage />);
       
-      expect(screen.getAllByText('Back to Dashboard').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('reviews.backToDashboard').length).toBeGreaterThan(0);
     });
   });
 });
@@ -327,7 +327,7 @@ describe('AdminFuelReportsPage', () => {
 
       render(<AdminFuelReportsPage />);
       
-      expect(screen.getAllByText('Pending Fuel Reports').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('fuelReports.title').length).toBeGreaterThan(0);
     });
 
     it('should render back to dashboard link', async () => {
@@ -345,7 +345,7 @@ describe('AdminFuelReportsPage', () => {
 
       render(<AdminFuelReportsPage />);
       
-      expect(screen.getAllByText('Back to Dashboard').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('fuelReports.backToDashboard').length).toBeGreaterThan(0);
     });
   });
 });
