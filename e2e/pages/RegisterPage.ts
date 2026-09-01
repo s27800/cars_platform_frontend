@@ -86,22 +86,18 @@ export class RegisterPage extends BasePage {
     await this.submitButton.click();
   }
 
-  /** Click submit button even if disabled */
   async forceClickSubmit(): Promise<void> {
     await this.submitButton.click({ force: true });
   }
 
-  /** Check that the submit button is disabled */
   async expectSubmitDisabled(): Promise<void> {
     await expect(this.submitButton).toBeDisabled();
   }
 
-  /** Check that the submit button is enabled */
   async expectSubmitEnabled(): Promise<void> {
     await expect(this.submitButton).toBeEnabled();
   }
 
-  /** Fill all registration fields */
   async fillRegistrationForm(data: {
     username: string;
     email: string;
@@ -118,7 +114,6 @@ export class RegisterPage extends BasePage {
     await this.fillConfirmPassword(data.confirmPassword);
   }
 
-  /** Perform complete registration flow */
   async register(data: {
     username: string;
     email: string;
@@ -147,9 +142,9 @@ export class RegisterPage extends BasePage {
 
   async expectError(text?: string): Promise<void> {
     await expect(this.errorMessage).toBeVisible();
-    if (text) {
+    
+    if (text)
       await expect(this.errorMessage).toContainText(text);
-    }
   }
 
   async expectNoError(): Promise<void> {

@@ -3,8 +3,6 @@
     "title": "Car Search",
     "subtitle": "Browse and filter through our car database",
     "searchPlaceholder": "Search cars...",
-    "results": "{{count}} result found",
-    "results_plural": "{{count}} results found",
     "showingResults": "Showing {{count}} of {{total}} results",
     "noResults": "No cars found",
     "noResultsHint": "Try adjusting your filters or search query",
@@ -24,7 +22,9 @@
       "nameDesc": "Name Z-A",
       "priceAsc": "Price: Low to High",
       "priceDesc": "Price: High to Low"
-    }
+    },
+    "results_one": "{{count}} result found",
+    "results_other": "{{count}} results found"
   },
   "filters": {
     "title": "Filters",
@@ -112,10 +112,10 @@
     "browseCars": "Browse Cars",
     "technicalSpecifications": "Technical Specifications",
     "suggestCorrection": "Suggest Correction",
-    "carsInComparison": "{{count}} car in comparison list.",
-    "carsInComparison_plural": "{{count}} cars in comparison list.",
     "viewComparison": "View comparison",
-    "similarCars": "Similar cars"
+    "similarCars": "Similar cars",
+    "carsInComparison_one": "{{count}} car in comparison list.",
+    "carsInComparison_other": "{{count}} cars in comparison list."
   },
   "comparison": {
     "title": "Compare Cars",
@@ -162,9 +162,7 @@
     "errorTitle": "Model not found",
     "errorDescription": "Something went wrong while loading model details.",
     "errorNotFound": "The model you're looking for doesn't exist or has been removed.",
-    "generationsCount": "{{count}} generations",
     "generationsCount_one": "{{count}} generation",
-    "carsCount": "{{count}} cars",
     "carsCount_one": "{{count}} car",
     "stats": {
       "generations": "Generations",
@@ -175,7 +173,9 @@
       "title": "Generations",
       "subtitle": "Click on a generation to view its cars",
       "empty": "No generations available for this model yet."
-    }
+    },
+    "generationsCount_other": "{{count}} generations",
+    "carsCount_other": "{{count}} cars"
   },
   "generation": {
     "variants": "Variants",
@@ -184,7 +184,6 @@
     "errorTitle": "Generation not found",
     "errorDescription": "Something went wrong while loading generation details.",
     "errorNotFound": "The generation you're looking for doesn't exist or has been removed.",
-    "carsCount": "{{count}} cars",
     "carsCount_one": "{{count}} car",
     "searchAllCars": "Search all cars",
     "stats": {
@@ -196,7 +195,8 @@
       "title": "Cars",
       "subtitle": "Click on a car to view its details or add to comparison",
       "empty": "No cars available for this generation yet."
-    }
+    },
+    "carsCount_other": "{{count}} cars"
   },
   "like": {
     "add": "Add to favorites",
@@ -287,18 +287,17 @@
     "no": "No"
   },
   "fuelReports": {
-    "submitted": "{{count}} reports submitted",
     "submitted_one": "{{count}} report submitted",
     "unit": "L/100km",
-    "basedOnReports": "Based on {{count}} user reports",
     "basedOnReports_one": "Based on {{count}} user report",
     "disclaimer": "Real-world fuel consumption may differ from manufacturer specifications based on driving conditions, style, and maintenance.",
     "loginRequired": "Log in to add reports",
     "level": {
-      "excellent": "Excellent",
-      "good": "Good",
+      "veryEconomical": "Very economical",
+      "economical": "Economical",
       "average": "Average",
-      "poor": "Poor"
+      "aboveAverage": "Above average",
+      "high": "High consumption"
     },
     "status": {
       "approved": "Approved",
@@ -314,24 +313,119 @@
     "fuelConsumption": "Fuel Consumption",
     "additionalComments": "Additional Comments (optional)",
     "commentPlaceholder": "Share details about your driving conditions: city/highway ratio, season, driving style, AC usage, etc.",
-    "submitReport": "Submit Report"
+    "submitReport": "Submit Report",
+    "submitted_other": "{{count}} reports submitted",
+    "basedOnReports_other": "Based on {{count}} user reports",
+    "consumptionPlaceholder": "e.g. 7.5"
   },
   "proposals": {
-    "submitted": "{{count}} proposals submitted",
     "submitted_one": "{{count}} proposal submitted",
     "status": {
       "approved": "Approved",
       "pending": "Pending",
       "rejected": "Rejected"
     },
-    "categories": {
-      "technical": "Technical",
-      "images": "Images",
-      "description": "Description",
-      "other": "Other"
-    },
     "yourComment": "Your comment",
     "proposedChanges": "Proposed changes",
-    "adminFeedback": "Admin feedback"
+    "adminFeedback": "Admin feedback",
+    "submitted_other": "{{count}} proposals submitted",
+    "approvedOn": "Approved on {{date}}",
+    "rejectedOn": "Rejected on {{date}}"
+  },
+  "dataProposal": {
+    "title": "Suggest a correction",
+    "submit": "Submit proposal",
+    "category": "Category",
+    "selectCategory": "Select a category",
+    "proposedValues": "Proposed values",
+    "enterNew": "New {{field}}",
+    "comment": "Additional notes (optional)",
+    "commentPlaceholder": "Explain why you are suggesting these changes. Include sources if you have them.",
+    "categories": {
+      "engine": "Engine",
+      "transmission": "Transmission",
+      "chassis": "Chassis and brakes",
+      "performance": "Performance",
+      "outsideDimensions": "Exterior dimensions",
+      "insideDimensions": "Interior dimensions",
+      "basicInfo": "Basic information",
+      "tags": "Tags"
+    },
+    "info": {
+      "suggesting": "You are suggesting changes for {{carName}}.",
+      "instructions": "Fill in only the fields you want to change. An administrator reviews every proposal before it is published."
+    },
+    "success": {
+      "title": "Proposal submitted",
+      "description": "Thank you. Your proposal is now waiting for moderation."
+    },
+    "error": {
+      "title": "Could not submit the proposal",
+      "description": "Something went wrong. Please try again in a moment."
+    },
+    "validation": {
+      "categoryRequired": "Select a category",
+      "commentMaxLength": "The note can be at most 1000 characters",
+      "selectTag": "Select at least one tag to add or remove",
+      "fillAtLeastOneField": "Fill in at least one field"
+    },
+    "tags": {
+      "title": "Tags",
+      "instructions": "Uncheck a tag to propose removing it, pick one from the list below to propose adding it.",
+      "current": "Current tags (uncheck to remove):",
+      "add": "Tags to add:",
+      "summary": "Summary of changes:",
+      "adding_one": "Adding {{count}} tag",
+      "adding_other": "Adding {{count}} tags",
+      "removing_one": "Removing {{count}} tag",
+      "removing_other": "Removing {{count}} tags"
+    },
+    "fields": {
+      "engineCode": "Engine code",
+      "displacement": "Displacement (cm³)",
+      "engineType": "Fuel type",
+      "maxPower": "Power (HP)",
+      "maxPowerRpm": "Power at (rpm)",
+      "maxTorque": "Torque (Nm)",
+      "maxTorqueRpm": "Torque at (rpm)",
+      "cylinders": "Cylinders",
+      "valves": "Valves",
+      "turbo": "Turbocharger",
+      "transmissionType": "Transmission type",
+      "transmissionName": "Transmission name",
+      "gears": "Gears",
+      "clutchType": "Clutch type",
+      "driveType": "Drive",
+      "suspension": "Suspension",
+      "frontBrakes": "Front brakes",
+      "rearBrakes": "Rear brakes",
+      "frontBrakesRadius": "Front brake diameter (mm)",
+      "rearBrakesRadius": "Rear brake diameter (mm)",
+      "maxSpeed": "Top speed (km/h)",
+      "acceleration": "0-100 km/h (s)",
+      "cityConsumption": "Urban consumption (l/100 km)",
+      "highwayConsumption": "Highway consumption (l/100 km)",
+      "mixedConsumption": "Combined consumption (l/100 km)",
+      "fuelTank": "Fuel tank (l)",
+      "length": "Length (mm)",
+      "width": "Width (mm)",
+      "height": "Height (mm)",
+      "wheelbase": "Wheelbase (mm)",
+      "groundClearance": "Ground clearance (mm)",
+      "minTrunkSpace": "Minimum boot space (l)",
+      "maxTrunkSpace": "Maximum boot space (l)",
+      "frontHeadroom": "Front headroom (mm)",
+      "rearHeadroom": "Rear headroom (mm)",
+      "doors": "Doors",
+      "seats": "Seats",
+      "productionYears": "Production years",
+      "description": "Description"
+    }
+  },
+  "gallery": {
+    "previousImage": "Previous image",
+    "nextImage": "Next image",
+    "openFullscreen": "Open fullscreen",
+    "closeFullscreen": "Close fullscreen"
   }
 }

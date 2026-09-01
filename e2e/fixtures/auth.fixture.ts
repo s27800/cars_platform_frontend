@@ -27,8 +27,6 @@ type AuthFixtures = {
  * Extended test with authentication fixtures
  */
 export const test = base.extend<AuthFixtures>({
-
-  // Authenticated regular user page
   authenticatedPage: async ({ browser }, use) => {
     const context = await browser.newContext({
       storageState: USER_AUTH_FILE,
@@ -40,7 +38,6 @@ export const test = base.extend<AuthFixtures>({
     await context.close();
   },
 
-  // Authenticated admin page
   adminPage: async ({ browser }, use) => {
     const context = await browser.newContext({
       storageState: ADMIN_AUTH_FILE,
@@ -52,7 +49,6 @@ export const test = base.extend<AuthFixtures>({
     await context.close();
   },
 
-  // Unauthenticated page
   unauthenticatedPage: async ({ browser }, use) => {
     const context = await browser.newContext();
     const page = await context.newPage();

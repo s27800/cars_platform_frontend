@@ -1,18 +1,20 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { getSimilarCars } from '../../api/cars';
-import { CarCard } from '../../components/shared';
-import { Spinner } from '../../components/ui';
+import { getSimilarCars } from './api';
+import CarCard from './CarCard';
+import { Spinner } from '../../shared/components/ui';
+import { STALE_TIME } from '../../shared/utils/constants';
 
 
+// Cars the backend considers close to the one being viewed
 const SimilarCars = ({ carId }) => {
   const { t } = useTranslation('cars');
-  
+
   const { data: similarCars, isLoading, isError } = useQuery({
-    queryKey: ['similarCars', carId],
+    queryKey: ['cars', 'similar', carId],
     queryFn: () => getSimilarCars(carId, 4),
     enabled: !!carId,
-    staleTime: 5 * 60 * 1000, // 5 min cache
+    staleTime: STALE_TIME.LONG,
     retry: 1,
   });
 

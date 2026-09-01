@@ -42,16 +42,6 @@
     "loading": "Ładowanie..."
   },
   "pagination": {
-    "showing": "Wyświetlanie {{start}} do {{end}} z {{total}} wyników"
-  },
-  "status": {
-    "pending": "Oczekujące",
-    "approved": "Zatwierdzone",
-    "rejected": "Odrzucone",
-    "active": "Aktywne",
-    "inactive": "Nieaktywne"
-  },
-  "pagination": {
     "previous": "Poprzednia",
     "next": "Następna",
     "page": "Strona",
@@ -59,6 +49,13 @@
     "showing": "Pokazuję",
     "to": "do",
     "results": "wyników"
+  },
+  "status": {
+    "pending": "Oczekujące",
+    "approved": "Zatwierdzone",
+    "rejected": "Odrzucone",
+    "active": "Aktywne",
+    "inactive": "Nieaktywne"
   },
   "errors": {
     "somethingWentWrong": "Coś poszło nie tak",
@@ -85,12 +82,18 @@
   },
   "time": {
     "justNow": "Przed chwilą",
-    "minutesAgo": "{{count}} minutę temu",
-    "minutesAgo_plural": "{{count}} minut temu",
-    "hoursAgo": "{{count}} godzinę temu",
-    "hoursAgo_plural": "{{count}} godzin temu",
-    "daysAgo": "{{count}} dzień temu",
-    "daysAgo_plural": "{{count}} dni temu"
+    "minutesAgo_one": "{{count}} minutę temu",
+    "minutesAgo_few": "{{count}} minuty temu",
+    "minutesAgo_many": "{{count}} minut temu",
+    "minutesAgo_other": "{{count}} minut temu",
+    "hoursAgo_one": "{{count}} godzinę temu",
+    "hoursAgo_few": "{{count}} godziny temu",
+    "hoursAgo_many": "{{count}} godzin temu",
+    "hoursAgo_other": "{{count}} godzin temu",
+    "daysAgo_one": "{{count}} dzień temu",
+    "daysAgo_few": "{{count}} dni temu",
+    "daysAgo_many": "{{count}} dni temu",
+    "daysAgo_other": "{{count}} dni temu"
   },
   "about": {
     "title": "O nas",
@@ -132,5 +135,40 @@
     "title": "Polityka prywatności",
     "lastUpdated": "Ostatnia aktualizacja: {{date}}"
   },
-  "dangerZone": "Strefa niebezpieczna"
+  "dangerZone": "Strefa niebezpieczna",
+  "errorBoundary": {
+    "title": "Coś poszło nie tak",
+    "description": "Wystąpił nieoczekiwany błąd. Spróbuj ponownie lub wróć do strony głównej.",
+    "tryAgain": "Spróbuj ponownie",
+    "reload": "Odśwież stronę",
+    "goHome": "Idź do strony głównej"
+  },
+  "notSet": "Nie podano",
+  "a11y": {
+    "homeLink": "CarsPlatform - strona główna",
+    "mainNavigation": "Nawigacja główna",
+    "mainContent": "Treść główna",
+    "openMenu": "Otwórz menu",
+    "closeMenu": "Zamknij menu",
+    "switchToLight": "Przełącz na tryb jasny",
+    "switchToDark": "Przełącz na tryb ciemny",
+    "changeLanguage": "Zmień język",
+    "selectLanguage": "Wybierz język",
+    "closeModal": "Zamknij okno",
+    "dismissAlert": "Zamknij komunikat",
+    "notifications": "Powiadomienia",
+    "dismissNotification": "Zamknij powiadomienie",
+    "visitUsOn": "Odwiedź nas na {{network}}",
+    "previousPage": "Poprzednia strona",
+    "nextPage": "Następna strona"
+  },
+  "session": {
+    "expired": "Sesja wygasła. Zaloguj się ponownie.",
+    "accessDenied": "Brak dostępu. Nie masz uprawnień do wykonania tej operacji.",
+    "notFound": "Nie znaleziono żądanego zasobu.",
+    "invalidRequest": "Nieprawidłowe żądanie. Sprawdź wprowadzone dane.",
+    "conflict": "Ta operacja koliduje z istniejącymi danymi.",
+    "serverError": "Błąd serwera. Spróbuj ponownie później.",
+    "unexpected": "Wystąpił nieoczekiwany błąd."
+  }
 }

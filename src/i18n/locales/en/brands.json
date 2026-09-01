@@ -9,7 +9,6 @@
   "errorDescription": "Something went wrong while loading brand details.",
   "errorNotFound": "The brand you're looking for doesn't exist or has been removed.",
   "viewAllCars": "View all cars",
-  "modelsCount": "{{count}} models",
   "modelsCount_one": "{{count}} model",
   "stats": {
     "models": "Models",
@@ -22,5 +21,6 @@
     "title": "Models",
     "subtitle": "Click on a model to view its details",
     "empty": "No models available for this brand yet."
-  }
+  },
+  "modelsCount_other": "{{count}} models"
 }

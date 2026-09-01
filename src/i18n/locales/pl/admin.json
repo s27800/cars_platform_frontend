@@ -25,9 +25,11 @@
     "overview": {
       "title": "Przegląd oczekujących elementów",
       "allCaughtUp": "Wszystko zrobione! Brak elementów oczekujących na weryfikację.",
-      "pendingMessage": "Masz {{count}} element oczekujący na weryfikację.",
-      "pendingMessage_plural": "Masz {{count}} elementy/ów oczekujących na weryfikację.",
-      "pending": "{{count}} oczekujących"
+      "pending": "{{count}} oczekujących",
+      "pendingMessage_one": "Masz {{count}} element oczekujący na weryfikację.",
+      "pendingMessage_few": "Masz {{count}} elementy oczekujące na weryfikację.",
+      "pendingMessage_many": "Masz {{count}} elementów oczekujących na weryfikację.",
+      "pendingMessage_other": "Masz {{count}} elementów oczekujących na weryfikację."
     },
     "recentActivity": "Ostatnia aktywność",
     "pendingItems": "Elementy oczekujące na weryfikację"
@@ -57,12 +59,14 @@
     "retry": "Ponów",
     "allCaughtUp": "Wszystko zrobione!",
     "noPendingReviews": "Brak oczekujących opinii do moderacji. Sprawdź później.",
-    "pendingModeration": "{{count}} opinia oczekuje na moderację",
-    "pendingModeration_plural": "{{count}} opinii oczekuje na moderację",
     "reviewComment": "Komentarz do opinii:",
     "viewDetailedRatings": "Zobacz szczegółowe oceny ({{count}} kategorii)",
     "pending": "Oczekuje",
-    "likes": "{{count}} polubień"
+    "likes": "{{count}} polubień",
+    "pendingModeration_one": "{{count}} opinia oczekuje na moderację",
+    "pendingModeration_few": "{{count}} opinie oczekują na moderację",
+    "pendingModeration_many": "{{count}} opinii oczekuje na moderację",
+    "pendingModeration_other": "{{count}} opinii oczekuje na moderację"
   },
   "fuelReports": {
     "title": "Moderacja raportów spalania",
@@ -88,12 +92,14 @@
     "retry": "Ponów",
     "allCaughtUp": "Wszystko zrobione!",
     "noPendingReports": "Brak oczekujących raportów spalania do weryfikacji. Sprawdź później.",
-    "pendingVerification": "{{count}} raport spalania oczekuje na weryfikację",
-    "pendingVerification_plural": "{{count}} raportów spalania oczekuje na weryfikację",
     "reportedConsumption": "Zgłoszone zużycie paliwa",
     "userComment": "Komentarz użytkownika:",
     "pending": "Oczekuje",
-    "likes": "{{count}} polubień"
+    "likes": "{{count}} polubień",
+    "pendingVerification_one": "{{count}} raport spalania oczekuje na weryfikację",
+    "pendingVerification_few": "{{count}} raporty spalania oczekują na weryfikację",
+    "pendingVerification_many": "{{count}} raportów spalania oczekuje na weryfikację",
+    "pendingVerification_other": "{{count}} raportów spalania oczekuje na weryfikację"
   },
   "proposals": {
     "title": "Propozycje zmian danych",
@@ -122,12 +128,8 @@
     "retry": "Ponów",
     "allCaughtUp": "Wszystko zrobione!",
     "noPendingProposals": "Brak oczekujących propozycji danych do przeglądu. Sprawdź później.",
-    "pendingReview": "{{count}} propozycja oczekuje na przegląd",
-    "pendingReview_plural": "{{count}} propozycji oczekuje na przegląd",
     "pending": "Oczekuje",
     "userComment": "Komentarz użytkownika:",
-    "proposedChanges": "Proponowane zmiany ({{count}} pole)",
-    "proposedChanges_plural": "Proponowane zmiany ({{count}} pól)",
     "rejectModal": {
       "title": "Odrzuć propozycję",
       "warning": "Czy na pewno chcesz odrzucić tę propozycję danych? Możesz opcjonalnie podać powód użytkownikowi.",
@@ -136,15 +138,14 @@
       "cancel": "Anuluj",
       "confirm": "Odrzuć propozycję"
     },
-    "categories": {
-      "ENGINE": "Silnik",
-      "TRANSMISSION": "Skrzynia biegów",
-      "CHASSIS": "Podwozie i hamulce",
-      "PERFORMANCE": "Osiągi",
-      "OUTSIDE_DIMENSIONS": "Wymiary zewnętrzne",
-      "INSIDE_DIMENSIONS": "Wymiary wewnętrzne",
-      "BASIC_INFO": "Podstawowe informacje"
-    }
+    "pendingReview_one": "{{count}} propozycja oczekuje na przegląd",
+    "pendingReview_few": "{{count}} propozycje oczekują na przegląd",
+    "pendingReview_many": "{{count}} propozycji oczekuje na przegląd",
+    "pendingReview_other": "{{count}} propozycji oczekuje na przegląd",
+    "proposedChanges_one": "Proponowane zmiany ({{count}} pole)",
+    "proposedChanges_few": "Proponowane zmiany ({{count}} pola)",
+    "proposedChanges_many": "Proponowane zmiany ({{count}} pól)",
+    "proposedChanges_other": "Proponowane zmiany ({{count}} pól)"
   },
   "filters": {
     "all": "Wszystkie",

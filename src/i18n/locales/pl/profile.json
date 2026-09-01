@@ -68,7 +68,8 @@
     "description": "Trwale usuń swoje konto i wszystkie powiązane dane",
     "warning": "Ta akcja jest nieodwracalna. Wszystkie Twoje dane zostaną trwale usunięte.",
     "confirm": "Usuń konto",
-    "cancel": "Anuluj"
+    "cancel": "Anuluj",
+    "error": "Nie udało się usunąć konta. Spróbuj ponownie."
   },
   "settings": {
     "title": "Ustawienia",

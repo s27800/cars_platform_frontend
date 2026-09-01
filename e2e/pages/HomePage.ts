@@ -10,52 +10,42 @@ export class HomePage extends BasePage {
 
   // ============ LOCATORS ============
 
-  /** Hero section */
   get heroSection(): Locator {
     return this.page.locator('[data-testid="hero"], .hero, section').first();
   }
 
-  /** Hero title */
   get heroTitle(): Locator {
     return this.heroSection.getByRole('heading', { level: 1 });
   }
 
-  /** Search input in hero */
   get heroSearchInput(): Locator {
     return this.heroSection.getByPlaceholder(/search|szukaj/i);
   }
 
-  /** Search button in hero */
   get heroSearchButton(): Locator {
     return this.heroSection.getByRole('button', { name: /search|szukaj/i });
   }
 
-  /** Featured brands section */
   get brandsSection(): Locator {
     return this.page.locator('[data-testid="brands-section"], .brands-section');
   }
 
-  /** Brand cards */
   get brandCards(): Locator {
     return this.brandsSection.locator('[data-testid="brand-card"], .brand-card, a');
   }
 
-  /** Popular cars section */
   get popularCarsSection(): Locator {
     return this.page.locator('[data-testid="popular-cars"], .popular-cars');
   }
 
-  /** Popular car cards */
   get popularCarCards(): Locator {
     return this.popularCarsSection.locator('[data-testid="car-card"], .car-card, article');
   }
 
-  /** CTA (Call to Action) section */
   get ctaSection(): Locator {
     return this.page.locator('[data-testid="cta-section"], .cta-section');
   }
 
-  /** "Browse all cars" button */
   get browseAllCarsButton(): Locator {
     return this.page.getByRole('link', { name: /browse|przeglądaj|all cars/i });
   }

@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { IoLockClosedOutline, IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
-import { Button, Input, Alert } from '../../components/ui';
+import { Button, Input, Alert } from '../../shared/components/ui';
 
 
+// Eye icon that reveals the value of a password field
 const PasswordToggleButton = ({ show, onToggle }) => (
   <button
     type="button"
@@ -18,9 +19,10 @@ const PasswordToggleButton = ({ show, onToggle }) => (
 );
 
 
-const PasswordChangeForm = ({ 
-  onSubmit, 
-  isLoading = false, 
+// Password change form with the strength rules
+const PasswordChangeForm = ({
+  onSubmit,
+  isLoading = false,
   error = null,
   success = false,
 }) => {
@@ -29,22 +31,22 @@ const PasswordChangeForm = ({
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const validationSchema = Yup.object({
+  const validationSchema = useMemo(() => Yup.object().shape({
     currentPassword: Yup.string()
-      .required(t('validation:password.required', 'Current password is required')),
+      .required(t('validation:password.required')),
     newPassword: Yup.string()
-      .required(t('validation:password.required', 'New password is required'))
-      .min(8, t('validation:password.minLength', 'Password must be at least 8 characters'))
-      .max(72, t('validation:password.maxLength', 'Password cannot exceed 72 characters'))
+      .required(t('validation:password.required'))
+      .min(8, t('validation:password.minLength'))
+      .max(72, t('validation:password.maxLength'))
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
-        t('validation:password.pattern', 'Password must contain a lowercase letter, an uppercase letter and a digit')
+        t('validation:password.complexity')
       )
-      .notOneOf([Yup.ref('currentPassword')], t('validation:password.mustBeDifferent', 'New password must be different from current password')),
+      .notOneOf([Yup.ref('currentPassword')], t('validation:password.mustBeDifferent')),
     confirmPassword: Yup.string()
-      .required(t('validation:password.confirmRequired', 'Please confirm your new password'))
-      .oneOf([Yup.ref('newPassword')], t('validation:password.mustMatch', 'Passwords must match')),
-  });
+      .required(t('validation:confirmPassword.required'))
+      .oneOf([Yup.ref('newPassword')], t('validation:confirmPassword.match')),
+  }), [t]);
 
   const formik = useFormik({
     initialValues: {
@@ -58,7 +60,7 @@ const PasswordChangeForm = ({
         currentPassword: values.currentPassword,
         newPassword: values.newPassword,
       });
-      
+
       if (result?.success)
         resetForm();
     },
@@ -86,9 +88,9 @@ const PasswordChangeForm = ({
           placeholder={t('changePassword.currentPasswordPlaceholder')}
           leftIcon={<IoLockClosedOutline className="w-5 h-5" />}
           rightIcon={
-            <PasswordToggleButton 
-              show={showCurrentPassword} 
-              onToggle={() => setShowCurrentPassword(!showCurrentPassword)} 
+            <PasswordToggleButton
+              show={showCurrentPassword}
+              onToggle={() => setShowCurrentPassword(!showCurrentPassword)}
             />
           }
           value={formik.values.currentPassword}
@@ -105,9 +107,9 @@ const PasswordChangeForm = ({
           placeholder={t('changePassword.newPasswordPlaceholder')}
           leftIcon={<IoLockClosedOutline className="w-5 h-5" />}
           rightIcon={
-            <PasswordToggleButton 
-              show={showNewPassword} 
-              onToggle={() => setShowNewPassword(!showNewPassword)} 
+            <PasswordToggleButton
+              show={showNewPassword}
+              onToggle={() => setShowNewPassword(!showNewPassword)}
             />
           }
           value={formik.values.newPassword}
@@ -115,7 +117,7 @@ const PasswordChangeForm = ({
           onBlur={formik.handleBlur}
           error={formik.touched.newPassword && formik.errors.newPassword}
           disabled={isLoading}
-          hint={t('validation:password.hint', 'At least 8 characters, with a lowercase letter, an uppercase letter and a digit')}
+          hint={t('validation:password.hint')}
         />
 
         <Input
@@ -125,9 +127,9 @@ const PasswordChangeForm = ({
           placeholder={t('changePassword.confirmPasswordPlaceholder')}
           leftIcon={<IoLockClosedOutline className="w-5 h-5" />}
           rightIcon={
-            <PasswordToggleButton 
-              show={showConfirmPassword} 
-              onToggle={() => setShowConfirmPassword(!showConfirmPassword)} 
+            <PasswordToggleButton
+              show={showConfirmPassword}
+              onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
             />
           }
           value={formik.values.confirmPassword}

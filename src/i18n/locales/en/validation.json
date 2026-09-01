@@ -26,7 +26,8 @@
     "weak": "Password is too weak",
     "mismatch": "Passwords do not match",
     "complexity": "Password must contain a lowercase letter, an uppercase letter and a digit",
-    "hint": "At least 8 characters, with a lowercase letter, an uppercase letter and a digit"
+    "hint": "At least 8 characters, with a lowercase letter, an uppercase letter and a digit",
+    "mustBeDifferent": "New password must be different from the current one"
   },
   "emailField": {
     "required": "Email is required",
@@ -38,11 +39,13 @@
   },
   "firstName": {
     "required": "First name is required",
-    "minLength": "First name must be at least 2 characters"
+    "minLength": "First name must be at least 2 characters",
+    "maxLength": "First name must be at most 50 characters"
   },
   "lastName": {
     "required": "Last name is required",
-    "minLength": "Last name must be at least 2 characters"
+    "minLength": "Last name must be at least 2 characters",
+    "maxLength": "Last name must be at most 50 characters"
   },
   "review": {
     "titleRequired": "Review title is required",

@@ -10,47 +10,38 @@ export class ProfilePage extends BasePage {
 
   // ============ LOCATORS ============
 
-  /** Page title */
   get pageTitle(): Locator {
     return this.page.getByRole('heading', { level: 1 });
   }
 
-  /** User info section */
   get userInfoSection(): Locator {
     return this.page.locator('main').first();
   }
 
-  /** Username display */
   get usernameDisplay(): Locator {
     return this.page.getByText(/@\w+/);
   }
 
-  /** User name display */
   get userNameDisplay(): Locator {
     return this.page.locator('main').getByRole('heading').first();
   }
 
-  /** Email display */
   get emailDisplay(): Locator {
     return this.page.getByText(/@.*\.(com|pl|org|net)/i);
   }
 
-  /** Tabs navigation */
   get tabsNav(): Locator {
     return this.page.locator('[role="tablist"]');
   }
 
-  /** Profile/Edit Profile tab */
   get profileTab(): Locator {
     return this.page.getByRole('tab', { name: /edit profile/i });
   }
 
-  /** Password tab */
   get passwordTab(): Locator {
     return this.page.getByRole('tab', { name: /password/i });
   }
 
-  /** Activity tab (My Activity) */
   get activityTab(): Locator {
     return this.page.getByRole('tab', { name: /my activity|activity/i });
   }
@@ -58,27 +49,22 @@ export class ProfilePage extends BasePage {
 
   // ============ PROFILE EDIT FORM ============
 
-  /** Edit button */
   get editButton(): Locator {
     return this.profileTab;
   }
 
-  /** First name input */
   get firstNameInput(): Locator {
     return this.page.getByLabel(/first name|imię/i);
   }
 
-  /** Last name input */
   get lastNameInput(): Locator {
     return this.page.getByLabel(/last name|nazwisko/i);
   }
 
-  /** Save profile button */
   get saveProfileButton(): Locator {
     return this.page.getByRole('button', { name: /save changes|zapisz/i });
   }
 
-  /** Cancel edit button */
   get cancelEditButton(): Locator {
     return this.page.getByRole('button', { name: /cancel|anuluj/i });
   }
@@ -86,22 +72,18 @@ export class ProfilePage extends BasePage {
 
   // ============ PASSWORD CHANGE FORM ============
 
-  /** Current password input */
   get currentPasswordInput(): Locator {
     return this.page.locator('input[name="currentPassword"], input[name="oldPassword"]');
   }
 
-  /** New password input */
   get newPasswordInput(): Locator {
     return this.page.locator('input[name="newPassword"]');
   }
 
-  /** Confirm password input */
   get confirmPasswordInput(): Locator {
     return this.page.locator('input[name="confirmPassword"], input[name="confirmNewPassword"]');
   }
 
-  /** Change password button */
   get changePasswordButton(): Locator {
     return this.page.getByRole('button', { name: /change password|zmień hasło/i });
   }
@@ -109,27 +91,22 @@ export class ProfilePage extends BasePage {
 
   // ============ ACTIVITY SECTION ============
 
-  /** Activity type selector */
   get activityTypeSelector(): Locator {
     return this.page.locator('[data-testid="activity-type"], .activity-type');
   }
 
-  /** Reviews tab in activity */
   get reviewsActivityTab(): Locator {
     return this.page.getByRole('button', { name: /reviews|recenzje/i });
   }
 
-  /** Fuel reports tab in activity */
   get fuelReportsActivityTab(): Locator {
     return this.page.getByRole('button', { name: /fuel reports|raporty spalania/i });
   }
 
-  /** Proposals tab in activity */
   get proposalsActivityTab(): Locator {
     return this.page.getByRole('button', { name: /proposals|propozycje/i });
   }
 
-  /** Activity items list */
   get activityItems(): Locator {
     return this.page.locator('[data-testid="activity-item"], .activity-item, article');
   }

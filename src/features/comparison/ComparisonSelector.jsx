@@ -2,16 +2,17 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { IoSearchOutline, IoAddOutline, IoCloseOutline } from 'react-icons/io5';
-import { searchCars } from '../../api/cars';
-import { Input, Spinner } from '../../components/ui';
-import { useDebounce } from '../../hooks';
+import { searchCars } from '../cars/api';
+import { Input, Spinner } from '../../shared/components/ui';
+import { useDebounce } from '../../shared/hooks';
+import { STALE_TIME } from '../../shared/utils/constants';
 
 
 /**
  * Search input with dropdown results for selecting cars to compare
  */
-const ComparisonSelector = ({ 
-  onSelect, 
+const ComparisonSelector = ({
+  onSelect,
   excludeIds = [],
   placeholder,
 }) => {
@@ -24,14 +25,14 @@ const ComparisonSelector = ({
   const debouncedQuery = useDebounce(query, 300);
 
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: ['carSearch', debouncedQuery],
-    queryFn: () => searchCars({ 
+    queryKey: ['cars', 'quickSearch', debouncedQuery],
+    queryFn: () => searchCars({
       search: debouncedQuery,
       size: 8,
       page: 0,
     }),
     enabled: debouncedQuery.length >= 2,
-    staleTime: 30000,
+    staleTime: STALE_TIME.SHORT,
   });
 
   // Filter out already selected cars
@@ -42,9 +43,8 @@ const ComparisonSelector = ({
   // Handle click outside to close dropdown
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
+      if (containerRef.current && !containerRef.current.contains(e.target))
         setIsOpen(false);
-      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
@@ -106,7 +106,7 @@ const ComparisonSelector = ({
       {/* Dropdown results */}
       {showResults && (
         <div className="absolute z-50 w-full mt-2 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl shadow-lg overflow-hidden">
-          
+
           {showLoading && (
             <div className="flex items-center justify-center py-6">
               <Spinner size="sm" />
@@ -128,12 +128,12 @@ const ComparisonSelector = ({
                     onClick={() => handleSelect(car)}
                     className="w-full flex items-center gap-3 px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-700/50 transition-colors text-left"
                   >
-                    
+
                     {/* Car thumbnail */}
                     <div className="w-16 h-10 bg-neutral-100 dark:bg-neutral-700 rounded-lg overflow-hidden flex-shrink-0">
                       {car.mainImageUrl ? (
-                        <img 
-                          src={car.mainImageUrl} 
+                        <img
+                          src={car.mainImageUrl}
                           alt=""
                           className="w-full h-full object-cover"
                         />

@@ -26,19 +26,16 @@ test.describe('Login Page', () => {
   });
 
   test.describe('Successful Login', () => {
-    test('AUTH-001: should login successfully with valid credentials', async ({ page }) => {
+    test('should login successfully with valid credentials', async ({ page }) => {
       await loginPage.login(
         TEST_USERS.regularUser.username,
         TEST_USERS.regularUser.password
       );
 
-      // Should redirect away from login page
       await loginPage.expectLoginSuccess();
       
-      // Should be on home page
       await expect(page).toHaveURL('/');
       
-      // Should store token in localStorage
       const token = await page.evaluate(() => localStorage.getItem('token'));
       expect(token).toBeTruthy();
     });
@@ -55,49 +52,40 @@ test.describe('Login Page', () => {
       expect(token).toBeTruthy();
     });
 
-    test('AUTH-006: should redirect to original page after login', async ({ page }) => {
-
-      // Navigate to profile page (protected)
+    test('should redirect to original page after login', async ({ page }) => {
       await page.goto('/profile');
       
-      // Should redirect to login
       await expect(page).toHaveURL(/\/login/);
       
-      // Login
       await loginPage.login(
         TEST_USERS.regularUser.username,
         TEST_USERS.regularUser.password
       );
       
-      // Should redirect back to profile
       await expect(page).toHaveURL(/\/profile/);
     });
   });
 
   test.describe('Failed Login', () => {
-    test('AUTH-002: should show error with invalid password', async ({ page }) => {
+    test('should show error with invalid password', async ({ page }) => {
       await loginPage.loginAndWaitForResponse(
         TEST_USERS.regularUser.username,
         'wrongpassword123'
       );
 
-      // Wait for error toast/message
       await loginPage.expectError();
       
-      // Should stay on login page
       await expect(page).toHaveURL(/\/login/);
     });
 
-    test('AUTH-003: should show error with non-existent username', async ({ page }) => {
+    test('should show error with non-existent username', async ({ page }) => {
       await loginPage.loginAndWaitForResponse(
         'nonexistentuser12345',
         'somepassword123'
       );
 
-      // Wait for error toast/message
       await loginPage.expectError();
       
-      // Should stay on login page
       await expect(page).toHaveURL(/\/login/);
     });
 
@@ -107,45 +95,36 @@ test.describe('Login Page', () => {
   });
 
   test.describe('Form Validation', () => {
-    test('AUTH-004: should not allow submission without username', async ({ page }) => {
+    test('should not allow submission without username', async ({ page }) => {
       await loginPage.fillPassword('somepassword123');
       
-      // Button should still be disabled without username
       await loginPage.expectSubmitDisabled();
 
-      // Should stay on login page
       await expect(page).toHaveURL(/\/login/);
     });
 
-    test('AUTH-005: should not allow submission with short password', async ({ page }) => {
+    test('should not allow submission with short password', async ({ page }) => {
       await loginPage.fillUsername('testuser');
       await loginPage.fillPassword('123'); // Too short
       
-      // Button should be disabled with invalid password
       await loginPage.expectSubmitDisabled();
 
-      // Should stay on login page
       await expect(page).toHaveURL(/\/login/);
     });
   });
 
   test.describe('Password Visibility', () => {
-    test('AUTH-008: should toggle password visibility', async () => {
+    test('should toggle password visibility', async () => {
       await loginPage.fillPassword('testpassword');
       
-      // Initially password should be hidden
       await loginPage.expectPasswordHidden();
       
-      // Toggle visibility
       await loginPage.togglePasswordVisibility();
       
-      // Password should be visible
       await loginPage.expectPasswordVisible();
       
-      // Toggle back
       await loginPage.togglePasswordVisibility();
       
-      // Password should be hidden again
       await loginPage.expectPasswordHidden();
     });
   });
@@ -159,9 +138,7 @@ test.describe('Login Page', () => {
   });
 
   test.describe('Session Persistence', () => {
-    test('AUTH-007: should maintain session after page refresh', async ({ page }) => {
-
-      // Login
+    test('should maintain session after page refresh', async ({ page }) => {
       await loginPage.login(
         TEST_USERS.regularUser.username,
         TEST_USERS.regularUser.password
@@ -169,25 +146,19 @@ test.describe('Login Page', () => {
       
       await loginPage.expectLoginSuccess();
       
-      // Store token before refresh
       const tokenBefore = await page.evaluate(() => localStorage.getItem('token'));
       
-      // Refresh page
       await page.reload();
       
-      // Token should still exist
       const tokenAfter = await page.evaluate(() => localStorage.getItem('token'));
       expect(tokenAfter).toBe(tokenBefore);
       
-      // Should still be logged in (not redirected to login)
       await expect(page).not.toHaveURL(/\/login/);
     });
   });
 
   test.describe('Redirect Logged-in User', () => {
     test('should redirect authenticated user away from login page', async ({ page }) => {
-      
-      // First login
       await loginPage.login(
         TEST_USERS.regularUser.username,
         TEST_USERS.regularUser.password
@@ -195,10 +166,8 @@ test.describe('Login Page', () => {
       
       await loginPage.expectLoginSuccess();
       
-      // Try to navigate to login page again
       await page.goto('/login');
       
-      // Should be redirected away from login
       await expect(page).not.toHaveURL(/\/login$/);
     });
   });

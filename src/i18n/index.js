@@ -1,8 +1,8 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { STORAGE_KEYS } from '../shared/utils/constants';
 
-// Import translations
 import commonEN from './locales/en/common.json';
 import homeEN from './locales/en/home.json';
 import authEN from './locales/en/auth.json';
@@ -71,11 +71,11 @@ i18n
     fallbackLng: LANGUAGES.EN,
     defaultNS: 'common',
     ns: ['common', 'home', 'auth', 'cars', 'reviews', 'profile', 'admin', 'validation', 'pages', 'brands'],
-    
+
     detection: {
       order: ['localStorage', 'navigator'],
       caches: ['localStorage'],
-      lookupLocalStorage: 'language',
+      lookupLocalStorage: STORAGE_KEYS.LANGUAGE,
     },
 
     interpolation: {

@@ -10,17 +10,14 @@ export class CarsSearchPage extends BasePage {
 
   // ============ LOCATORS ============
 
-  /** Search input */
   get searchInput(): Locator {
     return this.page.getByRole('textbox', { name: /search cars/i });
   }
 
-  /** Filter panel (desktop sidebar) */
   get filtersPanel(): Locator {
     return this.page.locator('aside');
   }
 
-  /** Mobile filter drawer */
   get mobileFiltersDrawer(): Locator {
     return this.page.locator('.fixed.inset-0 .shadow-xl').or(
       this.page.locator('.fixed.inset-0 [class*="overflow-y"]')
@@ -29,72 +26,59 @@ export class CarsSearchPage extends BasePage {
     ).first();
   }
 
-  /** Get active filters container */
   async getActiveFiltersContainer(): Promise<Locator> {
 
-    // Check if mobile drawer is visible first
     const mobileDrawer = this.mobileFiltersDrawer;
     const isMobileDrawerVisible = await mobileDrawer.isVisible().catch(() => false);
     
     if (isMobileDrawerVisible)
       return mobileDrawer;
 
-    // Fall back to desktop sidebar
     return this.filtersPanel;
   }
 
-  /** Mobile filters button */
   get mobileFiltersButton(): Locator {
     return this.page.getByRole('button', { name: /filters|filtry/i });
   }
 
-  /** Results grid */
   get resultsGrid(): Locator {
     return this.page.locator('main').locator('[data-testid="cars-grid"], .grid').first();
   }
 
-  /** Car cards */
   get carCards(): Locator {
     return this.page.locator('main h3').locator('xpath=ancestor::div[contains(@class, "rounded")]');
   }
 
-  /** Pagination */
   get pagination(): Locator {
     return this.page.locator('main').locator('div').filter({
       has: this.page.locator('button[aria-label="Previous page"]')
     }).first();
   }
 
-  /** Sort select */
   get sortSelect(): Locator {
     return this.page.locator('select').filter({ 
       has: this.page.locator('option', { hasText: /A-Z|Z-A|High to Low|Low to High|Domyślnie/i })
     }).first();
   }
 
-  /** Page size select */
   get pageSizeSelect(): Locator {
     return this.page.locator('select').filter({ 
       has: this.page.locator('option', { hasText: /12|24|48/ })
     }).first();
   }
 
-  /** No results message */
   get noResultsMessage(): Locator {
     return this.page.getByText(/no results|brak wyników|no cars found/i);
   }
 
-  /** Loading state */
   get loading(): Locator {
     return this.page.locator('[data-testid="loading"], .animate-pulse, .skeleton');
   }
 
-  /** Reset filters button */
   get resetFiltersButton(): Locator {
     return this.page.getByRole('button', { name: /reset|wyczyść|clear/i });
   }
 
-  /** Results count */
   get resultsCount(): Locator {
     return this.page.locator('[data-testid="results-count"]').or(
       this.page.getByText(/found|znaleziono|results|wyników/i)
@@ -104,32 +88,26 @@ export class CarsSearchPage extends BasePage {
 
   // ============ FILTER LOCATORS ============
 
-  /** Brand filter */
   getBrandFilter(): Locator {
     return this.filtersPanel.locator('[data-testid="brand-filter"], select, [role="combobox"]').first();
   }
 
-  /** Model filter */
   getModelFilter(): Locator {
     return this.filtersPanel.locator('[data-testid="model-filter"]');
   }
 
-  /** Body type filter checkboxes */
   getBodyTypeCheckboxes(): Locator {
     return this.filtersPanel.locator('input[type="checkbox"]');
   }
 
-  /** Engine type filter */
   getEngineTypeFilter(): Locator {
     return this.filtersPanel.locator('[data-testid="engine-type-filter"]');
   }
 
-  /** Min power input */
   getMinPowerInput(): Locator {
     return this.filtersPanel.locator('input[name*="minPower"], input[placeholder*="min"]').first();
   }
 
-  /** Max power input */
   getMaxPowerInput(): Locator {
     return this.filtersPanel.locator('input[name*="maxPower"], input[placeholder*="max"]').first();
   }
@@ -193,6 +171,7 @@ export class CarsSearchPage extends BasePage {
     await link.waitFor({ state: 'visible', timeout: 10000 });
     
     const href = await link.getAttribute('href');
+
     if (href) {
       await this.page.goto(href);
     } else {
@@ -203,33 +182,37 @@ export class CarsSearchPage extends BasePage {
 
   async resetFilters(): Promise<void> {
 
-    // Ensure mobile drawer is open if on mobile
     const container = await this.ensureMobileDrawerOpenAndGetContainer();
     
-    // Find reset button within the active container
     const resetBtn = container.getByRole('button', { name: /reset|wyczyść|clear/i });
     await resetBtn.waitFor({ state: 'visible', timeout: 5000 });
     await resetBtn.scrollIntoViewIfNeeded();
     
-    // Get current URL to detect change
     const currentUrl = this.page.url();
     const hasFilterParams = currentUrl.includes('brandIds') || currentUrl.includes('bodyTypeIds') || currentUrl.includes('engineTypeIds');
     
-    await resetBtn.click();
+    await resetBtn.click({ force: true });
     
-    // Wait for network
     await this.page.waitForLoadState('networkidle').catch(() => {});
     
-    // Wait for URL to change
     if (hasFilterParams) {
-      try {
-        await this.page.waitForFunction(
-          (patterns) => !patterns.some(p => window.location.href.includes(p)),
-          ['brandIds=', 'bodyTypeIds=', 'engineTypeIds='],
-          { timeout: 5000 }
-        );
-      } catch {
-        await this.page.waitForTimeout(500);
+      const maxRetries = 3;
+
+      for (let attempt = 0; attempt < maxRetries; attempt++) {
+        try {
+          await this.page.waitForFunction(
+            (patterns) => !patterns.some(p => window.location.href.includes(p)),
+            ['brandIds=', 'bodyTypeIds=', 'engineTypeIds='],
+            { timeout: 3000 }
+          );
+
+          break;
+        } catch {
+          if (attempt < maxRetries - 1) {
+            await resetBtn.click({ force: true });
+            await this.page.waitForTimeout(300);
+          }
+        }
       }
     }
     
@@ -242,19 +225,16 @@ export class CarsSearchPage extends BasePage {
     await this.page.waitForTimeout(300);
     await this.mobileFiltersButton.click({ force: true });
 
-    // Wait for drawer to open
     await this.mobileFiltersDrawer.waitFor({ state: 'visible', timeout: 5000 });
     await this.page.waitForTimeout(300);
   }
 
-  /** Open filters panel - handles mobile drawer automatically */
   async openFiltersIfMobile(isMobile: boolean): Promise<void> {
     if (isMobile) {
       const isFilterButtonVisible = await this.mobileFiltersButton.isVisible();
+
       if (isFilterButtonVisible) {
         await this.mobileFiltersButton.click();
-
-        // Wait for drawer to be visible
         await this.mobileFiltersDrawer.waitFor({ state: 'visible', timeout: 5000 });
         await this.page.waitForTimeout(300);
       }
@@ -264,29 +244,22 @@ export class CarsSearchPage extends BasePage {
 
   // ============ FILTER ACTIONS ============
 
-  /** Helper to ensure mobile filter drawer is open if on mobile, returns the active container */
   private async ensureMobileDrawerOpenAndGetContainer(): Promise<Locator> {
 
-    // First, check if mobile drawer is already visible
     const drawer = this.mobileFiltersDrawer;
     const isDrawerAlreadyVisible = await drawer.isVisible().catch(() => false);
 
     if (isDrawerAlreadyVisible) {
-
-      // Verify drawer content is visible
       const drawerSelect = drawer.locator('select').first();
 
       if (await drawerSelect.isVisible().catch(() => false))
         return drawer;
     }
     
-    // Use viewport width as the authoritative source for mobile vs desktop
     const viewport = this.page.viewportSize();
     const isMobileViewport = viewport && viewport.width < 768;
     
     if (isMobileViewport) {
-
-      // Open drawer on mobile
       const mobileFilterBtn = this.mobileFiltersButton;
       
       for (let attempt = 0; attempt < 3; attempt++) {
@@ -295,14 +268,11 @@ export class CarsSearchPage extends BasePage {
         if (isBtnVisible) {
           await mobileFilterBtn.click();
           
-          // Wait for drawer animation
           await this.page.waitForTimeout(300);
           
-          // Wait for drawer to be visible
           try {
             await drawer.waitFor({ state: 'visible', timeout: 3000 });
             
-            // Verify select inside drawer is visible
             const drawerSelect = drawer.locator('select').first();
             await drawerSelect.waitFor({ state: 'visible', timeout: 2000 });
             
@@ -313,34 +283,28 @@ export class CarsSearchPage extends BasePage {
         }
       }
       
-      // Final attempt
       await mobileFilterBtn.click({ force: true });
       await this.page.waitForTimeout(500);
       
-      // Return drawer
       return drawer;
     }
     
-    // Desktop - return sidebar
     return this.filtersPanel;
   }
 
   async selectBrand(brandName: string): Promise<void> {
     const container = await this.ensureMobileDrawerOpenAndGetContainer();
     
-    // Wait for container content to render
     await this.page.waitForTimeout(200);
     
     const brandSelect = container.locator('select').first();
     
-    // Retry logic for finding the select element
     for (let attempt = 0; attempt < 3; attempt++) {
       const isVisible = await brandSelect.isVisible().catch(() => false);
 
       if (isVisible)
         break;
       
-      // Re-ensure drawer is open
       await this.ensureMobileDrawerOpenAndGetContainer();
       await this.page.waitForTimeout(300);
     }
@@ -368,29 +332,26 @@ export class CarsSearchPage extends BasePage {
     
     const container = await this.ensureMobileDrawerOpenAndGetContainer();
     
-    // Wait for the container content to render
     await this.page.waitForTimeout(300);
     
     const powerButton = container.locator('button').filter({ hasText: /power|moc/i }).first();
     const numberInputs = container.locator('input[type="number"]');
     
-    // Retry logic for expanding the power section
     for (let attempt = 0; attempt < 3; attempt++) {
       const inputsVisible = await numberInputs.first().isVisible().catch(() => false);
-      if (inputsVisible) break;
+
+      if (inputsVisible)
+        break;
       
-      // Wait for button to be attached
       try {
         await powerButton.waitFor({ state: 'attached', timeout: 3000 });
       } catch {
-
-        // Re-ensure drawer is open on mobile
         await this.ensureMobileDrawerOpenAndGetContainer();
         await this.page.waitForTimeout(200);
+        
         continue;
       }
       
-      // Scroll the power section into view within the container
       await powerButton.scrollIntoViewIfNeeded({ timeout: 3000 }).catch(() => {});
       await this.page.waitForTimeout(200);
       
@@ -401,20 +362,16 @@ export class CarsSearchPage extends BasePage {
         await powerButton.click({ force: true });
       }
       
-      // Wait for expansion animation
       await this.page.waitForTimeout(500);
       
-      // Check if inputs appeared
       const appeared = await numberInputs.first().isVisible().catch(() => false);
       
       if (appeared)
         break;
       
-      // If not, wait a bit more before retry
       await this.page.waitForTimeout(300);
     }
     
-    // Final wait for inputs to be visible
     await numberInputs.first().waitFor({ state: 'visible', timeout: 10000 });
   }
 

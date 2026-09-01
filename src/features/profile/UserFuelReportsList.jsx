@@ -3,27 +3,29 @@ import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { IoCarSportOutline, IoSpeedometerOutline, IoTrashOutline } from 'react-icons/io5';
-import { getUserFuelReports } from '../../api/users';
-import { deleteFuelReport } from '../../api/fuelReports';
-import { Card, Spinner, Button, Badge, Pagination, ConfirmModal, IconButton } from '../../components/ui';
-import { formatDate, getConsumptionLevel } from '../../utils/helpers';
+import { getUserFuelReports } from './api';
+import { deleteFuelReport } from '../fuelReports/api';
+import { Card, Spinner, Button, Badge, Pagination, ConfirmModal, IconButton } from '../../shared/components/ui';
+import { formatDate, getConsumptionLevel } from '../../shared/utils/helpers';
+import { FUEL_REPORTS_PAGE_SIZE, STALE_TIME } from '../../shared/utils/constants';
 
 
+// Fuel reports this user submitted with delete option
 const UserFuelReportsList = () => {
   const { t } = useTranslation('profile');
   const [page, setPage] = useState(0);
   const [deleteTarget, setDeleteTarget] = useState(null);
-  const pageSize = 5;
+  const pageSize = FUEL_REPORTS_PAGE_SIZE;
   const queryClient = useQueryClient();
 
-  const { 
-    data: reportsData, 
-    isLoading, 
+  const {
+    data: reportsData,
+    isLoading,
     error,
   } = useQuery({
-    queryKey: ['userFuelReports', page, pageSize],
+    queryKey: ['user', 'fuelReports', page, pageSize],
     queryFn: () => getUserFuelReports({ page, size: pageSize, sort: 'reportDate,desc' }),
-    staleTime: 30000,
+    staleTime: STALE_TIME.SHORT,
   });
 
   const reports = reportsData?.content || [];
@@ -34,7 +36,7 @@ const UserFuelReportsList = () => {
   const deleteMutation = useMutation({
     mutationFn: deleteFuelReport,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['userFuelReports'] });
+      queryClient.invalidateQueries({ queryKey: ['user', 'fuelReports'] });
       setDeleteTarget(null);
     },
   });
@@ -44,9 +46,8 @@ const UserFuelReportsList = () => {
   };
 
   const handleDeleteConfirm = () => {
-    if (deleteTarget) {
+    if (deleteTarget)
       deleteMutation.mutate(deleteTarget.id);
-    }
   };
 
   // Loading State
@@ -63,10 +64,10 @@ const UserFuelReportsList = () => {
     return (
       <div className="text-center py-8">
         <p className="text-red-500 dark:text-red-400 mb-4">
-          {t('common:error.loadFailed', 'Failed to load your fuel reports. Please try again.')}
+          {t('common:errors.loadFailed')}
         </p>
         <Button variant="secondary" onClick={() => window.location.reload()}>
-          {t('common:retry', 'Retry')}
+          {t('common:retry')}
         </Button>
       </div>
     );
@@ -84,7 +85,7 @@ const UserFuelReportsList = () => {
           {t('fuelReports.emptyDescription')}
         </p>
         <Button to="/cars" variant="primary">
-          {t('common:browseCars', 'Browse Cars')}
+          {t('common:browseCars')}
         </Button>
       </div>
     );
@@ -93,16 +94,15 @@ const UserFuelReportsList = () => {
   return (
     <div>
       <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
-        {t('cars:fuelReports.submitted', '{{count}} reports submitted', { count: totalElements })}
+        {t('cars:fuelReports.submitted', { count: totalElements })}
       </p>
 
       <div className="space-y-4">
         {reports.map((report) => (
-          <UserFuelReportCard 
-            key={report.id} 
-            report={report} 
+          <UserFuelReportCard
+            key={report.id}
+            report={report}
             onDelete={() => handleDeleteClick(report)}
-            t={t}
           />
         ))}
       </div>
@@ -125,9 +125,9 @@ const UserFuelReportsList = () => {
         isOpen={!!deleteTarget}
         onClose={() => setDeleteTarget(null)}
         onConfirm={handleDeleteConfirm}
-        title={t('cars:fuelReports.deleteReport', 'Delete Fuel Report')}
-        message={t('cars:fuelReports.confirmDelete', 'Are you sure you want to delete your fuel report for {{car}}?', { car: `${deleteTarget?.carInfo?.brandName} ${deleteTarget?.carInfo?.modelName}` })}
-        confirmText={t('cars:fuelReports.deleteReport', 'Delete Report')}
+        title={t('cars:fuelReports.deleteReport')}
+        message={t('cars:fuelReports.confirmDelete', { car: `${deleteTarget?.carInfo?.brandName} ${deleteTarget?.carInfo?.modelName}` })}
+        confirmText={t('cars:fuelReports.deleteReport')}
         variant="danger"
         isLoading={deleteMutation.isPending}
       />
@@ -137,7 +137,7 @@ const UserFuelReportsList = () => {
 
 
 // Card component for displaying user's fuel report with car info
-const UserFuelReportCard = ({ report, onDelete, t }) => {
+const UserFuelReportCard = ({ report, onDelete }) => {
   const { t: tCars } = useTranslation('cars');
   const carInfo = report.carInfo;
   const fuelValue = parseFloat(report.fuelConsumption || 0).toFixed(1);
@@ -148,7 +148,7 @@ const UserFuelReportCard = ({ report, onDelete, t }) => {
 
       {/* Car Info Header */}
       <div className="flex items-center justify-between p-4 bg-neutral-50 dark:bg-neutral-800/50 border-b border-neutral-200 dark:border-neutral-700">
-        <Link 
+        <Link
           to={`/cars/${carInfo?.carId}`}
           className="flex items-center gap-3 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
         >
@@ -165,25 +165,25 @@ const UserFuelReportCard = ({ report, onDelete, t }) => {
           </div>
         </Link>
 
-        <Badge 
-          variant={report.isApproved ? 'success' : 'warning'} 
+        <Badge
+          variant={report.isApproved ? 'success' : 'warning'}
           size="sm"
         >
-          {report.isApproved ? tCars('fuelReports.status.approved', 'Approved') : tCars('fuelReports.status.pending', 'Pending')}
+          {report.isApproved ? tCars('fuelReports.status.approved') : tCars('fuelReports.status.pending')}
         </Badge>
       </div>
 
       {/* Report Content */}
       <div className="p-4">
-        
+
         {/* Fuel Consumption and Date */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <IoSpeedometerOutline className={`w-6 h-6 ${level.color}`} />
             <span className={`text-2xl font-bold ${level.color}`}>{fuelValue}</span>
-            <span className="text-sm text-neutral-500 dark:text-neutral-400">{tCars('fuelReports.unit', 'L/100km')}</span>
+            <span className="text-sm text-neutral-500 dark:text-neutral-400">{tCars('fuelReports.unit')}</span>
             <Badge variant={level.variant} size="sm" className="ml-2">
-              {tCars(`fuelReports.level.${level.label.toLowerCase()}`, level.label)}
+              {tCars(`fuelReports.level.${level.labelKey}`)}
             </Badge>
           </div>
           <p className="text-sm text-neutral-500 dark:text-neutral-400">
@@ -204,7 +204,7 @@ const UserFuelReportCard = ({ report, onDelete, t }) => {
             variant="ghost"
             size="sm"
             onClick={onDelete}
-            label={tCars('fuelReports.deleteReport', 'Delete fuel report')}
+            label={tCars('fuelReports.deleteReport')}
             className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
           >
             <IoTrashOutline className="w-4 h-4" />

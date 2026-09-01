@@ -33,6 +33,9 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+    rules: {
+      'no-unused-vars': ['error', { ignoreRestSiblings: true }],
+    },
   },
 
   {
@@ -57,7 +60,7 @@ export default defineConfig([
   },
 
   {
-    files: ['src/contexts/**/*.jsx', 'src/main.jsx'],
+    files: ['src/shared/contexts/**/*.jsx', 'src/app/main.jsx'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },

@@ -30,9 +30,9 @@ const SpecificationSection = ({
             {title}
           </span>
         </div>
-        
-        <IoChevronDownOutline 
-          className={`w-5 h-5 text-neutral-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+
+        <IoChevronDownOutline
+          className={`w-5 h-5 text-neutral-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
         />
       </button>
 

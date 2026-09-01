@@ -26,7 +26,8 @@
     "weak": "Hasło jest zbyt słabe",
     "mismatch": "Hasła nie są identyczne",
     "complexity": "Hasło musi zawierać małą literę, wielką literę i cyfrę",
-    "hint": "Minimum 8 znaków, zawierające małą literę, wielką literę i cyfrę"
+    "hint": "Minimum 8 znaków, zawierające małą literę, wielką literę i cyfrę",
+    "mustBeDifferent": "Nowe hasło musi różnić się od obecnego"
   },
   "emailField": {
     "required": "Email jest wymagany",
@@ -38,11 +39,13 @@
   },
   "firstName": {
     "required": "Imię jest wymagane",
-    "minLength": "Imię musi mieć co najmniej 2 znaki"
+    "minLength": "Imię musi mieć co najmniej 2 znaki",
+    "maxLength": "Imię może mieć najwyżej 50 znaków"
   },
   "lastName": {
     "required": "Nazwisko jest wymagane",
-    "minLength": "Nazwisko musi mieć co najmniej 2 znaki"
+    "minLength": "Nazwisko musi mieć co najmniej 2 znaki",
+    "maxLength": "Nazwisko może mieć najwyżej 50 znaków"
   },
   "review": {
     "titleRequired": "Tytuł opinii jest wymagany",

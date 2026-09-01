@@ -46,7 +46,6 @@ export const TEST_USERS = {
   },
 };
 
-// Generate unique user
 export const generateNewUser = () => {
   const timestamp = Date.now();
   const shortId = String(timestamp).slice(-8);
@@ -94,7 +93,7 @@ export const TEST_MODELS = {
   a6: { id: 13, brandId: 3, name: 'A6' },
 };
 
-// ============ FILTER OPTIONS ============
+// ============ TEST FILTER OPTIONS ============
 export const FILTER_OPTIONS = {
   bodyTypes: [
     { id: 1, name: 'Sedan' },
@@ -153,13 +152,13 @@ export const TEST_FUEL_REPORT = {
   },
 };
 
-// ============ PAGINATION ============
+// ============ TEST PAGINATION ============
 export const PAGINATION = {
   defaultPageSize: 12,
   pageSizeOptions: [12, 24, 48],
 };
 
-// ============ SORT OPTIONS ============
+// ============ TEST SORT OPTIONS ============
 export const SORT_OPTIONS = {
   default: '',
   nameAsc: 'name,asc',
@@ -168,7 +167,7 @@ export const SORT_OPTIONS = {
   powerDesc: 'engine.power,desc',
 };
 
-// ============ ROUTES ============
+// ============ TEST ROUTES ============
 export const ROUTES = {
   home: '/',
   login: '/login',

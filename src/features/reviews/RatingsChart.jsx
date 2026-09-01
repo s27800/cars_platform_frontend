@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { Rating } from '../../components/ui';
-import { RATING_CATEGORIES } from '../../utils/constants';
-import { calculateAverage } from '../../utils/helpers';
+import { Rating } from '../../shared/components/ui';
+import { RATING_CATEGORIES } from './ratingCategories';
+import { calculateAverage } from '../../shared/utils/helpers';
 
 
 // Map API field names
@@ -52,7 +52,7 @@ const RatingsChart = ({ averageRatings, className = '' }) => {
             </span>
           </div>
         </div>
-        <span className="text-sm text-neutral-500">{t('basedOnCategories', 'Based on {{count}} categories', { count: ratingEntries.length })}</span>
+        <span className="text-sm text-neutral-500">{t('basedOnCategories', { count: ratingEntries.length })}</span>
       </div>
 
       {/* Category bars */}
@@ -78,13 +78,13 @@ const RatingBar = ({ label, value, maxValue = 5 }) => {
   const getBarColor = (val) => {
     if (val >= 4)
       return 'bg-green-500';
-    
+
     if (val >= 3)
       return 'bg-yellow-500';
-    
+
     if (val >= 2)
       return 'bg-orange-500';
-    
+
     return 'bg-red-500';
   };
 
@@ -93,14 +93,14 @@ const RatingBar = ({ label, value, maxValue = 5 }) => {
       <span className="w-32 text-sm text-neutral-600 dark:text-neutral-400 flex-shrink-0">
         {label}
       </span>
-      
+
       <div className="flex-1 h-2 bg-neutral-200 dark:bg-neutral-700 rounded-full overflow-hidden">
         <div
           className={`h-full ${getBarColor(value)} rounded-full transition-all duration-500`}
           style={{ width: `${percentage}%` }}
         />
       </div>
-      
+
       <span className="w-10 text-sm font-medium text-neutral-900 dark:text-white text-right">
         {value.toFixed(1)}
       </span>

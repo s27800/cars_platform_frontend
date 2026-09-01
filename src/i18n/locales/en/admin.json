@@ -25,9 +25,9 @@
     "overview": {
       "title": "Pending Items Overview",
       "allCaughtUp": "All caught up! No items waiting for review.",
-      "pendingMessage": "You have {{count}} item waiting for your review.",
-      "pendingMessage_plural": "You have {{count}} items waiting for your review.",
-      "pending": "{{count}} pending"
+      "pending": "{{count}} pending",
+      "pendingMessage_one": "You have {{count}} item waiting for your review.",
+      "pendingMessage_other": "You have {{count}} items waiting for your review."
     },
     "recentActivity": "Recent activity",
     "pendingItems": "Items pending review"
@@ -57,12 +57,12 @@
     "retry": "Retry",
     "allCaughtUp": "All caught up!",
     "noPendingReviews": "There are no pending reviews to moderate. Check back later.",
-    "pendingModeration": "{{count}} review pending moderation",
-    "pendingModeration_plural": "{{count}} reviews pending moderation",
     "reviewComment": "Review comment:",
     "viewDetailedRatings": "View detailed ratings ({{count}} categories)",
     "pending": "Pending",
-    "likes": "{{count}} likes"
+    "likes": "{{count}} likes",
+    "pendingModeration_one": "{{count}} review pending moderation",
+    "pendingModeration_other": "{{count}} reviews pending moderation"
   },
   "fuelReports": {
     "title": "Fuel Report Moderation",
@@ -88,12 +88,12 @@
     "retry": "Retry",
     "allCaughtUp": "All caught up!",
     "noPendingReports": "There are no pending fuel reports to verify. Check back later.",
-    "pendingVerification": "{{count}} fuel report pending verification",
-    "pendingVerification_plural": "{{count}} fuel reports pending verification",
     "reportedConsumption": "Reported fuel consumption",
     "userComment": "User's comment:",
     "pending": "Pending",
-    "likes": "{{count}} likes"
+    "likes": "{{count}} likes",
+    "pendingVerification_one": "{{count}} fuel report pending verification",
+    "pendingVerification_other": "{{count}} fuel reports pending verification"
   },
   "proposals": {
     "title": "Data Proposals",
@@ -122,12 +122,8 @@
     "retry": "Retry",
     "allCaughtUp": "All caught up!",
     "noPendingProposals": "There are no pending data proposals to review. Check back later.",
-    "pendingReview": "{{count}} proposal pending review",
-    "pendingReview_plural": "{{count}} proposals pending review",
     "pending": "Pending",
     "userComment": "User's comment:",
-    "proposedChanges": "Proposed changes ({{count}} field)",
-    "proposedChanges_plural": "Proposed changes ({{count}} fields)",
     "rejectModal": {
       "title": "Reject Proposal",
       "warning": "Are you sure you want to reject this data proposal? You can optionally provide feedback to the user.",
@@ -136,15 +132,10 @@
       "cancel": "Cancel",
       "confirm": "Reject Proposal"
     },
-    "categories": {
-      "ENGINE": "Engine",
-      "TRANSMISSION": "Transmission",
-      "CHASSIS": "Chassis & Brakes",
-      "PERFORMANCE": "Performance",
-      "OUTSIDE_DIMENSIONS": "Outside Dimensions",
-      "INSIDE_DIMENSIONS": "Inside Dimensions",
-      "BASIC_INFO": "Basic Information"
-    }
+    "pendingReview_one": "{{count}} proposal pending review",
+    "pendingReview_other": "{{count}} proposals pending review",
+    "proposedChanges_one": "Proposed changes ({{count}} field)",
+    "proposedChanges_other": "Proposed changes ({{count}} fields)"
   },
   "filters": {
     "all": "All",

@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { IoCheckmarkCircle, IoStar } from 'react-icons/io5';
-import { createReview } from '../../api/reviews';
-import { Button, TextArea, Rating, Alert } from '../../components/ui';
-import { RATING_CATEGORIES } from '../../utils/constants';
+import { createReview } from './api';
+import { Button, TextArea, Rating, Alert } from '../../shared/components/ui';
+import { RATING_CATEGORIES } from './ratingCategories';
 
 
 // Reusable form component for adding car reviews with ratings
@@ -15,21 +15,26 @@ const AddReviewForm = ({ carId, onSuccess, onCancel }) => {
   const queryClient = useQueryClient();
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  // Build validation schema dynamically from categories
-  const ratingRule = Yup.number().min(1, t('validation:required')).max(5).required(t('validation:required'));
-  const reviewSchema = Yup.object().shape({
-    comment: Yup.string()
-      .min(10, t('validation:minLength', { min: 10 }))
-      .max(2000, t('validation:maxLength', { max: 2000 }))
-      .required(t('validation:required')),
-    ...Object.fromEntries(RATING_CATEGORIES.map(cat => [cat.key, ratingRule])),
-  });
+  const validationSchema = useMemo(() => {
+    const ratingRule = Yup.number()
+      .min(1, t('validation:required'))
+      .max(5)
+      .required(t('validation:required'));
+
+    return Yup.object().shape({
+      comment: Yup.string()
+        .min(10, t('validation:minLength', { min: 10 }))
+        .max(2000, t('validation:maxLength', { max: 2000 }))
+        .required(t('validation:required')),
+      ...Object.fromEntries(RATING_CATEGORIES.map(cat => [cat.key, ratingRule])),
+    });
+  }, [t]);
 
   const createMutation = useMutation({
     mutationFn: (reviewData) => createReview(carId, reviewData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['reviews', carId] });
-      queryClient.invalidateQueries({ queryKey: ['averageRatings', carId] });
+      queryClient.invalidateQueries({ queryKey: ['reviews', 'list', carId] });
+      queryClient.invalidateQueries({ queryKey: ['reviews', 'averageRatings', carId] });
       setSubmitSuccess(true);
       formik.resetForm();
       setTimeout(() => onSuccess?.(), 2000);
@@ -51,7 +56,7 @@ const AddReviewForm = ({ carId, onSuccess, onCancel }) => {
       priceQualityRating: 0,
       failureFreeRating: 0,
     },
-    validationSchema: reviewSchema,
+    validationSchema,
     onSubmit: (values) => {
       createMutation.mutate(values);
     },
@@ -66,7 +71,7 @@ const AddReviewForm = ({ carId, onSuccess, onCancel }) => {
           {t('messages.submitSuccess')}
         </h3>
         <p className="text-neutral-600 dark:text-neutral-400">
-          {t('messages.pendingApproval', 'Your review will be visible after moderation approval.')}
+          {t('messages.pendingApproval')}
         </p>
       </div>
     );
@@ -100,7 +105,7 @@ const AddReviewForm = ({ carId, onSuccess, onCancel }) => {
       <div>
         <h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-4 flex items-center gap-2">
           <IoStar className="w-4 h-4 text-yellow-400" />
-          {t('form.rateAspects', 'Rate different aspects (1-5 stars)')}
+          {t('form.rateAspects')}
         </h4>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -125,7 +130,7 @@ const AddReviewForm = ({ carId, onSuccess, onCancel }) => {
                   </span>
                 </div>
               </div>
-              
+
               <div className="mt-2">
                 <Rating
                   value={formik.values[key]}
@@ -134,7 +139,7 @@ const AddReviewForm = ({ carId, onSuccess, onCancel }) => {
                   precision={1}
                 />
               </div>
-              
+
               {formik.touched[key] && formik.errors[key] && (
                 <p className="mt-1 text-xs text-red-500">{formik.errors[key]}</p>
               )}
