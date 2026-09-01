@@ -9,40 +9,34 @@ export class AdminDashboardPage extends BasePage {
 
   // ============ LOCATORS ============
 
-  /** Page title */
   get pageTitle(): Locator {
     return this.page.getByRole('heading', { level: 1 });
   }
 
-  /** Dashboard stats cards */
   get statsCards(): Locator {
     return this.page.locator('.grid').locator('div.rounded-2xl').filter({
       hasText: /Pending/i
     });
   }
 
-  /** Pending reviews card */
   get pendingReviewsCard(): Locator {
     return this.page.locator('[data-testid="pending-reviews"]').or(
       this.page.getByText(/pending reviews|oczekujące recenzje/i).locator('..')
     );
   }
 
-  /** Pending fuel reports card */
   get pendingFuelReportsCard(): Locator {
     return this.page.locator('[data-testid="pending-fuel-reports"]').or(
       this.page.getByText(/pending.*fuel|oczekujące.*spalania/i).locator('..')
     );
   }
 
-  /** Pending proposals card */
   get pendingProposalsCard(): Locator {
     return this.page.locator('[data-testid="pending-proposals"]').or(
       this.page.getByText(/pending.*proposals|oczekujące.*propozycje/i).locator('..')
     );
   }
 
-  /** Navigation links */
   get reviewsLink(): Locator {
     return this.page.getByRole('link', { name: /reviews|recenzje/i });
   }
@@ -58,24 +52,20 @@ export class AdminDashboardPage extends BasePage {
 
   // ============ ADMIN REVIEWS PAGE ============
 
-  /** Reviews list */
   get reviewsList(): Locator {
     return this.page.locator('.space-y-5, .space-y-4');
   }
 
-  /** Review items */
   get reviewItems(): Locator {
     return this.page.locator('.rounded-2xl, .rounded-xl').filter({
       has: this.page.getByRole('button', { name: /approve|reject/i })
     });
   }
 
-  /** Approve buttons */
   get approveButtons(): Locator {
     return this.page.getByRole('button', { name: /approve|zatwierdź/i });
   }
 
-  /** Reject buttons */
   get rejectButtons(): Locator {
     return this.page.getByRole('button', { name: /reject|odrzuć/i });
   }
@@ -83,12 +73,10 @@ export class AdminDashboardPage extends BasePage {
 
   // ============ ADMIN FUEL REPORTS PAGE ============
 
-  /** Fuel reports list */
   get fuelReportsList(): Locator {
     return this.page.locator('.space-y-5, .space-y-4');
   }
 
-  /** Fuel report items */
   get fuelReportItems(): Locator {
     return this.page.locator('.rounded-2xl, .rounded-xl').filter({
       has: this.page.getByRole('button', { name: /approve|reject/i })
@@ -98,12 +86,10 @@ export class AdminDashboardPage extends BasePage {
 
   // ============ ADMIN PROPOSALS PAGE ============
 
-  /** Proposals list */
   get proposalsList(): Locator {
     return this.page.locator('.space-y-5, .space-y-4');
   }
 
-  /** Proposal items */
   get proposalItems(): Locator {
     return this.page.locator('.rounded-2xl, .rounded-xl').filter({
       has: this.page.getByRole('button', { name: /approve|reject/i })
@@ -113,12 +99,10 @@ export class AdminDashboardPage extends BasePage {
 
   // ============ COMMON ============
 
-  /** Pagination */
   get pagination(): Locator {
     return this.page.locator('[data-testid="pagination"], nav[aria-label*="pagination"]');
   }
 
-  /** Empty state message */
   get emptyState(): Locator {
     return this.page.getByText(/no pending|brak oczekujących|empty/i);
   }

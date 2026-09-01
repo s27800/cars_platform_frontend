@@ -68,7 +68,8 @@
     "description": "Permanently delete your account and all associated data",
     "warning": "This action cannot be undone. All your data will be permanently deleted.",
     "confirm": "Delete Account",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "error": "Failed to delete the account. Please try again."
   },
   "settings": {
     "title": "Settings",

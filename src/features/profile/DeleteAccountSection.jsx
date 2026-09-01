@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { IoTrashOutline, IoWarningOutline } from 'react-icons/io5';
-import { deleteAccount } from '../../api/users';
-import { useAuth } from '../../hooks';
-import { Button, ConfirmModal, Alert } from '../../components/ui';
+import { deleteAccount } from './api';
+import { useAuth } from '../../shared/hooks';
+import { Button, ConfirmModal, Alert } from '../../shared/components/ui';
 
 
 /**
@@ -26,7 +26,7 @@ const DeleteAccountSection = () => {
       navigate('/', { replace: true });
     },
     onError: (err) => {
-      setError(err.response?.data?.message || t('deleteAccount.error', 'Failed to delete account. Please try again.'));
+      setError(err.response?.data?.message || t('deleteAccount.error'));
       setShowConfirm(false);
     },
   });
@@ -38,12 +38,12 @@ const DeleteAccountSection = () => {
 
   return (
     <div className="mt-8 pt-8 border-t border-neutral-200 dark:border-neutral-700">
-        
+
       {/* Danger Zone Header */}
       <div className="flex items-center gap-2 mb-4">
         <IoWarningOutline className="w-5 h-5 text-red-500" />
         <h3 className="text-lg font-semibold text-red-600 dark:text-red-400">
-          {t('common:dangerZone', 'Danger Zone')}
+          {t('common:dangerZone')}
         </h3>
       </div>
 

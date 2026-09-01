@@ -6,8 +6,8 @@ import { render, screen } from '@testing-library/react';
 vi.mock('@tanstack/react-query', () => ({
   useQuery: vi.fn(() => ({ data: null, isLoading: false })),
   useQueries: () => [],
-  useMutation: vi.fn(() => ({ 
-    mutate: vi.fn(), 
+  useMutation: vi.fn(() => ({
+    mutate: vi.fn(),
     isPending: false,
     mutateAsync: vi.fn(),
   })),
@@ -25,23 +25,30 @@ vi.mock('react-i18next', () => ({
 }));
 
 // Mock hooks
-vi.mock('../../../hooks', () => ({
+vi.mock('../../../shared/hooks', () => ({
   useAuth: vi.fn(() => ({ isAuthenticated: false })),
   useToast: () => ({ addToast: vi.fn() }),
 }));
 
 // Mock UI components
-vi.mock('../../../components/ui', () => ({
+vi.mock('../../../shared/components/ui', () => ({
   Avatar: ({ name }) => <div data-testid="avatar">{name?.charAt(0)}</div>,
   Badge: ({ children, variant }) => <span data-testid="badge" data-variant={variant}>{children}</span>,
   Spinner: () => <div data-testid="spinner">Loading...</div>,
-  Button: ({ children, onClick, disabled }) => (
-    <button onClick={onClick} disabled={disabled}>{children}</button>
+  Button: ({ children, onClick, disabled, type }) => (
+    <button onClick={onClick} disabled={disabled} type={type}>{children}</button>
   ),
-  Input: ({ label, value, onChange, error, ...props }) => (
+  Input: ({ label, value, onChange, error, leftIcon, rightIcon, ...props }) => (
     <div>
       {label && <label>{label}</label>}
       <input value={value} onChange={onChange} {...props} />
+      {error && <span className="error">{error}</span>}
+    </div>
+  ),
+  TextArea: ({ label, value, onChange, error, ...props }) => (
+    <div>
+      {label && <label>{label}</label>}
+      <textarea value={value} onChange={onChange} {...props} />
       {error && <span className="error">{error}</span>}
     </div>
   ),
@@ -54,16 +61,18 @@ vi.mock('../../../components/ui', () => ({
     </div>
   ),
   Modal: ({ isOpen, children }) => isOpen ? <div data-testid="modal">{children}</div> : null,
+  Alert: ({ children, variant }) => <div data-testid="alert" data-variant={variant}>{children}</div>,
+  Pagination: () => <div data-testid="pagination" />,
 }));
 
 // Mock API
-vi.mock('../../../api/fuelReports', () => ({
+vi.mock('../api', () => ({
   getFuelReports: vi.fn(() => Promise.resolve({ content: [], totalElements: 0 })),
   createFuelReport: vi.fn(() => Promise.resolve({ id: 1 })),
   getAverageFuelConsumption: vi.fn(() => Promise.resolve({ average: 7.5 })),
 }));
 
-vi.mock('../../../api/likes', () => ({
+vi.mock('../../../shared/api/likes', () => ({
   toggleFuelReportLike: vi.fn(() => Promise.resolve({ liked: true, likesCount: 1 })),
   getFuelReportLikeStatus: vi.fn(() => Promise.resolve({ liked: false, likesCount: 0 })),
 }));
@@ -73,10 +82,14 @@ vi.mock('react-icons/io5', () => ({
   IoHeartOutline: () => <span data-testid="icon-heart-outline" />,
   IoHeart: () => <span data-testid="icon-heart" />,
   IoSpeedometerOutline: () => <span data-testid="icon-speedometer" />,
+  IoCheckmarkCircle: () => <span data-testid="icon-checkmark" />,
+  IoAddOutline: () => <span data-testid="icon-add" />,
+  IoFlameOutline: () => <span data-testid="icon-flame" />,
+  IoChevronDownOutline: () => <span data-testid="icon-chevron-down" />,
 }));
 
 // Mock utils
-vi.mock('../../../utils/helpers', () => ({
+vi.mock('../../../shared/utils/helpers', () => ({
   formatDate: (date) => date,
   getConsumptionLevel: (value) => {
     if (value < 6) return { label: 'Low', color: 'text-green-600', variant: 'success' };
@@ -89,15 +102,6 @@ vi.mock('../../../utils/helpers', () => ({
 describe('FuelReportCard', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-  });
-
-  describe('module', () => {
-    it('should export FuelReportCard component', async () => {
-      const module = await import('../FuelReportCard');
-
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
   });
 
   describe('rendering', () => {
@@ -154,34 +158,42 @@ describe('FuelReportCard', () => {
 });
 
 describe('FuelReportsSection', () => {
-  describe('module', () => {
-    it('should export FuelReportsSection component', async () => {
-      const module = await import('../FuelReportsSection');
+  it('should render section header with toggle', async () => {
+    const FuelReportsSection = (await import('../FuelReportsSection')).default;
 
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
+    render(<FuelReportsSection carId={1} />);
+
+    const buttons = screen.getAllByRole('button');
+    expect(buttons.some(btn => btn.getAttribute('aria-expanded') === 'true')).toBe(true);
+    expect(screen.getByText('details.fuelReports')).toBeInTheDocument();
+  });
+
+  it('should show loading spinner while fetching data', async () => {
+    const { useQuery } = await import('@tanstack/react-query');
+    useQuery.mockReturnValue({ isLoading: true, data: null });
+
+    const FuelReportsSection = (await import('../FuelReportsSection')).default;
+
+    render(<FuelReportsSection carId={1} defaultOpen={true} />);
+
+    expect(screen.getAllByTestId('spinner').length).toBeGreaterThan(0);
   });
 });
 
 describe('AddFuelReportForm', () => {
-  describe('module', () => {
-    it('should export AddFuelReportForm component', async () => {
-      const module = await import('../AddFuelReportForm');
+  it('should render form with fuel consumption input', async () => {
+    const AddFuelReportForm = (await import('../AddFuelReportForm')).default;
 
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
+    render(<AddFuelReportForm carId={1} onSuccess={vi.fn()} onCancel={vi.fn()} />);
+
+    expect(screen.getByRole('button', { name: 'fuelReports.submitReport' })).toBeInTheDocument();
   });
-});
 
-describe('AddFuelReportForm', () => {
-  describe('module', () => {
-    it('should export AddFuelReportForm component', async () => {
-      const module = await import('../AddFuelReportForm');
-      
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
+  it('should render cancel button', async () => {
+    const AddFuelReportForm = (await import('../AddFuelReportForm')).default;
+
+    render(<AddFuelReportForm carId={1} onSuccess={vi.fn()} onCancel={vi.fn()} />);
+
+    expect(screen.getByRole('button', { name: 'common:buttons.cancel' })).toBeInTheDocument();
   });
 });

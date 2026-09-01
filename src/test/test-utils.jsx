@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider, ThemeProvider, ToastProvider } from '../contexts';
+import { AuthProvider, ThemeProvider, ToastProvider } from '../shared/contexts';
 
 
 // Create a custom render that includes providers
@@ -17,7 +17,7 @@ const createTestQueryClient = () => new QueryClient({
 
 export const AllProviders = ({ children }) => {
   const queryClient = createTestQueryClient();
-  
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>

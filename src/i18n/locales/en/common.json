@@ -42,16 +42,6 @@
     "loading": "Loading..."
   },
   "pagination": {
-    "showing": "Showing {{start}} to {{end}} of {{total}} results"
-  },
-  "status": {
-    "pending": "Pending",
-    "approved": "Approved",
-    "rejected": "Rejected",
-    "active": "Active",
-    "inactive": "Inactive"
-  },
-  "pagination": {
     "previous": "Previous",
     "next": "Next",
     "page": "Page",
@@ -59,6 +49,13 @@
     "showing": "Showing",
     "to": "to",
     "results": "results"
+  },
+  "status": {
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "active": "Active",
+    "inactive": "Inactive"
   },
   "errors": {
     "somethingWentWrong": "Something went wrong",
@@ -85,12 +82,12 @@
   },
   "time": {
     "justNow": "Just now",
-    "minutesAgo": "{{count}} minute ago",
-    "minutesAgo_plural": "{{count}} minutes ago",
-    "hoursAgo": "{{count}} hour ago",
-    "hoursAgo_plural": "{{count}} hours ago",
-    "daysAgo": "{{count}} day ago",
-    "daysAgo_plural": "{{count}} days ago"
+    "minutesAgo_one": "{{count}} minute ago",
+    "minutesAgo_other": "{{count}} minutes ago",
+    "hoursAgo_one": "{{count}} hour ago",
+    "hoursAgo_other": "{{count}} hours ago",
+    "daysAgo_one": "{{count}} day ago",
+    "daysAgo_other": "{{count}} days ago"
   },
   "about": {
     "title": "About us",
@@ -132,5 +129,40 @@
     "title": "Privacy Policy",
     "lastUpdated": "Last updated: {{date}}"
   },
-  "dangerZone": "Danger Zone"
+  "dangerZone": "Danger Zone",
+  "errorBoundary": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Please try again or return to the home page.",
+    "tryAgain": "Try Again",
+    "reload": "Reload Page",
+    "goHome": "Go to Home"
+  },
+  "notSet": "Not set",
+  "a11y": {
+    "homeLink": "CarsPlatform - home page",
+    "mainNavigation": "Main navigation",
+    "mainContent": "Main content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchToLight": "Switch to light mode",
+    "switchToDark": "Switch to dark mode",
+    "changeLanguage": "Change language",
+    "selectLanguage": "Select language",
+    "closeModal": "Close dialog",
+    "dismissAlert": "Dismiss alert",
+    "notifications": "Notifications",
+    "dismissNotification": "Dismiss notification",
+    "visitUsOn": "Visit us on {{network}}",
+    "previousPage": "Previous page",
+    "nextPage": "Next page"
+  },
+  "session": {
+    "expired": "Your session has expired. Please log in again.",
+    "accessDenied": "Access denied. You do not have permission to perform this action.",
+    "notFound": "The requested resource was not found.",
+    "invalidRequest": "Invalid request. Please check the data you entered.",
+    "conflict": "This action conflicts with existing data.",
+    "serverError": "Server error. Please try again later.",
+    "unexpected": "An unexpected error occurred."
+  }
 }

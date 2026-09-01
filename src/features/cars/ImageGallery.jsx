@@ -1,17 +1,17 @@
 import { useState, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import { 
-  IoChevronBackOutline, 
-  IoChevronForwardOutline, 
+import {
+  IoChevronBackOutline,
+  IoChevronForwardOutline,
   IoCloseOutline,
   IoExpandOutline,
   IoImageOutline,
 } from 'react-icons/io5';
-import { IconButton } from '../../components/ui';
+import { IconButton } from '../../shared/components/ui';
 
 
-// Image gallery component with thumbnail navigation and lightbox mode.
+// Image gallery component with thumbnail navigation and lightbox mode
 const ImageGallery = ({ images = [], carName = 'Car' }) => {
   const { t } = useTranslation('cars');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -95,14 +95,14 @@ const ImageGallery = ({ images = [], carName = 'Car' }) => {
               <button
                 onClick={goToPrevious}
                 className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
-                aria-label="Previous image"
+                aria-label={t('gallery.previousImage')}
               >
                 <IoChevronBackOutline className="w-5 h-5" />
               </button>
               <button
                 onClick={goToNext}
                 className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
-                aria-label="Next image"
+                aria-label={t('gallery.nextImage')}
               >
                 <IoChevronForwardOutline className="w-5 h-5" />
               </button>
@@ -113,7 +113,7 @@ const ImageGallery = ({ images = [], carName = 'Car' }) => {
           <button
             onClick={() => setIsLightboxOpen(true)}
             className="absolute top-3 right-3 p-2 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
-            aria-label="Open fullscreen"
+            aria-label={t('gallery.openFullscreen')}
           >
             <IoExpandOutline className="w-5 h-5" />
           </button>
@@ -136,8 +136,8 @@ const ImageGallery = ({ images = [], carName = 'Car' }) => {
                 className={`
                   flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden
                   border-2 transition-all
-                  ${index === selectedIndex 
-                    ? 'border-primary-500 ring-2 ring-primary-500/30' 
+                  ${index === selectedIndex
+                    ? 'border-primary-500 ring-2 ring-primary-500/30'
                     : 'border-transparent hover:border-neutral-300 dark:hover:border-neutral-600'
                   }
                 `}
@@ -157,7 +157,7 @@ const ImageGallery = ({ images = [], carName = 'Car' }) => {
 
       {/* Lightbox Modal */}
       {isLightboxOpen && createPortal(
-        <div 
+        <div
           className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
           onClick={() => setIsLightboxOpen(false)}
         >
@@ -166,7 +166,7 @@ const ImageGallery = ({ images = [], carName = 'Car' }) => {
             size="lg"
             onClick={() => setIsLightboxOpen(false)}
             className="absolute top-4 right-4 text-white hover:bg-white/10"
-            aria-label="Close lightbox"
+            aria-label={t('gallery.closeFullscreen')}
           >
             <IoCloseOutline className="w-6 h-6" />
           </IconButton>
@@ -177,14 +177,14 @@ const ImageGallery = ({ images = [], carName = 'Car' }) => {
               <button
                 onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
                 className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-                aria-label="Previous image"
+                aria-label={t('gallery.previousImage')}
               >
                 <IoChevronBackOutline className="w-6 h-6" />
               </button>
               <button
                 onClick={(e) => { e.stopPropagation(); goToNext(); }}
                 className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-                aria-label="Next image"
+                aria-label={t('gallery.nextImage')}
               >
                 <IoChevronForwardOutline className="w-6 h-6" />
               </button>

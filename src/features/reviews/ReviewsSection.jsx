@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { IoAddOutline, IoStarOutline, IoChevronDownOutline } from 'react-icons/io5';
-import { getReviews, getAverageRatings } from '../../api/reviews';
-import { useAuth } from '../../hooks';
-import { Button, Spinner, Pagination, Modal, Alert } from '../../components/ui';
+import { getReviews, getAverageRatings } from './api';
+import { useAuth } from '../../shared/hooks';
+import { Button, Spinner, Pagination, Modal, Alert } from '../../shared/components/ui';
 import ReviewCard from './ReviewCard';
 import AddReviewForm from './AddReviewForm';
 import RatingsChart from './RatingsChart';
+import { REVIEWS_PAGE_SIZE } from '../../shared/utils/constants';
 
 
 // Reusable component for displaying reviews section with average ratings chart, reviews list, and add review functionality
@@ -17,25 +18,25 @@ const ReviewsSection = ({ carId, defaultOpen = true, className = '' }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [page, setPage] = useState(0);
   const [showAddForm, setShowAddForm] = useState(false);
-  const pageSize = 5;
+  const pageSize = REVIEWS_PAGE_SIZE;
 
   // Fetch reviews with pagination
-  const { 
-    data: reviewsData, 
+  const {
+    data: reviewsData,
     isLoading: isLoadingReviews,
     isError: isReviewsError,
   } = useQuery({
-    queryKey: ['reviews', carId, page, pageSize],
+    queryKey: ['reviews', 'list', carId, page, pageSize],
     queryFn: () => getReviews(carId, { page, size: pageSize }),
     enabled: !!carId,
   });
 
   // Fetch average ratings
-  const { 
+  const {
     data: averageRatings,
     isLoading: isLoadingRatings,
   } = useQuery({
-    queryKey: ['averageRatings', carId],
+    queryKey: ['reviews', 'averageRatings', carId],
     queryFn: () => getAverageRatings(carId),
     enabled: !!carId,
   });
@@ -51,7 +52,7 @@ const ReviewsSection = ({ carId, defaultOpen = true, className = '' }) => {
 
   return (
     <div className={`border border-neutral-200 dark:border-neutral-700 rounded-xl overflow-hidden ${className}`}>
-      
+
       {/* Section header */}
       <button
         type="button"
@@ -85,7 +86,7 @@ const ReviewsSection = ({ carId, defaultOpen = true, className = '' }) => {
               {t('writeReview')}
             </Button>
           )}
-          <IoChevronDownOutline 
+          <IoChevronDownOutline
             className={`w-5 h-5 text-neutral-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
           />
         </div>

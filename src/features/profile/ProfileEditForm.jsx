@@ -1,28 +1,30 @@
+import { useMemo } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { IoPersonOutline, IoMailOutline } from 'react-icons/io5';
-import { Button, Input, Alert } from '../../components/ui';
+import { Button, Input, Alert } from '../../shared/components/ui';
 
 
-const ProfileEditForm = ({ 
-  user, 
-  onSubmit, 
-  isLoading = false, 
+// Editable account details - the submit button stays off until something changes
+const ProfileEditForm = ({
+  user,
+  onSubmit,
+  isLoading = false,
   error = null,
   success = false,
 }) => {
   const { t } = useTranslation('profile');
 
-  const validationSchema = Yup.object({
+  const validationSchema = useMemo(() => Yup.object().shape({
     email: Yup.string()
-      .email(t('validation:email.invalid', 'Invalid email address'))
-      .required(t('validation:email.required', 'Email is required')),
+      .email(t('validation:email.invalid'))
+      .required(t('validation:email.required')),
     firstName: Yup.string()
-      .max(50, t('validation:firstName.max', 'First name must be at most 50 characters')),
+      .max(50, t('validation:firstName.maxLength')),
     lastName: Yup.string()
-      .max(50, t('validation:lastName.max', 'Last name must be at most 50 characters')),
-  });
+      .max(50, t('validation:lastName.maxLength')),
+  }), [t]);
 
   const formik = useFormik({
     initialValues: {
@@ -37,7 +39,7 @@ const ProfileEditForm = ({
     },
   });
 
-  const hasChanges = 
+  const hasChanges =
     formik.values.email !== (user?.email || '') ||
     formik.values.firstName !== (user?.firstName || '') ||
     formik.values.lastName !== (user?.lastName || '');

@@ -10,122 +10,98 @@ export class CarDetailsPage extends BasePage {
 
   // ============ LOCATORS ============
 
-  /** Car name/title */
   get carTitle(): Locator {
     return this.page.getByRole('heading', { level: 1 });
   }
 
-  /** Image gallery */
   get imageGallery(): Locator {
     return this.page.locator('.swiper, [class*="gallery"], [class*="carousel"]').first();
   }
 
-  /** Main image */
   get mainImage(): Locator {
     return this.page.locator('main img').first();
   }
 
-  /** Gallery thumbnails */
   get thumbnails(): Locator {
     return this.page.locator('.swiper-slide img, [class*="thumbnail"] img');
   }
 
-  /** Gallery navigation - next */
   get galleryNext(): Locator {
     return this.page.locator('.swiper-button-next, [aria-label*="next"]');
   }
 
-  /** Gallery navigation - previous */
   get galleryPrev(): Locator {
     return this.page.locator('.swiper-button-prev, [aria-label*="prev"]');
   }
 
-  /** Specifications section */
   get specificationsSection(): Locator {
     return this.page.locator('section').filter({ hasText: /technical specifications|specyfikacja/i });
   }
 
-  /** Engine specs */
   get engineSpecs(): Locator {
     return this.page.getByText(/engine|silnik/i).locator('..');
   }
 
-  /** Add to comparison button */
   get addToComparisonButton(): Locator {
     return this.page.getByRole('button', { name: /add to comparison|remove from comparison|porównaj|usuń z porównania/i });
   }
 
-  /** Like button */
   get likeButton(): Locator {
     return this.page.locator('button').filter({ has: this.page.locator('svg[class*="heart"], [class*="like"]') });
   }
 
-  /** Reviews tab button */
   get reviewsTab(): Locator {
     return this.page.getByRole('tab', { name: /^reviews$/i });
   }
 
-  /** Fuel reports tab button */
   get fuelReportsTab(): Locator {
     return this.page.getByRole('tab', { name: /fuel reports/i });
   }
 
-  /** Reviews section */
   get reviewsSection(): Locator {
     return this.page.locator('section').filter({ hasText: /reviews/i }).first();
   }
 
-  /** Review items */
   get reviewItems(): Locator {
     return this.page.locator('article, [class*="review-item"], [class*="review-card"]');
   }
 
-  /** Add review button */
   get addReviewButton(): Locator {
     return this.page.getByRole('button', { name: 'Write a review', exact: true }).first();
   }
 
-  /** Average rating */
   get averageRating(): Locator {
     return this.page.locator('[class*="rating"], [class*="stars"]').first();
   }
 
-  /** Fuel reports section */
   get fuelReportsSection(): Locator {
     return this.page.locator('section').filter({ hasText: /fuel reports/i });
   }
 
-  /** Add fuel report button */
   get addFuelReportButton(): Locator {
     return this.page.getByRole('button', { name: /add report/i }).first();
   }
 
-  /** Average consumption */
   get averageConsumption(): Locator {
     return this.page.getByText(/average.*consumption|średnie.*zużycie/i).locator('..');
   }
 
-  /** Breadcrumb navigation */
   get breadcrumbs(): Locator {
     return this.page.locator('nav[aria-label*="breadcrumb"], nav').filter({ hasText: '/' }).first();
   }
 
-  /** Brand link */
   get brandLink(): Locator {
     return this.breadcrumbs.locator('a[href^="/brands/"]').first();
   }
 
-  /** Model link */
   get modelLink(): Locator {
     return this.breadcrumbs.locator('a[href^="/models/"]').first();
   }
 
-  /** Generation link */
   get generationLink(): Locator {
     return this.breadcrumbs.locator('a[href^="/generations/"]').first();
   }
 
-  /** Tabs container */
   get tabs(): Locator {
     return this.page.locator('[role="tablist"]');
   }
@@ -175,17 +151,20 @@ export class CarDetailsPage extends BasePage {
 
   async selectTab(tabName: string): Promise<void> {
     const tab = this.page.getByRole('tab', { name: new RegExp(tabName, 'i') });
-    await tab.scrollIntoViewIfNeeded();
+    await tab.waitFor({ state: 'visible' });
+    await tab.evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
     await tab.click();
   }
 
   async clickReviewsTab(): Promise<void> {
-    await this.reviewsTab.scrollIntoViewIfNeeded();
+    await this.reviewsTab.waitFor({ state: 'visible' });
+    await this.reviewsTab.evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
     await this.reviewsTab.click();
   }
 
   async clickFuelReportsTab(): Promise<void> {
-    await this.fuelReportsTab.scrollIntoViewIfNeeded();
+    await this.fuelReportsTab.waitFor({ state: 'visible' });
+    await this.fuelReportsTab.evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
     await this.fuelReportsTab.click();
   }
 

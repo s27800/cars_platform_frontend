@@ -3,6 +3,7 @@
  * Test selectors
  */
 export const SELECTORS = {
+  
   // Auth
   LOGIN_FORM: 'login-form',
   LOGIN_USERNAME: 'login-username',

@@ -3,28 +3,30 @@ import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { IoCarSportOutline, IoDocumentTextOutline, IoTrashOutline } from 'react-icons/io5';
-import { getUserReviews } from '../../api/users';
-import { deleteReview } from '../../api/reviews';
-import { Card, Spinner, Button, Badge, Rating, Pagination, ConfirmModal, IconButton } from '../../components/ui';
-import { RATING_CATEGORIES } from '../../utils/constants';
-import { formatDate, calculateAverage } from '../../utils/helpers';
+import { getUserReviews } from './api';
+import { deleteReview } from '../reviews/api';
+import { Card, Spinner, Button, Badge, Rating, Pagination, ConfirmModal, IconButton } from '../../shared/components/ui';
+import { RATING_CATEGORIES } from '../reviews';
+import { formatDate, calculateAverage } from '../../shared/utils/helpers';
+import { REVIEWS_PAGE_SIZE, STALE_TIME } from '../../shared/utils/constants';
 
 
+// Reviews this user posted with delete option
 const UserReviewsList = () => {
   const { t } = useTranslation('profile');
   const [page, setPage] = useState(0);
   const [deleteTarget, setDeleteTarget] = useState(null);
-  const pageSize = 5;
+  const pageSize = REVIEWS_PAGE_SIZE;
   const queryClient = useQueryClient();
 
-  const { 
-    data: reviewsData, 
-    isLoading, 
+  const {
+    data: reviewsData,
+    isLoading,
     error,
   } = useQuery({
-    queryKey: ['userReviews', page, pageSize],
+    queryKey: ['user', 'reviews', page, pageSize],
     queryFn: () => getUserReviews({ page, size: pageSize, sort: 'reviewDate,desc' }),
-    staleTime: 30000,
+    staleTime: STALE_TIME.SHORT,
   });
 
   const reviews = reviewsData?.content || [];
@@ -35,7 +37,7 @@ const UserReviewsList = () => {
   const deleteMutation = useMutation({
     mutationFn: deleteReview,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['userReviews'] });
+      queryClient.invalidateQueries({ queryKey: ['user', 'reviews'] });
       setDeleteTarget(null);
     },
   });
@@ -45,9 +47,8 @@ const UserReviewsList = () => {
   };
 
   const handleDeleteConfirm = () => {
-    if (deleteTarget) {
+    if (deleteTarget)
       deleteMutation.mutate(deleteTarget.id);
-    }
   };
 
   // Loading State
@@ -64,10 +65,10 @@ const UserReviewsList = () => {
     return (
       <div className="text-center py-8">
         <p className="text-red-500 dark:text-red-400 mb-4">
-          {t('common:error.loadFailed', 'Failed to load your reviews. Please try again.')}
+          {t('common:errors.loadFailed')}
         </p>
         <Button variant="secondary" onClick={() => window.location.reload()}>
-          {t('common:retry', 'Retry')}
+          {t('common:retry')}
         </Button>
       </div>
     );
@@ -85,7 +86,7 @@ const UserReviewsList = () => {
           {t('reviews.emptyDescription')}
         </p>
         <Button to="/cars" variant="primary">
-          {t('common:browseCars', 'Browse Cars')}
+          {t('common:browseCars')}
         </Button>
       </div>
     );
@@ -94,16 +95,15 @@ const UserReviewsList = () => {
   return (
     <div>
       <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
-        {t('reviews:submitted', '{{count}} reviews submitted', { count: totalElements })}
+        {t('reviews:submitted', { count: totalElements })}
       </p>
 
       <div className="space-y-4">
         {reviews.map((review) => (
-          <UserReviewCard 
-            key={review.id} 
-            review={review} 
+          <UserReviewCard
+            key={review.id}
+            review={review}
             onDelete={() => handleDeleteClick(review)}
-            t={t}
           />
         ))}
       </div>
@@ -126,9 +126,9 @@ const UserReviewsList = () => {
         isOpen={!!deleteTarget}
         onClose={() => setDeleteTarget(null)}
         onConfirm={handleDeleteConfirm}
-        title={t('reviews:deleteReview', 'Delete Review')}
-        message={t('reviews:confirmDelete', 'Are you sure you want to delete your review for {{car}}?', { car: `${deleteTarget?.carInfo?.brandName} ${deleteTarget?.carInfo?.modelName}` })}
-        confirmText={t('reviews:deleteReview', 'Delete Review')}
+        title={t('reviews:deleteReview')}
+        message={t('reviews:confirmDelete', { car: `${deleteTarget?.carInfo?.brandName} ${deleteTarget?.carInfo?.modelName}` })}
+        confirmText={t('reviews:deleteReview')}
         variant="danger"
         isLoading={deleteMutation.isPending}
       />
@@ -138,7 +138,7 @@ const UserReviewsList = () => {
 
 
 // Card component for displaying user's review with car info
-const UserReviewCard = ({ review, onDelete, t }) => {
+const UserReviewCard = ({ review, onDelete }) => {
   const { t: tReviews } = useTranslation('reviews');
   const ratings = RATING_CATEGORIES.map(cat => review[cat.key]);
   const averageRating = calculateAverage(ratings);
@@ -149,7 +149,7 @@ const UserReviewCard = ({ review, onDelete, t }) => {
 
       {/* Car Info Header */}
       <div className="flex items-center justify-between p-4 bg-neutral-50 dark:bg-neutral-800/50 border-b border-neutral-200 dark:border-neutral-700">
-        <Link 
+        <Link
           to={`/cars/${carInfo?.carId}`}
           className="flex items-center gap-3 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
         >
@@ -166,17 +166,17 @@ const UserReviewCard = ({ review, onDelete, t }) => {
           </div>
         </Link>
 
-        <Badge 
-          variant={review.isApproved ? 'success' : 'warning'} 
+        <Badge
+          variant={review.isApproved ? 'success' : 'warning'}
           size="sm"
         >
-          {review.isApproved ? tReviews('status.approved', 'Approved') : tReviews('status.pending', 'Pending')}
+          {review.isApproved ? tReviews('status.approved') : tReviews('status.pending')}
         </Badge>
       </div>
 
       {/* Review Content */}
       <div className="p-4">
-        
+
         {/* Rating and Date */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
@@ -202,7 +202,7 @@ const UserReviewCard = ({ review, onDelete, t }) => {
           {RATING_CATEGORIES.map(({ key, label }) => {
             const value = review[key];
             if (value === null || value === undefined) return null;
-            
+
             return (
               <div key={key} className="text-center">
                 <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-1">
@@ -219,13 +219,13 @@ const UserReviewCard = ({ review, onDelete, t }) => {
         {/* Footer with likes and delete */}
         <div className="mt-3 pt-3 border-t border-neutral-100 dark:border-neutral-700 flex items-center justify-between">
           <span className="text-sm text-neutral-500 dark:text-neutral-400">
-            {tReviews('likes', '{{count}} likes', { count: review.likesCount || 0 })}
+            {tReviews('likes', { count: review.likesCount || 0 })}
           </span>
           <IconButton
             variant="ghost"
             size="sm"
             onClick={onDelete}
-            label={tReviews('deleteReview', 'Delete review')}
+            label={tReviews('deleteReview')}
             className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
           >
             <IoTrashOutline className="w-4 h-4" />

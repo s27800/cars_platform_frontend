@@ -81,9 +81,17 @@
     "pending": "Oczekująca",
     "rejected": "Odrzucona"
   },
-  "submitted": "{{count}} opinii przesłanych",
   "submitted_one": "{{count}} opinia przesłana",
-  "likes": "{{count}} polubień",
   "likes_one": "{{count}} polubienie",
-  "confirmDelete": "Czy na pewno chcesz usunąć swoją opinię dla {{car}}?"
+  "confirmDelete": "Czy na pewno chcesz usunąć swoją opinię dla {{car}}?",
+  "helpfulCount_one": "{{count}} osoba uznała to za pomocne",
+  "helpfulCount_few": "{{count}} osoby uznały to za pomocne",
+  "helpfulCount_many": "{{count}} osób uznało to za pomocne",
+  "helpfulCount_other": "{{count}} osób uznało to za pomocne",
+  "submitted_few": "{{count}} opinie przesłane",
+  "submitted_many": "{{count}} opinii przesłanych",
+  "submitted_other": "{{count}} opinii przesłanych",
+  "likes_few": "{{count}} polubienia",
+  "likes_many": "{{count}} polubień",
+  "likes_other": "{{count}} polubień"
 }

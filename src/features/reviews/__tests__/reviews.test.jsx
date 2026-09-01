@@ -6,8 +6,8 @@ import { render, screen } from '@testing-library/react';
 vi.mock('@tanstack/react-query', () => ({
   useQuery: vi.fn(() => ({ data: null, isLoading: false })),
   useQueries: () => [],
-  useMutation: vi.fn(() => ({ 
-    mutate: vi.fn(), 
+  useMutation: vi.fn(() => ({
+    mutate: vi.fn(),
     isPending: false,
     mutateAsync: vi.fn(),
   })),
@@ -25,13 +25,13 @@ vi.mock('react-i18next', () => ({
 }));
 
 // Mock hooks
-vi.mock('../../../hooks', () => ({
+vi.mock('../../../shared/hooks', () => ({
   useAuth: vi.fn(() => ({ isAuthenticated: false })),
   useToast: () => ({ addToast: vi.fn() }),
 }));
 
 // Mock UI components
-vi.mock('../../../components/ui', () => ({
+vi.mock('../../../shared/components/ui', () => ({
   Avatar: ({ name }) => <div data-testid="avatar" data-name={name}>{name?.charAt(0)}</div>,
   Badge: ({ children, variant }) => <span data-testid="badge" data-variant={variant}>{children}</span>,
   Rating: ({ value, readonly, onChange }) => (
@@ -56,12 +56,12 @@ vi.mock('../../../components/ui', () => ({
 }));
 
 // Mock API
-vi.mock('../../../api/likes', () => ({
+vi.mock('../../../shared/api/likes', () => ({
   toggleReviewLike: vi.fn(() => Promise.resolve({ liked: true, likesCount: 1 })),
   getReviewLikeStatus: vi.fn(() => Promise.resolve({ liked: false, likesCount: 0 })),
 }));
 
-vi.mock('../../../api/reviews', () => ({
+vi.mock('../api', () => ({
   getReviews: vi.fn(() => Promise.resolve({ content: [], totalElements: 0 })),
   createReview: vi.fn(() => Promise.resolve({ id: 1 })),
   getAverageRatings: vi.fn(() => Promise.resolve({})),
@@ -71,20 +71,24 @@ vi.mock('../../../api/reviews', () => ({
 vi.mock('react-icons/io5', () => ({
   IoHeartOutline: () => <span data-testid="icon-heart-outline" />,
   IoHeart: () => <span data-testid="icon-heart" />,
+  IoStarOutline: () => <span data-testid="icon-star-outline" />,
+  IoStar: () => <span data-testid="icon-star" />,
+  IoAddOutline: () => <span data-testid="icon-add" />,
+  IoChevronDownOutline: () => <span data-testid="icon-chevron-down" />,
 }));
 
 // Mock utils
-vi.mock('../../../utils/helpers', () => ({
+vi.mock('../../../shared/utils/helpers', () => ({
   formatDate: (date) => date,
   calculateAverage: (arr) => arr.reduce((a, b) => a + b, 0) / arr.length || 0,
 }));
 
-vi.mock('../../../utils/constants', () => ({
+vi.mock('../ratingCategories', () => ({
   RATING_CATEGORIES: [
-    { key: 'comfort', label: 'Comfort', description: 'Comfort rating' },
-    { key: 'performance', label: 'Performance', description: 'Performance rating' },
-    { key: 'reliability', label: 'Reliability', description: 'Reliability rating' },
-    { key: 'handling', label: 'Handling', description: 'Handling rating' },
+    { key: 'comfort', labelKey: 'comfort', descKey: 'comfortDesc' },
+    { key: 'performance', labelKey: 'performance', descKey: 'performanceDesc' },
+    { key: 'reliability', labelKey: 'reliability', descKey: 'reliabilityDesc' },
+    { key: 'handling', labelKey: 'handling', descKey: 'handlingDesc' },
   ],
 }));
 
@@ -92,15 +96,6 @@ vi.mock('../../../utils/constants', () => ({
 describe('ReviewCard', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-  });
-
-  describe('module', () => {
-    it('should export ReviewCard component', async () => {
-      const module = await import('../ReviewCard');
-
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
   });
 
   describe('rendering', () => {
@@ -197,25 +192,26 @@ describe('ReviewCard', () => {
 });
 
 describe('ReviewsSection', () => {
-  describe('module', () => {
-    it('should export ReviewsSection component', async () => {
-      const module = await import('../ReviewsSection');
+  it('should render section header with toggle', async () => {
+    const ReviewsSection = (await import('../ReviewsSection')).default;
 
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
+    render(<ReviewsSection carId={1} />);
+
+    const buttons = screen.getAllByRole('button');
+    expect(buttons.some(btn => btn.getAttribute('aria-expanded') === 'true')).toBe(true);
+  });
+
+  it('should render collapsible content when open', async () => {
+    const ReviewsSection = (await import('../ReviewsSection')).default;
+
+    render(<ReviewsSection carId={1} defaultOpen={true} />);
+
+    const buttons = screen.getAllByRole('button');
+    expect(buttons.some(btn => btn.getAttribute('aria-expanded') === 'true')).toBe(true);
   });
 });
 
 describe('RatingsChart', () => {
-  describe('module', () => {
-    it('should export RatingsChart component', async () => {
-      const module = await import('../RatingsChart');
-
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
-  });
 
   describe('rendering', () => {
     it('should render ratings chart with data', async () => {
@@ -236,12 +232,19 @@ describe('RatingsChart', () => {
 });
 
 describe('AddReviewForm', () => {
-  describe('module', () => {
-    it('should export AddReviewForm component', async () => {
-      const module = await import('../AddReviewForm');
+  it('should render form with rating inputs', async () => {
+    const AddReviewForm = (await import('../AddReviewForm')).default;
 
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
+    render(<AddReviewForm carId={1} onSuccess={vi.fn()} onCancel={vi.fn()} />);
+
+    expect(screen.getByRole('button', { name: 'form.submit' })).toBeInTheDocument();
+  });
+
+  it('should render cancel button', async () => {
+    const AddReviewForm = (await import('../AddReviewForm')).default;
+
+    render(<AddReviewForm carId={1} onSuccess={vi.fn()} onCancel={vi.fn()} />);
+
+    expect(screen.getByRole('button', { name: 'form.cancel' })).toBeInTheDocument();
   });
 });

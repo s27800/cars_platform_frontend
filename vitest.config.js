@@ -1,6 +1,5 @@
-import { defineConfig } from 'vitest/config';
-import react from '@vitejs/plugin-react';
-import path from 'path';
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
 
 
 export default defineConfig({
@@ -17,31 +16,20 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
       reportsDirectory: './coverage',
       include: [
-        'src/utils/**/*.js',
-        'src/hooks/**/*.js',
-        'src/contexts/**/*.jsx',
-        'src/api/**/*.js',
-        'src/components/ui/**/*.jsx',
-        'src/components/shared/**/*.jsx',
-        'src/components/layout/**/*.jsx',
-        'src/features/**/*.jsx',
-        'src/pages/**/*.jsx',
+        'src/app/layout/**/*.jsx',
+        'src/shared/**/*.{js,jsx}',
+        'src/features/**/*.{js,jsx}',
       ],
       exclude: [
         'node_modules/',
         'src/test/',
         'e2e/',
         '**/*.d.ts',
-        'src/main.jsx',
-        'src/App.jsx',
+        'src/app/main.jsx',
+        'src/app/App.jsx',
         '**/__tests__/**',
       ],
     },
     reporters: ['verbose'],
   },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-});
+})

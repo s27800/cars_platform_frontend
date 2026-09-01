@@ -11,8 +11,8 @@ vi.mock('react-router-dom', () => ({
 vi.mock('@tanstack/react-query', () => ({
   useQuery: vi.fn(() => ({ data: null, isLoading: false })),
   useQueries: () => [],
-  useMutation: vi.fn(() => ({ 
-    mutate: vi.fn(), 
+  useMutation: vi.fn(() => ({
+    mutate: vi.fn(),
     isPending: false,
     mutateAsync: vi.fn(),
   })),
@@ -30,7 +30,7 @@ vi.mock('react-i18next', () => ({
 }));
 
 // Mock hooks
-vi.mock('../../../hooks', () => ({
+vi.mock('../../../shared/hooks', () => ({
   useAuth: vi.fn(() => ({
     user: { id: 1, username: 'testuser', email: 'test@example.com' },
     isAuthenticated: true,
@@ -40,14 +40,14 @@ vi.mock('../../../hooks', () => ({
 }));
 
 // Mock UI components
-vi.mock('../../../components/ui', () => ({
+vi.mock('../../../shared/components/ui', () => ({
   Avatar: ({ name, size }) => <div data-testid="avatar" data-name={name} data-size={size}>{name?.charAt(0)}</div>,
   Badge: ({ children, variant }) => <span data-testid="badge" data-variant={variant}>{children}</span>,
   Spinner: () => <div data-testid="spinner">Loading...</div>,
   Button: ({ children, onClick, disabled, type, isLoading }) => (
     <button onClick={onClick} disabled={disabled || isLoading} type={type}>{children}</button>
   ),
-  Input: ({ label, value, onChange, error, type, ...props }) => (
+  Input: ({ label, value, onChange, error, type, leftIcon, rightIcon, ...props }) => (
     <div>
       {label && <label>{label}</label>}
       <input type={type} value={value} onChange={onChange} data-testid={`input-${label}`} {...props} />
@@ -68,22 +68,22 @@ vi.mock('../../../components/ui', () => ({
 }));
 
 // Mock API
-vi.mock('../../../api/users', () => ({
+vi.mock('../api', () => ({
   updateProfile: vi.fn(() => Promise.resolve({ id: 1 })),
   changePassword: vi.fn(() => Promise.resolve()),
 }));
 
-vi.mock('../../../api/reviews', () => ({
+vi.mock('../../reviews/api', () => ({
   getUserReviews: vi.fn(() => Promise.resolve({ content: [], totalElements: 0 })),
   deleteReview: vi.fn(() => Promise.resolve()),
 }));
 
-vi.mock('../../../api/fuelReports', () => ({
+vi.mock('../../fuelReports/api', () => ({
   getUserFuelReports: vi.fn(() => Promise.resolve({ content: [], totalElements: 0 })),
   deleteFuelReport: vi.fn(() => Promise.resolve()),
 }));
 
-vi.mock('../../../api/dataProposals', () => ({
+vi.mock('../../dataProposals/api', () => ({
   getUserProposals: vi.fn(() => Promise.resolve({ content: [], totalElements: 0 })),
 }));
 
@@ -107,36 +107,27 @@ vi.mock('react-icons/io5', () => ({
 }));
 
 // Mock utils
-vi.mock('../../../utils/helpers', () => ({
+vi.mock('../../../shared/utils/helpers', () => ({
   formatDate: (date) => date,
   calculateAverage: (arr) => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0,
   getConsumptionLevel: (value) => value < 6 ? 'low' : value < 10 ? 'medium' : 'high',
 }));
 
-vi.mock('../../../utils/constants', () => ({
+vi.mock('../../reviews', () => ({
   RATING_CATEGORIES: [
-    { key: 'comfort', label: 'Comfort' },
-    { key: 'performance', label: 'Performance' },
+    { key: 'comfort', labelKey: 'comfort' },
+    { key: 'performance', labelKey: 'performance' },
   ],
-  PROPOSAL_CATEGORIES: [
-    { value: 'ENGINE', label: 'Engine' },
-    { value: 'TRANSMISSION', label: 'Transmission' },
-  ],
+}));
+
+vi.mock('../../dataProposals', () => ({
+  getProposalCategoryLabel: (value) => value,
 }));
 
 
 describe('ProfileInfo', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-  });
-
-  describe('module', () => {
-    it('should export ProfileInfo component', async () => {
-      const module = await import('../ProfileInfo');
-
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
   });
 
   describe('rendering', () => {
@@ -157,14 +148,6 @@ describe('ProfileInfo', () => {
 });
 
 describe('ProfileEditForm', () => {
-  describe('module', () => {
-    it('should export ProfileEditForm component', async () => {
-      const module = await import('../ProfileEditForm');
-
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
-  });
 
   describe('rendering', () => {
     it('should render edit form fields', async () => {
@@ -183,14 +166,6 @@ describe('ProfileEditForm', () => {
 });
 
 describe('PasswordChangeForm', () => {
-  describe('module', () => {
-    it('should export PasswordChangeForm component', async () => {
-      const module = await import('../PasswordChangeForm');
-
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
-  });
 
   describe('rendering', () => {
     it('should render password change form', async () => {
@@ -204,14 +179,6 @@ describe('PasswordChangeForm', () => {
 });
 
 describe('UserReviewsList', () => {
-  describe('module', () => {
-    it('should export UserReviewsList component', async () => {
-      const module = await import('../UserReviewsList');
-
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
-  });
 
   describe('rendering', () => {
     it('should render reviews list container', async () => {
@@ -225,14 +192,6 @@ describe('UserReviewsList', () => {
 });
 
 describe('UserFuelReportsList', () => {
-  describe('module', () => {
-    it('should export UserFuelReportsList component', async () => {
-      const module = await import('../UserFuelReportsList');
-
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
-  });
 
   describe('rendering', () => {
     it('should render fuel reports list container', async () => {
@@ -246,14 +205,6 @@ describe('UserFuelReportsList', () => {
 });
 
 describe('UserDataProposalsList', () => {
-  describe('module', () => {
-    it('should export UserDataProposalsList component', async () => {
-      const module = await import('../UserDataProposalsList');
-
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
-  });
 
   describe('rendering', () => {
     it('should render proposals list container', async () => {

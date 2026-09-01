@@ -3,8 +3,6 @@
     "title": "Wyszukiwanie samochodów",
     "subtitle": "Przeglądaj i filtruj naszą bazę samochodów",
     "searchPlaceholder": "Szukaj samochodów...",
-    "results": "Znaleziono {{count}} wynik",
-    "results_plural": "Znaleziono {{count}} wyników",
     "showingResults": "Wyświetlono {{count}} z {{total}} wyników",
     "noResults": "Nie znaleziono samochodów",
     "noResultsHint": "Spróbuj dostosować filtry lub zapytanie",
@@ -24,7 +22,11 @@
       "nameDesc": "Nazwa Z-A",
       "priceAsc": "Cena: od najniższej",
       "priceDesc": "Cena: od najwyższej"
-    }
+    },
+    "results_one": "Znaleziono {{count}} wynik",
+    "results_few": "Znaleziono {{count}} wyniki",
+    "results_many": "Znaleziono {{count}} wyników",
+    "results_other": "Znaleziono {{count}} wyników"
   },
   "filters": {
     "title": "Filtry",
@@ -164,10 +166,8 @@
     "errorTitle": "Nie znaleziono modelu",
     "errorDescription": "Coś poszło nie tak podczas ładowania szczegółów modelu.",
     "errorNotFound": "Model, którego szukasz, nie istnieje lub został usunięty.",
-    "generationsCount": "{{count}} generacji",
     "generationsCount_one": "{{count}} generacja",
     "generationsCount_few": "{{count}} generacje",
-    "carsCount": "{{count}} samochodów",
     "carsCount_one": "{{count}} samochód",
     "carsCount_few": "{{count}} samochody",
     "stats": {
@@ -179,7 +179,11 @@
       "title": "Generacje",
       "subtitle": "Kliknij na generację, aby zobaczyć jej samochody",
       "empty": "Brak dostępnych generacji dla tego modelu."
-    }
+    },
+    "generationsCount_many": "{{count}} generacji",
+    "generationsCount_other": "{{count}} generacji",
+    "carsCount_many": "{{count}} samochodów",
+    "carsCount_other": "{{count}} samochodów"
   },
   "generation": {
     "variants": "Warianty",
@@ -188,7 +192,6 @@
     "errorTitle": "Nie znaleziono generacji",
     "errorDescription": "Coś poszło nie tak podczas ładowania szczegółów generacji.",
     "errorNotFound": "Generacja, której szukasz, nie istnieje lub została usunięta.",
-    "carsCount": "{{count}} samochodów",
     "carsCount_one": "{{count}} samochód",
     "carsCount_few": "{{count}} samochody",
     "searchAllCars": "Szukaj wszystkich samochodów",
@@ -201,7 +204,9 @@
       "title": "Samochody",
       "subtitle": "Kliknij na samochód, aby zobaczyć szczegóły lub dodać do porównania",
       "empty": "Brak dostępnych samochodów dla tej generacji."
-    }
+    },
+    "carsCount_many": "{{count}} samochodów",
+    "carsCount_other": "{{count}} samochodów"
   },
   "like": {
     "add": "Dodaj do ulubionych",
@@ -292,18 +297,17 @@
     "no": "Nie"
   },
   "fuelReports": {
-    "submitted": "{{count}} raportów przesłanych",
     "submitted_one": "{{count}} raport przesłany",
     "unit": "L/100km",
-    "basedOnReports": "Na podstawie {{count}} raportów użytkowników",
     "basedOnReports_one": "Na podstawie {{count}} raportu użytkownika",
     "disclaimer": "Rzeczywiste spalanie może różnić się od specyfikacji producenta w zależności od warunków jazdy, stylu jazdy i konserwacji.",
     "loginRequired": "Zaloguj się, aby dodawać raporty",
     "level": {
-      "excellent": "Doskonałe",
-      "good": "Dobre",
-      "average": "Średnie",
-      "poor": "Słabe"
+      "veryEconomical": "Bardzo oszczędny",
+      "economical": "Oszczędny",
+      "average": "Przeciętny",
+      "aboveAverage": "Powyżej średniej",
+      "high": "Wysokie spalanie"
     },
     "status": {
       "approved": "Zatwierdzony",
@@ -319,24 +323,129 @@
     "fuelConsumption": "Spalanie",
     "additionalComments": "Dodatkowe komentarze (opcjonalnie)",
     "commentPlaceholder": "Podaj szczegóły dotyczące warunków jazdy: proporcja miasto/trasa, pora roku, styl jazdy, używanie klimatyzacji itp.",
-    "submitReport": "Prześlij raport"
+    "submitReport": "Prześlij raport",
+    "submitted_few": "{{count}} raporty przesłane",
+    "submitted_many": "{{count}} raportów przesłanych",
+    "submitted_other": "{{count}} raportów przesłanych",
+    "basedOnReports_few": "Na podstawie {{count}} raportów użytkowników",
+    "basedOnReports_many": "Na podstawie {{count}} raportów użytkowników",
+    "basedOnReports_other": "Na podstawie {{count}} raportów użytkowników",
+    "consumptionPlaceholder": "np. 7,5"
   },
   "proposals": {
-    "submitted": "{{count}} propozycji przesłanych",
     "submitted_one": "{{count}} propozycja przesłana",
     "status": {
       "approved": "Zatwierdzona",
       "pending": "Oczekująca",
       "rejected": "Odrzucona"
     },
-    "categories": {
-      "technical": "Techniczne",
-      "images": "Obrazy",
-      "description": "Opis",
-      "other": "Inne"
-    },
     "yourComment": "Twój komentarz",
     "proposedChanges": "Proponowane zmiany",
-    "adminFeedback": "Odpowiedź administratora"
+    "adminFeedback": "Odpowiedź administratora",
+    "submitted_few": "{{count}} propozycje przesłane",
+    "submitted_many": "{{count}} propozycji przesłanych",
+    "submitted_other": "{{count}} propozycji przesłanych",
+    "approvedOn": "Zatwierdzono {{date}}",
+    "rejectedOn": "Odrzucono {{date}}"
+  },
+  "dataProposal": {
+    "title": "Zgłoś poprawkę",
+    "submit": "Wyślij propozycję",
+    "category": "Kategoria",
+    "selectCategory": "Wybierz kategorię",
+    "proposedValues": "Proponowane wartości",
+    "enterNew": "Nowa wartość: {{field}}",
+    "comment": "Dodatkowe uwagi (opcjonalnie)",
+    "commentPlaceholder": "Wyjaśnij, dlaczego proponujesz te zmiany. Podaj źródła, jeśli je masz.",
+    "categories": {
+      "engine": "Silnik",
+      "transmission": "Skrzynia biegów",
+      "chassis": "Podwozie i hamulce",
+      "performance": "Osiągi",
+      "outsideDimensions": "Wymiary zewnętrzne",
+      "insideDimensions": "Wymiary wnętrza",
+      "basicInfo": "Informacje podstawowe",
+      "tags": "Tagi"
+    },
+    "info": {
+      "suggesting": "Proponujesz zmiany dla: {{carName}}.",
+      "instructions": "Wypełnij tylko te pola, które chcesz zmienić. Każdą propozycję sprawdza administrator przed publikacją."
+    },
+    "success": {
+      "title": "Propozycja wysłana",
+      "description": "Dziękujemy. Twoja propozycja czeka na moderację."
+    },
+    "error": {
+      "title": "Nie udało się wysłać propozycji",
+      "description": "Coś poszło nie tak. Spróbuj ponownie za chwilę."
+    },
+    "validation": {
+      "categoryRequired": "Wybierz kategorię",
+      "commentMaxLength": "Uwagi mogą mieć najwyżej 1000 znaków",
+      "selectTag": "Wybierz przynajmniej jeden tag do dodania lub usunięcia",
+      "fillAtLeastOneField": "Wypełnij przynajmniej jedno pole"
+    },
+    "tags": {
+      "title": "Tagi",
+      "instructions": "Odznacz tag, aby zaproponować jego usunięcie, albo wybierz tag z listy poniżej, aby zaproponować dodanie.",
+      "current": "Obecne tagi (odznacz, aby usunąć):",
+      "add": "Tagi do dodania:",
+      "summary": "Podsumowanie zmian:",
+      "adding_one": "Dodanie {{count}} tagu",
+      "adding_few": "Dodanie {{count}} tagów",
+      "adding_many": "Dodanie {{count}} tagów",
+      "adding_other": "Dodanie {{count}} tagów",
+      "removing_one": "Usunięcie {{count}} tagu",
+      "removing_few": "Usunięcie {{count}} tagów",
+      "removing_many": "Usunięcie {{count}} tagów",
+      "removing_other": "Usunięcie {{count}} tagów"
+    },
+    "fields": {
+      "engineCode": "Kod silnika",
+      "displacement": "Pojemność (cm³)",
+      "engineType": "Rodzaj paliwa",
+      "maxPower": "Moc (KM)",
+      "maxPowerRpm": "Moc przy (obr./min)",
+      "maxTorque": "Moment obrotowy (Nm)",
+      "maxTorqueRpm": "Moment przy (obr./min)",
+      "cylinders": "Liczba cylindrów",
+      "valves": "Liczba zaworów",
+      "turbo": "Turbodoładowanie",
+      "transmissionType": "Rodzaj skrzyni",
+      "transmissionName": "Nazwa skrzyni",
+      "gears": "Liczba biegów",
+      "clutchType": "Rodzaj sprzęgła",
+      "driveType": "Napęd",
+      "suspension": "Zawieszenie",
+      "frontBrakes": "Hamulce przednie",
+      "rearBrakes": "Hamulce tylne",
+      "frontBrakesRadius": "Średnica hamulców przednich (mm)",
+      "rearBrakesRadius": "Średnica hamulców tylnych (mm)",
+      "maxSpeed": "Prędkość maksymalna (km/h)",
+      "acceleration": "0-100 km/h (s)",
+      "cityConsumption": "Spalanie w mieście (l/100 km)",
+      "highwayConsumption": "Spalanie w trasie (l/100 km)",
+      "mixedConsumption": "Spalanie mieszane (l/100 km)",
+      "fuelTank": "Zbiornik paliwa (l)",
+      "length": "Długość (mm)",
+      "width": "Szerokość (mm)",
+      "height": "Wysokość (mm)",
+      "wheelbase": "Rozstaw osi (mm)",
+      "groundClearance": "Prześwit (mm)",
+      "minTrunkSpace": "Minimalna pojemność bagażnika (l)",
+      "maxTrunkSpace": "Maksymalna pojemność bagażnika (l)",
+      "frontHeadroom": "Wysokość z przodu (mm)",
+      "rearHeadroom": "Wysokość z tyłu (mm)",
+      "doors": "Liczba drzwi",
+      "seats": "Liczba miejsc",
+      "productionYears": "Lata produkcji",
+      "description": "Opis"
+    }
+  },
+  "gallery": {
+    "previousImage": "Poprzednie zdjęcie",
+    "nextImage": "Następne zdjęcie",
+    "openFullscreen": "Otwórz pełny ekran",
+    "closeFullscreen": "Zamknij pełny ekran"
   }
 }

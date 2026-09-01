@@ -1,246 +1,209 @@
 # Cars Platform Frontend
 
-Nowoczesna aplikacja webowa do przeglądania, wyszukiwania i porównywania samochodów. Zbudowana z wykorzystaniem React 19 i Vite.
+Aplikacja webowa do przeglądania, wyszukiwania i porównywania samochodów. Zbudowana w React 19 i Vite.
 
-## 🚀 Stack technologiczny
+## Stack technologiczny
 
-| Technologia | Wersja | Opis |
+| Technologia | Wersja | Rola |
 |-------------|--------|------|
 | React | 19.2 | Biblioteka UI |
-| Vite | 8.0 | Build tool |
-| Tailwind CSS | 4.3 | Framework CSS |
+| Vite | 8.0 | Narzędzie budujące i serwer deweloperski |
+| Tailwind CSS | 4.3 | Stylowanie |
 | React Router | 7.15 | Routing |
-| TanStack React Query | 5.100 | Zarządzanie stanem serwera |
+| TanStack React Query | 5.100 | Stan serwera i cache zapytań |
 | Formik + Yup | 2.4 / 1.7 | Formularze i walidacja |
 | i18next | 24.2 | Internacjonalizacja (PL/EN) |
 | Axios | 1.16 | Klient HTTP |
 | Vitest | 4.1 | Testy jednostkowe |
-| Testing Library | 16.3 | Testowanie komponentów React |
+| Testing Library | 16.3 | Testowanie komponentów |
 | Playwright | 1.50 | Testy E2E |
 
-## 📁 Struktura projektu
+## Architektura
+
+Projekt jest zorganizowany wertykalnie: **jeden pakiet na funkcjonalność**. Pakiet
+zawiera własne wywołania API, komponenty i strony, więc cała funkcjonalność mieści
+się w jednym katalogu.
 
 ```
 src/
-├── api/                    # Klienci API
-│   ├── apiClient.js        # Konfiguracja Axios
-│   ├── auth.js             # Autentykacja
-│   ├── brands.js           # Marki samochodów
-│   ├── cars.js             # Samochody
-│   ├── reviews.js          # Recenzje
-│   ├── fuelReports.js      # Raporty zużycia paliwa
-│   └── ...
-├── components/             # Komponenty React
-│   ├── forms/              # Komponenty formularzy
-│   ├── layout/             # Layout (Header, Footer, Sidebar)
-│   ├── shared/             # Współdzielone komponenty
-│   └── ui/                 # Podstawowe elementy UI
-├── contexts/               # React Context
-│   ├── AuthContext.jsx     # Stan autentykacji
-│   ├── ThemeContext.jsx    # Dark/Light mode
-│   ├── LanguageContext.jsx # Język aplikacji
-│   └── ToastContext.jsx    # Powiadomienia
-├── features/               # Moduły funkcjonalne
-│   ├── admin/              # Panel administracyjny
-│   ├── brands/             # Funkcje marek
-│   ├── cars/               # Funkcje samochodów
-│   ├── comparison/         # Porównywarka
-│   ├── fuelReports/        # Raporty paliwa
-│   ├── profile/            # Profil użytkownika
-│   └── reviews/            # Recenzje
-├── hooks/                  # Custom hooks
-│   ├── __tests__/          # Testy jednostkowe (hooks)
-│   ├── useAuth.js          # Hook autentykacji
-│   ├── useDebounce.js      # Debouncing
-│   ├── useTheme.js         # Motyw aplikacji
-│   └── useToast.js         # Powiadomienia toast
-├── test/                   # Konfiguracja testów
-│   ├── setup.js            # Setup Vitest
-│   └── test-utils.jsx      # Utilities testowe
-├── i18n/                   # Tłumaczenia
-│   └── locales/
-│       ├── en/             # Angielski
-│       └── pl/             # Polski
-├── pages/                  # Strony aplikacji
-│   ├── HomePage.jsx
-│   ├── CarsSearchPage.jsx
-│   ├── CarDetailsPage.jsx
-│   ├── ComparisonPage.jsx
-│   ├── ProfilePage.jsx
-│   ├── AdminDashboard.jsx
-│   └── ...
-└── utils/                  # Funkcje pomocnicze
-e2e/
-├── tests/                  # Testy E2E
-│   ├── auth/               # Testy autentykacji
-│   ├── cars/               # Testy samochodów
-│   ├── comparison/         # Testy porównywarki
-│   ├── admin/              # Testy panelu admina
-│   ├── profile/            # Testy profilu
-│   ├── reviews/            # Testy recenzji
-│   ├── fuel-reports/       # Testy raportów paliwa
-│   └── navigation/         # Testy nawigacji
-├── pages/                  # Page Object Model
-├── fixtures/               # Dane testowe
-└── utils/                  # Utilities testowe
-coverage/                   # Raporty pokrycia kodu
+├── app/                    # punkt kompozycji aplikacji
+│   ├── main.jsx            # montowanie Reacta, providery
+│   ├── App.jsx             # definicje tras
+│   ├── index.css           # style globalne (Tailwind)
+│   └── layout/             # powłoka: Header, Footer, MainLayout
+│
+├── features/               # pakiety funkcjonalne
+│   ├── admin/              # moderacja: api.js + 4 strony panelu
+│   ├── auth/               # logowanie i rejestracja
+│   ├── brands/             # marki → modele → generacje (3 moduły API, 4 strony)
+│   ├── cars/               # wyszukiwarka i karta samochodu
+│   ├── comparison/         # porównywarka do 4 aut
+│   ├── dataProposals/      # propozycje poprawek danych
+│   ├── fuelReports/        # raporty spalania
+│   ├── home/               # strona główna
+│   ├── profile/            # profil i aktywność użytkownika
+│   ├── reviews/            # opinie i oceny
+│   └── staticPages/        # O nas, FAQ, regulamin, polityka, 404
+│
+├── shared/                 # elementy używane przez więcej niż jedną funkcjonalność
+│   ├── api/                # apiClient (Axios), queryClient, auth, tags, likes, userSettings
+│   ├── components/         # ProtectedRoute, ErrorBoundary
+│   │   └── ui/             # 25 komponentów bazowych (Button, Modal, Input, …)
+│   ├── contexts/           # Auth, Theme, Language, Toast
+│   ├── hooks/              # useAuth, useTheme, useLanguage, useToast, useDebounce, useUserSettings
+│   └── utils/              # constants.js, helpers.js, toastBus.js
+│
+├── i18n/                   # konfiguracja i18next
+│   └── locales/{en,pl}/    # 10 przestrzeni nazw na język
+│
+└── test/                   # setup Vitest i wspólne narzędzia testowe
 ```
 
-## ✨ Główne funkcjonalności
+### Zasady zależności
 
-- **Wyszukiwanie samochodów** - zaawansowane filtry (marka, model, rok, typ nadwozia, silnik, cena)
-- **Porównywarka** - porównywanie do 4 samochodów jednocześnie
-- **Szczegóły samochodu** - specyfikacje techniczne, galeria zdjęć
-- **System recenzji** - dodawanie i przeglądanie recenzji użytkowników
-- **Raporty zużycia paliwa** - rzeczywiste dane od użytkowników
-- **Panel administracyjny** - moderacja recenzji i raportów
-- **Profil użytkownika** - polubione samochody, historia
-- **Dark/Light mode** - przełączanie motywu
-- **Wielojęzyczność** - polski i angielski
+| Warstwa | Może importować z |
+|---------|-------------------|
+| `app/` | `features/`, `shared/` |
+| `features/X/` | własnego pakietu, publicznego `index.js` innego pakietu, `shared/` |
+| `shared/` | wyłącznie `shared/` |
 
-## 🛠️ Instalacja
+`shared/` nigdy nie zależy od `features/` — dlatego powłoka aplikacji (Header
+osadzający wyszukiwarkę z pakietu `cars`) leży w `app/`, a nie w `shared/`.
 
-### Wymagania
+Dostęp między pakietami: komponenty przez barrel (`import { CarCard } from '../cars'`),
+funkcje API przez ścieżkę bezpośrednią (`import { getCarById } from '../cars/api'`),
+żeby barrel nie wciągał drzewa komponentów do modułu, który potrzebuje tylko HTTP.
 
-- Node.js 22+
-- npm lub yarn
+### Konwencje
 
-### Uruchomienie lokalne
+- **Komentarze** — każdy eksportowany komponent poprzedza jednolinijkowy opis;
+  komponenty o nieoczywistym kontrakcie propsów mają blok JSDoc z `@param`;
+  funkcje niebędące komponentami (API, helpery, hooki) mają JSDoc zawsze.
+- **Klucze React Query** — `[domena, zakres, ...parametry]`, np. `['cars', 'detail', id]`,
+  `['admin', 'pendingReviews', page, size]`. Dzięki hierarchii unieważnienie
+  `['admin', 'pendingReviews']` obejmuje zarówno listę stronicowaną, jak i licznik
+  na pulpicie.
+- **Czasy świeżości** — wyłącznie `STALE_TIME.SHORT/MEDIUM/LONG` z `shared/utils/constants.js`.
+- **localStorage** — wszystkie klucze w `STORAGE_KEYS`, bo przestrzeń nazw jest wspólna.
+- **Teksty** — żadnych napisów widocznych dla użytkownika w kodzie, łącznie
+  z `aria-label`. Brakujący klucz ma być widoczny, dlatego `t()` nie dostaje
+  tekstu zapasowego.
+- **Formularze** — Formik z `useFormik`, schemat Yup w `useMemo` zależnym od `t`,
+  zawsze pod nazwą `validationSchema`.
+
+## Główne funkcjonalności
+
+- **Wyszukiwanie samochodów** — filtry po marce, modelu, generacji, typie nadwozia,
+  silniku, napędzie, skrzyni, osiągach i spalaniu
+- **Porównywarka** — do 4 samochodów jednocześnie, z podświetleniem najlepszych wartości
+- **Szczegóły samochodu** — specyfikacja techniczna, galeria, podobne modele
+- **Opinie** — 11 kategorii ocen, moderowane przed publikacją
+- **Raporty spalania** — rzeczywiste dane od użytkowników, moderowane
+- **Propozycje poprawek** — zgłaszanie zmian w danych technicznych i tagach
+- **Panel administracyjny** — moderacja opinii, raportów i propozycji
+- **Profil użytkownika** — własne opinie, raporty i propozycje wraz ze statusem
+- **Tryb jasny i ciemny** — z zapisem na koncie
+- **Wielojęzyczność** — polski i angielski, z automatycznym wykryciem języka przeglądarki
+
+## Instalacja
+
+Wymagania: Node.js 22+.
 
 ```bash
-# Klonowanie repozytorium
 git clone https://github.com/s27800/cars_platform_frontend.git
 cd cars_platform_frontend
-
-# Instalacja zależności
 npm install
-
-# Uruchomienie serwera deweloperskiego
 npm run dev
 ```
 
-Aplikacja będzie dostępna pod adresem: `http://localhost:5173`
+Serwer deweloperski startuje na `http://localhost:3000` (port ustawiony w `vite.config.js`).
 
 ### Zmienne środowiskowe
 
-Utwórz plik `.env` w katalogu głównym:
+Plik `.env` w katalogu głównym:
 
 ```env
 VITE_API_URL=http://localhost:8080/api
 ```
 
-## 📜 Skrypty NPM
+## Skrypty NPM
 
 | Skrypt | Opis |
 |--------|------|
-| `npm run dev` | Uruchomienie serwera deweloperskiego |
+| `npm run dev` | Serwer deweloperski |
 | `npm run build` | Build produkcyjny |
 | `npm run preview` | Podgląd buildu produkcyjnego |
-| `npm run lint` | Sprawdzenie kodu ESLint |
-| `npm run test` | Uruchomienie testów jednostkowych |
-| `npm run test:watch` | Testy jednostkowe w trybie watch |
+| `npm run lint` | ESLint |
+| `npm run test` | Testy jednostkowe w trybie watch |
+| `npm run test:run` | Testy jednostkowe jednorazowo |
 | `npm run test:ui` | Testy jednostkowe z interfejsem Vitest |
 | `npm run test:coverage` | Testy jednostkowe z raportem pokrycia |
-| `npm run test:e2e` | Uruchomienie testów E2E |
+| `npm run test:e2e` | Testy E2E |
 | `npm run test:e2e:ui` | Testy E2E z interfejsem Playwright |
 | `npm run test:e2e:debug` | Testy E2E w trybie debug |
 | `npm run test:e2e:headed` | Testy E2E z widoczną przeglądarką |
-| `npm run test:e2e:report` | Wyświetlenie raportu testów |
+| `npm run test:e2e:report` | Raport z ostatniego przebiegu E2E |
+| `npm run test:e2e:auth` | Testy E2E oznaczone `@auth` |
+| `npm run test:e2e:cars` | Testy E2E oznaczone `@cars` |
+| `npm run test:e2e:comparison` | Testy E2E oznaczone `@comparison` |
 
-## 🧪 Testowanie
+## Testowanie
 
 ### Testy jednostkowe (Vitest + Testing Library)
 
-Projekt zawiera **67 plików testów jednostkowych** pokrywających:
+**70 plików, 819 testów.** Testy leżą w katalogu `__tests__` obok kodu, który sprawdzają.
 
-| Kategoria | Pliki testowe | Opis |
-|-----------|---------------|------|
-| API | 15 | Klienci HTTP (auth, cars, brands, reviews, itp.) |
-| Components/UI | 22 | Komponenty interfejsu (Button, Modal, Input, itp.) |
-| Components/Shared | 5 | Współdzielone komponenty (CarCard, FiltersPanel, itp.) |
-| Components/Layout | 3 | Layout (Header, Footer, MainLayout) |
-| Contexts | 4 | React Context (Auth, Theme, Language, Toast) |
-| Hooks | 5 | Custom hooks (useAuth, useDebounce, useTheme, itp.) |
-| Features | 7 | Moduły funkcjonalne (cars, comparison, reviews, itp.) |
-| Pages | 4 | Strony aplikacji (auth, car, admin, static) |
-| Utils | 2 | Funkcje pomocnicze (helpers, constants) |
+| Obszar | Pliki testowe |
+|--------|---------------|
+| `shared/components/ui` | 22 |
+| `shared/components` (bez `ui`) | 1 |
+| `shared/api` | 6 |
+| `shared/contexts` | 4 |
+| `shared/hooks` | 5 |
+| `shared/utils` | 2 |
+| `app/layout` | 3 |
+| `features/*` | 27 |
 
 ```bash
-# Uruchomienie testów jednostkowych
-npm run test
-
-# Testy w trybie watch (automatyczne przeładowanie)
-npm run test:watch
-
-# Testy z interfejsem graficznym Vitest
-npm run test:ui
-
-# Testy z raportem pokrycia kodu
-npm run test:coverage
+npm run test:run        # jednorazowo
+npm run test            # tryb watch
+npm run test:coverage   # z raportem pokrycia
 ```
 
-#### Konfiguracja Vitest
-
-Testy konfigurowane są w `vitest.config.js`:
-- Środowisko: jsdom
-- Setup: `src/test/setup.js`
-- Coverage: v8 provider (text, json, html)
-- Globalne zmienne testowe
+Konfiguracja w `vitest.config.js`: środowisko jsdom, setup w `src/test/setup.js`,
+pokrycie liczone providerem v8 dla `src/app/layout`, `src/shared` i `src/features`.
 
 ### Testy E2E (Playwright)
 
+**16 plików spec.** Konfiguracja w `playwright.config.ts`.
+
+| Katalog | Pliki |
+|---------|-------|
+| `auth` | 3 |
+| `cars` | 4 |
+| `comparison` | 3 |
+| `navigation` | 2 |
+| `admin` | 1 |
+| `fuel-reports` | 1 |
+| `profile` | 1 |
+| `reviews` | 1 |
+
+Uruchamiane w pięciu konfiguracjach przeglądarek — Chromium, Firefox, WebKit oraz
+mobilne Pixel 5 i iPhone 12 — po projekcie `setup`, który loguje użytkownika
+testowego. Wzorzec Page Object w `e2e/pages/`.
+
 ```bash
-# Uruchomienie wszystkich testów
 npm run test:e2e
-
-# Testy z interfejsem graficznym
-npm run test:e2e:ui
-
-# Testy konkretnej kategorii
-npm run test:e2e:auth       # Testy autentykacji
-npm run test:e2e:cars       # Testy samochodów
-npm run test:e2e:comparison # Testy porównywarki
-
-# Pojedynczy plik testowy
-npx playwright test auth.spec.ts
+npx playwright test auth.spec.ts     # pojedynczy plik
 ```
 
-Projekt zawiera **15 plików testów E2E** w następujących kategoriach:
-
-| Kategoria | Pliki | Opis |
-|-----------|-------|------|
-| auth | 3 | Logowanie, rejestracja, wylogowanie |
-| cars | 4 | Wyszukiwanie, filtry, paginacja, szczegóły |
-| comparison | 3 | Dodawanie, usuwanie, tabela porównania |
-| admin | 1 | Panel administracyjny |
-| navigation | 1 | Nawigacja aplikacji |
-| profile | 1 | Profil użytkownika |
-| reviews | 1 | System recenzji |
-| fuel-reports | 1 | Raporty zużycia paliwa |
-
-### Konfiguracja Playwright
-
-Testy konfigurowane są w `playwright.config.ts`:
-- Przeglądarki: Chromium, Firefox, WebKit
-- Raportowanie: HTML, JUnit (CI)
-- Screenshot przy błędzie
-- Video przy pierwszym retry
-- Page Object Model w `e2e/pages/`
-
-## 🐳 Docker
-
-### Build obrazu
+## Docker
 
 ```bash
 docker build -t cars-platform-frontend .
-```
-
-### Uruchomienie kontenera
-
-```bash
 docker run -p 3000:80 cars-platform-frontend
 ```
 
-## 🔗 Powiązane
+## Powiązane
 
-- [Backend Repository](https://github.com/s27800/cars_platform_backend) - Spring Boot REST API
+- [Backend Repository](https://github.com/s27800/cars_platform_backend) — Spring Boot REST API

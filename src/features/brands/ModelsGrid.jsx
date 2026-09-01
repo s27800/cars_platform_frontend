@@ -7,6 +7,7 @@ import {
 } from 'react-icons/io5';
 
 
+// One model tile inside the grid
 const ModelCard = ({ model, t }) => {
   const { id, name, generationsCount = 0 } = model;
 
@@ -41,6 +42,7 @@ const ModelCard = ({ model, t }) => {
 };
 
 
+// Grid of the models belonging to a brand
 const ModelsGrid = ({ models }) => {
   const { t } = useTranslation('cars');
   const sortedModels = [...models].sort((a, b) => a.name.localeCompare(b.name));

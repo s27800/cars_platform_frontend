@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { IoHeartOutline, IoHeart } from 'react-icons/io5';
-import { toggleReviewLike, getReviewLikeStatus } from '../../api/likes';
-import { useAuth } from '../../hooks';
-import { Avatar, Badge, Rating } from '../../components/ui';
-import { RATING_CATEGORIES } from '../../utils/constants';
-import { formatDate, calculateAverage } from '../../utils/helpers';
+import { toggleReviewLike, getReviewLikeStatus } from '../../shared/api/likes';
+import { useAuth } from '../../shared/hooks';
+import { Avatar, Badge, Rating } from '../../shared/components/ui';
+import { RATING_CATEGORIES } from './ratingCategories';
+import { formatDate, calculateAverage } from '../../shared/utils/helpers';
+import { STALE_TIME } from '../../shared/utils/constants';
 
 
 // Reusable component displaying a single review with ratings breakdown and like button
@@ -19,10 +20,10 @@ const ReviewCard = ({ review }) => {
 
   // Fetch like status for authenticated users
   const { data: likeStatus } = useQuery({
-    queryKey: ['reviewLikeStatus', review.id],
+    queryKey: ['reviews', 'likeStatus', review.id],
     queryFn: () => getReviewLikeStatus(review.id),
     enabled: isAuthenticated,
-    staleTime: 30000,
+    staleTime: STALE_TIME.SHORT,
   });
 
   const [lastLikeStatus, setLastLikeStatus] = useState(null);
@@ -48,7 +49,7 @@ const ReviewCard = ({ review }) => {
       setLikeCount(prev => isLiked ? prev + 1 : prev - 1);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['reviewLikeStatus', review.id] });
+      queryClient.invalidateQueries({ queryKey: ['reviews', 'likeStatus', review.id] });
     },
   });
 
@@ -62,8 +63,8 @@ const ReviewCard = ({ review }) => {
       {/* Author info and date */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
-          <Avatar 
-            name={authorName} 
+          <Avatar
+            name={authorName}
             size="md"
           />
           <div>
@@ -84,7 +85,7 @@ const ReviewCard = ({ review }) => {
               {t('status.pending')}
             </Badge>
           )}
-          
+
           {/* Overall rating */}
           <div className="flex items-center gap-2">
             <Rating value={averageRating} readonly size="sm" />
@@ -107,7 +108,7 @@ const ReviewCard = ({ review }) => {
         {RATING_CATEGORIES.map(({ key, labelKey }) => {
           const value = review[key];
           if (value === null || value === undefined) return null;
-          
+
           return (
             <div key={key} className="text-center">
               <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-1">
@@ -128,8 +129,8 @@ const ReviewCard = ({ review }) => {
           disabled={!isAuthenticated || likeMutation.isPending}
           className={`
             flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors
-            ${isAuthenticated 
-              ? 'hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer' 
+            ${isAuthenticated
+              ? 'hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer'
               : 'opacity-50 cursor-not-allowed'
             }
             ${isLiked ? 'text-red-500' : 'text-neutral-600 dark:text-neutral-400'}

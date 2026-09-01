@@ -11,27 +11,20 @@ test.describe('Car Details', () => {
   });
 
   test.describe('Page Display', () => {
-    test('CAR-001: should display car details', async ({ page }) => {
-
-      // First get a car ID from search
+    test('should display car details', async ({ page }) => {
       const searchPage = new CarsSearchPage(page);
 
       await searchPage.goto();
       await searchPage.waitForLoading();
       
-      // Click first car
       await searchPage.clickCarCard(0);
       
-      // Should navigate to details page
       await expect(page).toHaveURL(/\/cars\/[0-9a-fA-F-]{36}/);
       
-      // Should display car title
       await carDetailsPage.expectPageVisible();
     });
 
     test('should display car title', async ({ page }) => {
-
-      // Navigate to a specific car
       await carDetailsPage.goto(testCars().first.id);
       await carDetailsPage.waitForLoading();
 
@@ -40,7 +33,7 @@ test.describe('Car Details', () => {
   });
 
   test.describe('Image Gallery', () => {
-    test('CAR-002: should display image gallery', async ({ page }) => {
+    test('should display image gallery', async ({ page }) => {
       await carDetailsPage.goto(testCars().first.id);
       await carDetailsPage.waitForLoading();
       await carDetailsPage.expectImageGalleryVisible();
@@ -50,22 +43,19 @@ test.describe('Car Details', () => {
       await carDetailsPage.goto(testCars().first.id);
       await carDetailsPage.waitForLoading();
 
-      // Check if navigation buttons exist
       const hasNextButton = await carDetailsPage.galleryNext.isVisible().catch(() => false);
       
       if (hasNextButton) {
 
-        // Click next
         await carDetailsPage.clickNextImage();
         
-        // Gallery should still be visible
         await carDetailsPage.expectImageGalleryVisible();
       }
     });
   });
 
   test.describe('Specifications', () => {
-    test('CAR-003: should display specifications section', async ({ page }) => {
+    test('should display specifications section', async ({ page }) => {
       await carDetailsPage.goto(testCars().first.id);
       await carDetailsPage.waitForLoading();
       await carDetailsPage.expectSpecificationsVisible();
@@ -73,7 +63,7 @@ test.describe('Car Details', () => {
   });
 
   test.describe('Reviews Section', () => {
-    test('CAR-004: should display reviews section', async ({ page }) => {
+    test('should display reviews section', async ({ page }) => {
       await carDetailsPage.goto(testCars().first.id);
       await carDetailsPage.waitForLoading();
       await carDetailsPage.expectReviewsSection();
@@ -81,17 +71,14 @@ test.describe('Car Details', () => {
   });
 
   test.describe('Comparison', () => {
-    test('CAR-006: should add car to comparison', async ({ page }) => {
+    test('should add car to comparison', async ({ page }) => {
       await carDetailsPage.goto(testCars().first.id);
       await carDetailsPage.waitForLoading();
 
-      // Click add to comparison
       await carDetailsPage.addToComparison();
 
-      // Button should change state
       await carDetailsPage.expectAddedToComparison();
 
-      // Car should be in localStorage comparison
       const comparison = await page.evaluate(() => {
         return localStorage.getItem('comparisonCars');
       });
@@ -101,7 +88,7 @@ test.describe('Car Details', () => {
   });
 
   test.describe('Breadcrumbs', () => {
-    test('CAR-008: should display breadcrumb navigation', async ({ page }) => {
+    test('should display breadcrumb navigation', async ({ page }) => {
       await carDetailsPage.goto(testCars().first.id);
       await carDetailsPage.waitForLoading();
       await carDetailsPage.expectBreadcrumbsVisible();
@@ -111,40 +98,30 @@ test.describe('Car Details', () => {
       await carDetailsPage.goto(testCars().first.id);
       await carDetailsPage.waitForLoading();
 
-      // Click on brand link in breadcrumbs
       await carDetailsPage.clickBrandLink();
 
-      // Should navigate to brand page
       await expect(page).toHaveURL(/\/brands\/[0-9a-fA-F-]{36}/);
     });
   });
 
   test.describe('Error Handling', () => {
-    test('CAR-009: should show 404 for non-existent car', async ({ page }) => {
-
-      // Navigate to non-existent car ID
+    test('should show 404 for non-existent car', async ({ page }) => {
       await carDetailsPage.goto(testCars().missing);
-      
-      // Should show not found message or redirect
       await carDetailsPage.expectNotFound();
     });
   });
 
   test.describe('Like Feature', () => {
-    test('CAR-007: should require login for like button', async ({ page }) => {
-
-      // As unauthenticated user
+    test('should require login for like button', async ({ page }) => {
       await carDetailsPage.goto(testCars().first.id);
       await carDetailsPage.waitForLoading();
 
-      // Try to like
       const likeButton = carDetailsPage.likeButton;
       const isVisible = await likeButton.isVisible().catch(() => false);
 
       if (isVisible) {
         await carDetailsPage.clickLike();
         
-        // Should either redirect to login or show message
         const isOnLogin = await page.url().includes('/login');
         const hasToast = await carDetailsPage.toast.isVisible().catch(() => false);
         
@@ -155,8 +132,6 @@ test.describe('Car Details', () => {
 
   test.describe('Add Review', () => {
     test('should show add review button when logged in', async ({ page }) => {
-      
-      // Login first
       const loginPage = new (await import('../../pages/LoginPage')).LoginPage(page);
 
       await loginPage.goto();
@@ -167,20 +142,17 @@ test.describe('Car Details', () => {
       await carDetailsPage.goto(testCars().first.id);
       await carDetailsPage.waitForLoading();
 
-      // Click reviews tab to expand it
       await carDetailsPage.clickReviewsTab();
       
       await expect(carDetailsPage.addReviewButton).toBeVisible();
     });
 
-    test('CAR-005: should require login to add review', async ({ page }) => {
+    test('should require login to add review', async ({ page }) => {
       await carDetailsPage.goto(testCars().first.id);
       await carDetailsPage.waitForLoading();
 
-      // Click reviews tab to expand
       await carDetailsPage.clickReviewsTab();
 
-      // For unauthenticated users, there should be a login prompt
       const loginButton = page.getByRole('link', { name: /login/i });
       const loginPrompt = page.getByText(/login to interact|login to write/i);
       
@@ -196,7 +168,6 @@ test.describe('Car Details', () => {
       await carDetailsPage.goto(testCars().first.id);
       await carDetailsPage.waitForLoading();
 
-      // Fuel reports section should exist
       const section = carDetailsPage.fuelReportsSection;
       
       await expect(section).toBeVisible();

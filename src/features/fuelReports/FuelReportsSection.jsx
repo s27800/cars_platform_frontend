@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { IoAddOutline, IoFlameOutline, IoSpeedometerOutline, IoChevronDownOutline } from 'react-icons/io5';
-import { getFuelReports, getAverageConsumption } from '../../api/fuelReports';
-import { useAuth } from '../../hooks';
-import { Button, Spinner, Pagination, Modal, Alert } from '../../components/ui';
+import { getFuelReports, getAverageConsumption } from './api';
+import { useAuth } from '../../shared/hooks';
+import { Button, Spinner, Pagination, Modal, Alert } from '../../shared/components/ui';
 import FuelReportCard from './FuelReportCard';
 import AddFuelReportForm from './AddFuelReportForm';
+import { FUEL_REPORTS_PAGE_SIZE } from '../../shared/utils/constants';
 
 
 // Reusable section component for displaying fuel reports and average consumption
@@ -16,25 +17,25 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [page, setPage] = useState(0);
   const [showAddForm, setShowAddForm] = useState(false);
-  const pageSize = 5;
+  const pageSize = FUEL_REPORTS_PAGE_SIZE;
 
   // Fetch fuel reports with pagination
-  const { 
-    data: reportsData, 
+  const {
+    data: reportsData,
     isLoading: isLoadingReports,
     isError: isReportsError,
   } = useQuery({
-    queryKey: ['fuelReports', carId, page, pageSize],
+    queryKey: ['fuelReports', 'list', carId, page, pageSize],
     queryFn: () => getFuelReports(carId, { page, size: pageSize }),
     enabled: !!carId,
   });
 
   // Fetch average consumption
-  const { 
+  const {
     data: averageConsumption,
     isLoading: isLoadingAverage,
   } = useQuery({
-    queryKey: ['averageConsumption', carId],
+    queryKey: ['fuelReports', 'averageConsumption', carId],
     queryFn: () => getAverageConsumption(carId),
     enabled: !!carId,
   });
@@ -93,7 +94,7 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
               {t('details.addFuelReport')}
             </Button>
           )}
-          <IoChevronDownOutline 
+          <IoChevronDownOutline
             className={`w-5 h-5 text-neutral-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
           />
         </div>
@@ -102,6 +103,7 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
       {/* Collapsible content */}
       {isOpen && (
       <div className="p-4 bg-white dark:bg-neutral-800">
+
       {/* Average consumption card */}
       {isLoadingAverage ? (
         <div className="flex justify-center py-8">
@@ -115,10 +117,10 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
                 {t('stats.fuelConsumption')}
               </h4>
               <p className="text-sm text-neutral-500">
-                {t('fuelReports.basedOnReports', 'Based on {{count}} user reports', { count: totalElements })}
+                {t('fuelReports.basedOnReports', { count: totalElements })}
               </p>
             </div>
-            
+
             <div className="flex items-center gap-3">
               <IoSpeedometerOutline className="w-8 h-8 text-primary-500" />
               <div className="text-right">
@@ -135,7 +137,7 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
           {/* Comparison with manufacturer data */}
           <div className="mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700">
             <p className="text-xs text-neutral-500 dark:text-neutral-400">
-              {t('fuelReports.disclaimer', 'Real-world fuel consumption may differ from manufacturer specifications based on driving conditions, style, and maintenance.')}
+              {t('fuelReports.disclaimer')}
             </p>
           </div>
         </div>
@@ -179,7 +181,7 @@ const FuelReportsSection = ({ carId, defaultOpen = true, className = '' }) => {
               <Button to="/login" variant="ghost" size="sm">
                 {t('auth:login')}
               </Button>
-              {t('fuelReports.loginRequired', 'to add a report')}
+              {t('fuelReports.loginRequired')}
             </p>
           )}
         </div>

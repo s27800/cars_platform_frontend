@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { IoHeartOutline, IoHeart, IoSpeedometerOutline } from 'react-icons/io5';
-import { toggleFuelReportLike, getFuelReportLikeStatus } from '../../api/likes';
-import { useAuth } from '../../hooks';
-import { Avatar, Badge } from '../../components/ui';
-import { formatDate, getConsumptionLevel } from '../../utils/helpers';
+import { toggleFuelReportLike, getFuelReportLikeStatus } from '../../shared/api/likes';
+import { useAuth } from '../../shared/hooks';
+import { Avatar, Badge } from '../../shared/components/ui';
+import { formatDate, getConsumptionLevel } from '../../shared/utils/helpers';
+import { STALE_TIME } from '../../shared/utils/constants';
 
 
 // Reusable card component displaying fuel consumption report with like functionality
@@ -18,10 +19,10 @@ const FuelReportCard = ({ report }) => {
 
   // Fetch like status for authenticated users
   const { data: likeStatus } = useQuery({
-    queryKey: ['fuelReportLikeStatus', report.id],
+    queryKey: ['fuelReports', 'likeStatus', report.id],
     queryFn: () => getFuelReportLikeStatus(report.id),
     enabled: isAuthenticated,
-    staleTime: 30000,
+    staleTime: STALE_TIME.SHORT,
   });
 
   const [lastLikeStatus, setLastLikeStatus] = useState(null);
@@ -47,7 +48,7 @@ const FuelReportCard = ({ report }) => {
       setLikeCount(prev => isLiked ? prev + 1 : prev - 1);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['fuelReportLikeStatus', report.id] });
+      queryClient.invalidateQueries({ queryKey: ['fuelReports', 'likeStatus', report.id] });
     },
   });
 
@@ -74,14 +75,14 @@ const FuelReportCard = ({ report }) => {
           {report.isApproved === false && (
             <Badge variant="warning" size="sm">{t('fuelReports.status.pending')}</Badge>
           )}
-          
+
           <div className="text-right">
             <div className="flex items-center gap-1.5">
               <IoSpeedometerOutline className={`w-5 h-5 ${level.color}`} />
               <span className={`text-2xl font-bold ${level.color}`}>{fuelValue}</span>
               <span className="text-sm text-neutral-500 dark:text-neutral-400">{t('fuelReports.unit')}</span>
             </div>
-            <span className={`text-xs ${level.color}`}>{t(`fuelReports.level.${level.label.toLowerCase()}`)}</span>
+            <span className={`text-xs ${level.color}`}>{t(`fuelReports.level.${level.labelKey}`)}</span>
           </div>
         </div>
       </div>
@@ -99,8 +100,8 @@ const FuelReportCard = ({ report }) => {
           disabled={!isAuthenticated || likeMutation.isPending}
           className={`
             flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors
-            ${isAuthenticated 
-              ? 'hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer' 
+            ${isAuthenticated
+              ? 'hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer'
               : 'opacity-50 cursor-not-allowed'
             }
             ${isLiked ? 'text-red-500' : 'text-neutral-600 dark:text-neutral-400'}

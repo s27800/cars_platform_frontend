@@ -22,32 +22,34 @@ vi.mock('react-i18next', () => ({
 }));
 
 // Mock UI components
-vi.mock('../../../components/ui', () => ({
+vi.mock('../../../shared/components/ui', () => ({
   Spinner: () => <div data-testid="spinner">Loading</div>,
   Button: ({ children, onClick }) => <button onClick={onClick}>{children}</button>,
   Card: ({ children }) => <div data-testid="card">{children}</div>,
+  Input: vi.fn().mockImplementation(({ placeholder, leftIcon, rightIcon, ...props }) => (
+    <input placeholder={placeholder} {...props} />
+  )),
 }));
 
 // Mock APIs
-vi.mock('../../../api/reviews', () => ({
+vi.mock('../../reviews/api', () => ({
   getAverageRatings: vi.fn(),
 }));
 
-vi.mock('../../../api/fuelReports', () => ({
+vi.mock('../../fuelReports/api', () => ({
   getAverageConsumption: vi.fn(),
 }));
 
-vi.mock('../../../api/cars', () => ({
+vi.mock('../../cars/api', () => ({
   searchCars: vi.fn(),
 }));
 
 // Mock utils
-vi.mock('../../../utils/constants', () => ({
+vi.mock('../../reviews', () => ({
   RATING_CATEGORIES: [
-    { key: 'comfort', label: 'Comfort' },
-    { key: 'performance', label: 'Performance' },
+    { key: 'comfort', labelKey: 'comfort' },
+    { key: 'performance', labelKey: 'performance' },
   ],
-  COMPARISON_SPECS: [],
 }));
 
 
@@ -55,53 +57,45 @@ const renderWithRouter = (ui) => render(<BrowserRouter>{ui}</BrowserRouter>);
 
 
 describe('ComparisonTable', () => {
-  describe('module', () => {
-    it('should export ComparisonTable component', async () => {
-      const module = await import('../ComparisonTable');
-
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
-  });
 
   describe('rendering', () => {
     it('should render table with empty cars', async () => {
       const ComparisonTable = (await import('../ComparisonTable')).default;
-      
+
       renderWithRouter(<ComparisonTable cars={[]} onRemoveCar={vi.fn()} />);
-      
+
       expect(document.body).toBeInTheDocument();
     });
   });
 });
 
 describe('ComparisonStats', () => {
-  describe('module', () => {
-    it('should export ComparisonStats component', async () => {
-      const module = await import('../ComparisonStats');
-
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
-  });
 
   describe('rendering', () => {
     it('should return null when no carIds', async () => {
       const ComparisonStats = (await import('../ComparisonStats')).default;
       const { container } = render(<ComparisonStats carIds={[]} />);
-      
+
       expect(container).toBeEmptyDOMElement();
     });
   });
 });
 
 describe('ComparisonSelector', () => {
-  describe('module', () => {
-    it('should export ComparisonSelector component', async () => {
-      const module = await import('../ComparisonSelector');
+  it('should render search input with placeholder', async () => {
+    const ComparisonSelector = (await import('../ComparisonSelector')).default;
 
-      expect(module.default).toBeDefined();
-      expect(typeof module.default).toBe('function');
-    });
+    renderWithRouter(<ComparisonSelector onSelect={vi.fn()} />);
+
+    expect(document.querySelector('input')).toBeInTheDocument();
+    expect(document.querySelector('input')).toHaveAttribute('placeholder', 'comparison.searchFirst');
+  });
+
+  it('should accept custom placeholder', async () => {
+    const ComparisonSelector = (await import('../ComparisonSelector')).default;
+
+    renderWithRouter(<ComparisonSelector onSelect={vi.fn()} placeholder="Custom placeholder" />);
+
+    expect(document.querySelector('input')).toHaveAttribute('placeholder', 'Custom placeholder');
   });
 });

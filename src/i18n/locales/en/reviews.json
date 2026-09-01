@@ -81,9 +81,11 @@
     "pending": "Pending",
     "rejected": "Rejected"
   },
-  "submitted": "{{count}} reviews submitted",
   "submitted_one": "{{count}} review submitted",
-  "likes": "{{count}} likes",
   "likes_one": "{{count}} like",
-  "confirmDelete": "Are you sure you want to delete your review for {{car}}?"
+  "confirmDelete": "Are you sure you want to delete your review for {{car}}?",
+  "helpfulCount_one": "{{count}} person found this helpful",
+  "helpfulCount_other": "{{count}} people found this helpful",
+  "submitted_other": "{{count}} reviews submitted",
+  "likes_other": "{{count}} likes"
 }

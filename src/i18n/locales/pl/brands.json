@@ -9,7 +9,6 @@
   "errorDescription": "Wystąpił problem podczas ładowania szczegółów marki.",
   "errorNotFound": "Szukana marka nie istnieje lub została usunięta.",
   "viewAllCars": "Zobacz wszystkie samochody",
-  "modelsCount": "{{count}} modeli",
   "modelsCount_one": "{{count}} model",
   "modelsCount_few": "{{count}} modele",
   "stats": {
@@ -23,5 +22,7 @@
     "title": "Modele",
     "subtitle": "Kliknij model, aby zobaczyć szczegóły",
     "empty": "Brak dostępnych modeli dla tej marki."
-  }
+  },
+  "modelsCount_many": "{{count}} modeli",
+  "modelsCount_other": "{{count}} modeli"
 }
